@@ -95,7 +95,8 @@ class model_perfil_red extends CI_Model
 			}
 
 			/*################ PERFIL DEL USUARIO #########################*/
-			if(!isset($_POST['tipo_plan']))$_POST['tipo_plan']=0;
+			if(!isset($_POST['tipo_plan']))
+				$_POST['tipo_plan']=0;
 
 			($_POST['tipo_plan']==0) ? $estatus=3 : $estatus=1;
 
@@ -300,6 +301,7 @@ class model_perfil_red extends CI_Model
 		}
 
 	}
+	
 	function actualiza_directo($id_,$id)
 	{
 		$q=$this->db->query("select id_red from red where id_usuario=".$id_);

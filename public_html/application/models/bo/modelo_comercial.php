@@ -5,17 +5,11 @@ class modelo_comercial extends CI_Model
 	function get_dato_usuario()
 	{
 		$q=$this->db->query('
-			Select U.id, U.username, 
-			U.email, 
-			TU.descripcion tipo_usuario, 
-			UP.nombre, 
-			UP.apellido, 
+			
+select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.apellido, 
 			UP.id_estatus, 
-			UP.keyword, 
-			(select url from cat_img CIMG where CIMG.id_img=(select CUI.id_img from cross_img_user CUI where CUI.id_user=U.id)) url 
-			from users U 
-			left join user_profiles UP on UP.user_id=U.id  
-			left join cat_tipo_usuario TU on TU.id_tipo_usuario=UP.id_tipo_usuario 
+			UP.keyword, cat_img.url as url from users U, user_profiles UP, cat_tipo_usuario TU, cross_img_user, cat_img
+			where UP.user_id = U.id and TU.id_tipo_usuario = UP.id_tipo_usuario and cat_img.id_img = cross_img_user.id_img and cross_img_user.id_user = U.id;
 			');
 		return $q->result();
 	}
@@ -250,12 +244,7 @@ class modelo_comercial extends CI_Model
 	}
 	function get_afiliados_($id)
 	{
-		$q=$this->db->query("select *,(select nombre from user_profiles where user_id=id_afiliado) afiliado,
-			(select apellido from user_profiles where user_id=id_afiliado) afiliado_p, 
-			(select nombre from user_profiles where user_id=debajo_de) debajo_de_n, 
-			(select apellido from user_profiles where user_id=debajo_de) debajo_de_p, 
-			(select (select url from cat_img b where a.id_img=b.id_img) url from cross_img_user a where id_user = id_afiliado) img 
-			from afiliar where id_red=".$id." order by lado");
+		$q=$this->db->query("select afiliados.id, afiliados.id_red, afiliados.debajo_de, afiliados.directo, afiliados.lado, afiliados.nombre as afiliado, afiliados.apellido as afiliado_p, user_profiles.nombre as debajo_de_n, user_profiles.apellido as debajo_de_p, cat_img.url as img from afiliados, user_profiles, cat_img, cross_img_user where afiliados.debajo_de = user_profiles.user_id and cross_img_user.id_img = cat_img.id_img and  cross_img_user.id_user = afiliados.user_id and afiliados.id_red = '$id'");
 		return $q->result();
 	}
 	function get_afiliados($id)
