@@ -92,7 +92,7 @@ $ci->load->model("model_permissions");?>
 											//	if($permiso){
 												?>
 												<div class="col-sm-4">
-													<a href="perfil_red/foto">
+													<a href="comercial/">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-money fa-3x"></i>
 															<h5>Comercial</h5>
@@ -107,7 +107,7 @@ $ci->load->model("model_permissions");?>
 											//	if($permiso){
 												?>
 												<div class="col-sm-4">
-													<a href="perfil_red/foto">
+													<a href="#">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-folder-open fa-3x"></i>
 															<h5>Administrativo</h5>
@@ -122,7 +122,7 @@ $ci->load->model("model_permissions");?>
 												//if($permiso){
 												?>
 												<div class="col-sm-4">
-													<a href="perfil_red/">
+													<a href="#">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-desktop fa-3x"></i>
 															<h5>Oficina Virtual</h5>
@@ -135,7 +135,7 @@ $ci->load->model("model_permissions");?>
 											//	if($permiso){
 												?>
 												<div class="col-sm-4">
-													<a href="perfil_red/foto">
+													<a href="#">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-book fa-3x"></i>
 															<h5>Reportes</h5>
@@ -150,7 +150,7 @@ $ci->load->model("model_permissions");?>
 											//	if($permiso){
 												?>
 												<div class="col-sm-4">
-													<a href="perfil_red/foto">
+													<a href="#">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-cubes fa-3x"></i>
 															<h5>Logistico</h5>

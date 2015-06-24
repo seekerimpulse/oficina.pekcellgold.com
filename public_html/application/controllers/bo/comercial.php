@@ -35,8 +35,75 @@ class comercial extends CI_Controller
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/comercial/main_dashboard');
+		$this->template->build('website/bo/comercial/index');
 	}
+	
+	function altas()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/altas/index');
+	}
+	
+	function red()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/red/index');
+	}
+	
+	function reportes()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/reportes/index');
+	}
+	
 	function oficina_virtual()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -136,6 +203,7 @@ class comercial extends CI_Controller
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/crear_encuesta');
 	}
+	/*
 	function red()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -180,7 +248,7 @@ class comercial extends CI_Controller
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red');
-	}
+	}*/
 	function get_detalle_usuario()
 	{
 		$detalle=$this->modelo_comercial->get_detalle_usuario();
