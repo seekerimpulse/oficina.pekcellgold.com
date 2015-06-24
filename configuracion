@@ -16,6 +16,15 @@ PASOS PARA INICIAR OFICINA VIRTUAL
 	Require all granted
 </Directory>
 
+	sudo a2enmod rewrite
+	
+	y en el archivo de config(/etc/apache2/apache2.conf) de apache cambiar
+	<Directory /var/www/>
+		Options Indexes FollowSymLinks
+		AllowOverride All
+		Allow from all
+		Require all granted
+	</Directory>
 
 agregar a la BD
 
