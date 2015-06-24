@@ -13,6 +13,7 @@ class perfil_red extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/general');
 		$this->load->model('ov/model_perfil_red');
+		$this->load->model('model_tipo_red');
 	}
 
 	function index()
@@ -54,8 +55,9 @@ class perfil_red extends CI_Controller
 		$estudios        = $this->model_perfil_red->get_estudios();
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
-		//$coaplicante	 = $this->model_perfil_red->get_coaplicante($id);
-
+		$coaplicante	 = $this->model_perfil_red->get_coaplicante($id);
+		
+		
 		$this->template->set("dir",$dir);
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
@@ -68,7 +70,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("estudios",$estudios);
 		$this->template->set("ocupacion",$ocupacion);
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
-		//$this->template->set("name_c",$coaplicante[0]->nombre)
+		$this->template->set("name_c",$coaplicante[0]->nombre);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
@@ -297,6 +299,28 @@ class perfil_red extends CI_Controller
 			redirect('/auth');
 		}
 
+		$redes 			 = $this->model_tipo_red->listarTodos();
+
+		
+
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+
+		$this->template->set_theme('desktop');
+        $this->template->set_layout('website/main');
+        $this->template->set_partial('header', 'website/ov/header');
+        $this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/perfil_red/redes');
+	}
+	
+	function nuevo_afilido()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
 		$id              = $this->tank_auth->get_user_id();
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
 		$telefonos       = $this->model_perfil_red->telefonos($id);
@@ -310,11 +334,13 @@ class perfil_red extends CI_Controller
 		$estudios        = $this->model_perfil_red->get_estudios();
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+		
 		$red             = $this->model_perfil_red->get_red($id);
 		$id_red          = $red[0]->id_red;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red);
 		$image 			 = $this->model_perfil_red->get_images($id);
-
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
+		
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
 		{
@@ -324,7 +350,7 @@ class perfil_red extends CI_Controller
 				$img_perfil=$img->url;
 			}
 		}
-
+	
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 		$this->template->set("afiliados",$afiliados);
@@ -336,13 +362,15 @@ class perfil_red extends CI_Controller
 		$this->template->set("ocupacion",$ocupacion);
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
-
+		$this->template->set("red_frontales",$red_forntales);
+	
 		$this->template->set_theme('desktop');
-        $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
-        $this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/perfil_red/afiliar');
 	}
+	
 	function use_mail()
 	{
 		$use_mail=$this->model_perfil_red->use_mail();
@@ -367,7 +395,8 @@ class perfil_red extends CI_Controller
 	}
 	function afiliar_nuevo()
 	{
-		$id=$this->tank_auth->get_user_id();
+		$id = $this->tank_auth->get_user_id();
+		echo "llego ".$_GET['id']; exit;
 		$resultado=$this->model_perfil_red->afiliar_nuevo($id);
 		if($resultado)
 		{
