@@ -39,3 +39,18 @@ from afiliar, user_profiles where afiliar.id_afiliado = user_profiles.user_id;
 		short_open_tag = Off
 	reemplazar por:
 		short_open_tag = On
+
+8. Habilitar Administrador de Base de Datos
+En mysql 
+	GRANT ALL PRIVILEGES
+	ON *.*
+	TO 'user'@'%'
+	IDENTIFIED BY 'password';
+En terminal 
+	/etc/mysql/my.cnf
+	[Editar la linea]   
+	bind-address        = 192.168.0.116
+
+En terminal 
+	stop mysql
+	start mysql
