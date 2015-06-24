@@ -2,7 +2,7 @@
 		<div class="page-footer">
 			<div class="row">
 				<div class="col-xs-12">
-					<span class="txt-color-white">World live© 2013-2014</span>
+					<span class="txt-color-white">World live© 2015</span>
 					<?if(isset($nombre))
 					{?>
 					<span class="pull-right txt-color-white">Hola: <?=$nombre?> tu última sesión fue: <?=$sesion?></span>
