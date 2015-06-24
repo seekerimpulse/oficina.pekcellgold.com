@@ -16,7 +16,7 @@
 				<td><?= $red->id;?></td>
 				<td><?= $red->nombre;?></td>
 				<td><?= $red->descripcion;?></td>
-				<td><a class="txt-color-white" onclick="modificar()" href="#" title="Modificar">
+				<td><a class="txt-color-white" onclick="modificar(<?= $red->id;?>)" href="#" title="Modificar">
 
     <i class="fa fa-upload">
     </i>
@@ -28,19 +28,36 @@
 </table>
 
 <script type="text/javascript">
-function eliminar(id)
+function modificar(id_red)
+{
+
+$.ajax({
+	type: "POST",
+	url: "/bo/tipo_red/actualizar_red",
+	data: {id: id_red},
+})
+.done(function( msg )
 {
 	bootbox.dialog({
-			message: "Confirme que <b>eliminará</b> al usuario con el id <b>"+id+"</b>",
-			title: "Atención",
+	message: msg,
+	title: 'Modificar Red',
+})//fin done ajax
+});//Fin callback bootbox
+}
+/*
+function modificar(id)
+{
+	bootbox.dialog({
+			title: "Modificar Red",
+			message: "<b>Nombre: </b>",
 			buttons: {
 				success: {
-				label: "Eliminar!",
+				label: "Actualizar!",
 				className: "btn-success",
 				callback: function() {
 						$.ajax({
 							type: "POST",
-							url: "/bo/comercial/del_user",
+							url: "/bo/tipo_red/actualizar_red",
 							data: {id: id},
 						})
 						.done(function( msg )
@@ -53,7 +70,7 @@ function eliminar(id)
 									label: "Cerrar!",
 									className: "btn-success",
 									callback: function() {
-										//location.href="";
+										location.href="/index.php";
 										}
 									}
 								}
@@ -68,6 +85,6 @@ function eliminar(id)
 					}
 				}
 			},
-		});
-}
+		}); 
+}*/
 </script>

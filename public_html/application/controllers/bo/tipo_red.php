@@ -37,7 +37,19 @@ class tipo_red extends CI_Controller{
 	public function actualizar_red()
 	{
 		$id_red = $_POST['id'];
-		redirect("/bo/tipo_red/mostrar_redes");
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+
+		$id              = $this->tank_auth->get_user_id();
+		$style           = $this->general->get_style($id);
+	
+		$this->template->set("style",$style);
+		$this->template->set_theme('desktop');
+        $this->template->set_layout('website/main');
+		$this->template->build('website/bo/TipoRed/modificarRed');	
+
 	}
 	
 	public function guardar_red(){
