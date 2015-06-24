@@ -13,6 +13,7 @@ class perfil_red extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/general');
 		$this->load->model('ov/model_perfil_red');
+		$this->load->model('ov/model_afiliado');
 		$this->load->model('model_tipo_red');
 	}
 
@@ -395,9 +396,9 @@ class perfil_red extends CI_Controller
 	}
 	function afiliar_nuevo()
 	{
-		$id = $this->tank_auth->get_user_id();
-		echo "llego ".$_GET['id']; exit;
-		$resultado=$this->model_perfil_red->afiliar_nuevo($id);
+		$resultado = $this->model_afiliado->crearUsuario();
+		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
+		
 		if($resultado)
 		{
 			$id_afiliado=$this->model_perfil_red->get_id();
@@ -408,6 +409,12 @@ class perfil_red extends CI_Controller
 			echo "!UPS¡ lo sentimos parece que algo fallo";
 		}
 	}
+	
+	function crear_user()
+	{	
+		$this->tank_auth->create_user($_POST['username'], $_POST['email'], $_POST['Contraseña'], $_POST['email']);;
+	}
+	
 	function afiliar_nuevo_r($id)
 	{
 		sleep(3);

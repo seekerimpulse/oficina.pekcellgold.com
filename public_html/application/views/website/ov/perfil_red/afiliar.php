@@ -700,11 +700,11 @@ $(document).ready(function() {
 						
 						$.ajax({
 							type: "POST",
-							url: "/auth/register",
+							url: "/ov/perfil_red/crear_user",
 							data: $('#register').serialize()
 						})
 						.done(function( msg1 ) {
-							
+						
 							$("#progress").attr('style','width: 40%');
 							var email=$("#email").val();
 							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
@@ -714,7 +714,7 @@ $(document).ready(function() {
 								data: $('#checkout-form').serialize()
 								})
 								.done(function( msg ) {
-									
+									alert(msg)
 									$("#progress").attr('style','width: 100%');
 									bootbox.dialog({
 										message: msg,
@@ -748,7 +748,7 @@ $(document).ready(function() {
 	pageSetUp();
 })
 $("#remove_step").click(function() {
-	$("#tipo_plan").attr("name"," ");
+	$("#tipo_plan").attr("name","tipo_plan");
 	$('.wizard').wizard('selectedItem', {
 			step: 4
 		});
@@ -1355,7 +1355,7 @@ function botbox(nombre, id, lado)
 
 		$("#remove_step_r").click(function(event) {
 
-			$("#tipo_plan_r").attr("name"," ");
+			$("#tipo_plan_r").attr("name","tipo_plan");
 			$('.wizard_r').wizard('selectedItem', {
 					step: 4
 				});
