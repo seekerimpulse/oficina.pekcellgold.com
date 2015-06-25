@@ -16,7 +16,7 @@
 				<td><?= $red->id;?></td>
 				<td><?= $red->nombre;?></td>
 				<td><?= $red->descripcion;?></td>
-				<td><a class="txt-color-white" onclick="modificar()" href="#" title="Modificar">
+				<td><a class="txt-color-white" onclick="modificar(<?= $red->id;?>)" href="#" title="Modificar">
 
     <i class="fa fa-upload">
     </i>
@@ -28,46 +28,20 @@
 </table>
 
 <script type="text/javascript">
-function eliminar(id)
+function modificar(id_red)
+{
+
+$.ajax({
+	type: "POST",
+	url: "/bo/tipo_red/modificar_red",
+	data: {id: id_red},
+})
+.done(function( msg )
 {
 	bootbox.dialog({
-			message: "Confirme que <b>eliminará</b> al usuario con el id <b>"+id+"</b>",
-			title: "Atención",
-			buttons: {
-				success: {
-				label: "Eliminar!",
-				className: "btn-success",
-				callback: function() {
-						$.ajax({
-							type: "POST",
-							url: "/bo/comercial/del_user",
-							data: {id: id},
-						})
-						.done(function( msg )
-						{
-							bootbox.dialog({
-								message: msg,
-								title: "Atención",
-								buttons: {
-									success: {
-									label: "Cerrar!",
-									className: "btn-success",
-									callback: function() {
-										//location.href="";
-										}
-									}
-								}
-							});
-						});
-					}
-				},
-				danger: {
-				label: "Cancelar!",
-				className: "btn-danger",
-				callback: function() {
-					}
-				}
-			},
-		});
+	message: msg,
+	title: 'Modificar Red',
+})//fin done ajax
+});//Fin callback bootbox
 }
 </script>

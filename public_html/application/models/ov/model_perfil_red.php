@@ -61,20 +61,23 @@ class model_perfil_red extends CI_Model
 	function afiliar_nuevo($id)
 	{
 
-		$id_afiliador=$this->db->query('select id from users where email like "'.$_POST['mail_important'].'"');
+		$id_afiliador= $this->db->query('select id from users where email like "'.$_POST['mail_important'].'"');
 
-		$id_afiliador=$id_afiliador->result();
-
+		$id_afiliador = $id_afiliador->result();
+		
+		
 			if($id_afiliador[0]->id)
-			$id_nuevo=$id_afiliador[0]->id;
+				$id_nuevo=$id_afiliador[0]->id;
 			else
-			$id_nuevo=$id_afiliador->id;
-
+				$id_nuevo=$id_afiliador->id;
+		
 		$existe_mail=$this->db->query('select id from user_profiles where id='.$id_nuevo);
 		$existe_mail=$existe_mail->result();
-
-		if(!$existe_mail)
+		
+		
+		if($existe_mail == null)
 		{
+			
 			$directo=0;
 			if(!isset($_POST['afiliados']))
 			{
@@ -141,6 +144,7 @@ class model_perfil_red extends CI_Model
 
 			/*################### DATO RED #########################*/
 			$dato_red=array(
+						'id_red'        => $_GET['id'],
 		                "id_usuario"	=> $id_nuevo,
 		                "profundidad"	=> "0",
 		                "estatus"		=> "ACT"
@@ -149,14 +153,13 @@ class model_perfil_red extends CI_Model
 		    /*################### FIN DATO RED #########################*/
 
 		     /*################### DATO AFILIAR #########################*/
-		    $mi_red=$this->db->query('select id_red from red where id_usuario='.$id);
-		    $mi_red=$mi_red->result();
-		    $mi_red=$mi_red[0]->id_red;
+		    $mi_red=$_GET['id'];
 
 		    if(isset($_POST['sponsor']))
 		    {
 		    	$directo=0;
 		    }
+		    
 		    if(!isset($_POST['lado']))
 		    	$lado=0;
 		    else
@@ -300,6 +303,10 @@ class model_perfil_red extends CI_Model
 			return false;
 		}
 
+	}
+	
+	function AgregarUsuarioRed($id_usuario, $id_red){
+		
 	}
 	
 	function actualiza_directo($id_,$id)

@@ -14,7 +14,7 @@
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
-
+			
 			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
@@ -58,15 +58,24 @@
 							</ul>
 							<div id="myTabContent1" class="tab-content padding-10">
 								<div class="tab-pane fade in active" id="s1">
+									
 									<div id="uno" class="row fuelux">
-									<?$contar=0; foreach ($afiliados as $key) 
+									
+									<?
+									$contar=0; 
+									foreach ($afiliados as $key) 
 	                                	{
-	                                    	if($key->debajo_de==$id){$contar++;}
+	                                    	if($key->debajo_de==$id){
+	                                    		$contar++;
+	                                    	}
 	                                	}
-	                                    if($contar<2)
+	                                    if( $contar< $red_frontales[0]->frontal)
 	                                    {?>
+	                                    
 	                                	<div id="myWizard" class="wizard">
+		                                	
 											<ul class="steps">
+											
 												<li data-target="#step1" class="active">
 													<span class="badge badge-info">1</span>Datos del registro<span class="chevron"></span>
 												</li>
@@ -94,6 +103,7 @@
 												<div class="step-pane active" id="step1">
 													<form id="register" class="smart-form">
 														<fieldset>
+														
 															<legend>Información de cuenta</legend>
 															<section id="usuario" class="col col-6">
 																<label class="input"> <i class="icon-prepend fa fa-user"></i>
@@ -320,6 +330,9 @@
 																</section>
 															</div>
 														</fieldset>
+															<input class='hide' type="text" name="red" id='red' value="<?php echo $_GET['id']; ?>" placeholder="">
+															<input type="text" name="id" value="<?php echo $id; ?>" placeholder="">
+															
 													</form>
 												</div>
 												<div class="step-pane" id="step3">
@@ -691,12 +704,14 @@ $(document).ready(function() {
 						$( ".actions" ).slideUp();
 						$( ".actions" ).remove();
 						$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
+						
 						$.ajax({
 							type: "POST",
-							url: "/auth/register",
+							url: "/ov/perfil_red/crear_user",
 							data: $('#register').serialize()
 						})
 						.done(function( msg1 ) {
+						
 							$("#progress").attr('style','width: 40%');
 							var email=$("#email").val();
 							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
@@ -706,6 +721,7 @@ $(document).ready(function() {
 								data: $('#checkout-form').serialize()
 								})
 								.done(function( msg ) {
+									alert(msg)
 									$("#progress").attr('style','width: 100%');
 									bootbox.dialog({
 										message: msg,
@@ -739,7 +755,7 @@ $(document).ready(function() {
 	pageSetUp();
 })
 $("#remove_step").click(function() {
-	$("#tipo_plan").attr("name"," ");
+	$("#tipo_plan").attr("name","tipo_plan");
 	$('.wizard').wizard('selectedItem', {
 			step: 4
 		});
@@ -1346,7 +1362,7 @@ function botbox(nombre, id, lado)
 
 		$("#remove_step_r").click(function(event) {
 
-			$("#tipo_plan_r").attr("name"," ");
+			$("#tipo_plan_r").attr("name","tipo_plan");
 			$('.wizard_r').wizard('selectedItem', {
 					step: 4
 				});

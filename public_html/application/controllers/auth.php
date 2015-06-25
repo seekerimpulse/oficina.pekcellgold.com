@@ -163,8 +163,8 @@ class Auth extends CI_Controller
 					$data['lst_id']=$last_id;
 					if ($email_activation) {									// send "activate" email
 						$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
-						//$id_nuevo_usr=$this->db->query("select id from users order by id desc limit 1");
-						//$data['id']=$id_nuevo_usr[0]->id;
+						$id_nuevo_usr=$this->db->query("select id from users order by id desc limit 1");
+						$data['id']=$id_nuevo_usr[0]->id;
 						$this->send_email_activate( $data['email'], $data);
 
 						unset($data['password']); // Clear password (just for any case)
