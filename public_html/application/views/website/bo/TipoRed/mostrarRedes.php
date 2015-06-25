@@ -33,7 +33,7 @@ function modificar(id_red)
 
 $.ajax({
 	type: "POST",
-	url: "/bo/tipo_red/actualizar_red",
+	url: "/bo/tipo_red/modificar_red",
 	data: {id: id_red},
 })
 .done(function( msg )
@@ -44,47 +44,4 @@ $.ajax({
 })//fin done ajax
 });//Fin callback bootbox
 }
-/*
-function modificar(id)
-{
-	bootbox.dialog({
-			title: "Modificar Red",
-			message: "<b>Nombre: </b>",
-			buttons: {
-				success: {
-				label: "Actualizar!",
-				className: "btn-success",
-				callback: function() {
-						$.ajax({
-							type: "POST",
-							url: "/bo/tipo_red/actualizar_red",
-							data: {id: id},
-						})
-						.done(function( msg )
-						{
-							bootbox.dialog({
-								message: msg,
-								title: "Atención",
-								buttons: {
-									success: {
-									label: "Cerrar!",
-									className: "btn-success",
-									callback: function() {
-										location.href="/index.php";
-										}
-									}
-								}
-							});
-						});
-					}
-				},
-				danger: {
-				label: "Cancelar!",
-				className: "btn-danger",
-				callback: function() {
-					}
-				}
-			},
-		}); 
-}*/
 </script>
