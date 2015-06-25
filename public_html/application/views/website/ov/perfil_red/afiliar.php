@@ -62,15 +62,14 @@
 									<div id="uno" class="row fuelux">
 									
 									<?
-									$contar=0; 
+									$contar=1; 
 									foreach ($afiliados as $key) 
 	                                	{
-	                                    	if($key->debajo_de==$id){
 	                                    		$contar++;
-	                                    	}
+	                                    		 
 	                                	}
-	                                    if( $contar< $red_frontales[0]->frontal)
-	                                    {?>
+	                                    if( $contar <= $red_frontales[0]->frontal || $premium == '2' )
+	                                    {  ?>
 	                                    
 	                                	<div id="myWizard" class="wizard">
 		                                	
@@ -191,14 +190,7 @@
 															</section>
 															</div>
 														</fieldset>
-														<fieldset>
-															<legend>Configuración del afiliado</legend>
-																<section class="col col-6">
-																	<label class="toggle">
-																	<input type="checkbox" checked="checked" name="lado">
-																	<i data-swchoff-text="IZQ" data-swchon-text="DER"></i>Posición: </label>
-																</section>
-														</fieldset>
+														
 														<fieldset>
 															<legend>Datos co-aplicante</legend>
 															<div class="row">
@@ -464,9 +456,56 @@
 				
 											</div>
 										</div>
-										<?}
-										else{
-										echo "<h1>   Solo puedes tener dos frontales, pero puedes afiliar en red</h1>";}?>
+										<?}	elseif($premium == '0'){ ?> 
+											<h1>   Solo puedes tener <?php echo $red_frontales[0]->frontal ?>, pero puedes afiliar en red"</h1>
+											<div id="faseuno" class="col-xs-12 col-sm-6 col-md-3">
+													            <div class="panel panel-success pricing-big">
+													                <div class="panel-heading">
+													                    <h3 class="panel-title">
+													                       <i class="fa fa-plane"></i> Fase 1</h3>
+													                </div>
+													                <div class="panel-body no-padding text-align-center">
+													                    <div class="the-price">
+													                        <h1>
+													                            <strong>$0 USD</strong></h1>
+													                    </div>
+																		<div class="price-features">
+																			<ul class="list-unstyled text-left">
+																	          	<li><i class="fa fa-check text-success"></i> <strong></strong> Afiliar Usuarios a profundidad</li>
+																	        </ul>
+																		</div>
+													                </div>
+													                <div class="panel-footer text-align-center">
+													                    <a id="fase1" href="javascript:void(0);" class="btn btn-primary btn-block" role="button">Seleccionar</a>
+													                </div>
+													            </div>
+													        </div>
+													        
+												<div id="fasedos" class="col-xs-12 col-sm-6 col-md-3">
+													            <div class="panel panel-success pricing-big">
+													                <div class="panel-heading">
+													                    <h3 class="panel-title">
+													                       <i class="fa fa-plane"></i> Fase 2</h3>
+													                </div>
+													                <div class="panel-body no-padding text-align-center">
+													                    <div class="the-price">
+													                        <h1>
+													                            <strong>$10 USD</strong></h1>
+													                    </div>
+																		<div class="price-features">
+																			<ul class="list-unstyled text-left">
+																	          	<li><i class="fa fa-check text-success"></i> <strong></strong> Afiliar Usuarios a Frontal sin limites</li>
+																	        </ul>
+																		</div>
+													                </div>
+													                <div class="panel-footer text-align-center">
+													                    <a id="fase2" href="javascript:void(0);" class="btn btn-primary btn-block" role="button">Seleccionar</a>
+													                </div>
+													            </div>
+													        </div>
+										<?php } else {?>
+										<h1>   Solo puedes tener <?php echo $red_frontales[0]->frontal ?>, pero puedes afiliar en red"</h1>
+											<?php }?>
 									</div>
 								</div>
 								<div class="tab-pane fade in" id="s2">
@@ -721,7 +760,8 @@ $(document).ready(function() {
 								data: $('#checkout-form').serialize()
 								})
 								.done(function( msg ) {
-									alert(msg)
+
+									
 									$("#progress").attr('style','width: 100%');
 									bootbox.dialog({
 										message: msg,
@@ -774,6 +814,7 @@ $("#plan1").click(function(event) {
 	$("#plantres").removeClass('packselected');
 	$("#plancuatro").removeClass('packselected');
 });
+
 $("#plan2").click(function(event) {
 	$("#tipo_plan").attr("value","2");
 	$("#planuno").removeClass('packselected');
@@ -794,6 +835,38 @@ $("#plan4").click(function(event) {
 	$("#plandos").removeClass('packselected');
 	$("#plantres").removeClass('packselected');
 	$("#plancuatro").addClass('packselected');
+});
+
+$("#fase1").click(function(event) {
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/CambioFase",
+		data: {
+			id: <?php echo $id ?>,
+			red: <?php echo $_GET['id'] ?>,
+			fase: '1'
+				},
+	})
+	.done(function( msg )
+	{
+		alert('Has Cambiado de fase')
+	})
+});
+
+$("#fase2").click(function(event) {
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/CambioFase",
+		data: {
+			id: <?php echo $id ?>,
+			red: <?php echo $_GET['id'] ?>,
+			fase: '2'
+				},
+	})
+	.done(function( msg )
+	{
+		alert('Has Cambiado de fase')
+	})
 });
 /*
 CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
@@ -934,7 +1007,8 @@ function subred(id)
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/get_red_afiliar",
-		data: {id: id},
+		data: {id: id,
+				red: <?php echo $_GET['id']; ?>},
 	})
 	.done(function( msg )
 	{
@@ -1148,6 +1222,8 @@ function botbox(nombre, id, lado)
 								+'</section>'
 							+'</div>'
 						+'</fieldset>'
+						+'<input class="hide" type="text" name="red" id="red" value="<?php echo $_GET['id']; ?>" placeholder="">'
+						+'<input type="text" class="hide" name="id" value="<?php echo $id; ?>" placeholder="">'
 					+'</form>'
 				+'</div>'
 				+'<div class="step-pane" id="step3_r">'
@@ -1283,6 +1359,7 @@ function botbox(nombre, id, lado)
 		title: "Afiliar a "+nombre,
 	});
 	$('.wizard_r').on('finished.fu.wizard', function (e, data) {
+			
 			  		var ids = new Array( 
 					"#nombre_r",
 				 	"#apellido_r",
@@ -1317,7 +1394,7 @@ function botbox(nombre, id, lado)
 					{
 						var id=$("#id").val();
 						$.ajax({
-		                       url:"/auth/register",
+		                       url:"/ov/perfil_red/crear_user",
 		                       data:$("#register_red").serialize(),
 		                       type:"POST",
 		                       success:function(response){
@@ -1327,7 +1404,7 @@ function botbox(nombre, id, lado)
 							var email=$("#email_r").val();
 							$("#afiliar_red").append("<input value='"+email+"' type='hidden' name='mail_important'>");
 							$.ajax({
-		                       url:"/ov/perfil_red/afiliar_nuevo_r/"+id,
+		                       url:"/ov/perfil_red/afiliar_nuevo",
 		                       data:$("#afiliar_red").serialize(),
 		                       type:"POST",
 		                       success:function(response){

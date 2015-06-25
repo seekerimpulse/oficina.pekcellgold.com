@@ -319,7 +319,7 @@ class model_perfil_red extends CI_Model
 	}
 	function get_red($id)
 	{
-		$q=$this->db->query("select * from red where id_usuario=".$id);
+		$q=$this->db->query("select * from red where id_usuario = ".$id."");
 		return $q->result();
 	}
 	function get_pais()
@@ -328,26 +328,25 @@ class model_perfil_red extends CI_Model
 		$q=$this->db->query("select Code, Name, Code2 from Country ");
 		return $q->result();
 	}
-	function get_afiliados_($id)
+	function get_afiliados_($id, $id_afiliado)
 	{
 		$q=$this->db->query("select *,(select nombre from user_profiles where user_id=id_afiliado) afiliado,
 			(select apellido from user_profiles where user_id=id_afiliado) afiliado_p,
 			(select nombre from user_profiles where user_id=debajo_de) debajo_de_n,
 			(select apellido from user_profiles where user_id=debajo_de) debajo_de_p,
 			(select (select url from cat_img b where a.id_img=b.id_img) url from cross_img_user a where id_user = id_afiliado) img
-			from afiliar where id_red=".$id." order by lado");
+			from afiliar where id_red=".$id." and debajo_de='.$id_afiliado.' order by lado");
 		return $q->result();
 	}
-	function get_afiliados($id)
+	function get_afiliados($id, $id_afiliado)
 	{
-		$debajo_de=$this->db->query("select id_usuario from red where id_red=".$id);
-		$debajo_de=$debajo_de->result();
+		
 		$q=$this->db->query("select *,(select nombre from user_profiles where user_id=id_afiliado) afiliado,
 			(select apellido from user_profiles where user_id=id_afiliado) afiliado_p,
 			(select nombre from user_profiles where user_id=debajo_de) debajo_de_n,
 			(select apellido from user_profiles where user_id=debajo_de) debajo_de_p,
 			(select (select url from cat_img b where a.id_img=b.id_img) url from cross_img_user a where id_user = id_afiliado) img
-			from afiliar where id_red=".$id." and debajo_de=".$debajo_de[0]->id_usuario." order by lado");
+			from afiliar where id_red=".$id." and debajo_de=".$id_afiliado." order by lado");
 		return $q->result();
 	}
 	function use_mail()
