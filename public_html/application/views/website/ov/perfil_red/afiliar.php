@@ -61,11 +61,15 @@
 									
 									<div id="uno" class="row fuelux">
 									
-									<?$contar=0; foreach ($afiliados as $key) 
+									<?
+									$contar=0; 
+									foreach ($afiliados as $key) 
 	                                	{
-	                                    	if($key->debajo_de==$id){$contar++;}
+	                                    	if($key->debajo_de==$id){
+	                                    		$contar++;
+	                                    	}
 	                                	}
-	                                    if($contar< $red_frontales[0]->frontal)
+	                                    if( $contar< $red_frontales[0]->frontal)
 	                                    {?>
 	                                    
 	                                	<div id="myWizard" class="wizard">
@@ -98,8 +102,8 @@
 											<div class="form-horizontal" id="fuelux-wizard" >
 												<div class="step-pane active" id="step1">
 													<form id="register" class="smart-form">
-													
 														<fieldset>
+														
 															<legend>Información de cuenta</legend>
 															<section id="usuario" class="col col-6">
 																<label class="input"> <i class="icon-prepend fa fa-user"></i>
@@ -326,6 +330,9 @@
 																</section>
 															</div>
 														</fieldset>
+															<input class='hide' type="text" name="red" id='red' value="<?php echo $_GET['id']; ?>" placeholder="">
+															<input type="text" name="id" value="<?php echo $id; ?>" placeholder="">
+															
 													</form>
 												</div>
 												<div class="step-pane" id="step3">

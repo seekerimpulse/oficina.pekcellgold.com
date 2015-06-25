@@ -396,6 +396,7 @@ class perfil_red extends CI_Controller
 	}
 	function afiliar_nuevo()
 	{
+		
 		$resultado = $this->model_afiliado->crearUsuario();
 		//$resultado=$this->model_perfil_red->afiliar_nuevo($id);
 		
