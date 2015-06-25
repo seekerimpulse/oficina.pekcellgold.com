@@ -41,4 +41,12 @@ class Model_tipo_red extends CI_Model{
 		
 		$this->db->update('tipo_red', $datos);
 	}
+	function actualizar($id, $nombre, $descripcion, $profundidad, $frontal){
+		$datos = array(
+				'nombre' => $nombre,
+				'descripcion' => $descripcion,
+				'frontal' => $frontal,
+				'profundidad' => $profundidad);
+		$this->db->update("tipo_red",$datos,"id = ".$id);
+	}
 }

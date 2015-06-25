@@ -34,30 +34,37 @@ class tipo_red extends CI_Controller{
 
 	}
 
+	public function modificar_red(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id              = $this->tank_auth->get_user_id();
+		$style           = $this->general->get_style($id);
+		$id_red = $_POST['id'];
+		//echo $id_red;
+		$this->template->set("id_red",$id_red);
+		$this->template->set("style",$style);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->build('website/bo/TipoRed/modificarRed');
+	}
+	
 	public function actualizar_red()
 	{
 		$id_red = $_POST['id'];
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
+		$nombre_red = $_POST['nombre'];
+		$descripcion_red = $_POST['descripcion'];
+		$capacidadRed = $this->model_tipo_red->traerCapacidadRed();
 
-		$id              = $this->tank_auth->get_user_id();
-		$style           = $this->general->get_style($id);
-	
-		$this->template->set("style",$style);
-		$this->template->set_theme('desktop');
-        $this->template->set_layout('website/main');
-		$this->template->build('website/bo/TipoRed/modificarRed');	
-
+		$this->model_tipo_red->actualizar($_POST['id'],$_POST['nombre'],$_POST['descripcion'],$capacidadRed[0]->frontal,$capacidadRed[0]->profundidad);
+		redirect("/bo/tipo_red/mostrar_redes");
 	}
 	
 	public function guardar_red(){
 			$capacidadRed = $this->model_tipo_red->traerCapacidadRed();
-			if($capacidadRed[0]->frontal == null){
-				$capacidadRed[0]->frontal = 3;
-				$capacidadRed[0]->profundidad = 2;
-			}
+			
 			$this->model_tipo_red->insertar($_POST['nombre'],$_POST['descripcion'],$capacidadRed[0]->frontal,$capacidadRed[0]->profundidad);
 			redirect("/bo/tipo_red/mostrar_redes");
 	}
