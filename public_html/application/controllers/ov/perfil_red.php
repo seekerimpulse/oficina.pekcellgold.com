@@ -81,9 +81,8 @@ class perfil_red extends CI_Controller
 	}
 	function get_red_afiliar()
 	{
-		$id_red=$this->model_perfil_red->get_red($_POST['id']);
-		$id_red=$id_red[0]->id_red;
-		$afiliados=$this->model_perfil_red->get_afiliados($id_red);
+		$id_red=$_POST['red'];
+		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
 
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
@@ -301,9 +300,6 @@ class perfil_red extends CI_Controller
 		}
 
 		$redes 			 = $this->model_tipo_red->listarTodos();
-
-		
-
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 		$this->template->set("redes",$redes);
@@ -331,16 +327,17 @@ class perfil_red extends CI_Controller
 		$dir             = $this->model_perfil_red->dir($id);
 		$civil           = $this->model_perfil_red->edo_civil();
 		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
-		$afiliados       = $this->model_perfil_red->get_afiliados($id);
 		$estudios        = $this->model_perfil_red->get_estudios();
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+		$id_red          = $_GET['id'];
+		$premium         = $red[0]->premium;
+		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
 		
-		$red             = $this->model_perfil_red->get_red($id);
-		$id_red          = $red[0]->id_red;
-		$afiliados       = $this->model_perfil_red->get_afiliados($id_red);
 		$image 			 = $this->model_perfil_red->get_images($id);
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
+		
+	
 		
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
@@ -364,7 +361,8 @@ class perfil_red extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
-	
+		$this->template->set("premium",$premium);
+		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
@@ -413,7 +411,45 @@ class perfil_red extends CI_Controller
 	
 	function crear_user()
 	{	
-		$this->tank_auth->create_user($_POST['username'], $_POST['email'], $_POST['Contraseña'], $_POST['email']);;
+		$this->tank_auth->create_user($_POST['username'], $_POST['email'], $_POST['password'], $_POST['email']);;
+	}
+	
+	function CargarFormulario(){
+		
+		$id              = $_POST['id'];
+		$id_red          = $_POST['red'];
+		
+		$sexo            = $this->model_perfil_red->sexo();
+		$pais            = $this->model_perfil_red->get_pais();
+		$civil           = $this->model_perfil_red->edo_civil();
+		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
+		$estudios        = $this->model_perfil_red->get_estudios();
+		$ocupacion       = $this->model_perfil_red->get_ocupacion();
+		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
+		
+		
+		$img_perfil="/template/img/empresario.jpg";
+		foreach ($image as $img)
+		{
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$img_perfil=$img->url;
+			}
+		}
+		
+		$this->template->set("id",$id);
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("sexo",$sexo);
+		$this->template->set("civil",$civil);
+		$this->template->set("pais",$pais);
+		$this->template->set("tipo_fiscal",$tipo_fiscal);
+		$this->template->set("estudios",$estudios);
+		$this->template->set("ocupacion",$ocupacion);
+		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
+		
+		$this->template->build('website/ov/perfil_red/FromNuevoAfiliado');
 	}
 	
 	function afiliar_nuevo_r($id)
@@ -948,5 +984,9 @@ class perfil_red extends CI_Controller
               </div>
             </div>
 		';
+	}
+	
+	function CambioFase(){
+		$this->model_afiliado->CambiarFase($_POST['id'], $_POST['red'], $_POST['fase']);
 	}
 }

@@ -27,6 +27,9 @@ class model_afiliado extends CI_Model{
 		if(!isset($_POST['tipo_plan']))
 			$_POST['tipo_plan'] = 0;
 		
+		if(!isset($_POST['fiscal'])){
+			$_POST['fiscal']=1;
+		}
 		$dato_profile = array(
 			"user_id"            => $id,
 			"id_sexo"            => $_POST['sexo'],
@@ -43,8 +46,8 @@ class model_afiliado extends CI_Model{
 			"apellido"           => $_POST['apellido'],
 			"fecha_nacimiento"   => $_POST['nacimiento']
 			);
+		
 		$this->db->insert("user_profiles",$dato_profile);
-		echo $this->db->_error_message();
 		
 		$perfil=2;
 		if($_POST['tipo_plan']==0){
@@ -72,10 +75,11 @@ class model_afiliado extends CI_Model{
 			
 		}
 	}
-	function crearUsuario($id){
+	function crearUsuario(){
 		
 		$id = $this->obtenrIdUser($_POST['mail_important']);
 		
+		$this->db->query('update users set activated="1" where id="'.$id.'"');
 		$this->EstiloUsuaio($id);
 		$directo=0;
 		if(!isset($_POST['afiliados']))
@@ -89,15 +93,21 @@ class model_afiliado extends CI_Model{
 		$this->CrearCoaplicante($id);
 		
 		$mi_red=$_POST['red'];
-		/*################### DATO RED #########################*/
-		$dato_red=array(
-			'id_red'        => $mi_red,
-			"id_usuario"	=> $id,
-			"profundidad"	=> "0",
-			"estatus"		=> "ACT"
-			);
 		
-		$this->db->insert("red",$dato_red);
+		/*################### DATO RED #########################*/
+	
+		$redes = $this->db->get('tipo_red');
+		$redes = $redes->result();
+		foreach ($redes as $red){
+			$dato_red=array(
+					'id_red'        => $red->id,
+					"id_usuario"	=> $id,
+					"profundidad"	=> "0",
+					"estatus"		=> "ACT",
+					"premium"			=> '0'
+			);
+			$this->db->insert("red",$dato_red);
+		}
 		
 		/*################### FIN DATO RED #########################*/
 		
@@ -106,21 +116,23 @@ class model_afiliado extends CI_Model{
 		$directo = 1;
 		if(isset($_POST['sponsor']))
 		{
-			$directo=0;
+			$directo = 0;
 		}
-		
-
-		$lado = 0;
-		if(!isset($_POST['lado']))
-			$lado=0;
-		else
-			$lado=$_POST['lado'];
-		
-		$id_debajo = $_POST['id'];
-
+		$id_debajo = '1';
 		if(isset($_POST['afiliados']) && $_POST['afiliados'] != $id){
 			$id_debajo = $_POST['afiliados'];
+		}else{
+			$id_debajo = $_POST['id'];
 		}
+
+		
+		$lado = 1;
+		if(!isset($_POST['lado']))
+			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
+		else
+			$lado = $_POST['lado'];
+		
+		
 		$dato_afiliar=array(
 			"id_red"      => $mi_red,
 			"id_afiliado" => $id,
@@ -131,8 +143,8 @@ class model_afiliado extends CI_Model{
 		
 		
  		$this->db->insert("afiliar",$dato_afiliar);
-		
-		
+ 		
+ 		
 		/*################### DATO TELEFONOS #########################*/
 		//tipo_tel 1=fijo 2=movil
 		if($_POST["fijo"])
@@ -215,7 +227,7 @@ class model_afiliado extends CI_Model{
 			);
 		$this->db->insert("cross_rango_user",$dato_rango);
 		/*################### FIN DATO RANGO #########################*/
-		
+		var_dump($_POST['lado']); exit;
 		return true;
 	}
 	
@@ -226,4 +238,32 @@ class model_afiliado extends CI_Model{
 		return $id_afiliador[0]->id;
 	}
 
+	function consultarFrontalDisponible($id_debajo, $red){
+		
+		
+		$query = $this->db->query('select * from afiliar where debajo_de = '.$id_debajo.' and id_red = '.$red.' ');
+		
+		$lados = $query->result();
+		$lado_disponible=0;
+		
+		if(isset($lados)){
+			foreach ($lados as $filaLado){
+				$lado_disponible = ($filaLado->lado) + 1;
+				
+			}
+		}
+		return $lado_disponible;
+	}
+	
+	function CambiarFase($id, $red, $fase){
+		
+		$query = $this->db->query('select * from red where id_usuario = '.$id.' and id_red = '.$red.' ');
+		
+		$red = $query->result();
+		
+		if($red[0]->premium == '0'){
+			$this->db->query("update red set premium = '".$fase."' where id_red = '".$red."' and id_usuario = '".$id."' ");
+			return true;
+		}
+	}
 }
