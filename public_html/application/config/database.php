@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = '192.168.1.110';
+$db['default']['hostname'] = '192.168.1.114';
 $db['default']['username'] = 'root';
 $db['default']['password'] = 'toor';
 $db['default']['database'] = 'OficinaVirtual';

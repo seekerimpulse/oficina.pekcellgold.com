@@ -55,7 +55,7 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="#">
+													<a href="/bo/admin/paises">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-usd fa-3x"></i>
 															<h1>Pais/Moneda</h1>
@@ -63,7 +63,7 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="#">
+													<a href="/bo/capacidadRed/capacidad_de_la_red">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-sort-numeric-asc fa-3x"></i>
 															<h1>Frontalidad / Profundidad</h1>

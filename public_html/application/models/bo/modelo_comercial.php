@@ -242,15 +242,16 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 		$q=$this->db->query("select * from red where id_usuario=".$id);
 		return $q->result();
 	}
-	function get_afiliados_($id)
+	/*function get_afiliados_($id)
 	{
 		$q=$this->db->query("select afiliados.id, afiliados.id_red, afiliados.debajo_de, afiliados.directo, afiliados.lado, afiliados.nombre as afiliado, afiliados.apellido as afiliado_p, user_profiles.nombre as debajo_de_n, user_profiles.apellido as debajo_de_p, cat_img.url as img from afiliados, user_profiles, cat_img, cross_img_user where afiliados.debajo_de = user_profiles.user_id and cross_img_user.id_img = cat_img.id_img and  cross_img_user.id_user = afiliados.user_id and afiliados.id_red = '$id'");
 		return $q->result();
-	}
+	}*/
 	function get_afiliados($id)
 	{
-		$debajo_de=$this->db->query("select id_usuario from red where id_red=".$id);
-		$debajo_de=$debajo_de->result();
+		$debajo_de = $this->db->query("select id_usuario from red where id_red=".$id);
+		$debajo_de = $debajo_de->result();
+		
 		$q=$this->db->query("select *,(select nombre from user_profiles where user_id=id_afiliado) afiliado,
 			(select apellido from user_profiles where user_id=id_afiliado) afiliado_p, 
 			(select nombre from user_profiles where user_id=debajo_de) debajo_de_n, 

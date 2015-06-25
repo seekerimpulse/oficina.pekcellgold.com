@@ -37,7 +37,32 @@ class comercial extends CI_Controller
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/index');
 	}
+	function red_genealogica()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
 	
+		$id=2;
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style($id);
+		
+		$id_red=$this->modelo_comercial->get_red($id);
+		$id_red=$id_red[0]->id_red;
+		$afiliados=$this->modelo_comercial->get_afiliados($id_red);
+		
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/red/genealogico');
+	}
 	function altas()
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -81,6 +106,7 @@ class comercial extends CI_Controller
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/index');
 	}
+	
 	
 	function reportes()
 	{

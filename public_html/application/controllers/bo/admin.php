@@ -102,17 +102,32 @@ class admin extends CI_Controller
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/admin/altas');
 	}
+	
+	function paises()
+	{
+		$pais = $this->model_admin->get_pais();
+		$this->template->set("pais",$pais);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/admin/paises');
+	}
+	
 	function dato_pais_multiple()
 	{
+		
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
 			redirect('/auth');
 		}
+		
 		if(isset($_POST['pais_check']))
 		{
 			foreach ($_POST['pais_check'] as $key){
 
 				$dato_pais=$this->model_admin->get_dato_pais_($key);
+				
 				echo '<form id="'.$key.'"  class="smart-form"><div class="row">
 				<input name="pais" type="hidden" value="'.$key.'">
 				<section class="col col-6">
@@ -163,6 +178,7 @@ class admin extends CI_Controller
 			}
 		}
 	}
+	
 	function use_keyword()
 	{
 		$use_keyword=$this->model_admin->use_keyword();
@@ -983,7 +999,9 @@ class admin extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
 		$dato_pais=$this->model_admin->get_dato_pais();
+		
 		echo '<form id="'.$_POST['pais'].'"  class="smart-form"><div class="row">
 		<input name="pais" type="hidden" value="'.$_POST['pais'].'">
 		<section class="col col-6">
