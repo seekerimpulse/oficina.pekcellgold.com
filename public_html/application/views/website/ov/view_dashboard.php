@@ -163,7 +163,7 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="red/mi_red">
+													<a href="/ov/perfil_red/afiliar">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-edit fa-3x"></i>
 															<h5>Afiliar</h5>
@@ -174,7 +174,7 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="perfil_red/red">
+													<a href="/ov/red/index">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-rss fa-3x"></i>
 															<h5>Red</h5>
