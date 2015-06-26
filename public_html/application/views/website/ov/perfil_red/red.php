@@ -119,33 +119,29 @@
 																	<li>
 																		<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#"><div class="nombre">Tú</div></a>
 																		<ul>
-																		<?foreach ($afiliadostree as $key) 
+																		<?
+																		$aux=0;
+																		foreach ($afiliadostree as $key) 
 					                                                    {
+					                                                    	$aux++;
 					                                                    	$key->img ? $img=$key->img : $img="/template/img/empresario.jpg";
 					                                                        if($key->debajo_de==$id)
-					                                                        {?>
+					                                                        { ?>
 																			<li id="t<?=$key->id_afiliado?>">
 																				<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subtree(<?=$key->id_afiliado?>)" href="#"></a>
 																				<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
 																			</li>
 																			<?}
 																		}
-																		if(sizeof($afiliadostree)==0)
-																		{?>
+																		
+																		for ( $i = $aux ; $i < $frontales ; $i++){ ?>
 																			<li>
 																				<a href="#">Sin afiliados</a>
 																			</li>
 																			<li>
 																				<a href="#">Sin afiliados</a>
 																			</li>
-																		<?}
-																		if(sizeof($afiliadostree)==1)
-																		{?>
-																			<li>
-																				<a href="#">Sin afiliados</a>
-																			</li>
-																		<?}
-																		?>
+																		<?} ?>
 																		</ul>
 																	</li>
 																</ul>

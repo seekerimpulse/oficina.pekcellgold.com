@@ -519,8 +519,11 @@
 												<li>
 													<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#"><div class="nombre">Tú</div></a>
 													<ul>
-													<?foreach ($afiliados as $key) 
+													<?
+													$aux =0;
+													foreach ($afiliados as $key) 
                                                     {
+                                                    	$aux++;
                                                     	$key->img ? $img=$key->img : $img="/template/img/empresario.jpg";
                                                         if($key->debajo_de==$id)
                                                         {?>
@@ -530,22 +533,11 @@
 														</li>
 														<?}
 													}
-														if(sizeof($afiliados)==0)
-														{?>
+													for ( $i = $aux ; $i < $red_frontales[0]->frontal ; $i++){?>
 															<li>
-																<a href="#">Sin afiliados</a>
-															</li>
-															<li>
-																<a href="#">Sin afiliados</a>
-															</li>
-														<?}
-														if(sizeof($afiliados)==1)
-														{?>
-															<li>
-																<a href="#">Sin afiliados</a>
-															</li>
-														<?}
-														?>
+																<a onclick='botbox("<?php echo 'Tu'; ?>","<?php echo $id; ?>","<?php echo $i; ?> ")' href='javascript:void(0)'>Afiliar Aqui</a>
+												            </li>
+														<? } ?>
 													</ul>
 												</li>
 											</ul>
