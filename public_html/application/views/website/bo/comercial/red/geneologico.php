@@ -61,9 +61,7 @@
 													<?php } ?>
 												</ul>
 												<div id="myTabContent1" class="tab-content padding-10">
-													<?php foreach ($redes as $red ) {
-														 
-														?>
+													<?php foreach ($redes as $red ) {?>
 													
 														<div class="tab-pane fade" id="s<?php echo $red->id ?>">
 														<div class="row">
@@ -72,8 +70,12 @@
 																	<li>
 																		<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#"><div class="nombre">Tú</div></a>
 																		<ul>
-																		<?foreach ($afiliadostree[$red->id] as $key) 
+																		<?
+																		$aux=0;
+																		
+																		foreach ($afiliadostree[$red->id] as $key) 
 					                                                    {
+					                                                    	$aux++;
 					                                                    	$key->img ? $img=$key->img : $img="/template/img/empresario.jpg";
 					                                                        if($key->debajo_de==$id)
 					                                                        {?>
@@ -83,22 +85,11 @@
 																			</li>
 																			<?}
 																		}
-																		if(sizeof($afiliadostree)==0)
-																		{?>
+																		for ( $i = $aux ; $i < $red_frontales[0]->frontal ; $i++){ ?>
 																			<li>
 																				<a href="#">Sin afiliados</a>
 																			</li>
-																			<li>
-																				<a href="#">Sin afiliados</a>
-																			</li>
-																		<?}
-																		if(sizeof($afiliadostree)==1)
-																		{?>
-																			<li>
-																				<a href="#">Sin afiliados</a>
-																			</li>
-																		<?}
-																		?>
+																		<?} ?>
 																		</ul>
 																	</li>
 																</ul>
