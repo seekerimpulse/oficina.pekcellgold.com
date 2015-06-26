@@ -61,49 +61,29 @@
 													<?php } ?>
 												</ul>
 												<div id="myTabContent1" class="tab-content padding-10">
-													<?php foreach ($redes as $red ) {
-														 
-														?>
-													
-														<div class="tab-pane fade" id="s<?php echo $red->id ?>">
-														<div class="row">
-															<div class="tree1">
-																<ul>
-																	<li>
-																		<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#"><div class="nombre">Tú</div></a>
-																		<ul>
-																		<?foreach ($afiliadostree[$red->id] as $key) 
-					                                                    {
-					                                                    	$key->img ? $img=$key->img : $img="/template/img/empresario.jpg";
-					                                                        if($key->debajo_de==$id)
-					                                                        {?>
-																			<li id="t<?=$key->id_afiliado?>">
-																				<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subtree(<?=$key->id_afiliado?>, <?php echo $red->id; ?>)" href="#"></a>
-																				<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
-																			</li>
-																			<?}
-																		}
-																		if(sizeof($afiliadostree)==0)
-																		{?>
-																			<li>
-																				<a href="#">Sin afiliados</a>
-																			</li>
-																			<li>
-																				<a href="#">Sin afiliados</a>
-																			</li>
-																		<?}
-																		if(sizeof($afiliadostree)==1)
-																		{?>
-																			<li>
-																				<a href="#">Sin afiliados</a>
-																			</li>
-																		<?}
-																		?>
-																		</ul>
-																	</li>
-																</ul>
-															</div>
-														</div>
+													<?php foreach ($redes as $red ) { ?>
+														<div class="tab-pane fade" id="s<?php echo $red->id; ?>">
+														<div class="tree smart-form">
+		                                                    <ul>
+		                                                        <li>
+			                                                        <span><i class="fa fa-lg fa-folder-open"></i>Tú</span>
+			                                                        <ul>
+		                                                                <? 
+		                                                                    foreach ($afiliados[$red->id] as $key) 
+		                                                                    {
+		                                                                        if($key->debajo_de==$id)
+		                                                                        {?>
+		                                                                        	<li id="<?=$key->id_afiliado?>" class="parent_li" role="treeitem" style="display: list-item;">
+			                                                                			<span class="quitar" onclick="subred(<?=$key->id_afiliado?>,<?php echo $red->id; ?>)"><i class="fa fa-lg fa-plus-circle"></i> <?=$key->afiliado?> <?=$key->afiliado_p?></span>
+			                                                            			</li>
+		                                                                        <?}
+		                                                                           
+		                                                                    }
+		                                                                 ?>
+			                                                         </ul>
+			                                                    </li>
+		                                                    </ul>
+	                                                  	</div>
 													</div>
 													<?php } ?>
 												</div>
