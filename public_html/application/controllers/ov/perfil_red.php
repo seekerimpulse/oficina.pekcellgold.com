@@ -421,6 +421,7 @@ class perfil_red extends CI_Controller
 	function crear_user()
 	{	
 		$this->tank_auth->create_user($_POST['username'], $_POST['email'], $_POST['password'], $_POST['email']);;
+	
 	}
 	
 	function CargarFormulario(){
