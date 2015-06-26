@@ -14,6 +14,7 @@ class comercial extends CI_Controller
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/general');
 		$this->load->model('bo/modelo_comercial');
+		$this->load->model('ov/model_perfil_red');
 	}
 
 	function index()
@@ -63,6 +64,35 @@ class comercial extends CI_Controller
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red/genealogico');
 	}
+	
+	function red_tabla()
+	{
+		
+		$id            = 1;
+		
+		$style         = $this->general->get_style($id);
+		$id_red        = 1;
+		
+		$afiliados     = $this->model_perfil_red->get_tabla();
+		//var_dump($afiliados);
+		/*$image=$this->model_perfil_red->get_images($id);
+		$user="/template/img/empresario.jpg";
+		foreach ($image as $img) {
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$user=$img->url;
+			}
+		}*/
+		
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/red/tabla');
+	}
+	
 	function altas()
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -275,7 +305,7 @@ class comercial extends CI_Controller
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/red');
 	}*/
-	function get_detalle_usuario()
+	/*function get_detalle_usuario()
 	{
 		$detalle=$this->modelo_comercial->get_detalle_usuario();
 		$img= ($detalle[0]->url) ? $detalle[0]->url : '/template/img/empresario.jpg';
@@ -297,7 +327,16 @@ class comercial extends CI_Controller
 		echo '<div class="row" style="border-bottom: 1px solid #CCC; padding: 3px"><div class="col-xs-6">Edad:</div><strong>'.$detalle[0]->edad.'</strong></div>';
 		echo '<div class="row" style="border-bottom: 1px solid #CCC; padding: 3px"><div class="col-xs-6">Última sesión:</div><strong>'.$detalle[0]->ultima_sesion.'</strong></div>';
 		echo '</div></div>';
+	}*/
+	
+	function get_detalle_usuario()
+	{
+		//$detalle=$this->modelo_comercial->get_detalle_usuario();
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->build('website/bo/comercial/red/detalleUsuario');
 	}
+	
 	function detalle_red()
 	{
 		$misdatos        = $this->modelo_comercial->datos_perfil($_POST['id']);

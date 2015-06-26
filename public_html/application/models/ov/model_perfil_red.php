@@ -349,6 +349,15 @@ class model_perfil_red extends CI_Model
 			from afiliar where id_red=".$id." and debajo_de=".$id_afiliado." order by lado");
 		return $q->result();
 	}
+	
+	function get_tabla()
+	{
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido
+		, CTU.descripcion from users U, user_profiles UP,
+		cat_tipo_usuario CTU where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario");
+		return  $q->result();
+		}
+	
 	function use_mail()
 	{
 		$q=$this->db->query("select * from users where email like '".$_POST['mail']."'");

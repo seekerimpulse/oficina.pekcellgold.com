@@ -22,4 +22,10 @@ class general extends CI_Model
 		$q=$this->db->query('select * from archivo where id_tipo=2');
 		return $q->result();
 	}
+	
+	function get_style($id)
+	{
+		$q=$this->db->query('select * from estilo_usuario where id_usuario = '.$id);
+		return $q->result();
+	}
 }
