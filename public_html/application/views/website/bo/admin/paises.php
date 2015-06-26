@@ -1,3 +1,18 @@
+ <!-- MAIN CONTENT -->
+<div id="content">
+	<div class="row">
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+			<h1 class="page-title txt-color-blueDark">
+					<a href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<span>> <a href="/bo/configuracion/"> Configuracion </a>
+				>	Pais Moneda
+				</span>
+			</h1>
+		</div>
+	</div>
+<section id="widget-grid" class="">
+<div class="row" style="background: rgb(255, 255, 255) none repeat scroll 0% 0%;margin-bottom:2rem;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <div class="tab-pane fade in active" id="s1" style="margin-bottom: 6rem">
 	<div class="row">
 		<h5 class="col-xs-12 col-sm-12 col-md-8 col-lg-8">De click en la bandera del país para editar</h5>
@@ -19,7 +34,10 @@
 		</form>
 	</div>
 </div>
-
+</div>
+</div>
+</section>
+</div>
 <script type="text/javascript">
 function dato_pais(codigo,nombre)
 {

@@ -1,105 +1,137 @@
 
-<!-- MAIN CONTENT -->
-<div id="content">
-	<div class="row">
-		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-			<h1 class="page-title txt-color-blueDark">
-					<a href="/bo/comercial/red"><i class="fa fa-home"></i> Inicio</a>
-				<span>>
-					Listar Geneologico
-				</span>
-			</h1>
-		</div>
-	</div>
-	<section id="widget-grid" class="">
-		<!-- START ROW -->
-		<div class="row">
-			
-			<!-- NEW COL START -->
-			<article class="col-sm-12 col-md-12 col-lg-12">
-				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-colorbutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
-					<header>
-						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Red Geneologico</h2>
-					</header>
+               <!-- MAIN CONTENT -->
+               <div id="content">
 
-					<!-- widget div-->
-					<div>
-						
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-							
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body">
-							<div class="tab-pane fade in" id="s1">
-									<div id="dos" class="row">
-										<!--
-										We will create a family tree1 using just CSS(3)
-										The markup will be simple nested lists
-										-->
-										<div class="tree1">
-											<ul>
-												<li>
-													<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#"><div class="nombre">Tú</div></a>
-													<ul>
-													<?foreach ($afiliados as $key) 
-                                                    {
-                                                    	$key->img ? $img=$key->img : $img="/template/img/empresario.jpg";
-                                                        if($key->debajo_de==$id)
-                                                        {?>
-														<li id="<?=$key->id_afiliado?>">
-															<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subred(<?=$key->id_afiliado?>)" href="#"></a>
-															<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
-														</li>
-														<?}
-													} ?>
-													</ul>
-												</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- end widget content -->
-						
-					</div>
-					<!-- end widget div -->
-				</div>
-				<!-- end widget -->
-			</article>
-			<!-- END COL -->
-		</div>
-		<div class="row">         
+                    <div class="row">
+                         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                              <h1 class="page-title txt-color-blueDark">
+                                   <a href="/bo/comercial/red"><i class="fa fa-home"></i> Inicio</a>
+                                   <span>>
+                                   Red
+                                   </span>
+                              </h1>
+                         </div>
+                    </div>
+                    <!-- widget grid -->
+                    <section id="widget-grid" class="">
+                    
+                         <!-- row -->
+                         <div class="row">
+                              <!-- NEW WIDGET START -->
+                              <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    
+                                   <!-- Widget ID (each widget will need unique ID)-->
+                                    <div class="jarviswidget jarviswidget-color-purity" id="wid-id-0" data-widget-editbutton="false" data-widget-colorbutton="false">
+                                        <!-- widget options:
+                                        usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+                    
+                                        data-widget-colorbutton="false"
+                                        data-widget-editbutton="false"
+                                        data-widget-togglebutton="false"
+                                        data-widget-deletebutton="false"
+                                        data-widget-fullscreenbutton="false"
+                                        data-widget-custombutton="false"
+                                        data-widget-collapsed="true"
+                                        data-widget-sortable="false"
+                    
+                                        -->
+                                        <header>
+                                             <span class="widget-icon"> <i class="fa fa-sitemap"></i> </span>
+                                             <h2>Genialogico</h2>
+                    
+                                        </header>
+                    
+                                        <!-- widget div-->
+                                        <div>
+                    
+                                             <!-- widget edit box -->
+                                             <div class="jarviswidget-editbox">
+                                                  <!-- This area used as dropdown edit box -->
+                    
+                                             </div>
+                                             <!-- end widget edit box -->
+                    
+                                             <!-- widget content -->
+                                             <div class="widget-body">
+												<ul id="myTab1" class="nav nav-tabs bordered">
+													<?php foreach ($redes as $red ) { ?>
+													<li>
+														<a href="#s<?php echo $red->id; ?>" data-toggle="tab"><?php echo $red->nombre; ?></a>
+													</li>
+													<?php } ?>
+												</ul>
+												<div id="myTabContent1" class="tab-content padding-10">
+													<?php foreach ($redes as $red ) {
+														 
+														?>
+													
+														<div class="tab-pane fade" id="s<?php echo $red->id ?>">
+														<div class="row">
+															<div class="tree1">
+																<ul>
+																	<li>
+																		<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#"><div class="nombre">Tú</div></a>
+																		<ul>
+																		<?foreach ($afiliadostree[$red->id] as $key) 
+					                                                    {
+					                                                    	$key->img ? $img=$key->img : $img="/template/img/empresario.jpg";
+					                                                        if($key->debajo_de==$id)
+					                                                        {?>
+																			<li id="t<?=$key->id_afiliado?>">
+																				<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subtree(<?=$key->id_afiliado?>, <?php echo $red->id; ?>)" href="#"></a>
+																				<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
+																			</li>
+																			<?}
+																		}
+																		if(sizeof($afiliadostree)==0)
+																		{?>
+																			<li>
+																				<a href="#">Sin afiliados</a>
+																			</li>
+																			<li>
+																				<a href="#">Sin afiliados</a>
+																			</li>
+																		<?}
+																		if(sizeof($afiliadostree)==1)
+																		{?>
+																			<li>
+																				<a href="#">Sin afiliados</a>
+																			</li>
+																		<?}
+																		?>
+																		</ul>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+													<?php } ?>
+												</div>
+											</div>
+                                             <!-- end widget content -->
+                                        </div>
+                                        <!-- end widget div -->
+                                   </div>
+                                   <!-- end widget -->
+                              </article>
+                              <!-- WIDGET END -->
+                         </div>
+                         <!-- end row -->
+                         <!-- row -->
+                         <div class="row">         
 	        <!-- a blank row to get started -->
-	        <div class="col-sm-12">
-	            <br />
-	            <br />
-	        </div>
-        </div>            
-		<!-- END ROW -->
-	</section>
-	<!-- end widget grid -->
-</div>
-<!-- END MAIN CONTENT -->
-<!-- PAGE RELATED PLUGIN(S) -->
+					        <div class="col-sm-12">
+					            <br />
+					            <br />
+					        </div>
+				        </div> 
+                         <!-- end row -->
+                    </section>
+                    <!-- end widget grid -->
+               </div>
+               <!-- END MAIN CONTENT -->
+          </div>
+          <!-- PAGE RELATED PLUGIN(S) -->
 <style type="text/css">
 	/*Now the CSS*/
 * {margin: 0; padding: 0;}
@@ -108,6 +140,7 @@
 .todo1{font-size: 11px; width: 100%; background: rgba(70, 120, 250, .8); margin-top: -4px; color: #FFF; cursor: pointer;}
 .todo:hover{font-size: 11px; text-decoration: underline; width: 100%; margin-top:-4px; background: rgba(0,0,0,.7); color: #FFF; cursor: pointer;}
 .todo1:hover{font-size: 11px; text-decoration: underline; width: 100%; margin-top:-4px; background: rgba(70, 120, 250, 1); color: #FFF; cursor: pointer;}
+
 .tree1 ul {
 	padding-top: 20px; position: relative;
 	
@@ -204,232 +237,118 @@ right connector from last child*/
 	border-color:  #94a0b4;
 }
 
-.packselected
-{
-	border-top: solid 5px #CCC;
-	border-bottom: solid 5px #CCC;
-	-webkit-box-shadow: 0px 0px 10px #CCC;
-	-moz-box-shadow: 0px 0px 10px #CCC;
-	box-shadow: 0px 0px 10px #CCC;
-}
 /*Thats all. I hope you enjoyed it.
 Thanks :)*/
 </style>
-<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
-<script src="/template/js/validacion.js"></script>
-<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
-<script type="text/javascript">
+        <style type="text/css" media="screen">
+        	#chart table{margin: 0 auto; color: #FFF;}
+        </style>
+		<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+         
+        <script type="text/javascript">
+          
+          // DO NOT REMOVE : GLOBAL FUNCTIONS!
+          
+          $(document).ready(function() {
+               
+               pageSetUp();
+               
+               // PAGE RELATED SCRIPTS
+          
+               $('.tree > ul').attr('role', 'tree').find('ul').attr('role', 'group');
+               $('.tree').find('li:has(ul)').addClass('parent_li').attr('role', 'treeitem').find(' > span').attr('title', 'Collapse this branch').on('click', function(e) {
+                    var children = $(this).parent('li.parent_li').find(' > ul > li');
+                    if (children.is(':visible')) {
+                         children.hide('fast');
+                         $(this).attr('title', 'Expand this branch').find(' > i').removeClass().addClass('fa fa-lg fa-plus-circle');
+                    } else {
+                         children.show('fast');
+                         $(this).attr('title', 'Collapse this branch').find(' > i').removeClass().addClass('fa fa-lg fa-minus-circle');
+                    }
+                    e.stopPropagation();
+               });            
+          
+          	/* COLUMN FILTER  */
+		    var otable = $('#datatable_fixed_column').DataTable({
+		    	//"bFilter": false,
+		    	//"bInfo": false,
+		    	//"bLengthChange": false
+		    	//"bAutoWidth": false,
+		    	//"bPaginate": false,
+		    	//"bStateSave": true // saves sort state using localStorage
+				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
+						"t"+
+						"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+				"autoWidth" : true	
+			
+		    });
+		    /* END COLUMN FILTER */
 
-// DO NOT REMOVE : GLOBAL FUNCTIONS!
-
-
-function use_username()
-{
-	$("#msg_usuario").remove();
-	var username=$("#username").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_username",
-		data: {username: username},
-	})
-	.done(function( msg )
+          })
+	function subred(id, red)
 	{
-		$("#usuario").append("<p id='msg_usuario'>"+msg+"</msg>")
-	});
-}
-function use_mail()
-{
-	$("#msg_correo").remove();
-	var mail=$("#email").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_mail",
-		data: {mail: mail},
-	})
-	.done(function( msg )
-	{
-		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
-	});
-}
-function use_username_r()
-{
-	$("#msg_usuario_r").remove();
-	var username=$("#username_r").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_username",
-		data: {username: username},
-	})
-	.done(function( msg )
-	{
-		$("#usuario_r").append("<p id='msg_usuario_r'>"+msg+"</msg>")
-	});
-}
-function use_mail_r()
-{
-	$("#msg_correo_r").remove();
-	var mail=$("#email_r").val();
-	$("#mail_important").attr('value',mail);
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_mail",
-		data: {mail: mail},
-	})
-	.done(function( msg )
-	{
-		$("#correo_r").append("<p id='msg_correo_r'>"+msg+"</msg>")
-	});
-}
-function otra()
-{
-	if($("#otro:checked").val()=="on")
-	{
-		$("#b_persona").removeClass("hidden");
-		$("#afiliado_value").attr("name","afiliados");
-	}
-	else
-	{
-		$("#b_persona").addClass("hidden");
-		$("#afiliado_value").attr("name","");
-	}
-}
-function agregar(tipo)
-{
-	if(tipo==1)
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-	else
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-}
-function agregar_red(tipo)
-{
-	if(tipo==1)
-	{
-		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-	else
-	{
-		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-}
- $(function()
- {
-	$( "#datepicker" ).datepicker({
-	changeMonth: true,
-	numberOfMonths: 2,
-	dateFormat:"yy-mm-dd",
-	defaultDate: "1970-01-01",
-	changeYear: true
-	});
-});
-
-function subred(id)
-{
-	$("#"+id).children(".quitar").attr('onclick','');
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/get_red_afiliar",
-		data: {id: id,
-				red: 1
-				},
-	})
-	.done(function( msg )
-	{
-		$("#"+id).append(msg);
-	});
-}
-
-function check_keyword()
-{
-	$("#msg_key").remove();
-	$("#key_").append('<i id="ajax_" class="icon-append fa fa-spinner fa-spin"></i>');
-
-	var keyword=$("#keyword").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#msg_key").remove();
-		$("#key").append("<p id='msg_key'>"+msg+"</msg>");
-		$("#ajax_").remove();
-	});
-}
-function check_keyword_co()
-{
-	$("#msg_key_co").remove();
-	$("#key_1").append('<i id="ajax_1" class="icon-append fa fa-spinner fa-spin"></i>');
-	var keyword=$("#keyword_co").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#msg_key_co").remove();
-		$("#key_co").append("<p id='msg_key_co'>"+msg+"</msg>");
-		$("#ajax_1").remove();
-	});
-}
-function check_keyword_red()
-{
-	$("#msg_key_red").remove();
-	var keyword=$("#keyword_red").val();
-	$("#key_2").append('<i id="ajax_2" class="icon-append fa fa-spinner fa-spin"></i>');
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#key_red").append("<p id='msg_key_red'>"+msg+"</msg>");
-		$("#ajax_2").remove();
-	});
-}
-function check_keyword_red_co()
-{
-	$("#msg_key_red_co").remove();
-	var keyword=$("#keyword_red_co").val();
-	$("#key_3").append('<i id="ajax_3" class="icon-append fa fa-spinner fa-spin"></i>');
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#msg_key_red_co").remove();
-		$("#key_red_co").append("<p id='msg_key_red_co'>"+msg+"</msg>");
-		$("#ajax_3").remove();
-	});
-}
-function codpos_red()
-{
-	var pais = $("#pais_red").val();
-	if(pais=="MEX")
-	{
-		var cp=$("#cp_red").val();
+		$("#"+id).children(".quitar").attr('onclick','');
 		$.ajax({
 			type: "POST",
-			url: "/ov/perfil_red/cp_red",
-			data: {cp: cp},
+			url: "/bo/usuarios/subred",
+			data: {
+				id: id,
+				red: red
+			},
 		})
 		.done(function( msg )
 		{
-			$("#colonia_red").remove();
-			$("#municipio_red").remove();
-			$("#estado_red").remove();
-			$("#dir_red").append(msg);
-		})
+			$("#"+id).append(msg);
+		});
 	}
-}
+
+	function subtree(id, red)
+	{
+		$("#t"+id).children(".quitar").attr('onclick','');
+		$.ajax({
+			type: "POST",
+			url: "/bo/usuarios/subtree",
+			data: {
+					id: id,
+				 	red: red 
+				 },
+		})
+		.done(function( msg )
+		{
+			$("#t"+id).append(msg);
+		});
+	}
+        jQuery(document).ready(function() {
+            
+            /* Custom jQuery for the example */
+            $("#show-list").click(function(e){
+                e.preventDefault();
+                
+                $('#list-html').toggle('fast', function(){
+                    if($(this).is(':visible')){
+                        $('#show-list').text('Hide underlying list.');
+                        $(".topbar").fadeTo('fast',0.9);
+                    }else{
+                        $('#show-list').text('Show underlying list.');
+                        $(".topbar").fadeTo('fast',1);                  
+                    }
+                });
+            });
+            
+            $('#list-html').text($('#org').html());
+            
+            $("#org").bind("DOMSubtreeModified", function() {
+                $('#list-html').text('');
+                
+                $('#list-html').text($('#org').html());
+                
+                prettyPrint();                
+            });
+        });
 function detalles(id)
 {
 	$.ajax({
@@ -454,4 +373,4 @@ function detalles(id)
 		});
 	});
 }
-</script>
+    </script>

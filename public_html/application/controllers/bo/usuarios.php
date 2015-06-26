@@ -61,6 +61,7 @@ class usuarios extends CI_Controller
 		$this->template->set("tipos",$tipos);
 		
 		$this->template->set_theme('desktop');
+		$this->template->set("style",$style);
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
@@ -101,9 +102,11 @@ class usuarios extends CI_Controller
 		$estudios        = $this->model_perfil_red->get_estudios();
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
-		$id_red          = 1;
-		$premium         = $red[0]->premium;
-		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
+		$red          = $this->model_tipo_red->listarTodos();
+		
+		foreach ($red as $reds){
+			$afiliadostree[$reds->id] = $this->model_perfil_red->get_afiliados($reds->id, $id);
+		}
 		
 		$image 			 = $this->model_perfil_red->get_images($id);
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
@@ -121,8 +124,9 @@ class usuarios extends CI_Controller
 		}
 		
 		$this->template->set("id",$id);
+		$this->template->set("redes",$red);
 		$this->template->set("style",$style);
-		$this->template->set("afiliados",$afiliados);
+		$this->template->set("afiliadostree",$afiliadostree);
 		$this->template->set("sexo",$sexo);
 		$this->template->set("civil",$civil);
 		$this->template->set("pais",$pais);
@@ -139,5 +143,182 @@ class usuarios extends CI_Controller
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/bo/comercial/red/geneologico');
+	}
+	
+	function grafico1(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id              = 2;
+		$usuario         = $this->model_perfil_red->datos_perfil($id);
+		$telefonos       = $this->model_perfil_red->telefonos($id);
+		$sexo            = $this->model_perfil_red->sexo();
+		$pais            = $this->model_perfil_red->get_pais();
+		$style           = $this->general->get_style($id);
+		$dir             = $this->model_perfil_red->dir($id);
+		$civil           = $this->model_perfil_red->edo_civil();
+		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
+		$estudios        = $this->model_perfil_red->get_estudios();
+		$ocupacion       = $this->model_perfil_red->get_ocupacion();
+		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+		$red          = $this->model_tipo_red->listarTodos();
+	
+		foreach ($red as $reds){
+			$afiliados[$reds->id] = $this->model_perfil_red->get_afiliados($reds->id, $id);
+		}
+	
+		$image 			 = $this->model_perfil_red->get_images($id);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
+	
+	
+	
+		$img_perfil="/template/img/empresario.jpg";
+		foreach ($image as $img)
+		{
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$img_perfil=$img->url;
+			}
+		}
+	
+		$this->template->set("id",$id);
+		$this->template->set("redes",$red);
+		$this->template->set("style",$style);
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("sexo",$sexo);
+		$this->template->set("civil",$civil);
+		$this->template->set("pais",$pais);
+		$this->template->set("tipo_fiscal",$tipo_fiscal);
+		$this->template->set("estudios",$estudios);
+		$this->template->set("ocupacion",$ocupacion);
+		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
+		$this->template->set("img_perfil",$img_perfil);
+		$this->template->set("red_frontales",$red_forntales);
+		$this->template->set("premium",$premium);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/red/grafico1');
+	}
+	
+	function subred()
+	{
+		$id = $_POST['id'];
+		$id_red = $_POST['red'];
+	
+		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $id);
+		if($afiliados)
+		{
+			$usuario=array();
+			foreach ($afiliados as $id_afiliado)
+			{
+				$usuario[]=$this->model_perfil_red->datos_perfil($id_afiliado->id_afiliado);
+			}
+			echo "<ul role='group'>";
+			foreach ($usuario as $afiliado)
+			{
+				echo "
+				<li class='parent_li' style='display: list-item;' role='treeitem' id='".$afiliado[0]->user_id."'>
+	            	<span class='quitar'  onclick='subred(".$afiliado[0]->user_id.",".$_POST['red'].")'><i class='fa fa-lg fa-plus-circle'></i> ".$afiliado[0]->nombre." ".$afiliado[0]->apellido."</span>
+	            </li>";
+			}
+			echo "</ul>";
+		}
+		else
+		{
+			echo "<ul  role='group'>
+				<li  class='parent_li' style='display: list-item;' role='treeitem'>
+					No tiene afiliados
+	            </li>";
+			echo "</ul>";
+		}
+	}
+	
+	function subtree()
+	{
+	
+		$afiliados=$this->model_perfil_red->get_afiliados($_POST['red'], $_POST['id']);
+	
+		$nombre = $this->model_perfil_red->get_name($_POST['id']);
+		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
+	
+		if($afiliados)
+		{
+			$usuario=array();
+			foreach ($afiliados as $id_afiliado)
+			{
+				$usuario[]=$this->model_perfil_red->datos_perfil($id_afiliado->id_afiliado);
+			}
+			echo "<ul>";
+			foreach ($usuario as $afiliado)
+			{
+				$image 			 = $this->model_perfil_red->get_images($afiliado[0]->user_id);
+				$img_perfil='/template/img/empresario.jpg';
+				foreach ($image as $img)
+				{
+					$cadena=explode(".", $img->img);
+					if($cadena[0]=="user")
+					{
+						$img_perfil=$img->url;
+					}
+				}
+				if(sizeof($afiliados)==1)
+				{
+					if($afiliados[0]->lado==0)
+					{
+						($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
+						echo "
+						<li id='t".$afiliado[0]->user_id."'>
+			            	<a class='quitar' onclick='subtree(".$afiliado[0]->user_id.",".$_POST['red'].")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
+			            	<div onclick='detalles(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
+			            </li>";
+						echo "
+						<li>
+							<a href='javascript:void(0)'>No tiene afiliado</a>
+			            </li>";
+					}
+					else
+					{
+						($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
+						echo "
+						<li>
+							<a href='javascript:void(0)'>No tiene afiliado</a>
+			            </li>";
+						echo "
+						<li id='t".$afiliado[0]->user_id."'>
+			            	<a class='quitar' onclick='subtree(".$afiliado[0]->user_id.",".$_POST['red'].")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
+			            	<div onclick='detalles(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
+			            </li>";
+					}
+				}
+				else
+				{
+					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
+					echo "
+					<li id='t".$afiliado[0]->user_id."'>
+		            	<a class='quitar' onclick='subtree(".$afiliado[0]->user_id.",".$_POST['red'].")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
+		            	<div onclick='detalles(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
+		            </li>";
+				}
+			}
+			echo "</ul>";
+		}
+		else
+		{
+			echo "<ul>
+				<li>
+					<a href='javascript:void(0)'>No tiene afiliado</a>
+	            </li>
+	            <li>
+					<a href='javascript:void(0)'>No tiene afiliado</a>
+	            </li>
+	            ";
+			echo "</ul>";
+		}
 	}
 }

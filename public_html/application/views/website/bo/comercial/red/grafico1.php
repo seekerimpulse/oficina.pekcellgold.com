@@ -5,7 +5,7 @@
                     <div class="row">
                          <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
                               <h1 class="page-title txt-color-blueDark">
-                                   <a href="/ov/dashboard"><i class="fa fa-home"></i> Inicio</a>
+                                   <a href="/bo/comercial/red"><i class="fa fa-home"></i> Inicio</a>
                                    <span>>
                                    Red
                                    </span>
@@ -37,7 +37,7 @@
                                         -->
                                         <header>
                                              <span class="widget-icon"> <i class="fa fa-sitemap"></i> </span>
-                                             <h2>Listado dinámico</h2>
+                                             <h2>Genialogico</h2>
                     
                                         </header>
                     
@@ -54,30 +54,27 @@
                                              <!-- widget content -->
                                              <div class="widget-body">
 												<ul id="myTab1" class="nav nav-tabs bordered">
-													<li class="active">
-														<a href="#s1" data-toggle="tab">Genealógico</a>
-													</li>
+													<?php foreach ($redes as $red ) { ?>
 													<li>
-														<a href="#s2" data-toggle="tab">Dinámico</a>
+														<a href="#s<?php echo $red->id; ?>" data-toggle="tab"><?php echo $red->nombre; ?></a>
 													</li>
-													<li>
-														<a href="#s3" data-toggle="tab">Árbol</a>
-													</li>
+													<?php } ?>
 												</ul>
 												<div id="myTabContent1" class="tab-content padding-10">
-													<div class="tab-pane fade in active" id="s1">
+													<?php foreach ($redes as $red ) { ?>
+														<div class="tab-pane fade" id="s<?php echo $red->id; ?>">
 														<div class="tree smart-form">
 		                                                    <ul>
 		                                                        <li>
 			                                                        <span><i class="fa fa-lg fa-folder-open"></i>Tú</span>
 			                                                        <ul>
-		                                                                <?
-		                                                                    foreach ($afiliados as $key) 
+		                                                                <? 
+		                                                                    foreach ($afiliados[$red->id] as $key) 
 		                                                                    {
 		                                                                        if($key->debajo_de==$id)
 		                                                                        {?>
 		                                                                        	<li id="<?=$key->id_afiliado?>" class="parent_li" role="treeitem" style="display: list-item;">
-			                                                                			<span class="quitar" onclick="subred(<?=$key->id_afiliado?>)"><i class="fa fa-lg fa-plus-circle"></i> <?=$key->afiliado?> <?=$key->afiliado_p?></span>
+			                                                                			<span class="quitar" onclick="subred(<?=$key->id_afiliado?>,<?php echo $red->id; ?>)"><i class="fa fa-lg fa-plus-circle"></i> <?=$key->afiliado?> <?=$key->afiliado_p?></span>
 			                                                            			</li>
 		                                                                        <?}
 		                                                                           
@@ -88,66 +85,7 @@
 		                                                    </ul>
 	                                                  	</div>
 													</div>
-													<div class="tab-pane fade" id="s2">
-														<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
-		          									        <thead>
-		          									            <tr>
-		          									            	<th>Consecutivo</th>
-		          								                    <th>Nombre</th>
-		          								                    <th>Apellido</th>
-		          								                    <th>Afiliado por ti</th>
-		          									            </tr>
-		          									        </thead>
-		          				
-		          									        <tbody>
-		          									        	<?foreach ($afiliados as $afiliado) {
-		          									        	?>
-		          									            <tr>
-		          									                <td><?=$afiliado->id_afiliado?></td>
-		          									                <td><?=$afiliado->afiliado?></td>
-		          									                <td><?=$afiliado->afiliado_p?></td>
-		          									                <td><?echo $afiliado->directo ? 'Si':'No' ?></td>
-		          									            </tr>
-		          									            <?}?>
-		          									        </tbody>
-		          										</table>
-													</div>
-													<div class="tab-pane fade" id="s3">
-														<div class="row">
-															<div class="tree1">
-																<ul>
-																	<li>
-																		<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#"><div class="nombre">Tú</div></a>
-																		<ul>
-																		<?
-																		$aux=0;
-																		foreach ($afiliadostree as $key) 
-					                                                    {
-					                                                    	$aux++;
-					                                                    	$key->img ? $img=$key->img : $img="/template/img/empresario.jpg";
-					                                                        if($key->debajo_de==$id)
-					                                                        { ?>
-																			<li id="t<?=$key->id_afiliado?>">
-																				<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subtree(<?=$key->id_afiliado?>)" href="#"></a>
-																				<div onclick="detalles(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
-																			</li>
-																			<?}
-																		}
-																		
-																		for ( $i = $aux ; $i < $frontales ; $i++){ ?>
-																			<li>
-																				<a href="#">Sin afiliados</a>
-																			</li>
-																			<li>
-																				<a href="#">Sin afiliados</a>
-																			</li>
-																		<?} ?>
-																		</ul>
-																	</li>
-																</ul>
-															</div>
-														</div>
-													</div>
+													<?php } ?>
 												</div>
 											</div>
                                              <!-- end widget content -->
@@ -331,15 +269,15 @@ Thanks :)*/
 		    /* END COLUMN FILTER */
 
           })
-	function subred(id)
+	function subred(id, red)
 	{
 		$("#"+id).children(".quitar").attr('onclick','');
 		$.ajax({
 			type: "POST",
-			url: "/ov/perfil_red/subred",
+			url: "/bo/usuarios/subred",
 			data: {
 				id: id,
-				red: <?php echo $_GET['id']; ?>
+				red: red
 			},
 		})
 		.done(function( msg )
@@ -348,15 +286,15 @@ Thanks :)*/
 		});
 	}
 
-	function subtree(id)
+	function subtree(id, red)
 	{
 		$("#t"+id).children(".quitar").attr('onclick','');
 		$.ajax({
 			type: "POST",
-			url: "/ov/perfil_red/subtree",
+			url: "/bo/usuarios/subtree",
 			data: {
 					id: id,
-				 	red: <?php echo $_GET['id']; ?> 
+				 	red: red 
 				 },
 		})
 		.done(function( msg )

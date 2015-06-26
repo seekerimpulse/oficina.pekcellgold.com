@@ -25,7 +25,7 @@ class red extends CI_Controller
 				redirect('/auth');
 			}
 
-		$redes 			 = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->listarTodos();
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 		$this->template->set("redes",$redes);
@@ -43,6 +43,8 @@ class red extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$frontales = $frontales[0]->frontal;
 		$id            = $this->tank_auth->get_user_id();
 		$style         = $this->general->get_style($id);
 		$id_red        = $_GET['id'];
@@ -62,6 +64,7 @@ class red extends CI_Controller
 		$this->template->set("user",$user);
 		$this->template->set("style",$style);
 		$this->template->set("id",$id);
+		$this->template->set("frontales",$frontales);
 		$this->template->set("afiliados",$afiliados);
 		$this->template->set("afiliadostree",$afiliadostree);
 		$this->template->set("img_perfil",$user);

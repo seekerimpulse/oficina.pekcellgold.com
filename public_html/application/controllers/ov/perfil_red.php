@@ -83,21 +83,26 @@ class perfil_red extends CI_Controller
 	function get_red_afiliar()
 	{
 		$id_red=$_POST['red'];
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$frontales= $frontales[0]->frontal;
 		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
-
+		
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
-
+		
 		if($afiliados)
 		{
+			
 			$usuario=array();
 			foreach ($afiliados as $id_afiliado)
 			{
 				$usuario[]=$this->model_perfil_red->datos_perfil($id_afiliado->id_afiliado);
 			}
-			echo "<ul>";
+			
+			
 			foreach ($usuario as $afiliado)
 			{
+				
 				$image 			 = $this->model_perfil_red->get_images($afiliado[0]->user_id);
 				$img_perfil='/template/img/empresario.jpg';
 				foreach ($image as $img)
@@ -108,44 +113,38 @@ class perfil_red extends CI_Controller
 						$img_perfil=$img->url;
 					}
 				}
-				if(sizeof($afiliados)==1)
+				
+				if(sizeof($afiliados) == 0)
 				{
-					if($afiliados[0]->lado==0)
-					{
+						
 						($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
-						echo "
-						<li id='".$afiliado[0]->user_id."'>
-			            	<a class='quitar' onclick='subred(".$afiliado[0]->user_id.")' style='background: url(".$img_perfil.");  background-size: cover; background-position: center;' href='javascript:void(0)'></a>
-			            	<div onclick='detalles(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
-			            </li>";
-			            echo "
-						<li>
-							<a onclick='botbox(".$nombre.",".$_POST['id'].",1)' href='javascript:void(0)'>Afiliar Aqui</a>
-			            </li>";
-			        }
-			        else
-			        {
-			        	($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
-			        	echo "
-						<li>
-							<a onclick='botbox(".$nombre.",".$_POST['id'].", 0)' href='javascript:void(0)'>Afiliar Aqui</a>
-			            </li>";
-			        	echo "
-						<li id='".$afiliado[0]->user_id."'>
-			            	<a class='quitar' onclick='subred(".$afiliado[0]->user_id.")' style='background: url(".$img_perfil.");  background-size: cover; background-position: center;' href='javascript:void(0)'></a>
-			            	<div onclick='detalles(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
-			            </li>";
-			        }
+						
+						for($i=$aux; $i < $frontales; $i++){
+							echo "<li>
+								<a onclick='botbox(".$nombre.",".$_POST['id'].",$i)' href='javascript:void(0)'>Afiliar Aqui</a>
+				            </li>";
+				           }
+				           
 				}
 				else
 				{
+					$aux++;
 					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
 					echo "
 					<li id='".$afiliado[0]->user_id."'>
 		            	<a class='quitar' onclick='subred(".$afiliado[0]->user_id.")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
 		            	<div onclick='detalles(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
 		            </li>";
+					
 	        	}
+	        	
+			}
+			if($aux > 0){
+				for($i=$aux; $i < $frontales; $i++){
+					echo "<li>
+								<a onclick='botbox(".$nombre.",".$_POST['id'].",$i)' href='javascript:void(0)'>Afiliar Aqui</a>
+											</li>";
+				}
 			}
 			echo "</ul>";
 		}
@@ -153,22 +152,25 @@ class perfil_red extends CI_Controller
 		{
 			$nombre=$this->model_perfil_red->get_name($_POST['id']);
 			$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
-			echo "<ul>
-				<li>
-					<a onclick='botbox(".$nombre.",".$_POST['id'].", 0)' href='javascript:void(0)'>Afiliar Aqui</a>
-	            </li>
-				<li>
-					<a onclick='botbox(".$nombre.",".$_POST['id'].", 1)' href='javascript:void(0)'>Afiliar Aqui</a>
+			echo "<ul>";
+			for($i=0; $i < $frontales; $i++){
+				echo "<li>
+					<a onclick='botbox(".$nombre.",".$_POST['id'].",$i)' href='javascript:void(0)'>Afiliar Aqui</a>
 	            </li>";
+	           }
 			echo "</ul>";
 		}
+		
+		
 	}
 	
 	function subtree()
 	{
 
 		$afiliados=$this->model_perfil_red->get_afiliados($_POST['red'], $_POST['id']);
-
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$frontales= $frontales[0]->frontal;
+		
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
 
@@ -235,17 +237,16 @@ class perfil_red extends CI_Controller
 		}
 		else
 		{
-			echo "<ul>
-				<li>
-					<a href='javascript:void(0)'>No tiene afiliado</a>
-	            </li>
-	            <li>
-					<a href='javascript:void(0)'>No tiene afiliado</a>
-	            </li>
-	            ";
+			echo "<ul>";
+			for($i=0; $i < $frontales; $i++){
+				echo "<li>
+					<a onclick='botbox(".$nombre.",".$_POST['id'].", .$i.)' href='javascript:void(0)'>Afiliar Aqui</a>
+	            </li>";
+	           }
 			echo "</ul>";
 		}
 	}
+	
 	function detalle_usuario()
 	{
 		$image 			 = $this->model_perfil_red->get_images($_POST['id']);
@@ -300,7 +301,11 @@ class perfil_red extends CI_Controller
 			redirect('/auth');
 		}
 
-		$redes 			 = $this->model_tipo_red->listarTodos();
+		$id              = $this->tank_auth->get_user_id();
+		$style           = $this->general->get_style($id);
+		
+		$redes = $this->model_tipo_red->listarTodos();
+		
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 		$this->template->set("redes",$redes);

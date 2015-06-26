@@ -520,7 +520,7 @@ class model_perfil_red extends CI_Model
 	}
 	function get_coaplicante($id)
 	{
-		$q=$this->db->query("select * from coaplicante where id_usuario=".$id);
+		$q=$this->db->query("select * from coaplicante where id_user=".$id);
 		return $q->result();
 	}
 
