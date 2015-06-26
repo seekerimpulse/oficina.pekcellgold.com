@@ -27,6 +27,7 @@
 }
 .link_dashboard:hover
 {
+transform: rotateY(-15deg);
 /*	-webkit-box-shadow: 0px 5px 20px #555;
 	-moz-box-shadow: 0px 5px 20px #555;
 	box-shadow: 0px 5px 20px #555;

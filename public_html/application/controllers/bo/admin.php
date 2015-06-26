@@ -105,8 +105,15 @@ class admin extends CI_Controller
 	
 	function paises()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$style = $this->modelo_dashboard->get_style($id);
 		$pais = $this->model_admin->get_pais();
 		$this->template->set("pais",$pais);
+		$this->template->set("style",$style);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');

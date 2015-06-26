@@ -299,7 +299,9 @@ class perfil_red extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		$id              = $this->tank_auth->get_user_id();
+		
+		$style           = $this->general->get_style($id);
 		$redes 			 = $this->model_tipo_red->listarTodos();
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
