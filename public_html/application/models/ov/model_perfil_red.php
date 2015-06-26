@@ -335,7 +335,7 @@ class model_perfil_red extends CI_Model
 			(select nombre from user_profiles where user_id=debajo_de) debajo_de_n,
 			(select apellido from user_profiles where user_id=debajo_de) debajo_de_p,
 			(select (select url from cat_img b where a.id_img=b.id_img) url from cross_img_user a where id_user = id_afiliado) img
-			from afiliar where id_red=".$id." and debajo_de='.$id_afiliado.' order by lado");
+			from afiliar where id_red=".$id." and debajo_de=".$id_afiliado." order by lado");
 		return $q->result();
 	}
 	function get_afiliados($id, $id_afiliado)

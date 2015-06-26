@@ -163,7 +163,7 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="perfil_red/afiliar">
+													<a href="red/mi_red">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-edit fa-3x"></i>
 															<h5>Afiliar</h5>

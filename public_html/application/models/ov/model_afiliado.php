@@ -48,7 +48,7 @@ class model_afiliado extends CI_Model{
 			);
 		
 		$this->db->insert("user_profiles",$dato_profile);
-		var_dump($dato_profile); exit;
+		
 		$perfil=2;
 		if($_POST['tipo_plan']==0){
 			$perfil=3;
@@ -93,8 +93,6 @@ class model_afiliado extends CI_Model{
 		
 		$this->CrearCoaplicante($id);
 		
-		$mi_red=$_POST['red'];
-		
 		/*################### DATO RED #########################*/
 	
 		$redes = $this->db->get('tipo_red');
@@ -126,12 +124,13 @@ class model_afiliado extends CI_Model{
 			$id_debajo = $_POST['id'];
 		}
 
-		
+		$mi_red=$_POST['red'];
 		$lado = 1;
 		if(!isset($_POST['lado']))
 			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
 		else
-			$lado = $_POST['lado'];
+		
+
 		
 		
 		$dato_afiliar=array(
@@ -226,9 +225,10 @@ class model_afiliado extends CI_Model{
 			"entregado"		=> 1,
 			"estatus"		=> "ACT"
 			);
+		
 		$this->db->insert("cross_rango_user",$dato_rango);
 		/*################### FIN DATO RANGO #########################*/
-		var_dump($_POST['lado']); exit;
+		
 		return true;
 	}
 	
@@ -241,13 +241,12 @@ class model_afiliado extends CI_Model{
 
 	function consultarFrontalDisponible($id_debajo, $red){
 		
-		
 		$query = $this->db->query('select * from afiliar where debajo_de = '.$id_debajo.' and id_red = '.$red.' ');
 		
 		$lados = $query->result();
 		$lado_disponible=0;
 		
-		if(isset($lados)){
+		if(isset($lados[0]->id)){
 			foreach ($lados as $filaLado){
 				$lado_disponible = ($filaLado->lado) + 1;
 				
@@ -281,7 +280,7 @@ class model_afiliado extends CI_Model{
 		$this->CrearCoaplicante($id);
 	
 		$mi_red=$_POST['red'];
-	
+		
 		/*################### DATO RED #########################*/
 	
 		$redes = $this->db->get('tipo_red');
@@ -308,7 +307,7 @@ class model_afiliado extends CI_Model{
 		}
 		
 		$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
-	
+		
 		$dato_afiliar=array(
 				"id_red"      => $mi_red,
 				"id_afiliado" => $id,
@@ -317,7 +316,7 @@ class model_afiliado extends CI_Model{
 				"lado"        => $lado
 		);
 	
-	
+		
 		$this->db->insert("afiliar",$dato_afiliar);
 			
 			
@@ -403,8 +402,6 @@ class model_afiliado extends CI_Model{
 		);
 		$this->db->insert("cross_rango_user",$dato_rango);
 		/*################### FIN DATO RANGO #########################*/
-		$this->db->query('update cross_perfil_usuario set');
-		
 		
 		return true;
 	}

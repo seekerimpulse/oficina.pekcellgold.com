@@ -341,7 +341,10 @@ Thanks :)*/
 		$.ajax({
 			type: "POST",
 			url: "/ov/perfil_red/subred",
-			data: {id: id},
+			data: {
+				id: id,
+				red: <?php echo $_GET['id']; ?>
+			},
 		})
 		.done(function( msg )
 		{
@@ -355,7 +358,10 @@ Thanks :)*/
 		$.ajax({
 			type: "POST",
 			url: "/ov/perfil_red/subtree",
-			data: {id: id},
+			data: {
+					id: id,
+				 	red: <?php echo $_GET['id']; ?> 
+				 },
 		})
 		.done(function( msg )
 		{

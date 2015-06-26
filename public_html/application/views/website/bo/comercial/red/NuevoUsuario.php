@@ -113,17 +113,6 @@
 																	<input id="confirm_password" required type="password" name="confirm_password" placeholder="Repite contraseña">
 																</label>
 															</section>
-															<section class="col col-6">
-																<label class="input">RED
-																	<select class="form-control input-sm" name="red">
-																		<?php foreach ($redes as $red) { ?>
-																			<option value="<?php echo $red->id; ?>"><?php echo $red->nombre; ?></option>
-																		<?php }?>
-																	</select>
-																</label>
-															</section>
-															
-														
 															
 														</fieldset>
 													</form>
@@ -132,6 +121,15 @@
 													<form method="POST" action="/perfil_red/afiliar_nuevo" id="checkout-form" class="smart-form" novalidate="novalidate">
 														<fieldset>
 															<legend>Datos personales del afiliado</legend>
+															<section class="col col-3">
+																<label class="input">RED
+																	<select class="form-control input-sm" name="red">
+																		<?php foreach ($redes as $red) { ?>
+																			<option value="<?php echo $red->id; ?>"><?php echo $red->nombre; ?></option>
+																		<?php }?>
+																	</select>
+																</label>
+															</section>
 															<div class="row">
 																<section class="col col-3">
 																	<label class="input"> <i class="icon-prepend fa fa-user"></i>
@@ -661,12 +659,11 @@ $(document).ready(function() {
 							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
 							$.ajax({
 								type: "POST",
-								url: "/bo/usuarios/alta/afiliar_nuevo",
+								url: "/bo/usuarios/afiliar_nuevo",
 								data: $('#checkout-form').serialize()
 								})
 								.done(function( msg ) {
-
-									
+									alert(msg);
 									$("#progress").attr('style','width: 100%');
 									bootbox.dialog({
 										message: msg,

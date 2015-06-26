@@ -79,6 +79,7 @@ class perfil_red extends CI_Controller
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/perfil_red/perfil');
 	}
+
 	function get_red_afiliar()
 	{
 		$id_red=$_POST['red'];
@@ -162,11 +163,11 @@ class perfil_red extends CI_Controller
 			echo "</ul>";
 		}
 	}
+	
 	function subtree()
 	{
-		$id_red=$this->model_perfil_red->get_red($_POST['id']);
-		$id_red=$id_red[0]->id_red;
-		$afiliados=$this->model_perfil_red->get_afiliados($id_red);
+
+		$afiliados=$this->model_perfil_red->get_afiliados($_POST['red'], $_POST['id']);
 
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
@@ -614,47 +615,13 @@ class perfil_red extends CI_Controller
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/perfil_red/foto');
 	}
-	function red()
-	{
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-		$id            = $this->tank_auth->get_user_id();
-		$style         = $this->general->get_style($id);
-		$red           = $this->model_perfil_red->get_red($id);
-		$id_red        = $red[0]->id_red;
-		$afiliados     = $this->model_perfil_red->get_afiliados_($id_red);
-		$afiliadostree = $this->model_perfil_red->get_afiliados($id_red);
-
-		$image=$this->model_perfil_red->get_images($id);
-		$user="/template/img/empresario.jpg";
-		foreach ($image as $img) {
-			$cadena=explode(".", $img->img);
-			if($cadena[0]=="user")
-			{
-				$user=$img->url;
-			}
-		}
-
-		$this->template->set("user",$user);
-		$this->template->set("style",$style);
-		$this->template->set("id",$id);
-		$this->template->set("afiliados",$afiliados);
-		$this->template->set("afiliadostree",$afiliadostree);
-		$this->template->set("img_perfil",$user);
-
-		$this->template->set_theme('desktop');
-        $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
-        $this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/perfil_red/red');
-	}
+	
 	function subred()
 	{
-		$id_red=$this->model_perfil_red->get_red($_POST['id']);
-		$id_red=$id_red[0]->id_red;
-		$afiliados=$this->model_perfil_red->get_afiliados($id_red);
+		$id = $_POST['id'];
+		$id_red = $_POST['red'];
+
+		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $id);
 		if($afiliados)
 		{
 			$usuario=array();
