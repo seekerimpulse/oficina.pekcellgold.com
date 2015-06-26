@@ -334,6 +334,7 @@ Thanks :)*/
 	function subred(id)
 	{
 		$("#"+id).children(".quitar").attr('onclick','');
+		
 		$.ajax({
 			type: "POST",
 			url: "/ov/perfil_red/subred",
@@ -351,6 +352,7 @@ Thanks :)*/
 	function subtree(id)
 	{
 		$("#t"+id).children(".quitar").attr('onclick','');
+		
 		$.ajax({
 			type: "POST",
 			url: "/ov/perfil_red/subtree",
