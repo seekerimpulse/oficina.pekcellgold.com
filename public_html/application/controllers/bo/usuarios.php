@@ -61,6 +61,7 @@ class usuarios extends CI_Controller
 		$this->template->set("tipos",$tipos);
 		
 		$this->template->set_theme('desktop');
+		$this->template->set("style",$style);
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
