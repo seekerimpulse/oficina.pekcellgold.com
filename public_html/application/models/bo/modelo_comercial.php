@@ -33,8 +33,9 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 			CEF.descripcion estatus_afiliado, 
 			UP.fecha_nacimiento, 
 			(select (YEAR(CURDATE())-YEAR(fecha_nacimiento)) - (RIGHT(CURDATE(),5)<RIGHT(fecha_nacimiento,5)) edad from user_profiles where user_id=U.id) edad, 
-			UP.ultima_sesion, 
-			(select url from cat_img CIMG where CIMG.id_img=(select CUI.id_img from cross_img_user CUI where CUI.id_user=U.id)) url 
+			UP.ultima_sesion".
+			//(select url from cat_img CIMG where CIMG.id_img=(select CUI.id_img from cross_img_user CUI where CUI.id_user=U.id)) url 
+			"
 			from users U 
 			left join user_profiles UP on UP.user_id=U.id  
 			left join cat_sexo CS on UP.id_sexo=CS.id_sexo 
