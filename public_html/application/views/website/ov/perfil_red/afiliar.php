@@ -785,7 +785,8 @@ $(document).ready(function() {
 			  });
 	
 	pageSetUp();
-})
+});
+
 $("#remove_step").click(function() {
 	$("#tipo_plan").attr("name","tipo_plan");
 	$('.wizard').wizard('selectedItem', {
@@ -829,7 +830,7 @@ $("#plan4").click(function(event) {
 	$("#plancuatro").addClass('packselected');
 });
 
-$("#fase1").click(function(event) {
+$("#fase1").click(function() {
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/CambioFase",
@@ -838,14 +839,12 @@ $("#fase1").click(function(event) {
 			red: <?php echo $_GET['id'] ?>,
 			fase: '1'
 				},
-	})
-	.done(function( msg )
-	{
+	}).done(function(msg) {
 		alert('Has Cambiado de fase')
 	})
 });
 
-$("#fase2").click(function(event) {
+$("#fase2").click(function() {
 	$.ajax({
 		type: "POST",
 		url: "/ov/perfil_red/CambioFase",
@@ -855,9 +854,9 @@ $("#fase2").click(function(event) {
 			fase: '2'
 				},
 	})
-	.done(function( msg )
+	.done(function(msg)
 	{
-		alert('Has Cambiado de fase')
+		alert('Has Cambiado de fase');
 	})
 });
 /*
@@ -987,6 +986,7 @@ function agregar_red(tipo)
 	$( "#datepicker" ).datepicker({
 	changeMonth: true,
 	numberOfMonths: 2,
+	maxDate: "-18a",
 	dateFormat:"yy-mm-dd",
 	defaultDate: "1970-01-01",
 	changeYear: true
@@ -1388,33 +1388,31 @@ function botbox(nombre, id, lado)
 						$.ajax({
 		                       url:"/ov/perfil_red/crear_user",
 		                       data:$("#register_red").serialize(),
-		                       type:"POST",
-		                       success:function(response){
-
-		                       }//Fin success register
-		                    });//Fin ajax register
-							var email=$("#email_r").val();
-							$("#afiliar_red").append("<input value='"+email+"' type='hidden' name='mail_important'>");
-							$.ajax({
-		                       url:"/ov/perfil_red/afiliar_nuevo",
-		                       data:$("#afiliar_red").serialize(),
-		                       type:"POST",
-		                       success:function(response){
-									bootbox.dialog({
-										message: response,
-										title: "Atención",
-										buttons: {
-											success: {
-											label: "Ok!",
-											className: "btn-success",
-											callback: function() {
-												location.href="";
+		                       type:"POST" }).done(function( msg1 ) {
+		                       	
+		                       	var email=$("#email_r").val();
+								$("#afiliar_red").append("<input value='"+email+"' type='hidden' name='mail_important'>");
+								$.ajax({
+			                       url:"/ov/perfil_red/afiliar_nuevo",
+			                       data:$("#afiliar_red").serialize(),
+			                       type:"POST"}).done(function( msg ) {
+			                       	bootbox.dialog({
+											message: msg,
+											title: "Atención",
+											buttons: {
+												success: {
+												label: "Ok!",
+												className: "btn-success",
+												callback: function() {
+													location.href="";
+													}
 												}
 											}
-										}
-									});
-		                       } //Fin success Profile
-		                    });//Fin ajax Profile
+										});
+
+			                       } );//Fin ajax Profile
+				           });//Fin ajax register
+							
 					}//Fin ajaxs
 				else
 				{

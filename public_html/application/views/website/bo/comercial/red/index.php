@@ -61,7 +61,7 @@
 													</a>
 												</div>
 												<div class="col-sm-2 link">
-													<a href="#">
+													<a href="/bo/comercial/red_tabla">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-list-ol fa-3x"></i>
 															<h1>Consecutivo</h1>

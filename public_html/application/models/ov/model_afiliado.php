@@ -128,12 +128,11 @@ class model_afiliado extends CI_Model{
 		$lado = 1;
 		if(!isset($_POST['lado']))
 			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
-		else
+		else{
+			$lado = $_POST['lado'];
+		}
 		
-
-		
-		
-		$dato_afiliar=array(
+		$dato_afiliar =array(
 			"id_red"      => $mi_red,
 			"id_afiliado" => $id,
 			"debajo_de"   => $id_debajo,
@@ -141,7 +140,7 @@ class model_afiliado extends CI_Model{
 			"lado"        => $lado
 			);
 		
-		
+		//var_dump($dato_afiliar); exit;
  		$this->db->insert("afiliar",$dato_afiliar);
  		
  		
