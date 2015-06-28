@@ -25,7 +25,7 @@ class model_afiliado extends CI_Model{
 		}
 		
 		if(!isset($_POST['tipo_plan']))
-			$_POST['tipo_plan'] = 0;
+			$_POST['tipo_plan'] = 1;
 		
 		if(!isset($_POST['fiscal'])){
 			$_POST['fiscal']=1;
@@ -199,11 +199,15 @@ class model_afiliado extends CI_Model{
 		/*################### FIN DATO BILLETERA #########################*/
 		
 		/*################### FIN DATO COBRO #########################*/
+
+		$query = $this->db->query('select * from paquete_inscripcion where id="'.$_POST['tipo_plan'].'"');
+		$plan = $query->result();
+		var_dump($plan); exit;
 		$dato_cobro=array(
 			"id_user"		=> $id,
 			"id_metodo"		=> 1,
 			"id_estatus"	=> 1,
-			"monto"			=> 0
+			"monto"			=> $plan[0]->precio
 			);
 		$this->db->insert("cobro",$dato_cobro);
 		
@@ -260,8 +264,8 @@ class model_afiliado extends CI_Model{
 		
 		$red = $query->result();
 		
-		if($red[0]->premium == '0'){
-			$this->db->query("update red set premium = '".$fase."' where id_red = '".$red."' and id_usuario = '".$id."' ");
+		if($red[0]->premium == 0){
+			$this->db->query("update red set premium = '".$fase."' where id_red =".$red[0]->id_red." and id_usuario=".$id);
 			return true;
 		}
 	}
@@ -403,5 +407,10 @@ class model_afiliado extends CI_Model{
 		/*################### FIN DATO RANGO #########################*/
 		
 		return true;
+	}
+
+	function RedAfiliado($id, $red){
+		$query = $this->db->query('select * from red where id_red = "'.$red.'" and id_usuario = "'.$id.'" ');
+		return $query->result();
 	}
 }

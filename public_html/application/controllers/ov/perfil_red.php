@@ -15,6 +15,7 @@ class perfil_red extends CI_Controller
 		$this->load->model('ov/model_perfil_red');
 		$this->load->model('ov/model_afiliado');
 		$this->load->model('model_tipo_red');
+		$this->load->model('model_planes');
 	}
 
 	function index()
@@ -327,6 +328,7 @@ class perfil_red extends CI_Controller
 			redirect('/auth');
 		}
 	
+		$id_red          = $_GET['id'];
 		$id              = $this->tank_auth->get_user_id();
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
 		$telefonos       = $this->model_perfil_red->telefonos($id);
@@ -339,10 +341,11 @@ class perfil_red extends CI_Controller
 		$estudios        = $this->model_perfil_red->get_estudios();
 		$ocupacion       = $this->model_perfil_red->get_ocupacion();
 		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
-		$id_red          = $_GET['id'];
+		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
 		$premium         = $red[0]->premium;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
-		
+		$planes 		 = $this->model_planes->Planes();
+
 		$image 			 = $this->model_perfil_red->get_images($id);
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
 		
@@ -357,7 +360,6 @@ class perfil_red extends CI_Controller
 				$img_perfil=$img->url;
 			}
 		}
-	
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 		$this->template->set("afiliados",$afiliados);
@@ -371,6 +373,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
 		$this->template->set("premium",$premium);
+		$this->template->set("planes",$planes);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');

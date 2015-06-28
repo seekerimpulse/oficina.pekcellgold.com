@@ -68,8 +68,9 @@
 	                                    		$contar++;
 	                                    		 
 	                                	}
+	                                    
 	                                    if( $contar <= $red_frontales[0]->frontal || $premium == '2' )
-	                                    {  ?>
+	                                    {   ?>
 	                                    
 	                                	<div id="myWizard" class="wizard">
 		                                	
@@ -840,7 +841,8 @@ $("#fase1").click(function() {
 			fase: '1'
 				},
 	}).done(function(msg) {
-		alert('Has Cambiado de fase')
+		alert('Has Cambiado de fase'+msg);
+		location.reload();
 	})
 });
 
@@ -856,7 +858,8 @@ $("#fase2").click(function() {
 	})
 	.done(function(msg)
 	{
-		alert('Has Cambiado de fase');
+		alert('Has Cambiado de fase'+msg);
+		location.reload();
 	})
 });
 /*
