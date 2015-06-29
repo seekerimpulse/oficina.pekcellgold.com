@@ -13,6 +13,7 @@ class comercial extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/general');
+		$this->load->model('bo/model_admin');
 		$this->load->model('bo/modelo_comercial');
 		$this->load->model('ov/model_perfil_red');
 	}
@@ -1344,4 +1345,77 @@ class comercial extends CI_Controller
 		$this->db->query("insert into cat_grupo (descripcion) values ('".$_POST['grupo']."')");
 	}
 
+	function nuevo_proveedor(){
+		if (!$this->tank_auth->is_logged_in()) 
+		{																		// logged in
+			redirect('/auth');
+		}
+
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+
+		$style=$this->modelo_dashboard->get_style($id);
+
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		$style           = $this->modelo_dashboard->get_style($id);
+		$sexo            = $this->model_admin->sexo();
+		$civil           = $this->model_admin->edo_civil();
+		$tipo            = $this->model_admin->get_user_type();
+		$tipo_fiscal     = $this->model_admin->tipo_fiscal();
+		$pais            = $this->model_admin->get_pais();
+		$productos       = $this->model_admin->get_mercancia();
+		$estudios        = $this->model_admin->get_estudios();
+		$ocupacion       = $this->model_admin->get_ocupacion();
+		$tiempo_dedicado = $this->model_admin->get_tiempo_dedicado();
+		$proveedores	 = $this->model_admin->get_proveedor();
+		$promo			 = $this->model_admin->get_promo();
+		$grupo			 = $this->model_admin->get_grupo();
+		$servicio		 = $this->model_admin->get_servicio();
+		$producto		 = $this->model_admin->get_producto();
+		$combinado		 = $this->model_admin->get_combinado();
+		$impuesto		 = $this->model_admin->get_impuesto();
+		$tipo_mercancia	 = $this->model_admin->get_tipo_mercancia();
+		$tipo_proveedor	 = $this->model_admin->get_tipo_proveedor();
+		$empresa	     = $this->model_admin->get_empresa();
+		$regimen	     = $this->model_admin->get_regimen();
+		$zona	         = $this->model_admin->get_zona();
+		$inscripcion	 = $this->model_admin->get_paquete();
+		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
+
+		$this->template->set("productos",$productos);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("sexo",$sexo);
+		$this->template->set("civil",$civil);
+		$this->template->set("tipo",$tipo);
+		$this->template->set("pais",$pais);
+		$this->template->set("estudios",$estudios);
+		$this->template->set("ocupacion",$ocupacion);
+		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
+		$this->template->set("tipo_fiscal",$tipo_fiscal);
+		$this->template->set("proveedores",$proveedores);
+		$this->template->set("promo",$promo);
+		$this->template->set("grupo",$grupo);
+		$this->template->set("servicio",$servicio);
+		$this->template->set("producto",$producto);
+		$this->template->set("combinado",$combinado);
+		$this->template->set("impuesto",$impuesto);
+		$this->template->set("tipo_mercancia",$tipo_mercancia);
+		$this->template->set("tipo_proveedor",$tipo_proveedor);
+		$this->template->set("empresa",$empresa);
+		$this->template->set("regimen",$regimen);
+		$this->template->set("zona",$zona);
+		$this->template->set("inscripcion",$inscripcion);
+		$this->template->set("tipo_paquete",$tipo_paquete);
+
+		$this->template->set_theme('desktop');
+        $this->template->set_layout('website/main');
+        $this->template->set_partial('header', 'website/bo/header');
+        $this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/altas/proveedor');		
+	}
 }

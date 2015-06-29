@@ -986,12 +986,14 @@ function agregar_red(tipo)
 }
  $(function()
  {
+	var a = new Date();
+ 	año = a.getFullYear()-19;
+ 	
 	$( "#datepicker" ).datepicker({
 	changeMonth: true,
 	numberOfMonths: 2,
-	maxDate: "-18a",
 	dateFormat:"yy-mm-dd",
-	defaultDate: "1970-01-01",
+	maxDate: año+"-12-31",
 	changeYear: true
 	});
 });
