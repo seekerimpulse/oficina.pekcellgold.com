@@ -453,6 +453,9 @@
 											    	</div>
 												</div>
 												<div class="step-pane" id="step4">
+													<div class="well">
+														<p>El pago se realizara despues en la enttrega de su primer pedido</p>
+													</div>
 												</div>
 				
 											</div>
@@ -1343,6 +1346,9 @@ function botbox(nombre, id, lado)
 			    	+'</div>'
 				+'</div>'
 				+'<div class="step-pane" id="step4_r">'
+				+'<div class="well">'
+					+'<p>El pago se realizara despues en la enttrega de su primer pedido</p>'
+				+'</div>'
 				+'</div>'
 
 			+'</div>'

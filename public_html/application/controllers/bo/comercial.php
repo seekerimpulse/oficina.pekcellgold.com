@@ -1418,4 +1418,126 @@ class comercial extends CI_Controller
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/altas/proveedor');		
 	}
+
+	function nueva_mercancia(){
+		if (!$this->tank_auth->is_logged_in()) 
+		{																		// logged in
+			redirect('/auth');
+		}
+
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+
+		$style=$this->modelo_dashboard->get_style($id);
+
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		$style           = $this->modelo_dashboard->get_style($id);
+		$productos       = $this->model_admin->get_mercancia();
+		$proveedores	 = $this->model_admin->get_proveedor();
+		$promo			 = $this->model_admin->get_promo();
+		$grupo			 = $this->model_admin->get_grupo();
+		$servicio		 = $this->model_admin->get_servicio();
+		$producto		 = $this->model_admin->get_producto();
+		$combinado		 = $this->model_admin->get_combinado();
+		$impuesto		 = $this->model_admin->get_impuesto();
+		$tipo_mercancia	 = $this->model_admin->get_tipo_mercancia();
+		$tipo_proveedor	 = $this->model_admin->get_tipo_proveedor();
+		$empresa	     = $this->model_admin->get_empresa();
+		$regimen	     = $this->model_admin->get_regimen();
+		$zona	         = $this->model_admin->get_zona();
+		$inscripcion	 = $this->model_admin->get_paquete();
+		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
+		$pais            = $this->model_admin->get_pais();
+
+		
+		$this->template->set("pais",$pais);
+		$this->template->set("productos",$productos);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("proveedores",$proveedores);
+		$this->template->set("promo",$promo);
+		$this->template->set("grupo",$grupo);
+		$this->template->set("servicio",$servicio);
+		$this->template->set("producto",$producto);
+		$this->template->set("combinado",$combinado);
+		$this->template->set("impuesto",$impuesto);
+		$this->template->set("tipo_mercancia",$tipo_mercancia);
+		$this->template->set("tipo_proveedor",$tipo_proveedor);
+		$this->template->set("empresa",$empresa);
+		$this->template->set("regimen",$regimen);
+		$this->template->set("zona",$zona);
+		$this->template->set("inscripcion",$inscripcion);
+		$this->template->set("tipo_paquete",$tipo_paquete);
+
+		$this->template->set_theme('desktop');
+        $this->template->set_layout('website/main');
+        $this->template->set_partial('header', 'website/bo/header');
+        $this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/altas/mercancia');		
+	}
+
+	function carrito(){
+		if (!$this->tank_auth->is_logged_in()) 
+		{																		// logged in
+			redirect('/auth');
+		}
+
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+
+		$style=$this->modelo_dashboard->get_style($id);
+
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		$style           = $this->modelo_dashboard->get_style($id);
+		$productos       = $this->model_admin->get_mercancia();
+		$proveedores	 = $this->model_admin->get_proveedor();
+		$promo			 = $this->model_admin->get_promo();
+		$grupo			 = $this->model_admin->get_grupo();
+		$servicio		 = $this->model_admin->get_servicio();
+		$producto		 = $this->model_admin->get_producto();
+		$combinado		 = $this->model_admin->get_combinado();
+		$impuesto		 = $this->model_admin->get_impuesto();
+		$tipo_mercancia	 = $this->model_admin->get_tipo_mercancia();
+		$tipo_proveedor	 = $this->model_admin->get_tipo_proveedor();
+		$empresa	     = $this->model_admin->get_empresa();
+		$regimen	     = $this->model_admin->get_regimen();
+		$zona	         = $this->model_admin->get_zona();
+		$inscripcion	 = $this->model_admin->get_paquete();
+		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
+		$pais            = $this->model_admin->get_pais();
+
+		
+		$this->template->set("pais",$pais);
+		$this->template->set("productos",$productos);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("proveedores",$proveedores);
+		$this->template->set("promo",$promo);
+		$this->template->set("grupo",$grupo);
+		$this->template->set("servicio",$servicio);
+		$this->template->set("producto",$producto);
+		$this->template->set("combinado",$combinado);
+		$this->template->set("impuesto",$impuesto);
+		$this->template->set("tipo_mercancia",$tipo_mercancia);
+		$this->template->set("tipo_proveedor",$tipo_proveedor);
+		$this->template->set("empresa",$empresa);
+		$this->template->set("regimen",$regimen);
+		$this->template->set("zona",$zona);
+		$this->template->set("inscripcion",$inscripcion);
+		$this->template->set("tipo_paquete",$tipo_paquete);
+
+		$this->template->set_theme('desktop');
+        $this->template->set_layout('website/main');
+        $this->template->set_partial('header', 'website/bo/header');
+        $this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/altas/carrito');		
+	}
 }
