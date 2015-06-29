@@ -200,9 +200,10 @@ class model_afiliado extends CI_Model{
 		
 		/*################### FIN DATO COBRO #########################*/
 
-		$query = $this->db->query('select * from paquete_inscripcion where id="'.$_POST['tipo_plan'].'"');
+
+		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$_POST['tipo_plan']);
 		$plan = $query->result();
-		var_dump($plan); exit;
+
 		$dato_cobro=array(
 			"id_user"		=> $id,
 			"id_metodo"		=> 1,
