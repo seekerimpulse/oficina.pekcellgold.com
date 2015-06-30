@@ -27,10 +27,10 @@ class Model_user_profiles extends CI_Model{
 		$this->db->update("user_profiles",$datos,"user_id = ".$user_id);
 	}
 
-	function bloquear($user_id){
+	function cambiar_estado($user_id, $estatus){
 
 		$datos = array(
-				'id_estatus' => 2
+				'id_estatus' => $estatus
 				);
 
 		$this->db->update("user_profiles",$datos,"user_id = ".$user_id);
