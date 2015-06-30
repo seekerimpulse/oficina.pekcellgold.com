@@ -2,6 +2,12 @@
 
 class general extends CI_Model
 {
+	function get_status($id)
+	{
+		$q=$this->db->query('select id_estatus from user_profiles where user_id = '.$id);
+		return $q->result();
+	}
+
 	function get_tipo($id)
 	{
 		$q=$this->db->query('select id_tipo_usuario from user_profiles where user_id = '.$id);

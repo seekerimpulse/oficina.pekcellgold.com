@@ -82,7 +82,7 @@
 								</header>
 								<fieldset>
 								<?php
-
+									
 									if(isset($data['errors']))
 									{
 										if(isset($data['errors']['login']))
@@ -93,8 +93,9 @@
 										{
 											$pswd='Error en la contraseña';
 										}
-									}
 
+									}
+									
 								?>
 
 									<span style="color: red;"><?php if(isset($login)) echo $login?></span>

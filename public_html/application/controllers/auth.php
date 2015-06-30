@@ -33,11 +33,13 @@ class Auth extends CI_Controller
 	 */
 	function login()
 	{
+
 		if ($this->tank_auth->is_logged_in())
 		{																		// logged in
 			$id   = $this->tank_auth->get_user_id();
 			$tipo = $this->general->get_tipo($id);
 			$tipo = $tipo[0]->id_tipo_usuario;
+			
 			if($tipo==1)
 				redirect('/bo/dashboard');
 			elseif ($tipo==2)
@@ -74,7 +76,10 @@ class Auth extends CI_Controller
 					}
 				}
 			}
+
+				
 			if ($this->form_validation->run()) {									// validation ok
+				
 				if ($this->tank_auth->login(
 						$this->form_validation->set_value('login'),
 						$this->form_validation->set_value('password'),
@@ -85,10 +90,20 @@ class Auth extends CI_Controller
 					$id   = $this->tank_auth->get_user_id();
 					$tipo = $this->general->get_tipo($id);
 					$tipo = $tipo[0]->id_tipo_usuario;
-					if($tipo==1)
-						redirect('/bo/dashboard');
-					elseif ($tipo==2)
-						redirect('/ov/dashboard');
+					
+					$estatus = $this->general->get_status($id);
+					$estatus = $estatus[0]->id_estatus;
+					
+					if($estatus == '1'){
+						if($tipo==1)
+							redirect('/bo/dashboard');
+						elseif ($tipo==2)
+							redirect('/ov/dashboard');
+					}else{
+						$this->logout2();
+
+					}
+
 				} else {
 					$errors = $this->tank_auth->get_error_message();
 					if (isset($errors['banned'])) {								// banned user
@@ -121,6 +136,19 @@ class Auth extends CI_Controller
 	    $this->session->sess_create();
 	    //$this->_show_message($this->lang->line('auth_message_logged_out'));
 		$this->load->view('auth/login');
+	}
+
+	function logout2()
+	{
+		$id   = $this->tank_auth->get_user_id();
+		$this->general->update_login($id);
+
+		$this->tank_auth->logout(); // Destroys session
+	    $this->session->sess_create();
+	    //$this->_show_message($this->lang->line('auth_message_logged_out'));
+		$login = "Cuenta Bloqueada";
+		$this->template->set('login',$login);
+		$this->template->build('auth/login');
 	}
 
 
