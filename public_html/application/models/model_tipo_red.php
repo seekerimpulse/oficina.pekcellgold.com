@@ -23,6 +23,12 @@ class Model_tipo_red extends CI_Model{
 		return $q->result();
 	}
 	
+	function traerRed($idRed)
+	{
+		$q=$this->db->query('select nombre, descripcion from tipo_red where id = '.$idRed);
+		return $q->result();
+	}
+	
 	function ObtenerFrontales()
 	{
 		$q=$this->db->query('select frontal from tipo_red where id=1');

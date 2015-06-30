@@ -272,15 +272,16 @@
 <script type="text/javascript">
 
 
- $(function()
- {
- 	var date = new Date();
+$(function()
+{
+	var a = new Date();
+ 	año = a.getFullYear()-19;
 	$( "#datepicker" ).datepicker({
-	changeMonth: true,
-	dateFormat:"yy-mm-dd",
-	changeYear: true
-	//minDate: date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate(),
-	//maxDate: date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()
+		changeMonth: true,
+		numberOfMonths: 2,
+		dateFormat:"yy-mm-dd",
+		maxDate: año+"-12-31",
+		changeYear: true
 	});
 });
 
