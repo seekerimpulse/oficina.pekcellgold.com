@@ -1,102 +1,143 @@
-<div class="row">
-	<form id="register1" class="smart-form">
-		<fieldset>
-			<legend>Información de cuenta</legend>
-			<section id="usuario1" class="col col-3">
-				<label class="input"> <i class="icon-prepend fa fa-user"></i>
-					<input id="username1" onkeyup="use_username1()" required type="text" name="username" placeholder="Usuario">
-				</label>
-			</section>
-			<section id="correo1" class="col col-3">
-				<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-					<input id="email1" onkeyup="use_mail1()" required type="email" name="email" placeholder="Email">
-				</label>
-			</section>
-			<section class="col col-3">
-				<label class="input"> <i class="icon-prepend fa fa-lock"></i>
-					<input required type="password" name="password" placeholder="Contraseña">
-				</label>
-			</section>
-			<section class="col col-3">
-				<label class="input"> <i class="icon-prepend fa fa-lock"></i>
-					<input required type="password" name="confirm_password" placeholder="Repite contraseña">
-				</label>
-			</section>
-		</fieldset>
-	</form>
-	<form method="POST" action="/bo/admin/new_proveedor" id="proveedor" class="smart-form" novalidate="novalidate">
-		<fieldset>
-			<legend>Configuración del proveedor</legend>
-			<section class="col col-3">
-				<label class="select">Selecciona el tipo de proveedor
-					<select id="tipo_proveedor" required name="tipo_proveedor">
-						<?foreach ($tipo_proveedor as $key)
-						{
-							echo '<option value="'.$key->id.'">'.$key->descripcion.'</option>';
-						}?>
-					</select>
-				</label>
-			</section>
-			<section class="col col-3">
-				<label class="select">Selecciona la empresa
-					<select id="empresa" required name="empresa">
-						<?foreach ($empresa as $key)
-						{
-							echo '<option value="'.$key->id_empresa.'">'.$key->nombre.'</option>';
-						}?>
-					</select>
-				</label>
-				<a href="#" onclick="new_empresa()">Agregar empresa <i class="fa fa-plus"></i></a>
-			</section>
-			<section class="col col-3">
-				<label class="input">Comisión por producto
-					<input required type="text" name="comision" placeholder="%">
-				</label>
-			</section>
-		</fieldset>
-		<fieldset>
-			<legend>Datos personales del proveedor</legend>
-			<div class="row">
-				<section class="col col-3">
-					<label class="input"> <i class="icon-prepend fa fa-user"></i>
-						<input required type="text" name="nombre" placeholder="Nombre">
-					</label>
-				</section>
-				<section class="col col-3">
-					<label class="input"> <i class="icon-prepend fa fa-user"></i>
-						<input required type="text" name="apellido" placeholder="Apellido">
-					</label>
-				</section>
-				<section class="col col-3">
-					<label class="input"> <i class="icon-append fa fa-calendar"></i>
-						<input required id="datepicker1" type="text" name="nacimiento" placeholder="Fecha de nacimiento">
-					</label>
-				</section>
-			</div>
-			<div class="row">
-				<div id="tel1" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					<section class="col col-3">
-						<label class="input"> <i class="icon-prepend fa fa-phone"></i>
-							<input required name="fijo[]" placeholder="(99) 99-99-99-99" type="tel">
+
+<!-- MAIN CONTENT -->
+<div id="content">
+	<div class="row">
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+			<h1 class="page-title txt-color-blueDark">
+					<a href="/bo/comercial/red"><i class="fa fa-home"></i> Inicio</a>
+				<span>>
+					afiliar
+				</span>
+			</h1>
+		</div>
+	</div>
+	<section id="widget-grid" class="">
+		<!-- START ROW -->
+		<div class="row">
+			
+			<!-- NEW COL START -->
+			<article class="col-sm-12 col-md-12 col-lg-12">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-colorbutton="false">
+					<!-- widget options:
+						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+						
+						data-widget-colorbutton="false"	
+						data-widget-editbutton="false"
+						data-widget-togglebutton="false"
+						data-widget-deletebutton="false"
+						data-widget-fullscreenbutton="false"
+						data-widget-custombutton="false"
+						data-widget-collapsed="true" 
+						data-widget-sortable="false"
+						
+					-->
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Nuevo Proveedor</h2>
+					</header>
+
+					<!-- widget div-->
+		<div>
+	
+			<form id="register1" class="smart-form">
+				<fieldset>
+					<legend>Información de cuenta</legend>
+					<section id="usuario1" class="col col-3">
+						<label class="input"> <i class="icon-prepend fa fa-user"></i>
+							<input id="username1" onkeyup="use_username1()" required type="text" name="username" placeholder="Usuario">
+						</label>
+					</section>
+					<section id="correo1" class="col col-3">
+						<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
+							<input id="email1" onkeyup="use_mail1()" required type="email" name="email" placeholder="Email">
 						</label>
 					</section>
 					<section class="col col-3">
-						<label class="input"> <i class="icon-prepend fa fa-mobile"></i>
-							<input required name="movil[]" placeholder="(999) 99-99-99-99-99" type="tel">
+						<label class="input"> <i class="icon-prepend fa fa-lock"></i>
+							<input required type="password" name="password" placeholder="Contraseña">
 						</label>
 					</section>
-				</div>
-				<section class="col col-3">
-					<button type="button" onclick="agregar1('1')" class="btn btn-primary">
-						&nbsp;Agregar <i class="fa fa-mobile"></i>&nbsp;
-					</button>
-					<button type="button" onclick="agregar1('2')" class="btn btn-primary">
-						&nbsp;Agregar <i class="fa fa-phone"></i>&nbsp;
-					</button>
-				</section>
-			</div>
-		</fieldset>
-		<fieldset>
+					<section class="col col-3">
+						<label class="input"> <i class="icon-prepend fa fa-lock"></i>
+							<input required type="password" name="confirm_password" placeholder="Repite contraseña">
+						</label>
+					</section>
+				</fieldset>
+			</form>
+			<form method="POST" action="/bo/admin/new_proveedor" id="proveedor" class="smart-form" novalidate="novalidate">
+				<fieldset>
+					<legend>Configuración del proveedor</legend>
+					<section class="col col-3">
+						<label class="select">Selecciona el tipo de proveedor
+							<select id="tipo_proveedor" required name="tipo_proveedor">
+								<?foreach ($tipo_proveedor as $key)
+								{
+									echo '<option value="'.$key->id.'">'.$key->descripcion.'</option>';
+								}?>
+							</select>
+						</label>
+					</section>
+					<section class="col col-3">
+						<label class="select">Selecciona la empresa
+							<select id="empresa" required name="empresa">
+								<?foreach ($empresa as $key)
+								{
+									echo '<option value="'.$key->id_empresa.'">'.$key->nombre.'</option>';
+								}?>
+							</select>
+						</label>
+						<a href="#" onclick="new_empresa()">Agregar empresa <i class="fa fa-plus"></i></a>
+					</section>
+					<section class="col col-3">
+						<label class="input">Comisión por producto
+							<input required type="text" name="comision" placeholder="%">
+						</label>
+					</section>
+				</fieldset>
+				<fieldset>
+					<legend>Datos personales del proveedor</legend>
+					<div class="row">
+						<section class="col col-3">
+							<label class="input"> <i class="icon-prepend fa fa-user"></i>
+								<input required type="text" name="nombre" placeholder="Nombre">
+							</label>
+						</section>
+						<section class="col col-3">
+							<label class="input"> <i class="icon-prepend fa fa-user"></i>
+								<input required type="text" name="apellido" placeholder="Apellido">
+							</label>
+						</section>
+						<section class="col col-3">
+							<label class="input"> <i class="icon-append fa fa-calendar"></i>
+								<input required id="datepicker1" type="text" name="nacimiento" placeholder="Fecha de nacimiento">
+							</label>
+						</section>
+					</div>
+					<div class="row">
+						<div id="tel1" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<section class="col col-3">
+								<label class="input"> <i class="icon-prepend fa fa-phone"></i>
+									<input required name="fijo[]" placeholder="(99) 99-99-99-99" type="tel">
+								</label>
+							</section>
+							<section class="col col-3">
+								<label class="input"> <i class="icon-prepend fa fa-mobile"></i>
+									<input required name="movil[]" placeholder="(999) 99-99-99-99-99" type="tel">
+								</label>
+							</section>
+						</div>
+						<section class="col col-3">
+							<button type="button" onclick="agregar1('1')" class="btn btn-primary">
+								&nbsp;Agregar <i class="fa fa-mobile"></i>&nbsp;
+							</button>
+							<button type="button" onclick="agregar1('2')" class="btn btn-primary">
+								&nbsp;Agregar <i class="fa fa-phone"></i>&nbsp;
+							</button>
+						</section>
+					</div>
+				</fieldset>
+				<fieldset>
 			<legend>Datos fiscales del proveedor</legend>
 			<div class="row">
 				<section class="col col-3">
@@ -346,6 +387,21 @@
 												</footer>
 											</form>
 										</div>
+					<!-- end widget div -->
+				</div>
+				<!-- end widget -->
+			</article>
+			<!-- END COL -->
+		</div>
+		<div class="row">         
+	        <!-- a blank row to get started -->
+	        <div class="col-sm-12">
+	            <br />
+	            <br />
+	        </div>
+        </div>            
+		<!-- END ROW -->
+	</section>
 <script type="text/javascript" >
 function new_proveedor()
 {

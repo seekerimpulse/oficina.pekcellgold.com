@@ -652,7 +652,7 @@ $(document).ready(function() {
 						
 						$.ajax({
 							type: "POST",
-							url: "/ov/perfil_red/crear_user",
+							url: "/auth/register",
 							data: $('#register').serialize()
 						})
 						.done(function( msg1 ) {

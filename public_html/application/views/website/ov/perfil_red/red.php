@@ -138,9 +138,6 @@
 																			<li>
 																				<a href="#">Sin afiliados</a>
 																			</li>
-																			<li>
-																				<a href="#">Sin afiliados</a>
-																			</li>
 																		<?} ?>
 																		</ul>
 																	</li>
