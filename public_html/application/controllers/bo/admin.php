@@ -208,7 +208,7 @@ class admin extends CI_Controller
 	{
 		
 		$empresa = $this->model_admin->new_empresa();
--		echo json_encode($empresa);
+		echo json_encode($empresa);
 	}
 
 	function new_proveedor()

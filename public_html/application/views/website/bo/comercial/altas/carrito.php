@@ -47,8 +47,8 @@
 										<div class="col-xs-12 col-md-6 col-sm-4 col-lg-3">
 											Editar <a title="Editar" href="#" class="txt-color-blue"><i class="fa fa-pencil"></i></a>
 											Eliminar <a title="Eliminar" href="#" class="txt-color-red"><i class="fa fa-trash-o"></i></a> 
-											Activar <a title="Activar" href="#" class="txt-color-green"><i class="fa fa-check-square-o"></i></a> 
-											Desactivar <a title="Desactivar" href="#" class="txt-color-green"><i class="fa fa-square-o"></i></a>
+											Activado <a title="Activar" href="#" class="txt-color-green"><i class="fa fa-check-square-o"></i></a> 
+											Desactivado <a title="Desactivar" href="#" class="txt-color-green"><i class="fa fa-square-o"></i></a>
 										</div>
 									</div>
 									
@@ -79,9 +79,9 @@
 													<td class="text-center"><a title="Editar" href="#" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil"></i></a>
 														<a title="Eliminar" href="#" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o"></i></a>
 														<?if($key->estatus=='DES'){?>
-															<a title="Activar" href="#" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o"></i></a>
+															<a title="Activar" href="#" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o"></i></a>
 														<?}else{?>
-															<a title="Desactivar" href="#" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o"></i></a>
+															<a title="Desactivar" href="#" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o"></i></a>
 														<?}?>
 													</td>
 												</tr>
@@ -1844,6 +1844,7 @@ function estatus(tipo,id)
 			}
 		})
 	}
+	pageSetUp();
 }
 
 function check_keyword()
