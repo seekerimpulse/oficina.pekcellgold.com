@@ -352,9 +352,11 @@ class model_perfil_red extends CI_Model
 	
 	function get_tabla()
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido
-		, CTU.descripcion from users U, user_profiles UP,
-		cat_tipo_usuario CTU where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario");
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus 
+
+from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA 
+
+where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus = UP.id_estatus");
 		return  $q->result();
 		}
 	
