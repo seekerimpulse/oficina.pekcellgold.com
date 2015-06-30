@@ -155,7 +155,7 @@ class model_admin extends CI_Model
 				"correo"     => $_POST['email'],
 				"site"       => $_POST['site']
             );
-        var_dump($dato_empresa); exit;
+
         $this->db->insert("empresa",$dato_empresa);
 
         $id_nuevo=mysql_insert_id();

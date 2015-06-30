@@ -482,7 +482,6 @@ function new_empresa()
 					})
 					.done(function( msg )
 					{
-						alert(msg);
 						var empresa = JSON.parse(msg);	
 						$("#empresa").append("<option value="+empresa['id']+">"+empresa['nombre']+"</option>");
 						$("#empresa").val(empresa['id']);
