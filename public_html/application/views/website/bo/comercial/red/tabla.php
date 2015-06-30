@@ -32,8 +32,8 @@
 			        <th><?php echo $afiliado->email?></th>
 			        <th><?php echo $afiliado->descripcion?></th>
 			        <th>
-				        <a title="Editar" href="#" onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-eye"></i></a>
-						<a title="Eliminar" href="#" onclick="elminar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-red"><i class="fa fa-trash-o"></i></a>
+				        <a title="Editar" href="#" onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil"></i></a>
+				        <a title="Bloquear" href="#" onclick="bloquear_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-gray"><i class="fa fa-unlock"></i></a>
 					</th>
 			        
 			    </tr>
@@ -61,7 +61,7 @@ $.ajax({
 });//Fin callback bootbox
 }
 
-function elminar_afiliado(id_afiliado)
+function bloquear_afiliado(id_afiliado)
 {
 		
 $.ajax({
