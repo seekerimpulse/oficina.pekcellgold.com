@@ -32,8 +32,8 @@
 			        <th><?php echo $afiliado->email?></th>
 			        <th><?php echo $afiliado->descripcion?></th>
 			        <th>
-				        <a title="Editar" href="#" onclick="modificar_afiliado('<?php $afiliado->id;?>')" class="txt-color-blue"><i class="fa fa-eye"></i></a>
-						<a title="Eliminar" href="#" onclick="eliminar('<?php $afiliado->id;?>')" class="txt-color-red"><i class="fa fa-trash-o"></i></a>
+				        <a title="Editar" href="#" onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-eye"></i></a>
+						<a title="Eliminar" href="#" onclick="elminar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-red"><i class="fa fa-trash-o"></i></a>
 					</th>
 			        
 			    </tr>
@@ -43,19 +43,39 @@
 </div>
 
 <script type="text/javascript">
-function modificar_afiliado(id)
-{
 
+function modificar_afiliado(id_afiliado)
+{
+		
 $.ajax({
 	type: "POST",
 	url: "/bo/comercial/get_detalle_usuario",
-	data: {id:id},
+	data: {id:id_afiliado},
 })
 .done(function( msg )
 {
 	bootbox.dialog({
 	message: msg,
 	title: 'Modificar Afiliado',
+})//fin done ajax
+});//Fin callback bootbox
+}
+
+function elminar_afiliado(id_afiliado)
+{
+		
+$.ajax({
+	type: "POST",
+	url: "/bo/comercial/bloquear_afiliado",
+	data: {id:id_afiliado
+	},
+})
+.done(function( msg )
+{
+	bootbox.dialog({
+		message: msg,
+	title: 'Modificar Afiliado',
+
 })//fin done ajax
 });//Fin callback bootbox
 }

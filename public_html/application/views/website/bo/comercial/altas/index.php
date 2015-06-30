@@ -47,7 +47,7 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/nuevo_proveedor">
+													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-truck fa-3x"></i>
 															<h1>Proveedor</h1>
@@ -55,7 +55,7 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/nueva_mercancia">
+													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-cubes fa-3x"></i>
 															<h1>Mercancia</h1>
@@ -63,7 +63,7 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/carrito">
+													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-desktop fa-3x"></i>
 															<h1>Carrito de compras</h1>

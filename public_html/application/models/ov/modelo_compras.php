@@ -382,12 +382,11 @@ class modelo_compras extends CI_Model
 			"id_metodo_pago" 	=> $_POST["pago"]
 		);
 		$this->db->insert("venta",$dato_venta);
-		$venta = mysql_insert_id();
+		$venta=mysql_insert_id();
 		if($_GET["tipo"]==3)
 		{
 			$this->db->query("insert into autocompra (fecha,id_usuario) values ('".$_POST['startdate']."',".$id_user.")");
 		}
-		
 		$dato_envio=array(
 			"id_venta"	=> $venta,
 			"nombre" 	=> $_POST["nombre_envio"],
@@ -403,9 +402,7 @@ class modelo_compras extends CI_Model
 			"celular" 	=> $_POST["celular_envio"],
 			"info_ad"	=> $_POST["info_envio"]
 		);
-		
 		$this->db->insert("cross_venta_envio",$dato_envio);
-		
 		$dato_fact=array(
 			"id_venta"	=> $venta,
 			"nombre" 	=> $_POST["nombre_fac"],
@@ -484,7 +481,6 @@ class modelo_compras extends CI_Model
 				"total"			=> $total,
 				"id_estatus"	=> 1
 			);
-
 			$this->db->insert("movimiento",$dato_mov);
 			$insert_mov=mysql_insert_id();
 			$dato_surtido=array(

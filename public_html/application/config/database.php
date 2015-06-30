@@ -48,9 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
+//$db['default']['hostname'] = '192.168.1.110';
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
-$db['default']['password'] = '1994edi';
+$db['default']['password'] = '123456';
 $db['default']['database'] = 'OficinaVirtual';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

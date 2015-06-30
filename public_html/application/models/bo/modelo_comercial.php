@@ -13,7 +13,7 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 			');
 		return $q->result();
 	}
-	function get_detalle_usuario()
+	function get_detalle_usuario($id_user)
 	{
 		$q=$this->db->query('
 			Select U.id, U.username, 
@@ -46,7 +46,7 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 			left join cat_tiempo_dedicado CTD on CTD.id_tiempo_dedicado=UP.id_tiempo_dedicado 
 			left join cat_estatus_afiliado CEF on CEF.id_estatus=UP.id_estatus 
 			left join coaplicante COA on COA.id_user=U.id 
-			where U.id='.$_POST['id']);
+			where U.id='.$id_user);
 		return $q->result();
 	}
 	function get_perfil_usuario()

@@ -65,26 +65,18 @@
 						$cantidad=0; 
 						foreach ($this->cart->contents() as $items) 
 						{
-							$total=$items['qty']*$items['price'];	?>
-							<tr class="miniCartProduct"> 
-								<td style="width:20%" class="miniCartProductThumb"><div> <a href=""> <img src="<?php echo $compras[$cantidad]['imagen']; ?>" alt="img"> </a> </div></td>
-								<td style="width:40%">
-									<div class="miniCartDescription">
-					                    <h4> 
-					                    	<a href=""><?php echo $compras[$cantidad]['nombre'];  ?></a>
-					                    </h4>
-					                    <div class="price">
-					                    	<span><?php echo $items['price'];  ?></span>
-					                    </div>
-				                     </div>
-				                </td>
-				                <td  style="width:10%" class="miniCartQuantity"><a > X <?php echo $items['qty'];  ?></a></td>
-				                <td  style="width:15%" class="miniCartSubtotal"><span><?php echo $total;  ?></span></td>
-				                <td  style="width:5%" class="delete">
-				                	<a onclick="quitar_producto(<?php echo $items['rowid'];  ?>)"> x </a>
-				                </td>
-							</tr>';
-						<?php $cantidad++; 
+							$total=$items['qty']*$items['price'];	
+							echo '<tr class="miniCartProduct"> 
+									<td style="width:20%" class="miniCartProductThumb"><div> <a href=""> <img src="'.$compras[$cantidad]['imagen'].'" alt="img"> </a> </div></td>
+									<td style="width:40%"><div class="miniCartDescription">
+				                        <h4> <a href=""> '.$compras[$cantidad]['nombre'].'</a> </h4>
+				                        <div class="price"> <span> '.$items['price'].' </span> </div>
+				                      </div></td>
+				                    <td  style="width:10%" class="miniCartQuantity"><a > X '.$items['qty'].' </a></td>
+				                    <td  style="width:15%" class="miniCartSubtotal"><span>'.$total.'</span></td>
+				                    <td  style="width:5%" class="delete"><a onclick="quitar_producto(\''.$items['rowid'].'\')"> x </a></td>
+								</tr>';
+								$cantidad++; 
 						} 
 					}
 				?>
@@ -96,7 +88,7 @@
         
         <div class="miniCartFooter  miniCartFooterInMobile text-right">
           <h3 class="text-right subtotal"> Subtotal: $<?php echo $this->cart->total(); ?> </h3>
-          <a class="btn btn-sm btn-danger" onclick="ver_cart()"> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a> <a class="btn btn-sm btn-primary" onclick="a_comprar()"> COMPRAR! </a> </div>
+          <a class="btn btn-sm btn-danger" oncl"ick="ver_cart()> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a> <a class="btn btn-sm btn-primary" onclick="a_comprar()"> COMPRAR! </a> </div>
         <!--/.miniCartFooter--> 
         
       </div>
@@ -128,24 +120,18 @@
 						$cantidad=0;
 						foreach ($this->cart->contents() as $items) 
 						{
-							$total=$items['qty']*$items['price'];  ?>	
-							<tr class="miniCartProduct"> 
-								<td style="width:20%" class="miniCartProductThumb">
-									<div> 
-										<a href=""> <img src="<?php echo $compras[$cantidad]['imagen'];  ?>" alt="img"> </a> 
-									</div>
-								</td>
-								<td style="width:40%">
-									<div class="miniCartDescription">
-				                        <h4> <a href=""><?php echo $compras[$cantidad]['nombre'];  ?>'</a> </h4>
-				                        <div class="price"> <span> <?php echo $items['price'];  ?> </span> </div>
-				                    </div>
-				                </td>
-				                <td  style="width:10%" class="miniCartQuantity"><a > X <?php echo $items['qty'];  ?></a></td>
-				                <td  style="width:15%" class="miniCartSubtotal"><span><?php echo $total;  ?></span></td>
-				                <td  style="width:5%" class="delete"><a onclick="quitar_producto(<?php echo $items['rowid'];  ?>)"> x </a></td>
-							</tr>'; 
-							<?php $cantidad++;
+							$total=$items['qty']*$items['price'];	
+							echo '<tr class="miniCartProduct"> 
+									<td style="width:20%" class="miniCartProductThumb"><div> <a href=""> <img src="'.$compras[$cantidad]['imagen'].'" alt="img"> </a> </div></td>
+									<td style="width:40%"><div class="miniCartDescription">
+				                        <h4> <a href=""> '.$compras[$cantidad]['nombre'].'</a> </h4>
+				                        <div class="price"> <span> '.$items['price'].' </span> </div>
+				                      </div></td>
+				                    <td  style="width:10%" class="miniCartQuantity"><a > X '.$items['qty'].' </a></td>
+				                    <td  style="width:15%" class="miniCartSubtotal"><span>'.$total.'</span></td>
+				                    <td  style="width:5%" class="delete"><a onclick="quitar_producto(\''.$items['rowid'].'\')"> x </a></td>
+								</tr>'; 
+								$cantidad++;
 						} 
 					}
                   
