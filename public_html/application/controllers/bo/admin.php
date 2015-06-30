@@ -15,6 +15,7 @@ class admin extends CI_Controller
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/general');
 	}
+
 	function index()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -205,8 +206,11 @@ class admin extends CI_Controller
 	}
 	function new_empresa()
 	{
-		$this->model_admin->new_empresa();
+		
+		$empresa = $this->model_admin->new_empresa();
+-		echo json_encode($empresa);
 	}
+
 	function new_proveedor()
 	{
 		$id=$this->tank_auth->get_user_id();
@@ -248,7 +252,7 @@ class admin extends CI_Controller
 		$mercancia 		= $this->model_admin->get_mercancia_espec($_POST['id']);
 		$impuestos_merc	= $this->model_admin->get_impuestos_mercancia($_POST['id']);
 		
-		echo '<div class="row"><form class="smart-form" id="update_merc" method="post" action="update_mercancia" enctype="multipart/form-data" novalidate="novalidate"> 
+		echo '<div class="row"><form class="smart-form" id="update_merc" method="post" action="/bo/admin/update_mercancia" enctype="multipart/form-data" novalidate="novalidate">  
 			<h3>Editar mercancía: <b>'.$data_merc[0]->nombre.'</b></h3>';
 		if($id_merc==1)
 		{
@@ -975,7 +979,7 @@ class admin extends CI_Controller
 			else
 				$this->model_admin->img_merc($sku,$data["upload_data"]);
 		}
-		redirect('/bo/admin/altas');
+		redirect('/bo/comercial/index');
 	}
 	function use_mail()
 	{
@@ -1216,7 +1220,7 @@ class admin extends CI_Controller
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_admin->img_merc($sku,$data["upload_data"]);
 		}
-		redirect("/bo/admin/altas");
+		redirect("/bo/comercial/carrito");
 	}
 	function detalle_paquete()
 	{

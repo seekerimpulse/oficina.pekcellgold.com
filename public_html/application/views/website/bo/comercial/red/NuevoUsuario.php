@@ -449,6 +449,9 @@
 											    	</div>
 												</div>
 												<div class="step-pane" id="step4">
+													<div class="well">
+-														<p>El pago se realizara despues, en la enttrega de su primer pedido</p>
+-													</div>
 												</div>
 				
 											</div>
@@ -663,7 +666,7 @@ $(document).ready(function() {
 								data: $('#checkout-form').serialize()
 								})
 								.done(function( msg ) {
-									alert(msg);
+									
 									$("#progress").attr('style','width: 100%');
 									bootbox.dialog({
 										message: msg,
@@ -863,11 +866,13 @@ function agregar_red(tipo)
 }
  $(function()
  {
+ 	var a = new Date();
+ 	año = a.getFullYear()-19;
 	$( "#datepicker" ).datepicker({
 	changeMonth: true,
 	numberOfMonths: 2,
 	dateFormat:"yy-mm-dd",
-	defaultDate: "1970-01-01",
+	maxDate: año+"-12-31",
 	changeYear: true
 	});
 });

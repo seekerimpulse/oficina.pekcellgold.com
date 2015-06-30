@@ -385,7 +385,7 @@ function new_proveedor()
 function new_empresa()
 {
 	bootbox.dialog({
-		message: '<form id="form_empresa" method="post" action="/bo/admin/new_empresa" class="smart-form">'
+		message: '<form id="form_empresa" method="post" class="smart-form">'
 					+'<fieldset>'
 						+'<legend>Información de cuenta</legend>'
 						+'<section id="usuario" class="col col-6">'
@@ -468,7 +468,7 @@ function new_empresa()
 							+'</div>'
 						+'</fieldset>'
 				+'</form>',
-		title: "Editar",
+		title: "Nueva Empresa",
 		buttons: {
 			submit: {
 			label: "Aceptar",
@@ -478,10 +478,11 @@ function new_empresa()
 					$.ajax({
 						type: "POST",
 						url: "/bo/admin/new_empresa",
-						data: $("#form_empresa").serialize(),
+						data: $("#form_empresa").serialize()
 					})
 					.done(function( msg )
 					{
+						alert(msg);
 						var empresa = JSON.parse(msg);	
 						$("#empresa").append("<option value="+empresa['id']+">"+empresa['nombre']+"</option>");
 						$("#empresa").val(empresa['id']);

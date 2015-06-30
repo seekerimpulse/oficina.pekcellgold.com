@@ -151,13 +151,14 @@ class model_admin extends CI_Model
 	{
 		$dato_empresa=array(
 				"nombre"     => $_POST['nombre'],
-				"id_regimen" => $_POST['regimen'],
+				"id_razon"   => $_POST['regimen'],
 				"correo"     => $_POST['email'],
 				"site"       => $_POST['site']
             );
-            $this->db->insert("empresa",$dato_empresa);
+        var_dump($dato_empresa); exit;
+        $this->db->insert("empresa",$dato_empresa);
 
-            $id_nuevo=mysql_insert_id();
+        $id_nuevo=mysql_insert_id();
 
 		$dato_dir=array(
 				"id_empresa"      => $id_nuevo,
@@ -165,12 +166,15 @@ class model_admin extends CI_Model
 				"calle"           =>$_POST['calle'],
 				"colonia"         =>$_POST['colonia'],
 				"municipio"       =>$_POST['municipio'],
-				"estado"          => 'NULL',
-				"pais"            =>$_POST['pais'],
+				"estado"          =>$_POST['pais'],
 				"numero_exterior" => $_POST['exterior'],
 				"numero_interior" => $_POST['interior']
             );
-            $this->db->insert("cross_dir_emp",$dato_dir);
+
+        $this->db->insert("cross_dir_emp",$dato_dir);
+
+        $empresa = array('id' => $id_nuevo, 'nombre' => $_POST['nombre']);
+        return $empresa;
 	}
 	function update_mercancia()
 	{
@@ -1221,18 +1225,17 @@ class model_admin extends CI_Model
 		    	$banco[0]->descripcion='Ninguno';
 		    }
 
-	    $dato_cat_cuenta=array(
-					"id_user" => $id_nuevo,
-					"cuenta"   => $cuenta,
-					"banco"   => $banco[0]->descripcion,
-					"estatus"   => 'ACT',
-	            );
-	    $this->db->insert("cat_cuenta",$dato_cat_cuenta);
+		    $dato_cat_cuenta=array(
+						"id_user" => $id_nuevo,
+						"cuenta"   => $cuenta,
+						"banco"   => $banco[0]->descripcion,
+						"estatus"   => 'ACT',
+		            );
+		    $this->db->insert("cat_cuenta",$dato_cat_cuenta);
 
 		}
-
-		$id_afiliador=$id_afiliador->result();
 	}
+
 	function get_prod_combinado($id)
 	{
 		$q=$this->db->query("SELECT a.*, b.nombre, c.id FROM cross_combinado a, producto b, mercancia c WHERE a.id_producto<>0 and a.id_producto=b.id 

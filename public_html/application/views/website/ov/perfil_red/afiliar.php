@@ -453,6 +453,9 @@
 											    	</div>
 												</div>
 												<div class="step-pane" id="step4">
+													<div class="well">
+-														<p>El pago se realizara despues en la enttrega de su primer pedido</p>
+-													</div>
 												</div>
 				
 											</div>
@@ -986,12 +989,13 @@ function agregar_red(tipo)
 }
  $(function()
  {
+ 	año = new Date();
+	año = a.getFullYear()-19;
 	$( "#datepicker" ).datepicker({
 	changeMonth: true,
 	numberOfMonths: 2,
-	maxDate: "-18a",
+	maxDate: año+"-12-31",
 	dateFormat:"yy-mm-dd",
-	defaultDate: "1970-01-01",
 	changeYear: true
 	});
 });
@@ -1341,6 +1345,9 @@ function botbox(nombre, id, lado)
 			    	+'</div>'
 				+'</div>'
 				+'<div class="step-pane" id="step4_r">'
+				+'<div class="well">'
+					+'<p>El pago se realizara despues en la enttrega de su primer pedido</p>'
+				+'</div>'
 				+'</div>'
 
 			+'</div>'

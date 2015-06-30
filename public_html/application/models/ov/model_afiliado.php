@@ -207,7 +207,7 @@ class model_afiliado extends CI_Model{
 		$dato_cobro=array(
 			"id_user"		=> $id,
 			"id_metodo"		=> 1,
-			"id_estatus"	=> 1,
+			"id_estatus"	=> 3,
 			"monto"			=> $plan[0]->precio
 			);
 		$this->db->insert("cobro",$dato_cobro);
@@ -379,18 +379,21 @@ class model_afiliado extends CI_Model{
 		/*################### FIN DATO BILLETERA #########################*/
 	
 		/*################### FIN DATO COBRO #########################*/
+		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$_POST['tipo_plan']);
+		$plan = $query->result();
+
 		$dato_cobro=array(
-				"id_user"		=> $id,
-				"id_metodo"		=> 1,
-				"id_estatus"	=> 1,
-				"monto"			=> 0
-		);
+			"id_user"		=> $id,
+			"id_metodo"		=> 1,
+			"id_estatus"	=> 3,
+			"monto"			=> $plan[0]->precio
+			);
 		$this->db->insert("cobro",$dato_cobro);
 	
 		$dato_cobro=array(
 				"id_user"		=> $id,
 				"id_metodo"		=> 1,
-				"id_estatus"	=> 4,
+				"id_estatus"	=> 1,
 				"monto"			=> 0
 		);
 		$this->db->insert("cobro",$dato_cobro);
@@ -409,6 +412,148 @@ class model_afiliado extends CI_Model{
 		
 		return true;
 	}
+	
+	function crearUsuarioProveedor($id_debajo){
+	
+		$id = $this->obtenrIdUser($_POST['mail_important']);
+		
+		$this->db->query('update users set activated="1" where id="'.$id.'"');
+		$this->EstiloUsuaio($id);
+		$directo=1;
+		
+		$this->CrearPerfil($id);
+	
+		$this->CrearCoaplicante($id);
+	
+		$mi_red=$_POST['red'];
+		
+		/*################### DATO RED #########################*/
+	
+		$redes = $this->db->get('tipo_red');
+		$redes = $redes->result();
+		foreach ($redes as $red){
+			$dato_red=array(
+					'id_red'        => $red->id,
+					"id_usuario"	=> $id,
+					"profundidad"	=> "0",
+					"estatus"		=> "ACT",
+					"premium"			=> '0'
+			);
+			$this->db->insert("red",$dato_red);
+		}
+	
+		/*################### FIN DATO RED #########################*/
+	
+		/*################### DATO AFILIAR #########################*/
+	
+		$directo = 1;
+		if(isset($_POST['sponsor']))
+		{
+			$directo = 0;
+		}
+		
+		$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
+		
+		$dato_afiliar=array(
+				"id_red"      => $mi_red,
+				"id_afiliado" => $id,
+				"debajo_de"   => $id_debajo,
+				"directo"     => $directo,
+				"lado"        => $lado
+		);
+	
+		
+		$this->db->insert("afiliar",$dato_afiliar);
+			
+			
+		/*################### DATO TELEFONOS #########################*/
+		//tipo_tel 1=fijo 2=movil
+		if($_POST["fijo"])
+		{
+			foreach ($_POST["fijo"] as $fijo)
+			{
+				$dato_tel=array(
+						"id_user"		=> $id,
+						"id_tipo_tel"	=> 1,
+						"numero"		=> $fijo,
+						"estatus"		=> "ACT"
+				);
+	
+				$this->db->insert("cross_tel_user",$dato_tel);
+			}
+	
+		}
+		if($_POST["movil"])
+		{
+			foreach ($_POST["movil"] as $movil)
+			{
+				$dato_tel=array(
+						"id_user"		=> $id,
+						"id_tipo_tel"	=> 2,
+						"numero"		=> $movil,
+						"estatus"		=> "ACT"
+				);
+				$this->db->insert("cross_tel_user",$dato_tel);
+			}
+		}
+	
+		/*################### FIN DATO TELEFONOS #########################*/
+		/*################### DATO DIRECCION #########################*/
+		$dato_dir=array(
+				"id_user"   => $id,
+				"cp"        => $_POST['cp'],
+				"calle"     => $_POST['calle'],
+				"colonia"   => $_POST['colonia'],
+				"municipio" => $_POST['municipio'],
+				"estado"    => $_POST['municipio'],
+				"pais"      =>$_POST['pais']
+		);
+		$this->db->insert("cross_dir_user",$dato_dir);
+		/*################### FIN DATO DIRECCION #########################*/
+	
+		/*################### DATO BILLETERA #########################*/
+		$dato_billetera=array(
+				"id_user"	=> $id,
+				"estatus"		=> "DES",
+				"activo"		=> "No"
+		);
+		$this->db->insert("billetera",$dato_billetera);
+		/*################### FIN DATO BILLETERA #########################*/
+	
+		/*################### FIN DATO COBRO #########################*/
+		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$_POST['tipo_plan']);
+		$plan = $query->result();
+
+		$dato_cobro=array(
+				"id_user"		=> $id,
+				"id_metodo"		=> 1,
+				"id_estatus"	=> 3,
+				"monto"			=> $plan[0]->precio
+		);
+		$this->db->insert("cobro",$dato_cobro);
+	
+ 		$dato_cobro=array(
+ 				"id_user"		=> $id,
+ 				"id_metodo"		=> 1,
+ 				"id_estatus"	=> 4,
+ 				"monto"			=> 0
+ 		);
+ 		$this->db->insert("cobro",$dato_cobro);
+ 	
+ 		/*################### FIN DATO COBRO #########################*/
+ 	
+ 		/*################### DATO RANGO #########################*/
+ 		$dato_rango=array(
+ 				"id_user"	=> $id,
+ 				"id_rango"		=> 1,
+ 				"entregado"		=> 1,
+ 				"estatus"		=> "ACT"
+ 		);
+ 		$this->db->insert("cross_rango_user",$dato_rango);
+ 		/*################### FIN DATO RANGO #########################*/
+ 		
+ 		return true;
+ 	}
 
 	function RedAfiliado($id, $red){
 		$query = $this->db->query('select * from red where id_red = "'.$red.'" and id_usuario = "'.$id.'" ');
