@@ -59,16 +59,16 @@
 						<form id="nueva" class="smart-form"  novalidate="novalidate" >
 							<fieldset>
 								<label class="input"> Nombre
-											<input type="text" name="nombre" placeholder="Nombre"class="form-control" required>
+											<input style="width: 25rem;" type="text" name="nombre" placeholder="Nombre"class="form-control" required>
 										</label>
 										<label class="select"> Selecione Red
-											<select name="red" required>
+											<select style="width: 25rem;" name="red" required>
 												<?php foreach ($redes as $red){?>
 												<option value="<?php echo $red->id; ?>"><?php echo $red->nombre; ?></option>
 												<?php } ?>
 											</select> <i></i> </label>
 										<label class="select"> Estatus
-											<select name="estado" required>
+											<select style="width: 25rem;" name="estado" required>
 												<option value="ACT">Activado</option>
 												<option value="DES">Desactivado</option>
 											</select> <i></i> </label>

@@ -73,7 +73,7 @@
 												<div class="col-sm-3 link">	
 													<a href="categorias">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-money fa-3x"></i>
+															<i class="fa fa-th fa-3x"></i>
 															<h1>Categorias Productos, Servicios </h1>
 														</div>
 													</a>
