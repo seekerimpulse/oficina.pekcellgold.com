@@ -742,7 +742,7 @@ $(document).ready(function() {
 						
 						$.ajax({
 							type: "POST",
-							url: "/ov/perfil_red/crear_user",
+							url: "/auth/register",
 							data: $('#register').serialize()
 						})
 						.done(function( msg1 ) {
@@ -1396,7 +1396,7 @@ function botbox(nombre, id, lado)
 					{
 						var id=$("#id").val();
 						$.ajax({
-		                       url:"/ov/perfil_red/crear_user",
+		                       url:"/auth/register",
 		                       data:$("#register_red").serialize(),
 		                       type:"POST" }).done(function( msg1 ) {
 		                       	

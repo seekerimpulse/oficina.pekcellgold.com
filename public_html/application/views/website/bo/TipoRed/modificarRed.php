@@ -7,10 +7,10 @@
 			<input type="text" class="hide" name="id" value = '<?= $id_red;?>' >
 			
 			<label for="">Nombre</label>
-			<input type="text" class="form-control" name="nombre" >
+			<input type="text" class="form-control" name="nombre" value = '<?= $datosDeRed[0]->nombre;?>'>
 
 			<label for="">Descripcion</label>
-			<textarea class="form-control" name="descripcion"></textarea>
+			<textarea class="form-control" name="descripcion" ><?= $datosDeRed[0]->descripcion;?></textarea>
 		</div>
 		<button type="submit" class="btn btn-success" >Actualizar</button>
 	</form>

@@ -43,8 +43,10 @@ class tipo_red extends CI_Controller{
 		$id              = $this->tank_auth->get_user_id();
 		$style           = $this->general->get_style($id);
 		$id_red = $_POST['id'];
+		$datosDeRed = $this->model_tipo_red->traerRed($id_red);
 		//echo $id_red;
 		$this->template->set("id_red",$id_red);
+		$this->template->set("datosDeRed",$datosDeRed);
 		$this->template->set("style",$style);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');

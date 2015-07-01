@@ -375,14 +375,21 @@ class comercial extends CI_Controller
 		$this->model_user_profiles->actualizar($_POST['id'], $_POST['sexo'], $_POST['estadoCivil'], $_POST['tipoUsuario'], $_POST['estudio'], $_POST['ocupacion'], $_POST['tiempoDedicado'],
 											   $_POST['estadoAfiliado'], $_POST['nombre'], $_POST['apellido'], $_POST['nacimiento']);
 		$this->model_coaplicante->actualizar($_POST['id'], $_POST['nombreCo'], $_POST['apellidoCo']);
-		echo "Se ha cambiado el perfil con exito";
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->red_tabla();
 	}
 
-	function bloquear_afiliado()
+	function cambiar_estado_afiliado()
 	{
-		$this->model_user_profiles->bloquear($_POST['id']);
-
-		echo "Se ha bloqueado el perfil con exito";
+		$this->model_user_profiles->cambiar_estado($_POST['id'], $_POST['estatus']);
+		if ($_POST['estatus']==1) echo "Se ha desbloqueado el perfil con exito";
+		else echo "Se ha bloqueado el perfil con exito";
+		//redirect('/bo/comercial/red_tabla');
+		//$this->red_tabla();
 	}
 
 	function detalle_red()
