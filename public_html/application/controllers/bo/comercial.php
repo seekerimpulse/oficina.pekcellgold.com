@@ -88,17 +88,11 @@ class comercial extends CI_Controller
 		$style         = $this->general->get_style($id);
 		
 		$afiliados     = $this->model_perfil_red->get_tabla();
-		/*$image=$this->model_perfil_red->get_images($id);
-		$user="/template/img/empresario.jpg";
-		foreach ($image as $img) {
-			$cadena=explode(".", $img->img);
-			if($cadena[0]=="user")
-			{
-				$user=$img->url;
-			}
-		}*/
-		
+		$image=$this->model_perfil_red->get_images_users();
+
+		$this->template->set("style",$style);
 		$this->template->set("afiliados",$afiliados);
+		$this->template->set("image",$image);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');

@@ -1,65 +1,111 @@
-  <div id="myTabContent1" class="tab-content padding-10" style="margin-bottom: 6rem;">
-
-		<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
-			<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
-				<center>
-				<a title="Editar" href="#" class="txt-color-blue"><i class="fa fa-eye fa-3x"></i></a>
-				<br>Editar
-				</center>
-			</div>
-			<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
-			<center>	
-				<a title="Bloquear" href="#" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
-				<br>Bloquear
-				</center>
-			</div>
-			<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
-				<center>
-					<a title="Desbloquear" href="#" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
-					<br>Desbloquear
-				</center>
-			</div>
-		</div>
-		
-		<table id="datatable_tabletools" class="table table-striped table-bordered table-hover" width="100%">
-			<thead>
-				<tr>
-					<th>ID</th>
-	                <th>Imagen</th>
-	                <th>Usuario</th>
-		            <th>Nombre</th>
-		            <th>Apellido</th>
-			        <th>e-mail</th>
-			        <th>Tipo usuario</th>
-			        <th>Accion</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-			     <?foreach ($afiliados as $afiliado) {
-			          									        	?>
-			      <tr>
-			        <td><?php echo $afiliado->id;?></td>
-	                <td><?php echo $afiliado?></td>
-	                <td><?php echo $afiliado->username?></td>
-		            <td><?php echo $afiliado->nombre?></td>
-		            <td><?php echo $afiliado->apellido?></td>
-			        <td><?php echo $afiliado->email?></td>
-			        <td><?php echo $afiliado->descripcion?></td>
-			        <td>
-			        	
-			        	<?if($afiliado->estatus=='Desactivado'){?>
-			        	<a title="Desbloquear" href="#" onclick="estado_afiliado(1,<?=$afiliado->id?>)" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
-						<?}else{?>
-						<a title="Bloquear" href="#" onclick="estado_afiliado(2,<?=$afiliado->id?>)" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
-						<?}?>
+ <div id="content">
+	 <div class="row">
+						<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+							<h1 class="page-title txt-color-blueDark">
+								
+								<!-- PAGE HEADER -->
+								<i class="fa-fw fa fa-home"></i> 
+									<a href="/bo/dashboard"> Menu</a> 
+								<span>&gt;
+									<a href="/bo/comercial">Comercial</a> &gt; Listar Consecutivo
+								</span>
+							</h1>
+						</div>
+	</div>
+	<section id="widget-grid" class="">
+	  <div id="myTabContent1" class="tab-content padding-10" style="margin-bottom: 6rem;">
+		<div class="row">
+			<!-- NEW COL START -->
+			<article class="col-sm-12 col-md-12 col-lg-12">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-colorbutton="false"	>
+					<header>
+						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+						<h2>Categorias de productos</h2>				
 						
-				        <a title="Editar" href="#" onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-					</td>
-			        
-			    </tr>
-			 <?} ?>
-		</tbody>
-		</table>
+					</header>
+
+					<!-- widget div-->
+					<div>
+			<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
+				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+					<center>
+					<a title="Editar" href="#" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+					<br>Editar
+					</center>
+				</div>
+				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+				<center>	
+					<a title="Bloquear" href="#" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
+					<br>Bloquear
+					</center>
+				</div>
+				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+					<center>
+						<a title="Desbloquear" href="#" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
+						<br>Desbloquear
+					</center>
+				</div>
+			</div>
+			
+			<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+				<thead>
+					<tr>
+						<th>ID</th>
+		                <th>Imagen</th>
+		                <th>Usuario</th>
+			            <th>Nombre</th>
+			            <th>Apellido</th>
+				        <th>e-mail</th>
+				        <th>Tipo usuario</th>
+				        <th>Accion</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+				     <?foreach ($afiliados as $afiliado) {
+				          									        	?>
+				      <tr>
+				        <td><?php echo $afiliado->id;?></td>
+				        
+				       <? 
+				       $afiliados_imagen="/template/img/empresario.jpg";
+				       foreach ($image as $img) {
+				       	   if($img->id_user==$afiliado->id){
+								$cadena=explode(".", $img->img);
+								if($cadena[0]=="user")
+								{
+									$afiliados_imagen=$img->url;
+								}
+				       	   }
+						}?>
+				        
+		                <td><img style="width: 10rem;" src="<?php echo $afiliados_imagen?>"></img></td>
+		                <td><?php echo $afiliado->username?></td>
+			            <td><?php echo $afiliado->nombre?></td>
+			            <td><?php echo $afiliado->apellido?></td>
+				        <td><?php echo $afiliado->email?></td>
+				        <td><?php echo $afiliado->descripcion?></td>
+				        <td>
+				        	
+				        	<?if($afiliado->estatus=='Desactivado'){?>
+				        	<a title="Desbloquear" href="#" onclick="estado_afiliado(1,<?=$afiliado->id?>)" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
+							<?}else{?>
+							<a title="Bloquear" href="#" onclick="estado_afiliado(2,<?=$afiliado->id?>)" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
+							<?}?>
+							
+					        <a title="Editar" href="#" onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+						</td>
+				        
+				    </tr>
+				 <?} ?>
+			</tbody>
+			</table>
+	</div>
+	</div>
+	</article>
+	</div>
+	</div>
+	</section>
 </div>
 <script src="/template/js/plugin/morris/raphael.min.js"></script>
 		<script src="/template/js/plugin/morris/morris.min.js"></script>
