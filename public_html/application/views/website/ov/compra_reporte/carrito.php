@@ -223,7 +223,7 @@
 						<div class="widget-body">
 							<? foreach ($redes as $red) {?>
 								<a class="btn bg-color-blueDark txt-color-white btn-block" 
-								onclick="show_serv(<?= $red->id;?>)"><?= $red->nombre;?></a>
+								onclick="show_todos('<?= $red->id;?>');"><?= $red->nombre;?></a>
 							<? } ?>
 						</div>
 						<!-- end widget content -->
@@ -300,7 +300,7 @@
 									       </div>
 								       </div> 
 								';
-							}
+							}/*
 							for($promocion_p=0;$promocion_p<sizeof($prom_p);$promocion_p++)
 							{
 								echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
@@ -361,7 +361,7 @@
 									       </div>
 								       </div>
 								';
-							}
+							}*/
 	      				 ?>
 				        
 				        <!--/.item--> 
@@ -457,7 +457,7 @@
 					}
 				});
 			}
-			function show_serv(id)
+			function show_serv()
 			{
 				$.ajax({
 					type: "get",
@@ -492,11 +492,12 @@
 					}
 				});
 			}
-			function show_todos()
+			function show_todos(idTipoRed)
 			{
 				$.ajax({
 					type: "get",
 					url: "show_todos",
+					data: { id: idTipoRed},
 					success:function(msg){
 						$("#mercancias").html(msg);
 				

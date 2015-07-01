@@ -21,6 +21,13 @@ class modelo_compras extends CI_Model
 		and b.estatus like "ACT" order by d.descripcion');
 		return $q->result();
 	}
+	function get_productos_red($idRed)
+	{
+		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, d.descripcion grupo, d.id_grupo, a.nombre img,d.id_red from producto a,
+		mercancia b, cat_grupo_producto d where a.id=b.sku and d.id_grupo=a.id_grupo and b.id_tipo_mercancia=1
+		and b.estatus like "ACT" and d.id_red='.$idRed.' order by d.descripcion');
+		return $q->result();
+	}
 	function get_grupo_prod()
 	{
 		$q=$this->db->query("SELECT id_grupo, descripcion from cat_grupo_producto");
@@ -69,6 +76,13 @@ class modelo_compras extends CI_Model
 		where a.id=b.sku and b.id_tipo_mercancia=2 and b.estatus like "ACT"');
 		return $q->result();
 	}
+	
+	function get_servicios_red($idRed)
+	{
+		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red from servicio a, mercancia b
+		where a.id=b.sku and b.id_tipo_mercancia=2 and b.estatus like "ACT" and a.id_red='.$idRed.'');
+		return $q->result();
+	}
 	function get_servicio_espec($busqueda)
 	{
 		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, b.tipo_servicio, c.username, d.costo, e.comision, d.fecha_alta, f.ruta from servicio a, users c, 
@@ -81,6 +95,12 @@ class modelo_compras extends CI_Model
 	{
 		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.fecha_alta, a.nombre img from combinado a, mercancia d, cross_combinado 
 		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3');
+		return $q->result();
+	}
+	function get_combinados_red($idRed)
+	{
+		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.fecha_alta, a.nombre img, e.id_red from combinado a, mercancia d, cross_combinado
+		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and e.id_red='.$idRed.'');
 		return $q->result();
 	}
 	function get_combinado_espec($busqueda)
@@ -97,11 +117,26 @@ class modelo_compras extends CI_Model
 		FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}
+	
+	function detalles_productos_red($i)
+	{
+		$q=$this->db->query('SELECT a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables
+		FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$i);
+		return $q->result();
+	}
+	
 	function detalles_servicios($i)
 	{
 		$q=$this->db->query('SELECT a.nombre, a.descripcion, a.fecha_inicio, a.fecha_fin, b.costo from servicio a, mercancia b where a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}
+	
+	function detalles_servicios_red($i)
+	{
+		$q=$this->db->query('SELECT a.nombre,a.descripcion,b.costo_publico,b.costo,b.puntos_comisionables from servicio a, mercancia b where a.id=b.sku and b.id='.$i);
+		return $q->result();
+	}
+	
 	function comb_espec($i)
 	{
 		$q_sku=$this->db->query('SELECT sku FROM mercancia where id='.$i);

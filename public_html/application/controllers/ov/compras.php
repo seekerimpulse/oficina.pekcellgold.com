@@ -720,53 +720,57 @@ function index()
 		switch($data['tipo'])
 		{
 			case 1:
-				$detalles=$this->modelo_compras->detalles_productos($id);
+				$detalles=$this->modelo_compras->detalles_productos_red($id);
 				echo "	<div class='col-lg-6 col-md-6 col-xs-6 col-sm-6'>
 							<h3 class='text-primary'>".$detalles[0]->nombre."</h3>
-							
-							<p class='font-sm'>".$detalles[0]->descripcion."</p>";
-							if($detalles[0]->peso)
+					";
+							if($detalles[0]->costo_publico)
 							{
 								echo"
-									<p class='font-sm'>Peso: ".$detalles[0]->peso."</p>";
+									<p class='font-sm'>Precio Publico: ".$detalles[0]->costo_publico."</p>";
 							}
-							if($detalles[0]->alto)
+							if($detalles[0]->costo)
 							{
 								echo"
-									<p class='font-sm'>Alto: ".$detalles[0]->alto."</p>";
+									<p class='font-sm'>Precio Afiliado: ".$detalles[0]->costo."</p>";
 							}
-							if($detalles[0]->ancho)
+							if($detalles[0]->puntos_comisionables)
 							{
 								echo"
-									<p class='font-sm'>Ancho: ".$detalles[0]->ancho."</p>";
+									<p class='font-sm'>Puntos: ".$detalles[0]->puntos_comisionables."</p>";
 							}
-							if($detalles[0]->profundidad)
+							if($detalles[0]->descripcion)
 							{
 								echo"
-									<p class='font-sm'>Profundiad: ".$detalles[0]->profundidad."</p>";
+									<textarea class='font-sm' readonly>".$detalles[0]->descripcion."</textarea>";
 							}
-							if($detalles[0]->diametro)
-							{
-								echo"
-									<p class='font-sm'>Diametro: ".$detalles[0]->diametro."</p><br>";
-							}
+
 				break;
 			case 2:
-				$detalles=$this->modelo_compras->detalles_servicios($id);
+				$detalles=$this->modelo_compras->detalles_servicios_red($id);
 				
-				echo "	<div class='col-lg-6 col-md-6 col-xs-6 col-sm-6'>
+						echo "	<div class='col-lg-6 col-md-6 col-xs-6 col-sm-6'>
 							<h3 class='text-primary'>".$detalles[0]->nombre."</h3>
-							
-							<p class='font-sm'>".$detalles[0]->descripcion."</p>";
-							if($detalles[0]->fecha_inicio)
+					";
+							if($detalles[0]->costo_publico)
 							{
 								echo"
-									<p class='font-sm'>Fecha Inicio: ".$detalles[0]->fecha_inicio."</p>";
+									<p class='font-sm'>Precio Publico: ".$detalles[0]->costo_publico."</p>";
 							}
-							if($detalles[0]->fecha_fin)
+							if($detalles[0]->costo)
 							{
 								echo"
-									<p class='font-sm'>Fecha Fin: ".$detalles[0]->fecha_fin."</p><br>";
+									<p class='font-sm'>Precio Afiliado: ".$detalles[0]->costo."</p>";
+							}
+							if($detalles[0]->puntos_comisionables)
+							{
+								echo"
+									<p class='font-sm'>Puntos: ".$detalles[0]->puntos_comisionables."</p>";
+							}
+							if($detalles[0]->descripcion)
+							{
+								echo"
+									<textarea class='font-sm' readonly>".$detalles[0]->descripcion."</textarea>";
 							}
 				break;
 			case 3:
@@ -1606,7 +1610,9 @@ function index()
 	}
 	function show_todos()
 	{
-		$prod=$this->modelo_compras->get_productos();
+	$idRed=$_GET['id'];
+
+		$prod=$this->modelo_compras->get_productos_red($idRed);
 		for($i=0;$i<sizeof($prod);$i++)
 		{
 			$imagen=$this->modelo_compras->get_img($prod[$i]->id);
@@ -1619,7 +1625,7 @@ function index()
 				$prod[$i]->img="";
 			}
 		}
-		$serv=$this->modelo_compras->get_servicios();
+		$serv=$this->modelo_compras->get_servicios_red($idRed);
 		for($j=0;$j<sizeof($serv);$j++)
 		{
 			$imagen=$this->modelo_compras->get_img($serv[$j]->id);
@@ -1632,7 +1638,7 @@ function index()
 				$serv[$j]->img="";
 			}
 		}
-		$comb=$this->modelo_compras->get_combinados();
+		$comb=$this->modelo_compras->get_combinados_red($idRed);
 		for($k=0;$k<sizeof($comb);$k++)
 		{
 			$imagen=$this->modelo_compras->get_img($comb[$k]->id);
@@ -1644,7 +1650,7 @@ function index()
 			{
 				$comb[$k]->img="";
 			}
-		}
+		}/*
 		$prom_p=$this->modelo_compras->get_promocion_prod();
 		for($n=0;$n<sizeof($prom_p);$n++)
 		{
@@ -1683,78 +1689,70 @@ function index()
 			{
 				$prom_c[$l]->img="";
 			}
-		}
+		}*/
 		//$prom=$this->modelo_compras->get_promocion();
 		for($productos=0;$productos<sizeof($prod);$productos++)
 		{
 
-				echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-				    	<div class="product">
-					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-					        	<i class="glyphicon glyphicon-heart"></i>
-					        </a>
-				          
-				          		<div class="image"> <a onclick="detalles('.$prod[$productos]->id.',1)"><img src="'.$prod[$productos]->img.'" alt="img" class="img-responsive"></a>
-				              		<div class="promotion">   </div>
-				            	</div>
-				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$prod[$productos]->nombre.'</a></h4>
-				              		<p>'.$prod[$productos]->grupo.' </br></br>
-				              		'.$prod[$productos]->descripcion.'. </p>
-				              		
-				              		
-				              	</div>
-				            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
-				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-				       </div>
-			       </div>
-			';
+									echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
+										        </a>
+									          
+									          		<div class="image"> <a onclick="detalles('.$prod[$productos]->id.',1)"><img src="'.$prod[$productos]->img.'" alt="img" class="img-responsive"></a>
+									              		<div class="promotion">   </div>
+									            	</div>
+									            	<div class="description">
+									              		<h4><a href="">'.$prod[$productos]->nombre.'</a></h4>
+     						              			</div>
+									            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
+									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
+									       </div>
+								       </div>
+								';
 
 		}
 		for($servicios=0;$servicios<sizeof($serv);$servicios++)
 		{
-			echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-				    	<div class="product">
-					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-					        	<i class="glyphicon glyphicon-heart"></i>
-					        </a>
-				          
-				          		<div class="image"> <a onclick="detalles('.$serv[$servicios]->id.',2)"><img src="'.$serv[$servicios]->img.'" alt="img" class="img-responsive"></a>
-				              		<div class="promotion">  </div>
-				            	</div>
-				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$serv[$servicios]->nombre.'</a></h4>
-				              		<p>'.$serv[$servicios]->descripcion.'.</p>
-				              		
-				              	</div>
-				            	<div class="price"> <span>$ '.$serv[$servicios]->costo.'</span> </div>
-				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-				       </div>
-			       </div>
-			';
+								echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
+										        </a>
+									          
+									          		<div class="image"> <a onclick="detalles('.$serv[$servicios]->id.',2)"><img src="'.$serv[$servicios]->img.'" alt="img" class="img-responsive"></a>
+									              		<div class="promotion">  </div>
+									            	</div>
+									            	<div class="description">
+									              		<h4><a href="">'.$serv[$servicios]->nombre.'</a></h4>
+									              	</div>
+									            	<div class="price"> <span>$ '.$serv[$servicios]->costo.'</span> </div>
+									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
+									       </div>
+								       </div>
+								';
 		}
 		for($combinados=0;$combinados<sizeof($comb);$combinados++)
 		{
-			echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-				    	<div class="product">
-					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-					        	<i class="glyphicon glyphicon-heart"></i>
-					        </a>
-				          
-				          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id_combinado.',3)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
-				              		<div class="promotion">  <span class="discount">'.$comb[$combinados]->descuento.'% DESCUENTO</span></div>
-				            	</div>
-				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$comb[$combinados]->nombre.'</a></h4>
-				              		<p>'.$comb[$combinados]->descripcion.'.
-				              		
-				              	</div>
-				            	<div class="price"> <span>$ '.$comb[$combinados]->costo.'</span> </div>
-				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',3,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-				       </div>
-			       </div>
-			';
-		}
+								echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
+										        </a>
+									          
+									          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id.',3)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
+									              		<div class="promotion">  <span class="discount">'.$comb[$combinados]->descuento.'% DESCUENTO</span></div>
+									            	</div>
+									            	<div class="description">
+									              		<h4><a href="">'.$comb[$combinados]->nombre.'</a></h4>
+									              	</div>
+									            	<div class="price"> <span>$ '.$comb[$combinados]->costo.'</span> </div>
+									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',3,'.$comb[$combinados]->descuento.')"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
+									       </div>
+								       </div> 
+								';
+		}/*
 		for($promocion_p=0;$promocion_p<sizeof($prom_p);$promocion_p++)
 		{
 			echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
@@ -1823,7 +1821,7 @@ function index()
 				       </div>
 			       </div>
 			';
-		}
+		}*/
 	}
 	function buscar_servicio()
 	{
