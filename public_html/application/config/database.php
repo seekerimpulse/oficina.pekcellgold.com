@@ -2,7 +2,7 @@
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
-| -------------------------------------------------------------------
+| ------------------------------------------------------------------- 
 | This file will contain the settings needed to access your database.
 |
 | For complete instructions please consult the 'Database Connection'
@@ -48,8 +48,8 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-//$db['default']['hostname'] = '192.168.1.110';
 $db['default']['hostname'] = '192.168.1.110';
+//$db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = 'toor';
 $db['default']['database'] = 'OficinaVirtual';

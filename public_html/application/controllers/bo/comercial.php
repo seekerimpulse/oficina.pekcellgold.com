@@ -27,6 +27,7 @@ class comercial extends CI_Controller
 		$this->load->model('model_user_profiles');
 		$this->load->model('model_coaplicante');
 		$this->load->model('bo/model_admin');
+		$this->load->model('ov/modelo_compras');
 	}
 
 	function index()
@@ -1545,13 +1546,9 @@ class comercial extends CI_Controller
 		$usuario=$this->general->get_username($id);
 		
 		$style           = $this->modelo_dashboard->get_style($id);
-		$productos       = $this->model_admin->get_mercancia();
+		
 		$proveedores	 = $this->model_admin->get_proveedor();
-		$promo			 = $this->model_admin->get_promo();
 		$grupo			 = $this->model_admin->get_grupo();
-		$servicio		 = $this->model_admin->get_servicio();
-		$producto		 = $this->model_admin->get_producto();
-		$combinado		 = $this->model_admin->get_combinado();
 		$impuesto		 = $this->model_admin->get_impuesto();
 		$tipo_mercancia	 = $this->model_admin->get_tipo_mercancia();
 		$tipo_proveedor	 = $this->model_admin->get_tipo_proveedor();
@@ -1561,7 +1558,13 @@ class comercial extends CI_Controller
 		$inscripcion	 = $this->model_admin->get_paquete();
 		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
 		$pais            = $this->model_admin->get_pais();
-
+		
+		
+		$productos       = $this->model_admin->get_productos();
+		$servicios		 = $this->model_admin->get_servicios();
+		//$promo			 = $this->model_admin->get_promo();
+		$combinados		 = $this->model_admin->get_combinados();
+		
 		
 		$this->template->set("pais",$pais);
 		$this->template->set("productos",$productos);
@@ -1570,9 +1573,9 @@ class comercial extends CI_Controller
 		$this->template->set("proveedores",$proveedores);
 		$this->template->set("promo",$promo);
 		$this->template->set("grupo",$grupo);
-		$this->template->set("servicio",$servicio);
+		$this->template->set("servicios",$servicios);
 		$this->template->set("producto",$producto);
-		$this->template->set("combinado",$combinado);
+		$this->template->set("combinados",$combinados);
 		$this->template->set("impuesto",$impuesto);
 		$this->template->set("tipo_mercancia",$tipo_mercancia);
 		$this->template->set("tipo_proveedor",$tipo_proveedor);
