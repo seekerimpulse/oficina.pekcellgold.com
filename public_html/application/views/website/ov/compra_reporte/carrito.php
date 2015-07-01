@@ -1,5 +1,5 @@
 <link href="/cart/HTML/assets/css/style.css" rel="stylesheet">
-<link href="/cart/HTML/assets/css/skin-6.css" rel="stylesheet">
+<link href="/cart/HTML/assets/css/skin-3.css" rel="stylesheet">
 
 <!-- css3 animation effect for this template -->
 <link href="/cart/HTML/assets/css/animate.min.css" rel="stylesheet">
@@ -35,22 +35,27 @@
     	<div class="col-sm-12">
         	<br />
         	<br />
+            <br />
+        	<br />
         </div>
-    </div>
+        <div class="col-sm-12">
+        </div>
+</div>
+
  <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation" id="cart_cont">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> </button>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i class="fa fa-shopping-cart colorWhite"> </i> <span class="cartRespons colorWhite"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> </button>
-      <a class="navbar-brand titulo_carrito" href="/ov/dashboard" > Dashboard &nbsp;</a> 
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i class="fa fa-shopping-cart colorWhite fa-2x"> </i> <span class="cartRespons colorWhite"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> </button>
+      <a style="color :#263569; margin-left:3rem;" class="navbar-brand titulo_carrito" href="/ov/dashboard" > <i class="fa fa-home"></i> Menu &nbsp;</a> 
       
-      <!-- this part for mobile -->
+      <!-- this part for mobile -
       <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
         <div class="input-group">
           <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
         </div>
-        <!-- /input-group --> 
+        <!-- /input-group --
         
-      </div>
+      </div> -->
     </div>
     
     <!-- this part is duplicate from cartMenu  keep it for mobile -->
@@ -97,19 +102,19 @@
     <!--/.navbar-cart-->
     
     <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+   <!--   <ul class="nav navbar-nav">
         <li class="active"> <a onclick="show_todos()"> Todos </a> </li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prod()"> Productos </a></li>
         
-        <!-- change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width -->
+        change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width 
         <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_serv()"> Servicios </a></li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_comb()"> Combinados </a></li>
         <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prom()"> Promociones </a></li>
       </ul>
-      
+      -->
       <!--- this part will be hidden for mobile version -->
       <div class="nav navbar-nav navbar-right hidden-xs">
-        <div class="dropdown  cartMenu "> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart"> </i> <span class="cartRespons"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> <b class="caret"> </b> </a>
+        <div class="dropdown  cartMenu "> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart fa-2x"> </i> <span class="cartRespons"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> <b class="caret"> </b> </a>
           <div class="dropdown-menu col-lg-4 col-xs-12 col-md-4 ">
             <div class="w100 miniCartTable scroll-pane">
               <table> 
@@ -150,15 +155,21 @@
           <!--/.dropdown-menu--> 
         </div>
         <!--/.cartMenu-->
-        
+        <!--  
         <div class="search-box">
           <div class="input-group">
             <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
           </div>
-          <!-- /input-group --> 
+          <!-- /input-group 
           
         </div>
-        <!--/.search-box --> 
+        <!--/.search-box -->
+        <div class=" transparent pull-right" id="logout">
+			<span> <a style="color: rgb(255, 255, 255); background: rgb(206, 53, 44) none repeat scroll 0% 0%;" class="btn btn-default btn-circle btn-lg" href="/index.php/auth/logout" title="Salir" data-action="userLogout" data-logout-msg="¿Realmente desea salir?">
+				<i style="font-size: 3rem;" class="fa fa-sign-out"></i>
+					</a>
+			</span>
+		</div>
       </div>
       <!--/.navbar-nav hidden-xs--> 
     </div>
@@ -185,19 +196,56 @@
 	       
 	      </div>
 	  </div>-->
-	  
-	 	<div class="morePost row featuredPostContainer style2 globalPaddingTop col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+	  <article class="col-lg-12 col-sm-4 col-md-3 col-lg-3">
+	  			<div class="carousel-inner">
+				<!-- Slide 1 -->
+				<div class="item active" style="height: 100%; margin-bottom: 2rem;">
+					<img src="/template/img/demo/m3.jpg" alt="demo user">
+				</div>
+			</div>
+				<div class="jarviswidget jarviswidget-color-darken" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-arrows-v"></i> </span>
+						<h2 class="font-md"><i>Categoria de los productos</i></h2>				
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+
+						</div>
+						<!-- end widget edit box -->
+						
+						<!-- widget content -->
+						<div class="widget-body">
+							<? foreach ($redes as $red) {?>
+								<a class="btn bg-color-blueDark txt-color-white btn-block" 
+								onclick="show_serv(<?= $red->id;?>)"><?= $red->nombre;?></a>
+							<? } ?>
+						</div>
+						<!-- end widget content -->
+						
+					</div>
+					<!-- end widget div -->
+					
+				</div>
+				<!-- end widget -->
+			</article>
+	 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 	    	<h3 class="section-title style2 text-center"><span>NUESTROS PRODUCTOS</span></h3>
-	    		<div class="container">
+	    		<div class="">
 	      			<div class="row xsResponse" id="mercancias">
 	      				<?php
 	      					for($productos=0;$productos<sizeof($prod);$productos++)
 							{
 					
-									echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-									    	<div class="product">
-										    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class="glyphicon glyphicon-heart"></i>
+									echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
 										        </a>
 									          
 									          		<div class="image"> <a onclick="detalles('.$prod[$productos]->id.',1)"><img src="'.$prod[$productos]->img.'" alt="img" class="img-responsive"></a>
@@ -205,11 +253,7 @@
 									            	</div>
 									            	<div class="description">
 									              		<h4><a href="">'.$prod[$productos]->nombre.'</a></h4>
-									              		<p>'.$prod[$productos]->grupo.' </br></br>
-									              		'.$prod[$productos]->descripcion.'. </p>
-									              		
-									              		
-									              	</div>
+     						              			</div>
 									            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 									       </div>
@@ -219,10 +263,10 @@
 							}
 							for($servicios=0;$servicios<sizeof($serv);$servicios++)
 							{
-								echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-									    	<div class="product">
-										    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class="glyphicon glyphicon-heart"></i>
+								echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
 										        </a>
 									          
 									          		<div class="image"> <a onclick="detalles('.$serv[$servicios]->id.',2)"><img src="'.$serv[$servicios]->img.'" alt="img" class="img-responsive"></a>
@@ -230,8 +274,6 @@
 									            	</div>
 									            	<div class="description">
 									              		<h4><a href="">'.$serv[$servicios]->nombre.'</a></h4>
-									              		<p>'.$serv[$servicios]->descripcion.'.</p>
-									              		
 									              	</div>
 									            	<div class="price"> <span>$ '.$serv[$servicios]->costo.'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
@@ -241,10 +283,10 @@
 							}
 							for($combinados=0;$combinados<sizeof($comb);$combinados++)
 							{
-								echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-									    	<div class="product">
-										    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class="glyphicon glyphicon-heart"></i>
+								echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
 										        </a>
 									          
 									          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id.',3)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
@@ -252,8 +294,6 @@
 									            	</div>
 									            	<div class="description">
 									              		<h4><a href="">'.$comb[$combinados]->nombre.'</a></h4>
-									              		<p>'.$comb[$combinados]->descripcion.'.
-									              		
 									              	</div>
 									            	<div class="price"> <span>$ '.$comb[$combinados]->costo.'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',3,'.$comb[$combinados]->descuento.')"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
@@ -264,9 +304,9 @@
 							for($promocion_p=0;$promocion_p<sizeof($prom_p);$promocion_p++)
 							{
 								echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-									    	<div class="product">
-										    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class="glyphicon glyphicon-heart"></i>
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
 										        </a>
 									          
 									          		<div class="image"> <a onclick="detalles('.$prom_p[$promocion_p]->id_promocion.',4)"><img src="'.$prom_p[$promocion_p]->img.'" alt="img" class="img-responsive"></a>
@@ -274,9 +314,7 @@
 									            	</div>
 									            	<div class="description">
 									              		<h4><a href="">'.$prom_p[$promocion_p]->nombre.'</a></h4>
-									              		<p>'.$prom_p[$promocion_p]->descripcion.'.
-									              		</br></br>Producto</br>'.$prom_p[$promocion_p]->producto.'</p>
-									              		
+							              		
 									              	</div>
 									            	<div class="price"> <span>$ '.$prom_p[$promocion_p]->costo.'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prom_p[$promocion_p]->id_promocion.',4,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
@@ -287,9 +325,9 @@
 							for($promocion_s=0;$promocion_s<sizeof($prom_s);$promocion_s++)
 							{
 								echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-									    	<div class="product">
-										    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class="glyphicon glyphicon-heart"></i>
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
 										        </a>
 									          
 									          		<div class="image"> <a onclick="detalles('.$prom_s[$promocion_s]->id_promocion.',5)"><img src="'.$prom_s[$promocion_s]->img.'" alt="img" class="img-responsive"></a>
@@ -297,9 +335,6 @@
 									            	</div>
 									            	<div class="description">
 									              		<h4><a href="">'.$prom_s[$promocion_s]->nombre.'</a></h4>
-									              		<p>'.$prom_s[$promocion_s]->descripcion.'.
-									              		</br></br>Servicio</br>'.$prom_s[$promocion_s]->servicio.'</p>
-									              		
 									              	</div>
 									            	<div class="price"> <span>$ '.$prom_s[$promocion_s]->costo.'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prom_s[$promocion_s]->id_promocion.',5,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
@@ -310,9 +345,9 @@
 							for($promocion_c=0;$promocion_c<sizeof($prom_c);$promocion_c++)
 							{
 								echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-									    	<div class="product">
-										    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class="glyphicon glyphicon-heart"></i>
+									    	<div class="producto">
+										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
+										        	<i class=""></i>
 										        </a>
 									          
 									          		<div class="image"> <a onclick="detalles('.$prom_c[$promocion_c]->id_promocion.',6)"><img src="'.$prom_c[$promocion_c]->img.'" alt="img" class="img-responsive"></a>
@@ -320,9 +355,6 @@
 									            	</div>
 									            	<div class="description">
 									              		<h4><a href="">'.$prom_c[$promocion_c]->nombre.'</a></h4>
-									              		<p>'.$prom_c[$promocion_c]->descripcion.'.
-									              		</br></br>Combinado</br>'.$prom_c[$promocion_c]->combinado.'</p>
-									              		
 									              	</div>
 									            	<div class="price"> <span>$ '.$prom_c[$promocion_c]->costo.'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prom_c[$promocion_c]->id_promocion.',6,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
@@ -350,7 +382,7 @@
 	  
 	</div>
 </div>
-<div class="row">         
+	<div class="row">         
          <!-- a blank row to get started -->
     	<div class="col-sm-12">
         	<br />
@@ -425,7 +457,7 @@
 					}
 				});
 			}
-			function show_serv()
+			function show_serv(id)
 			{
 				$.ajax({
 					type: "get",

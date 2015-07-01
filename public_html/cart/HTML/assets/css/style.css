@@ -2263,13 +2263,13 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 	-webkit-transition: all 0.3s ease 0s;
 	-o-transition: all 0.3s ease 0s;
 	-ms-transition: all 0.3s ease 0s;
-	margin-bottom: 15px;
-	height: 480px;
+	margin-bottom: 4rem;
+	/*height: 35rem;*/
 }
 #SimilarProductSlider .item {
 	height: auto !important;
 }
-.product {
+.producto {
 	display: block;
 	height: auto;
 	transition: all 0.3s ease 0s;
@@ -2277,8 +2277,8 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 	-webkit-transition: all 0.3s ease 0s;
 	-o-transition: all 0.3s ease 0s;
 	-ms-transition: all 0.3s ease 0s;
-	border: 1px solid #DDDDDD;
-	border-bottom: 1px solid #DDDDDD;
+	/*border: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;*/
 	text-align: center;
 }
 .product:hover {
@@ -2474,7 +2474,7 @@ h1.bolder-style.dark, h1.bolder-style.dark a {
 }
 .description {
 	margin: 0 4px 0 5px;
-	min-height: 107px;
+	/*min-height: 107px;*/
 }
 .promotion {
 	line-height: 18px;

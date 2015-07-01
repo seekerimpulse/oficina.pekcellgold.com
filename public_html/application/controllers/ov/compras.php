@@ -14,6 +14,7 @@ class compras extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/general');
 		$this->load->model('ov/modelo_compras');
+		$this->load->model('model_tipo_red');
 	}
 
 function index()
@@ -46,9 +47,11 @@ function index()
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
-		$this->template->set("style",$style);
+		//$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$productos=$this->modelo_compras->get_productos();
+		$redes = $this->model_tipo_red->listarTodos();
+		
 		for($i=0;$i<sizeof($productos);$i++)
 		{
 			$imagen=$this->modelo_compras->get_img($productos[$i]->id);
@@ -232,9 +235,10 @@ function index()
 		$data['prom_s']=$promocion_s;
 		$data['prom_c']=$promocion_c;
 		$data['compras']=$info_compras;
+		$this->template->set("redes", $redes);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
+        //$this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/carrito',$data);
 	}
