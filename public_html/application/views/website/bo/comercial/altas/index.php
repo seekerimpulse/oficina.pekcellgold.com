@@ -55,7 +55,7 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/nueva_mercancia">
+													<a href="/bo/mercancia/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-cubes fa-3x"></i>
 															<h1>Mercancia</h1>

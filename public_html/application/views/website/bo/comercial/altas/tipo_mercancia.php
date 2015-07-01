@@ -8,7 +8,7 @@
 							<i class="fa-fw fa fa-home"></i> 
 								<a href="/bo/dashboard"> Menu</a> 
 							<span>>
-								<a href="/bo/configuracion/">Configuracion</a> > Categorias
+								<a href="/bo/comercial/">Comercial</a> > Mercancia
 							</span>
 						</h1>
 					</div>
@@ -34,27 +34,17 @@
 						<div class="widget-body no-padding smart-form">
                 <fieldset>
                   <div class="contenidoBotones">
-										<div class="row">
-											<div class="col-sm-3 link">
-											</div>
-											<div class="col-sm-6 link">
-												<div class="col-sm-4 link">
-												<a href="/bo/categorias/nueva_categoria">
+						<div class="row">
+												<div class="col-sm-1 link"></div>
+												<?php foreach ($tipos as $tipo ) {?>
+												<div class="col-sm-3 link">
+												<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipo->id; ?>">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-edit fa-3x"></i>
-														<h1>Alta</h1>
+														<h1><?php echo $tipo->descripcion; ?></h1>
 													</div>
 												</a>
 												</div>
-												<div class="col-sm-4 link">
-												<a href="/bo/categorias/index">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-														<i class="fa fa-list-alt fa-3x"></i>
-														<h1>Listar</h1>
-													</div>
-												</a>
-												</div>
-											</div>
+												<?php } ?>
 										 </div>
 									</div>
 								</fieldset>
