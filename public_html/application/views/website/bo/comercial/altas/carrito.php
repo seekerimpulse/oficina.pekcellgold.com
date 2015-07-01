@@ -43,25 +43,49 @@
 						<div class="widget-body">
 							<div class="tab-pane" id="s5">
 									<div class="row">
-										<div class="col-xs-12 col-md-6 col-sm-8 col-lg-9"><h5>Productos en sistema</h5></div>
-										<div class="col-xs-12 col-md-6 col-sm-4 col-lg-3">
-											Editar <a title="Editar" href="#" class="txt-color-blue"><i class="fa fa-pencil"></i></a>
-											Eliminar <a title="Eliminar" href="#" class="txt-color-red"><i class="fa fa-trash-o"></i></a> 
-											Activado <a title="Activar" href="#" class="txt-color-green"><i class="fa fa-check-square-o"></i></a> 
-											Desactivado <a title="Desactivar" href="#" class="txt-color-green"><i class="fa fa-square-o"></i></a>
-										</div>
+										<div class="col-xs-12 col-md-6 col-sm-8 col-lg-4"><h5><center>Productos en sistema</center></h5></div>
+										<br>
+											<div class="col-xs-4 col-md-6 col-sm-4 col-lg-1" style="float: right;">
+												<center>
+													<a title="Editar" href="#" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+													<br> Editar 
+												</center>
+											</div>
+											
+											<div class="col-xs-4 col-md-6 col-sm-4 col-lg-1" style="float: right;">
+												<center>
+													<a title="Eliminar" href="#" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a> 
+													<br> Eliminar 
+												</center>
+											</div>
+											
+											<div class="col-xs-4 col-md-6 col-sm-4 col-lg-1" style="float: right;">
+												<center>
+													<a title="Activar" href="#" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a> 
+													<br> Activado 
+												</center>
+											</div>
+											
+											<div class="col-xs-4 col-md-6 col-sm-4 col-lg-1" style="float: right;">
+												<center>
+													<a title="Desactivar" href="#" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+													<br>Desactivado 
+												</center>
+											</div>
 									</div>
 									
 									<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 											<thead>			                
 												<tr>
 													<th data-hide="phone">ID</th>
-													<th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> SKU</th>
+													<th>NOMBRE</th>
+													<th>IMAGEN</th>
+													<th>RED</th>
 													<th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> TIPO</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> ALTA</th>
-													<th data-hide="phone,tablet"><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> ESTADO</th>
-													<th>PROVEEDOR</th>
-													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO</th>
+													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO REAL</th>
+													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO COSTO</th>
+													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO COSTO PUBLICO</th>
 													<th>ACCION</th>
 												</tr>
 											</thead>
@@ -70,22 +94,69 @@
 												<?foreach ($productos as $key) {?>
 												<tr>
 													<td><?=$key->id?></td>
-													<td><?=$key->sku?></td>
-													<td><?=$key->tipo_mercancia?></td>
+													<td><?=$key->nombre?></td>
+													<td><img style="width: 10rem;" src="<?=$key->url?>"></img></td>
+													<td><?=$key->red?></td>
+													<td><?=$key->descripcion?></td>
 													<td><?=$key->fecha_alta?></td>
-													<td><?=$key->estatus?></td>
-													<td><?=($key->id_proveedor) ? $key->id_proveedor: 'Ninguno';?></td>
+													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
-													<td class="text-center"><a title="Editar" href="#" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil"></i></a>
-														<a title="Eliminar" href="#" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o"></i></a>
+													<td><?=$key->costo_publico?></td>
+													<td class="text-center"><a title="Editar" href="#" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+														<a title="Eliminar" href="#" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
-															<a title="Activar" href="#" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o"></i></a>
+															<a title="Activar" href="#" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 														<?}else{?>
-															<a title="Desactivar" href="#" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o"></i></a>
+															<a title="Desactivar" href="#" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 														<?}?>
 													</td>
 												</tr>
 												<?}?>
+												
+												<?foreach ($servicios as $key) {?>
+												<tr>
+													<td><?=$key->id?></td>
+													<td><?=$key->nombre?></td>
+													<td><img style="width: 10rem;" src="<?=$key->url?>"></img></td>
+													<td><?=$key->red?></td>
+													<td><?=$key->descripcion?></td>
+													<td><?=$key->fecha_alta?></td>
+													<td><?=$key->real?></td>
+													<td><?=$key->costo?></td>
+													<td><?=$key->costo_publico?></td>
+													<td class="text-center"><a title="Editar" href="#" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+														<a title="Eliminar" href="#" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+														<?if($key->estatus=='DES'){?>
+															<a title="Activar" href="#" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+														<?}else{?>
+															<a title="Desactivar" href="#" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+														<?}?>
+													</td>
+												</tr>
+												<?}?>
+												
+												<?foreach ($combinados as $key) {?>
+												<tr>
+													<td><?=$key->id?></td>
+													<td><?=$key->nombre?></td>
+													<td><img style="width: 10rem;" src="<?=$key->url?>"></img></td>
+													<td><?=$key->red?></td>
+													<td><?=$key->descripcion?></td>
+													<td><?=$key->fecha_alta?></td>
+													<td><?=$key->real?></td>
+													<td><?=$key->costo?></td>
+													<td><?=$key->costo_publico?></td>
+													<td class="text-center"><a title="Editar" href="#" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+														<a title="Eliminar" href="#" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+														<?if($key->estatus=='DES'){?>
+															<a title="Activar" href="#" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+														<?}else{?>
+															<a title="Desactivar" href="#" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+														<?}?>
+													</td>
+												</tr>
+												<?}?>
+												
 											</tbody>
 										</table>
 								</div>
@@ -1737,6 +1808,7 @@ function eliminar(id)
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
+								location.href = "/bo/comercial/carrito";
 								}
 							}
 						}
@@ -1773,19 +1845,8 @@ function estatus(tipo,id)
 						data: {tipo: tipo, id: id},
 					})
 					.done(function( msg )
-					{
-						bootbox.dialog({
-						message: "Se ha activado el producto",
-						title: 'Activar',
-						buttons: {
-							success: {
-							label: "Aceptar",
-							className: "btn-success",
-							callback: function() {
-								}
-							}
-						}
-					})//fin done ajax
+					{	location.href = "/bo/comercial/carrito";
+						
 					});//Fin callback bootbox
 
 					}
@@ -1817,19 +1878,9 @@ function estatus(tipo,id)
 						data: {tipo: tipo, id: id},
 					})
 					.done(function( msg )
-					{
-						bootbox.dialog({
-						message: "Se ha desactivado el producto",
-						title: 'Descativar',
-						buttons: {
-							success: {
-							label: "Aceptar",
-							className: "btn-success",
-							callback: function() {
-								}
-							}
-						}
-					})//fin done ajax
+					{	
+						location.href = "/bo/comercial/carrito";
+						
 					});//Fin callback bootbox
 
 					}
