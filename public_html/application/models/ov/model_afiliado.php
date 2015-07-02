@@ -200,8 +200,11 @@ class model_afiliado extends CI_Model{
 		
 		/*################### FIN DATO COBRO #########################*/
 
-
-		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$_POST['tipo_plan']);
+		$plan = 1;
+		if(!isset($_POST['tipo_plan'])){
+			$plan = $_POST['tipo_plan'];
+		}
+		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$plan);
 		$plan = $query->result();
 
 		$dato_cobro=array(
@@ -379,9 +382,13 @@ class model_afiliado extends CI_Model{
 		/*################### FIN DATO BILLETERA #########################*/
 	
 		/*################### FIN DATO COBRO #########################*/
-		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$_POST['tipo_plan']);
+		$plan = 1;
+		if(!isset($_POST['tipo_plan'])){
+			$plan = $_POST['tipo_plan'];
+		}
+		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$plan);
 		$plan = $query->result();
-
+		
 		$dato_cobro=array(
 			"id_user"		=> $id,
 			"id_metodo"		=> 1,

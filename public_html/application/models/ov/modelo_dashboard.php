@@ -55,5 +55,12 @@ class modelo_dashboard extends CI_Model
     $q=$q->result();
 		return $q[0]->code2;
   }
+  
+  function get_user_country($id){
+  	$q=$this->db->query('SELECT pais FROM cross_dir_user where id_user='.$id.';
+                        ');
+  	$q=$q->result();
+  	return $q[0]->pais;
+  }
 
 }
