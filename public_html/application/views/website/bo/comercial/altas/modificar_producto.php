@@ -62,17 +62,17 @@
 													</label>
 												</section>
 												
-												<section class="col col-12" style="width: 100%;">RED
+												<section class="col col-12" style="width: 100%;">GRUPO
 															<label class="select">
-																<select name="red">
-																<?foreach ($red as $key){
+																<select name="grupo">
+																<?foreach ($grupo as $key){
 																	
-																	if ($data_merc[0]->nombre_red == $key->nombre){?>
-																		<option selected value='<?=$key->id?>'>
-																			<?= $key->nombre?>
+																	if ($data_merc[0]->descripcion_red == $key->descripcion){?>
+																		<option selected value='<?=$key->id_grupo?>'>
+																			<?= $key->descripcion?>
 																	<? }	else{?>
-																		<option value='<?=$key->id?>'>
-																			<?= $key->nombre?>
+																		<option value='<?=$key->id_grupo?>'>
+																			<?= $key->descripcion?>
 																	<? }?>
 																<?}?>
 																</select>
@@ -162,42 +162,42 @@
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Cantidad mínima de venta
-															<input type="text" name="min_venta" id="min_venta">
+															<input type="text" value='<?php echo $data_merc[0]->min_venta?>' name="min_venta">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Cantidad máxima de venta
-															<input type="text" name="max_venta" id="max_venta">
+															 <input type="text" value='<?php echo $data_merc[0]->max_venta?>' name="max_venta">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo real
-															<input type="text" name="real" id="real">
+															<input type="text" value='<?php echo $mercancia[0]->real?>' name="real">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo distribuidores
-															<input type="text" name="costo" id="costo">
+															<input type="text" value='<?php echo $mercancia[0]->costo?>' name="costo">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Costo publico
-															<input type="text" name="costo_publico" id="costo_publico">
+															<input type="text" value='<?php echo $mercancia[0]->costo_publico?>' name="costo_publico">
 														</label>
 													</section>
 													
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Tiempo mínimo de entrega
-															<input placeholder="En días" type="text" name="entrega" id="entrega">
+															<input placeholder="En días" type="text" value='<?php echo $mercancia[0]->entrega?>' name="entrega" >
 														</label>
 													</section>
 													
@@ -205,8 +205,15 @@
 														<label class="select">
 															<select name="proveedor">
 																<?foreach ($proveedores as $key)
-																{?>
-																<option value="<?=$key->id_usuario?>"><?=$key->nombre." ".$key->apellido?> comisión: %<?=$key->comision?></option>	
+																{ if ($mercancia[0]->id_proveedor == $key->user_id){?>
+																		<option selected value="<?=$key->user_id?>">
+																			<?=$key->nombre." ".$key->apellido?>
+																		</option>	
+																	<?}	else{?>
+																		<option value="<?=$key->user_id?>">
+																			<?=$key->nombre." ".$key->apellido?>
+																		</option>
+																	<?}?>
 																<?}?>
 															</select>
 														</label>
@@ -216,10 +223,15 @@
 														<label class="select">
 															<select id="pais" required name="pais">
 																<?foreach ($pais as $key)
-																{?>
-																<option value="<?=$key->Code?>">
-																	<?=$key->Name?>
-																</option>
+																{	if ($mercancia[0]->pais == $key->Code){?>
+																		<option selected value="<?=$key->Code?>">
+																			<?=$key->Name?>
+																		</option>
+																	<?}else{?>
+																		<option value="<?=$key->Code?>">
+																			<?=$key->Name?>
+																		</option>
+																	<?}?>
 																<?}?>
 															</select>
 														</label>

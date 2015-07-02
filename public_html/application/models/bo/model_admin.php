@@ -56,9 +56,14 @@ class model_admin extends CI_Model
 	function get_data_mercancia($tipo,$sku)
 	{
 		if($tipo==1)
-			$q=$this->db->query("select P.*, TR.nombre nombre_red from producto P, tipo_red TR, cat_grupo_producto 
+			/*$q=$this->db->query("select P.*, TR.nombre nombre_red from producto P, tipo_red TR, cat_grupo_producto 
 					CGP where P.id=".$sku." and 
-					CGP.id_grupo = P.id_grupo and CGP.id_red = TR.id");
+					CGP.id_grupo = P.id_grupo and CGP.id_red = TR.id");*/
+			$q=$this->db->query("select P.*, CGP.descripcion descripcion_red from producto P, cat_grupo_producto
+		CGP where P.id=".$sku." and
+		CGP.id_grupo = P.id_grupo");
+		
+		
 		if($tipo==2)
 			$q=$this->db->query("select * from servicio where id=".$sku);
 		if($tipo==3)
@@ -89,9 +94,14 @@ class model_admin extends CI_Model
 	}
 	function get_proveedor()
 	{
-		$q=$this->db->query("select id_usuario, comision, (select nombre from user_profiles where user_id=id_usuario) nombre, 
+		/*$q=$this->db->query("select id_usuario, comision, (select nombre from user_profiles where user_id=id_usuario) nombre, 
 			(select apellido from user_profiles where user_id=id_usuario) apellido
-		 from cat_proveedor");
+		 from cat_proveedor");*/
+		
+		$q=$this->db->query("select UP.user_id, UP.nombre, UP.apellido
+		from proveedor P, user_profiles UP where P.id_proveedor = UP.user_id;");
+		
+		
 		return $q->result();
 	}
 	function get_servicio()
@@ -291,13 +301,13 @@ where(a.id_pais=b.Code)");
 					"peso"           => $_POST['peso'],
 					"alto"           => $_POST['alto'],
 					"ancho"          => $_POST['ancho'],
-					//"id_grupo"       => $_POST['grupo'],
+					"id_grupo"       => $_POST['grupo'],
 					"profundidad"    => $_POST['profundidad'],
 					"diametro"       => $_POST['diametro'],
 					"marca"          => $_POST['marca'],
 					"codigo_barras"  => $_POST['codigo_barras'],
-					//"min_venta"      => $_POST['min_venta'],
-					//"max_venta"      => $_POST['max_venta'],
+					"min_venta"      => $_POST['min_venta'],
+					"max_venta"      => $_POST['max_venta'],
 					//"instalacion"    => $_POST['instalacion'],
 					//"especificacion" => $_POST['especificacion'],
 					//"produccion"     => $_POST['produccion'],
@@ -307,7 +317,7 @@ where(a.id_pais=b.Code)");
 
 			$this->db->where('id', $sku);
 			$this->db->update('producto', $dato_producto); 
-			/*
+			
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
 					"id_proveedor"      	=> $_POST['proveedor'],
@@ -315,12 +325,12 @@ where(a.id_pais=b.Code)");
 					"costo"            	 	=> $_POST['costo'],
 					"entrega"           	=> $_POST['entrega'],
 					"costo_publico"    		=> $_POST['costo_publico'],
-					"puntos_comisionables"	=> $_POST['puntos_com']
+					//"puntos_comisionables"	=> $_POST['puntos_com']
 	            );
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 
-			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
-			foreach($_POST['id_impuesto'] as $impuesto)
+			//$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
+			/*foreach($_POST['id_impuesto'] as $impuesto)
 			{
 				$dato_impuesto=array(
 					"id_mercancia"	=> $_POST['id_merc'],

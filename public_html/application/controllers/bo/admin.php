@@ -243,7 +243,7 @@ class admin extends CI_Controller
 		$regimen        = $this->model_admin->get_regimen();
 		$zona           = $this->model_admin->get_zona();
 		$merc           = $this->model_admin->mercancia_by_id();
-		$pais           = $this->model_admin->get_pais();
+		$pais           = $this->model_admin->get_pais_activo();
 		$id_merc 		= $merc[0]->id_tipo_mercancia;
 		$sku			= $merc[0]->sku;
 		$red          = $this->model_admin->get_red();
@@ -269,8 +269,10 @@ class admin extends CI_Controller
 			
 			$this->template->set("id_mercancia",$id_mercancia);
 			$this->template->set("data_merc",$data_merc);
-			$this->template->set("red",$red);
+			$this->template->set("grupo",$grupo);
 			$this->template->set("img",$img);
+			$this->template->set("mercancia",$mercancia);
+			$this->template->set("proveedores",$proveedores);
 			$this->template->set("pais",$pais);
 			$this->template->set("style",$style);
 			$this->template->set_theme('desktop');
