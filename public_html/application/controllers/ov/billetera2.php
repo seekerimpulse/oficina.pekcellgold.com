@@ -98,8 +98,9 @@ class billetera2 extends CI_Controller
 		$cobro=$this->modelo_billetera->get_cobro($id);
 		$metodo_cobro=$this->modelo_billetera->get_metodo();
 		$datatable=$this->modelo_billetera->datable($id);
-		$años = $this->modelo_billetera->añosCobro($id);
-	
+		$impuestos = $this->modelo_billetera->ValorImpuestos($id);
+		$retenciones = $this->modelo_billetera->ValorRetenciones($id);
+		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("historial",$historial);
@@ -107,13 +108,31 @@ class billetera2 extends CI_Controller
 		$this->template->set("cobro",$cobro);
 		$this->template->set("datatable",$datatable);
 		$this->template->set("metodo_cobro",$metodo_cobro);
-		$this->template->set("años",$años);
-	
+		$this->template->set("impuestos",$impuestos);
+		$this->template->set("retenciones",$retenciones);
+		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/billetera/dashboard');
 		$this->template->build('website/ov/billetera/pago');
+	}
+	
+	function cobrar()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$estado = $this->modelo_billetera->cobrar($id);
+
+		if($estado){
+			echo "Tu cobro se esta procesando";
+		}else{
+			echo "No cuentas con suficientes recursos para realizar el cobro";
+		}
 	}
 }

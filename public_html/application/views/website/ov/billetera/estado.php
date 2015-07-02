@@ -6,7 +6,7 @@
 						<h1 class="page-title txt-color-blueDark">
 							<a href="/ov"><i class="fa fa-home"></i> Menu</a>
 							<a href="/ov/billetera2/index"> > Billetera</a>
-							<span> > Pedir Plata</span>
+							<span> > Historial</span>
 							
 						</h1>
 					</div>
@@ -78,28 +78,19 @@
 																		</label>
 																	</section>
 																
-																	<?php 
-																		$total-=$impuesto->impuesto;
-																		} ?>
+																	<?php } ?>
 																</fieldset>
 																<fieldset>
-																	<header>Retenciones</header>
-																	<?php foreach ($retenciones as $retencion) {?>
 																	<section class="col col-10">
-																		<label class="label"><?php echo $retencion['descripcion']; ?></label>
+																		<label class="label">Cargos</label>
 																		<label class="input">
-																			<input type="text" class="from-control" name="retenciones" value="<?php echo $retencion['valor']; ?>" readonly />
+																			<input type="text" class="from-control" name="retenciones" readonly />
 																		</label>
 																	</section>
-																	<?php 
-																		$total-=$retencion['valor'];
-																		} ?>
-																</fieldset>
-																<fieldset>
 																	<section class="col col-10">
 																		<label class="label">Saldo</label>
 																		<label class="input">
-																			<input type="number" name="saldo" class="from-control" id="saldo" value="<?php echo $total; ?>" readonly />
+																			<input value="" type="number" name="saldo" class="from-control" id="saldo" readonly />
 																		</label>
 																	</section>
 																	<section class="col col-10">
@@ -207,20 +198,20 @@ function cobrar()
 	{
 		$.ajax({
 		type: "POST",
-		url: "/ov/billetera2/cobrar",
+		url: "/ov/billetera/cobrar",
 		data: $('#contact-form1').serialize()
 		})
 		.done(function( msg ) {
-			
+
 			bootbox.dialog({
-			message: msg,
-			title: "Transacion",
+			message: "Tu cobro se esta procesando",
+			title: "Cobro",
 			buttons: {
 				success: {
 				label: "Ok!",
 				className: "btn-success",
 				callback: function() {
-					location.href='historial';
+					location.href='';
 					}
 				}
 			}
