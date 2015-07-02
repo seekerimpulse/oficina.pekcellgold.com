@@ -4,8 +4,8 @@
 								<input type="text" class="hide" value="<?php echo $_POST['id']; ?>" name="id">
 								<label class="input"> Nombre
 								<input type="text" name="nombre" required placeholder="Nombre" style="width: 50%;" class="form-control" value="<?php echo $retencion[0]->descripcion; ?>" required>
-								<label class="input"> Porcentaje
-								<input type="number" name="porcentaje" required placeholder="porcentaje" style="width: 50%;" class="form-control" value="<?php echo $retencion[0]->porcentaje; ?>" required>
+								<label class="input"> Valor
+								<input type="number" name="porcentaje" required placeholder="valor" style="width: 50%;" class="form-control" value="<?php echo $retencion[0]->porcentaje; ?>" required>
 								<br><div class="inline-group">
 						        		<label class="radio">
 									    	<input <?php if($retencion[0]->duracion == 'UNA') echo 'checked=""';?> 

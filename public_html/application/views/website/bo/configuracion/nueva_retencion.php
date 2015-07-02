@@ -43,7 +43,7 @@
 				<input id='desc' class="form-control" name="desc" size="20" placeholder="Nombre" type="text" required>
 	        </label>
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
-				<input id='porc' class="form-control" name="porc" size="20" placeholder="Porcentaje" type="number" required>
+				<input id='porc' class="form-control" name="porc" size="20" placeholder="Valor" type="number" required>
 	        </label>
 	        <div class="inline-group">
 	        		<label class="radio">

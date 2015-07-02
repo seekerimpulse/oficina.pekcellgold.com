@@ -72,7 +72,7 @@
 												<tr>
 													<th>ID</th>
 													<th>Nombre</th>
-													<th>Porcentaje</th>
+													<th>Valor</th>
 													<th>Duracion</th>
 													<th></th>
 												</tr>
@@ -83,7 +83,7 @@
 													<tr>
 														<td><?php echo $retencion->id_retencion; ?></td>
 														<td><?php echo $retencion->descripcion; ?></td>
-														<td><?php echo $retencion->porcentaje; ?> %</td>
+														<td>$ <?php echo $retencion->porcentaje; ?></td>
 														<td>
 														<?php 
 														if($retencion->duracion=='DIA')

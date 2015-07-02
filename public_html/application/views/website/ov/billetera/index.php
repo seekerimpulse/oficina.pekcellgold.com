@@ -17,6 +17,7 @@
 					<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 						<a href="#">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
+								<i class="fa fa-signal fa-3x"></i>
 								<h5>Estado de Cuenta</h5>
 							</div>	
 						</a>
@@ -24,6 +25,7 @@
 					<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 						<a href="/ov/billetera2/historial">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
+								<i class="fa fa-calendar fa-3x"></i>
 								<h5>Historial</h5>
 							</div>	
 						</a>
@@ -32,7 +34,8 @@
 					<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
 						<a href="pedir_pago">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
-								<h5>Pedir Plata</h5>
+								<i class="fa fa-money fa-3x"></i>
+								<h5>Pedir Plata</h5> 
 							</div>	
 						</a>
 					</div>
