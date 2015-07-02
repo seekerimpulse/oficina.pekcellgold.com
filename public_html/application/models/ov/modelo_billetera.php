@@ -140,5 +140,17 @@ class modelo_billetera extends CI_Model
 		return $retenciones;
 	}
 	
+	function PagosClientes()
+	{
+		$q=$this->db->query('select * ,
+							(select descripcion from cat_metodo_cobro MP where C.id_metodo=MP.id_metodo) metodo,
+							(select descripcion from cat_estatus CE where CE.id_estatus=C.id_estatus) estado
+							from cobro C where id_estatus = 3 order by fecha');
+		return $q->result();
+	}
 	
+	function añosPagos(){
+		$q = $this->db->query("select YEAR(fecha) as año from cobro group by año");
+		return $q->result();
+	}
 }
