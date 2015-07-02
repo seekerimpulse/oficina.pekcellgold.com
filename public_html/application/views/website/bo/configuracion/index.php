@@ -79,10 +79,10 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">	
-													<a href="#">
+													<a href="retenciones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-money fa-3x"></i>
-															<h1>Alta Bono y periodo de calculo</h1>
+															<h1>Retenciones <br><br><br></h1>
 														</div>
 													</a>
 												</div>

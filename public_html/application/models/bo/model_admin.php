@@ -180,6 +180,34 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select * from cat_impuesto");
 		return $q->result();
 	}
+	function get_retencion()
+	{
+		$q=$this->db->query("select * from cat_retencion");
+		return $q->result();
+	}
+	
+	function cambiar_estatus_retencion(){
+	
+		$this->db->query("update cat_retencion set estatus = '".$_POST['estado']."' where id_retencion=".$_POST["id"]);
+		return true;
+	}
+	
+	function actualizar_retencion(){
+		$datos = array(
+				'descripcion' => $_POST['nombre'],
+				'porcentaje'	  => $_POST['porcentaje'],
+				'duracion'	  => $_POST['duracion']
+		);
+		$this->db->where('id_retencion', $_POST['id']);
+		$this->db->update('cat_retencion', $datos);
+		return true;
+	}
+	
+	function get_retencion_id($id){
+		$categoria = $this->db->query('select * from cat_retencion where id_retencion = '.$id.'');
+		return $categoria->result();
+	}
+	
 	function get_impuestos_mercancia($id)
 	{
 		$q=$this->db->query("SELECT id_impuesto FROM cross_merc_impuesto WHERE id_mercancia=".$id);
@@ -711,10 +739,26 @@ class model_admin extends CI_Model
             );
 		$this->db->insert("cat_impuesto",$dato_impuesto);
 	}
+	function new_retencion($nombre,$porcentaje,$duracion)
+	{
+		$dato_impuesto=array(
+				"descripcion" =>	$nombre,
+				"porcentaje"  =>	$porcentaje,
+				"duracion"  =>	$duracion,
+				"estatus"     =>	'ACT'
+		);
+		$this->db->insert("cat_retencion",$dato_impuesto);
+	}
 	function kill_impuesto()
 	{
 		$this->db->query("delete from cat_impuesto where id_impuesto=".$_POST["id"]);
 	}
+	
+	function kill_retencion()
+	{
+		$this->db->query("delete from cat_retencion where id_retencion=".$_POST["id"]);
+	}
+	
 	function get_dato_pais()
 	{
 		$q=$this->db->query("select CL.Language, CL.estatus estatus, CM.estatus estatus_m, CM.codigo_moneda codigo_moneda, CM.moneda moneda, C.estatus estado_pais
