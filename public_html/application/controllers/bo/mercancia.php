@@ -79,7 +79,7 @@ class mercancia extends CI_Controller
 		$zona	         = $this->model_admin->get_zona();
 		$inscripcion	 = $this->model_admin->get_paquete();
 		$tipo_paquete	 = $this->model_admin->get_tipo_paquete();
-		$pais            = $this->model_admin->get_pais();
+		$pais            = $this->model_admin->get_pais_activo();
 		
 		$redes           = $this->model_tipo_red->listarTodos();
 		

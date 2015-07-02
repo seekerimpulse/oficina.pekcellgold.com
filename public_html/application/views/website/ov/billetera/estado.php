@@ -6,7 +6,7 @@
 						<h1 class="page-title txt-color-blueDark">
 							<a href="/ov"><i class="fa fa-home"></i> Menu</a>
 							<a href="/ov/billetera2/index"> > Billetera</a>
-							<span> > Historial</span>
+							<span> > Estado</span>
 							
 						</h1>
 					</div>
@@ -65,65 +65,33 @@
 												<!-- widget content -->
 												<div class="widget-body">
 													<div id="myTabContent1" class="tab-content padding-10">
+													<h1 class="text-center">Estado de Cuenta del mes</h1>
 													<?php $total = $ganancias; ?>
-															<form action="send_mail" method="post" id="contact-form1"  class="smart-form">
-																<header>Comiciones: $<?=number_format($ganancias,2)?></header>
-																<fieldset>
-																	<header>Impuestos</header>
-																	<?php foreach ($impuestos as $impuesto) {?>
-																	<section class="col col-10">
-																		<label class="label">Impuesto <?php echo $impuesto->descripcion; ?></label>
-																		<label class="input">
-																			<input name="impuestos" type="text" readonly class="from-control" value="<?php echo $impuesto->impuesto; ?>"/>
-																		</label>
-																	</section>
+													
+															<table id="dt_basic" class="table table-striped table-bordered table-hover">
+																<?php foreach ($impuestos as $impuesto) {?>
+																	<tr>
+																		<td>Impuesto <?php echo $impuesto->descripcion; ?></td>
+																		<td><?php echo $impuesto->impuesto; ?></td>
+																	</tr>
 																
-																	<?php } ?>
-																</fieldset>
-																<fieldset>
-																	<section class="col col-10">
-																		<label class="label">Cargos</label>
-																		<label class="input">
-																			<input type="text" class="from-control" name="retenciones" readonly />
-																		</label>
-																	</section>
-																	<section class="col col-10">
-																		<label class="label">Saldo</label>
-																		<label class="input">
-																			<input value="" type="number" name="saldo" class="from-control" id="saldo" readonly />
-																		</label>
-																	</section>
-																	<section class="col col-10">
-																		<label class="label">Pedir Dinero </label>
-																		<label class="input">
-																			<input name="cobro" type="number" class="from-control" id="cobro"/>
-																		</label>
-																	</section>
-																	<section class="col col-10">
-																		<label class="label">Método de pago</label>
-																		<label class="select">
-																			<select required name="metodo">
-																			<?foreach ($metodo_cobro as $key)
-																			{
-																				echo '<option value="'.$key->id_metodo.'">'.$key->descripcion.'</option>';
-																			}?>
-																			</select>
-																		</label>
-																	</section>
-																	<section class="col col-10">
-																		<label class="label">Saldo Final</label>
-																		<label class="input">
-																			<input value="" type="number" name="neto" id="neto" class="from-control" readonly />
-																		</label>
-																	</section>
-																</fieldset>	
-																
-																<footer>
-																	<button type="button" onclick="cobrar()" class="btn btn-primary" id="enviar">
-																		Cobrar
-																	</button>
-																</footer>
-															</form>
+																	<?php $total-=$impuesto->impuesto;
+																	} ?>
+																	
+																	<?php foreach ($retenciones as $retencion) {?>
+																	<tr>
+																		<td><?php echo $retencion['descripcion']; ?></td>
+																		<td><?php echo $retencion['valor']; ?></td>
+																	</tr>
+																	<?php $total-=$retencion['valor'];
+																	} ?>
+																	
+																	<tr>
+																		<td>Saldo</td>
+																		<td><?php echo $total; ?></td>
+																	</tr>
+																</table>
+															
 														
 													</div>
 												</div>

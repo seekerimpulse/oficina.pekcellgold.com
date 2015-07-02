@@ -109,11 +109,11 @@ class modelo_billetera extends CI_Model
 		return $q->result();
 	}
 	
-	function ValorImpuestos($id){
+	function ValorImpuestos($id, $pais){
 		$mes = date("m");
 		$q = $this->db->query("select ci.id_impuesto, ci.descripcion, sum(v.costo * (ci.porcentaje/100)) as impuesto 
-								from venta v, cross_venta_mercancia cvm, cross_merc_impuesto cmi, cat_impuesto ci 
-								where v.id_venta = cvm.id_venta and  cmi.id_mercancia = cvm.id_mercancia and cmi.id_impuesto = ci.id_impuesto and v.id_user = ".$id." and ci.estatus = 'ACT' and Month(v.fecha) = '".$mes."' group by ci.id_impuesto;");
+					from venta v, cross_venta_mercancia cvm, cross_merc_impuesto cmi, cat_impuesto ci, mercancia m 
+					where v.id_venta = cvm.id_venta and  cmi.id_mercancia = cvm.id_mercancia and cmi.id_impuesto = ci.id_impuesto and v.id_user = ".$id." and cvm.id_mercancia = m.sku and m.pais = ci.id_pais and ci.estatus = 'ACT' and Month(v.fecha) = '".$mes."' and m.pais = '".$pais."'");
 		return $q->result();
 	}
 	

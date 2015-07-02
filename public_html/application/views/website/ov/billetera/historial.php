@@ -161,26 +161,7 @@
 				// DO NOT REMOVE : GLOBAL FUNCTIONS!
 				pageSetUp();
 
-				if ($('#sales-graph').length) {
-
-					Morris.Area({
-						element : 'sales-graph',
-						data : [
-						<?foreach ($historial as $key) 
-						{?>
-							{
-								period : '<?=$key->fecha?>',
-								dinerillo : <?=$key->monto?>,
-							},
-						<?}?>
-						],
-						xkey : 'period',
-						ykeys : ['dinerillo'],
-						labels : ['Ganancias'],
-						pointSize : 4,
-						hideHover : 'auto'
-					});
-				}
+				
 
 				/* BASIC ;*/
 				var responsiveHelper_dt_basic = undefined;
