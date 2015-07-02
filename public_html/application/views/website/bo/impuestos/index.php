@@ -73,6 +73,7 @@
 													<th>ID</th>
 													<th>Nombre</th>
 													<th>Porcentaje</th>
+													<th>Pais</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -83,6 +84,10 @@
 														<td><?php echo $impuesto->id_impuesto; ?></td>
 														<td><?php echo $impuesto->descripcion; ?></td>
 														<td><?php echo $impuesto->porcentaje; ?> %</td>
+														<td>
+															<img class="flag flag-<?php echo strtolower($impuesto->Code2); ?>" src="img/blank.gif">
+															<?php echo $impuesto->Name; ?>
+														</td>
 														<td>
 															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $impuesto->id_impuesto; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
 															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $impuesto->id_impuesto; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>

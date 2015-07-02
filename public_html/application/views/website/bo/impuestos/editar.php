@@ -1,6 +1,17 @@
 
 <form id="nueva" class="smart-form"  novalidate="novalidate" >
 							<fieldset>
+								<label class="select"> Selecione Pais
+									<select style="width: 25rem;" name="pais" required>
+									<?php foreach ($paises as $pais){
+										if($pais->Code==$impuesto[0]->id_pais)
+											echo '<option value="'.$pais->Code.'" selected>'.$pais->Name.'</option>';
+										else
+											echo '<option value="'.$pais->Code.'">'.$pais->Name.'</option>';
+										?>
+									<?php } ?>
+									</select>
+								</label>
 								<input type="text" class="hide" value="<?php echo $_POST['id']; ?>" name="id">
 								<label class="input"> Nombre
 								<input type="text" name="nombre" required placeholder="Nombre" style="width: 50%;" class="form-control" value="<?php echo $impuesto[0]->descripcion; ?>" required>

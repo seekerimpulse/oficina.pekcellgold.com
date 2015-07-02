@@ -45,12 +45,9 @@
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
 				<input id='porc' class="form-control" name="porc" size="20" placeholder="Valor" type="number" required>
 	        </label>
-	        <div class="inline-group">
-	        		<label class="radio">
-				    	<input checked="" value="UNA" name="duracion" placeholder="duracion" type="radio">
-					<i></i>Unica Vez</label>
+	        <div class="">
 					<label class="radio">
-						<input value="ANO" name="duracion" placeholder="duracion" type="radio">
+						<input checked="" value="ANO" name="duracion" placeholder="duracion" type="radio">
 					<i></i>Anual</label>
 					<label class="radio">
 						<input value="MES" name="duracion" placeholder="duracion" type="radio">
