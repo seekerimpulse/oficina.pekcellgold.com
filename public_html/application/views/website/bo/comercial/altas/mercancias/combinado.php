@@ -136,8 +136,6 @@
 											</select>
 											</label>
 											<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-											<a href="#" clas="pull-right" onclick="new_impuesto()">Nuevo impuesto<i class="fa fa-plus"></i></a>
-											<a href="#" onclick="kill_impuesto()">Eliminar impuesto<i class="fa fa-plus"></i></a>
 											</section>
 											<section class="col col-3">Proveedor
 											<label class="select">

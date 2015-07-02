@@ -117,7 +117,9 @@
 																<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>	
 															<?}?>
 															</select>
+															
 														</label>
+														<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
 													</section>
 													<section class="col col-3">Proveedor
 														<label class="select">
@@ -185,7 +187,29 @@ $(document).ready(function() {
 		savable:false
 	})
 
+	$('#startdate').datepicker({
+			changeMonth: true,
+			numberOfMonths: 2,
+			dateFormat:"yy-mm-dd",
+			changeYear: true,
+			prevText : '<i class="fa fa-chevron-left"></i>',
+			nextText : '<i class="fa fa-chevron-right"></i>',
+			onSelect : function(selectedDate) {
+				$('#finishdate').datepicker('option', 'minDate', selectedDate);
+			}
+		});
 
+		$('#finishdate').datepicker({
+			changeMonth: true,
+			numberOfMonths: 2,
+			dateFormat:"yy-mm-dd",
+			changeYear: true,
+			prevText : '<i class="fa fa-chevron-left"></i>',
+			nextText : '<i class="fa fa-chevron-right"></i>',
+			onSelect : function(selectedDate) {
+				$('#startdate').datepicker('option', 'maxDate', selectedDate);
+			}
+		});
 	/* BASIC ;*/
 	var responsiveHelper_dt_basic = undefined;
 	var responsiveHelper_datatable_fixed_column = undefined;
