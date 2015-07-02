@@ -219,7 +219,7 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="billetera">
+													<a href="billetera2/index">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-money fa-3x"></i>
 															<h5>Billetera</h5>

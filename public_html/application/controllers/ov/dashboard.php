@@ -29,10 +29,10 @@ class dashboard extends CI_Controller
 
 		$id_sponsor=$this->modelo_dashboard->get_red($id);
 		$ultima=$this->modelo_dashboard->get_ultima($id);
-    $telefono=$this->modelo_dashboard->get_user_phone($id);
-    $email=$this->modelo_dashboard->get_user_email($id);
-    $username=$this->modelo_dashboard->get_user_name($id);
-    $pais=$this->modelo_dashboard->get_user_country_code($id);
+	    $telefono=$this->modelo_dashboard->get_user_phone($id);
+	    $email=$this->modelo_dashboard->get_user_email($id);
+	    $username=$this->modelo_dashboard->get_user_name($id);
+	    $pais=$this->modelo_dashboard->get_user_country_code($id);
 
 		$name_sponsor=$this->general->get_username($id_sponsor[0]->id_usuario);
 
@@ -54,10 +54,10 @@ class dashboard extends CI_Controller
 
 		$this->template->set("id",$id);
 		$this->template->set("usuario",$usuario);
-    $this->template->set("telefono",$telefono);
-    $this->template->set("email",$email);
-    $this->template->set("username",$username);
-    $this->template->set("pais",$pais);
+	    $this->template->set("telefono",$telefono);
+	    $this->template->set("email",$email);
+	    $this->template->set("username",$username);
+	    $this->template->set("pais",$pais);
 		$this->template->set("style",$style);
 		$this->template->set("user",$user);
 		$this->template->set("fondo",$fondo);

@@ -43,7 +43,7 @@ class modelo_billetera extends CI_Model
 	}
 	function get_monto($id)
 	{
-		$q=$this->db->query('select monto from cobro where id_user='.$id.' and id_estatus=4');
+		$q=$this->db->query('select sum(monto) as monto from cobro where id_user='.$id.' and id_estatus=4');
 		return $q->result();
 	}
 	function get_cobro($id)
@@ -86,5 +86,10 @@ class modelo_billetera extends CI_Model
 	                "monto"			=> 	$monto_activo
 	            );
 		$this->db->insert("cobro",$dato_cobro);
+	}
+	
+	function añosCobro($id){
+		$q = $this->db->query("select YEAR(fecha) as año from cobro where id_user='$id' group by año");
+		return $q->result();
 	}
 }
