@@ -200,11 +200,12 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
+		$paises            = $this->model_admin->get_pais_activo();
+		
 		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->set("style",$style);
-	
+		$this->template->set("paises",$paises);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
@@ -221,7 +222,7 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-		$impuestos 	 = $this->model_admin->get_impuesto();
+		$impuestos 	 = $this->model_admin->get_impuestos();
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -241,6 +242,8 @@ class configuracion extends CI_Controller
 		$style           = $this->general->get_style($id);
 		$impuesto	 	 = $this->model_admin->get_impuesto_id($_POST['id']);
 	
+		$paises            = $this->model_admin->get_pais_activo();
+		$this->template->set("paises",$paises);
 		$this->template->set("impuesto",$impuesto);
 		$this->template->build('website/bo/impuestos/editar');
 	}

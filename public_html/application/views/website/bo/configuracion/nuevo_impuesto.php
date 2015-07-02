@@ -37,8 +37,15 @@
 <div>
     <fieldset id="pswd">
 		<form class="smart-form" action="/bo/admin/new_impuestos" method="POST" role="form">
-			<legend>Nueva Retencion </legend><br>
+			<legend>Nuevo Impuesto </legend><br>
 			<div class="form-group" style="width: 20rem;">
+				<label class="select" style="margin-left: 1rem;"> Selecione Pais
+					<select style="width: 25rem;" name="pais" required>
+					<?php foreach ($paises as $pais){?>
+						<option value="<?php echo $pais->Code; ?>"><?php echo $pais->Name; ?></option>
+					<?php } ?>
+					</select>
+				</label>
 			<label style="margin: 1rem;" class="input"><i class="icon-prepend fa fa-check-circle-o"></i>
 				<input id='desc' class="form-control" name="desc" size="20" placeholder="Nombre" type="text" required>
 	        </label>

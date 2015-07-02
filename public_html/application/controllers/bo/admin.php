@@ -1202,7 +1202,7 @@ class admin extends CI_Controller
 	
 	function new_impuestos()
 	{
-		$this->model_admin->new_impuestos($_POST['desc'],$_POST['porc']);
+		$this->model_admin->new_impuestos($_POST['desc'],$_POST['porc'],$_POST['pais']);
 		redirect('/bo/configuracion/listar_impuestos');
 	}
 	

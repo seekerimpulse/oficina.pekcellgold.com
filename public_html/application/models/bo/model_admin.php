@@ -180,6 +180,13 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select * from cat_impuesto");
 		return $q->result();
 	}
+	function get_impuestos()
+	{
+		$q=$this->db->query("select a.id_impuesto,a.descripcion,a.porcentaje,a.estatus,a.id_pais,b.Code,b.Name,b.Code2 from cat_impuesto a,Country b
+where(a.id_pais=b.Code)");
+		return $q->result();
+	}
+	
 	function get_retencion()
 	{
 		$q=$this->db->query("select * from cat_retencion");
@@ -212,7 +219,8 @@ class model_admin extends CI_Model
 	function actualizar_impuesto(){
 		$datos = array(
 				'descripcion' => $_POST['nombre'],
-				'porcentaje'	  => $_POST['porcentaje']
+				'porcentaje'	  => $_POST['porcentaje'],
+				'id_pais'	  => $_POST['pais']
 		);
 		$this->db->where('id_impuesto', $_POST['id']);
 		$this->db->update('cat_impuesto', $datos);
@@ -770,11 +778,12 @@ class model_admin extends CI_Model
 		$this->db->insert("cat_retencion",$dato_impuesto);
 	}
 	
-	function new_impuestos($nombre,$porcentaje)
+	function new_impuestos($nombre,$porcentaje,$pais)
 	{
 		$dato_impuesto=array(
 				"descripcion" =>	$nombre,
 				"porcentaje"  =>	$porcentaje,
+				"id_pais"  =>	$pais,
 				"estatus"     =>	'ACT'
 		);
 		$this->db->insert("cat_impuesto",$dato_impuesto);
@@ -846,6 +855,12 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select Code, Name, Code2 from Country ");
 		return $q->result();
 	}
+	function get_pais_activo()
+	{
+		$q=$this->db->query("select Code, Name, Code2 from Country where Estatus='ACT'");
+		return $q->result();
+	}
+	
 	function use_mail()
 	{
 		$q=$this->db->query("select * from users where email like '".$_POST['mail']."'");
