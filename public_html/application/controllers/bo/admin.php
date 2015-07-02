@@ -1199,6 +1199,13 @@ class admin extends CI_Controller
 		$this->model_admin->new_retencion($_POST['desc'],$_POST['porc'],$_POST['duracion']);
 		redirect('/bo/configuracion/listar_retenciones');
 	}
+	
+	function new_impuestos()
+	{
+		$this->model_admin->new_impuestos($_POST['desc'],$_POST['porc']);
+		redirect('/bo/configuracion/listar_impuestos');
+	}
+	
 	function kill_impuesto()
 	{
 		$this->model_admin->kill_impuesto();

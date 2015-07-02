@@ -192,6 +192,12 @@ class model_admin extends CI_Model
 		return true;
 	}
 	
+	function cambiar_estatus_impuesto(){
+	
+		$this->db->query("update cat_impuesto set estatus = '".$_POST['estado']."' where id_impuesto=".$_POST["id"]);
+		return true;
+	}
+	
 	function actualizar_retencion(){
 		$datos = array(
 				'descripcion' => $_POST['nombre'],
@@ -203,8 +209,22 @@ class model_admin extends CI_Model
 		return true;
 	}
 	
+	function actualizar_impuesto(){
+		$datos = array(
+				'descripcion' => $_POST['nombre'],
+				'porcentaje'	  => $_POST['porcentaje']
+		);
+		$this->db->where('id_impuesto', $_POST['id']);
+		$this->db->update('cat_impuesto', $datos);
+		return true;
+	}
+	
 	function get_retencion_id($id){
 		$categoria = $this->db->query('select * from cat_retencion where id_retencion = '.$id.'');
+		return $categoria->result();
+	}
+	function get_impuesto_id($id){
+		$categoria = $this->db->query('select * from cat_impuesto where id_impuesto = '.$id.'');
 		return $categoria->result();
 	}
 	
@@ -749,6 +769,17 @@ class model_admin extends CI_Model
 		);
 		$this->db->insert("cat_retencion",$dato_impuesto);
 	}
+	
+	function new_impuestos($nombre,$porcentaje)
+	{
+		$dato_impuesto=array(
+				"descripcion" =>	$nombre,
+				"porcentaje"  =>	$porcentaje,
+				"estatus"     =>	'ACT'
+		);
+		$this->db->insert("cat_impuesto",$dato_impuesto);
+	}
+	
 	function kill_impuesto()
 	{
 		$this->db->query("delete from cat_impuesto where id_impuesto=".$_POST["id"]);

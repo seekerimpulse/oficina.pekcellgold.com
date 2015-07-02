@@ -166,13 +166,97 @@ class configuracion extends CI_Controller
 	}
 	
 	function eliminar_retencion(){
-		$correcto = $this->model_grupo_producto->eliminar_categoria();
-		if($correcto){
-			echo "Retencion Eliminada";
-		}
-		else{
-			echo "No se logro eliminada la retencion";
+		echo "Retencion Eliminada";
+	
+	}
+	
+	function impuestos()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
 		}
 	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/impuestos');
+	}
+	
+	function nuevo_impuesto()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/nuevo_impuesto');
+	}
+	
+	function listar_impuestos()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$impuestos 	 = $this->model_admin->get_impuesto();
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+		$this->template->set("impuestos",$impuestos);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/impuestos/index');
+	}
+	function cambiar_estado_impuesto(){
+		$correcto = $this->model_admin->cambiar_estatus_impuesto();
+	}
+	function editar_impuesto(){
+		$id              = $this->tank_auth->get_user_id();
+		$style           = $this->general->get_style($id);
+		$impuesto	 	 = $this->model_admin->get_impuesto_id($_POST['id']);
+	
+		$this->template->set("impuesto",$impuesto);
+		$this->template->build('website/bo/impuestos/editar');
+	}
+	
+	function actualizar_impuesto(){
+		$correcto = $this->model_admin->actualizar_impuesto();
+		if($correcto){
+			echo "Retencion Actualizada";
+		}
+		else{
+			echo "No se logro actualizar la Retencion";
+		}
+	
+	}
+	
+	function eliminar_impuesto(){
+		echo "Retencion Eliminada";
 	}
 }

@@ -10,8 +10,8 @@
 								<a href="/bo/dashboard"> Menu</a> 
 							<span>>
 								<a href="/bo/configuracion/">Configuracion</a> > 
-								<a href="/bo/configuracion/retenciones">Retenciones</a>
-								> Listar Retenciones
+								<a href="/bo/configuracion/impuestos"> Impuestos</a>
+								> Listar Impuestos
 							</span>
 						</h1>
 		</div>
@@ -73,38 +73,23 @@
 													<th>ID</th>
 													<th>Nombre</th>
 													<th>Porcentaje</th>
-													<th>Duracion</th>
 													<th></th>
 												</tr>
 											</thead>
 											<tbody>
 												
-												<?foreach ($retenciones as $retencion) {?>
+												<?foreach ($impuestos as $impuesto) {?>
 													<tr>
-														<td><?php echo $retencion->id_retencion; ?></td>
-														<td><?php echo $retencion->descripcion; ?></td>
-														<td><?php echo $retencion->porcentaje; ?> %</td>
+														<td><?php echo $impuesto->id_impuesto; ?></td>
+														<td><?php echo $impuesto->descripcion; ?></td>
+														<td><?php echo $impuesto->porcentaje; ?> %</td>
 														<td>
-														<?php 
-														if($retencion->duracion=='DIA')
-															echo "Diario";
-														else if($retencion->duracion=='SEM')
-															echo "Semanal";
-														else if($retencion->duracion=='MES')
-															echo "Mensual";
-														else if($retencion->duracion=='ANO')
-															echo "Anual";
-														else if ($retencion->duracion=='UNA')
-															echo "Unica Vez";
-														 ?>
-														</td>
-														<td>
-															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $retencion->id_retencion; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $retencion->id_retencion; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
-															<?php if($retencion->estatus == 'ACT'){ ?>
-																<a title="Desactivar" onclick="estado('DES','<?php echo $retencion->id_retencion; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $impuesto->id_impuesto; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
+															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $impuesto->id_impuesto; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															<?php if($impuesto->estatus == 'ACT'){ ?>
+																<a title="Desactivar" onclick="estado('DES','<?php echo $impuesto->id_impuesto; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
-																<a title="Activar" onclick="estado('ACT','<?php echo $retencion->id_retencion; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+																<a title="Activar" onclick="estado('ACT','<?php echo $impuesto->id_impuesto; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
 														</td>
 													</tr>
@@ -229,7 +214,7 @@ $(document).ready(function() {
 function editar(id){
 	$.ajax({
 		type: "POST",
-		url: "/bo/configuracion/editar_retencion",
+		url: "/bo/configuracion/editar_impuesto",
 		data: {
 			id: id
 			}
@@ -238,7 +223,7 @@ function editar(id){
 	.done(function( msg ) {
 		bootbox.dialog({
 			message: msg,
-			title: 'Modificar Retencion',
+			title: 'Modificar Impuesto',
 				});
 	});//fin Done ajax
 }
@@ -252,14 +237,14 @@ function eliminar(id) {
 	}).done(function( msg ) {
 							
 		bootbox.dialog({
-			message: "Retencion Eliminada con exito",
+			message: "Impuesto Eliminado con exito",
 			title: "Atención",
 			buttons: {
 			success: {
 			label: "Ok!",
 			className: "btn-success",
 			callback: function() {
-			location.href="/bo/configuracion/listar_retenciones";
+			location.href="/bo/configuracion/listar_impuestos";
 					}
 				}
 			}
@@ -272,14 +257,14 @@ function estado(estatus, id)
 		
 	$.ajax({
 		type: "POST",
-		url: "/bo/configuracion/cambiar_estado_retencion",
+		url: "/bo/configuracion/cambiar_estado_impuesto",
 		data: {
 			id:id, 
 			estado: estatus
 		},
 		}).done(function( msg )
 				{
-					location.href = "/bo/configuracion/listar_retenciones";
+					location.href = "/bo/configuracion/listar_impuestos";
 				
 			})
 	}
