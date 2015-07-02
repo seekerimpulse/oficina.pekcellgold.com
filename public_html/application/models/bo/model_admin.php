@@ -56,7 +56,9 @@ class model_admin extends CI_Model
 	function get_data_mercancia($tipo,$sku)
 	{
 		if($tipo==1)
-			$q=$this->db->query("select * from producto where id=".$sku);
+			$q=$this->db->query("select P.*, TR.nombre nombre_red from producto P, tipo_red TR, cat_grupo_producto 
+					CGP where P.id=".$sku." and 
+					CGP.id_grupo = P.id_grupo and CGP.id_red = TR.id");
 		if($tipo==2)
 			$q=$this->db->query("select * from servicio where id=".$sku);
 		if($tipo==3)
@@ -125,6 +127,11 @@ class model_admin extends CI_Model
 	function get_grupo()
 	{
 		$q=$this->db->query("select * from cat_grupo_producto");
+		return $q->result();
+	}
+	function get_red()
+	{
+		$q=$this->db->query("select * from tipo_red");
 		return $q->result();
 	}
 	function get_mercancia()
@@ -228,23 +235,23 @@ class model_admin extends CI_Model
 					"peso"           => $_POST['peso'],
 					"alto"           => $_POST['alto'],
 					"ancho"          => $_POST['ancho'],
-					"id_grupo"       => $_POST['grupo'],
+					//"id_grupo"       => $_POST['grupo'],
 					"profundidad"    => $_POST['profundidad'],
 					"diametro"       => $_POST['diametro'],
 					"marca"          => $_POST['marca'],
 					"codigo_barras"  => $_POST['codigo_barras'],
-					"min_venta"      => $_POST['min_venta'],
-					"max_venta"      => $_POST['max_venta'],
-					"instalacion"    => $_POST['instalacion'],
-					"especificacion" => $_POST['especificacion'],
-					"produccion"     => $_POST['produccion'],
-					"importacion"    => $_POST['importacion'],
-					"sobrepedido"    => $_POST['sobrepedido']
+					//"min_venta"      => $_POST['min_venta'],
+					//"max_venta"      => $_POST['max_venta'],
+					//"instalacion"    => $_POST['instalacion'],
+					//"especificacion" => $_POST['especificacion'],
+					//"produccion"     => $_POST['produccion'],
+					//"importacion"    => $_POST['importacion'],
+					//"sobrepedido"    => $_POST['sobrepedido']
 	            );
 
 			$this->db->where('id', $sku);
 			$this->db->update('producto', $dato_producto); 
-			
+			/*
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
 					"id_proveedor"      	=> $_POST['proveedor'],
@@ -264,7 +271,7 @@ class model_admin extends CI_Model
 					"id_impuesto"	=> $impuesto
 				);
 				$this->db->insert("cross_merc_impuesto",$dato_impuesto);
-			}
+			}*/
 			// Produces:
 			// UPDATE mytable 
 			// SET title = '{$title}', name = '{$name}', date = '{$date}'
@@ -658,13 +665,15 @@ class model_admin extends CI_Model
 	                "estatus"			=>	"ACT"
 	            );
 			$this->db->insert("cat_img",$dato_img);
-			$id_foto=mysql_insert_id();
+			
+			$id_foto = mysql_insert_id();
 
 			$dato_cross_img=array(
 	                "id_mercancia"		=>	$id,
 	                "id_cat_imagen"	=>	$id_foto
 	            );
-			$this->db->insert("cross_merc_img",$dato_cross_img);
+			$this->db->where('id_mercancia', $id);
+			$this->db->update("cross_merc_img",$dato_cross_img);
 		}
 	}
 	function img_merc_promo($id,$data)

@@ -1770,15 +1770,6 @@ function editar(id_merc)
 		bootbox.dialog({
 		message: msg,
 		title: 'Edicion',
-		buttons: {
-			success: {
-			label: "Aceptar",
-			className: "btn-success",
-			callback: function() {
-				$("#update_merc").submit();
-				}
-			}
-		}
 	})//fin done ajax
 	});//Fin callback bootbox
 }

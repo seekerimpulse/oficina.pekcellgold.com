@@ -1,201 +1,327 @@
 
 <!-- MAIN CONTENT -->
 <div id="content">
-	<div class="row">
-		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-			<h1 class="page-title txt-color-blueDark">
-				
-				<!-- PAGE HEADER -->
-				<i class="fa-fw fa fa-pencil-square-o"></i> 
-				<a href="/bo/comercial">Comercial</a>
-				<!--<span>>
-					<a href="/bo/admin">Módulo administrativo</a>
-				</span>-->
-				<span>>
-					Mercancia
-				</span>
-			</h1>
-		</div>
-	</div>
+	
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
 			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-colorbutton="false"	>
-					
-					<header>
-						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Mercancia</h2>				
-						
-					</header>
-
-					<!-- widget div-->
+									<!-- widget div-->
 					<div>
 						<div class="widget-body">
-							<form method="POST" enctype="multipart/form-data"  action="/bo/mercancia/CrearCombinado" class="smart-form">
-								<input type="text" class="hide" value="<?php echo $_GET['id']; ?>" name="tipo_mercancia">
+							<form method="POST" enctype="multipart/form-data"   action="/bo/admin/update_mercancia" class="smart-form">
+								
+									<section class="col col-6" style="display:none;">
+										<label class="select"> 
+											<select id="tipo_merc" required name="tipo_merc">
+										             	<option value="1">merc</option>
+										        </select>
+										</label>
+									</section>
+									
+									<section class="col col-6" style="display:none;">
+										<label class="select"> 
+											<select id="id_merc" required name="id_merc">
+									                	<option value='<?php echo $id_mercancia?>'>merc</option>
+									                </select>
+									        </label>
+									</section>
+									
 								<fieldset>
-									<legend>Datos del Paquete</span></legend>
+									<legend>Datos del producto</span></legend>
 									<div id="form_mercancia">
 										<div class="row">
 											<fieldset>
-											
-											<section class="col col-2">
-											<label class="input">Nombre
-											<input type="text" name="nombre" id="nombre_pr">
-											</label>
-											</section>
-											<div id="tipo_promo">
-								
-											<section class="col col-2">
-											<label class="input"><span id="labelextra">Descuento del paquete</span>
-											<input id="precio_promo" type="text" name="descuento">
-											</label>
-											</section>
-											<section class="col col-3">RED
+												<section class="col col-12" style="width: 50%;">
+													<label class="input">
+														Nombre
+														<input required type="text" value='<?php echo $data_merc[0]->nombre?>' id="nombre_p" name="nombre">
+													</label>
+												</section>
+												
+												<section class="col col-12" style="width: 50%;">
+													<label class="input">
+														Concepto
+														<input required type="text" value='<?php echo $data_merc[0]->concepto?>' id="concepto" name="concepto">
+													</label>
+												</section>
+												
+												<section class="col col-12" style="width: 50%;">
+													<label class="input">
+														Marca
+														<input type="text" value='<?php echo $data_merc[0]->marca?>' name="marca" id="marca">
+													</label>
+												</section>
+												
+												<section class="col col-12" style="width: 50%;">
+													<label class="input">
+														Código de barras
+														<input type="text" value='<?php echo $data_merc[0]->codigo_barras?>' name="codigo_barras">
+													</label>
+												</section>
+												
+												<section class="col col-12" style="width: 100%;">RED
 															<label class="select">
 																<select name="red">
-																<?foreach ($redes as $key){?>
-																	<option value="<?=$key->id?>">
-																	<?= $key->nombre?>
+																<?foreach ($red as $key){
+																	
+																	if ($data_merc[0]->nombre_red == $key->nombre){?>
+																		<option selected value='<?=$key->id?>'>
+																			<?= $key->nombre?>
+																	<? }	else{?>
+																		<option value='<?=$key->id?>'>
+																			<?= $key->nombre?>
+																	<? }?>
 																<?}?>
 																</select>
 															</label>
-														</section>
-											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="prods">
-											<section class="col col-8">Productos
-											<label class="select">
-											<select class="custom-scroll"  name="producto[]">
-											<option value="0">Ninguno</option>
-											<?foreach ($producto as $key){?>
-											<option value="<?=$key->id_mercancia?>">
-											<?=$key->nombre?></option>
-											<?}?>
-											</select>
-											</label>
-											</section>
-											<section class="col col-4">
-											<label class="input">Cantidad de productos
-											<input type="number" min="1" name="n_productos[]" id="prod_qty">
-											</label>
-											</section>
-											</div>
-											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="servs">
-											<section class="col col-8">Servicios
-											<label class="select">
-											<select class="custom-scroll" name="servicio[]">
-											<option value="0">Ninguno</option>
-											<?foreach ($servicio as $key){?>
-											<option value="<?=$key->id_mercancia?>">
-											<?=$key->nombre?></option>
-											<?}?>
-											</select>
-											</label>
-											</section>
-											<section class="col col-4">
-											<label class="input">Cantidad de servicios
-											<input type="number" min="1" name="n_servicios[]" id="serv_qty">
-											</label>
-											</section>
-											</div>
-											</div>
-											</fieldset>
-											<div id="agregar" class=" text-center row"><a onclick="new_product()">Agregar producto <i class="fa fa-plus"></i></a>  <a  onclick="new_service()">Agregar servicio <i class="fa fa-plus"></i></a></div>
-											<div id="moneda"><fieldset id="moneda_field">
-											<legend>Moneda y país</legend>
-											<section class="col col-2">
-											<label class="input">
-											Costo real
-											<input type="text" name="real" id="real">
-											</label>
-											</section>
-											<section class="col col-2">
-											<label class="input">Costo distribuidores
-											<input type="text" name="costo" id="costo">
-											</label>
-											</section>
-											<section class="col col-2">
-											<label class="input">Costo publico
-											<input type="text" name="costo_publico" id="costo_publico">
-											</label>
-											</section>
-											<section class="col col-2">
-											<label class="input">
-											Tiempo mínimo de entrega
-											<input placeholder="En días" type="text" name="entrega" id="entrega">
-											</label>
-											</section>
-											<section class="col col-3">Impuesto
-											<label class="select">
-											<select name="id_impuesto[]">
-											<?foreach ($impuesto as $key){?>
-											<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>	
-											<?}?>
-											</select>
-											</label>
-											<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-											</section>
-											<section class="col col-3">Proveedor
-											<label class="select">
-											<select name="proveedor">
-											<?foreach ($proveedores as $key){?>
-											<option value="<?=$key->id_usuario?>">
-											<?=$key->nombre." ".$key->apellido?> comisión: %
-											<?=$key->comision?></option>
-											<?}?>
-											</select>
-											</label>
-											</section>
-											<section class="col col-3">País del producto
-											<label class="select">
-											<select id="pais" required name="pais">
-											<?foreach ($pais as $key){?>
-											<option value="<?=$key->Code?>">
-											<?=$key->Name?></option>
-											<?}?>
-											</select>
-											</label>
-											</section>
-											<section class="col col-3">
-											<label class="input">
-											Puntos comisionables
-											<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
-											</label>
-											</section>
-											</fieldset></div>
-											<div>
-											<section style="padding-left: 0px;" class="col col-6">Descripcion
-											<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"></textarea>
-											</section>
-											<section id="imagenes" class="col col-6">
-											<label class="label">Imágen</label>
-											<div class="input input-file"><span class="button"><input id="img" name="img[]" onchange="this.parentNode.nextSibling.value=this.value" type="file" multiple>Buscar</span>
-											<input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="" type="text">
-											</div><small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br/><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
-											</section>
-											</div>
+												</section>
+												
+												<div>
+													<section style="padding-left: 15px; width: 100%;" class="col col-12">
+														Descripcion
+														<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"><?php echo $data_merc[0]->descripcion?>
+														</textarea>
+													</section>
+													
+													<section id="imagenes2" class="col col-12">
+											        	<label class="label">
+											        		Imágen actual
+											        	</label>
+															<?php foreach ($img as $key)
+												                {
+												                	echo '<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="'.$key[0]->url.'"></div>';
+												                }
+												            ?>
+										            </section>
+																						
+													<section id="imagenes" class="col col-12">
+														<label class="label">
+															Imágen
+														</label>
+															<div class="input input-file">
+																<span class="button">
+																	<input id="img" name="img[]" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="" type="text">
+															</div>
+														<small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.
+															<br />
+															<cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"
+															</cite>
+														</small>
+													</section>
+												
+												</div>
+													
 											</fieldset>
 											
-																			<footer>
-																				<button type="submit" class="btn btn-primary">
-																					Agregar
-																				</button>
-																			</footer>
-																		</form>
-																	</div>
-
-																</div>
+											<fieldset>
+												<legend>Fisicos</legend>
+													
+													<section class="col col-12" style="width: 50%;">
+														<label class="input">
+															Peso
+															<input required type="number" value='<?php echo $data_merc[0]->peso?>' min="0" name="peso">
+														</label>
+													</section>
+													
+													<section id="colonia" class="col col-12" style="width: 50%;">
+														<label class="input">
+															Alto
+															<input type="number" min="0" value='<?php echo $data_merc[0]->alto?>' name="alto">
+														</label>
+													</section>
+													
+													<section id="municipio" class="col col-12" style="width: 50%;">
+														<label class="input">
+															Ancho
+															<input type="number" min="0" value='<?php echo $data_merc[0]->ancho?>' name="ancho">
+														</label>
+													</section>
+													
+													<section id="municipio" class="col col-12" style="width: 50%;">
+														<label class="input">
+															Profundidad
+															<input type="number" min="0" value='<?php echo $data_merc[0]->profundidad?>' name="profundidad">
+														</label>
+													</section>
+													
+													<section id="municipio" class="col col-12" style="width: 50%;">
+														<label class="input">
+															Diametro
+															<input type="number" min="0" value='<?php echo $data_merc[0]->diametro?>' name="diametro">
+														</label>
+													</section>
+											</fieldset>
+											
+											<fieldset id="moneda_field">
+												
+												<legend>Moneda y país</legend>
+													
+													<section class="col col-12" style="width: 50%;">
+														<label class="input">
+															Cantidad mínima de venta
+															<input type="text" name="min_venta" id="min_venta">
+														</label>
+													</section>
+													
+													<section class="col col-12" style="width: 50%;">
+														<label class="input">
+															Cantidad máxima de venta
+															<input type="text" name="max_venta" id="max_venta">
+														</label>
+													</section>
+													
+													<section class="col col-12" style="width: 50%;">
+														<label class="input">
+															Costo real
+															<input type="text" name="real" id="real">
+														</label>
+													</section>
+													
+													<section class="col col-12" style="width: 50%;">
+														<label class="input">
+															Costo distribuidores
+															<input type="text" name="costo" id="costo">
+														</label>
+													</section>
+													
+													<section class="col col-12" style="width: 50%;">
+														<label class="input">
+															Costo publico
+															<input type="text" name="costo_publico" id="costo_publico">
+														</label>
+													</section>
+													
+													<section class="col col-12" style="width: 50%;">
+														<label class="input">
+															Tiempo mínimo de entrega
+															<input placeholder="En días" type="text" name="entrega" id="entrega">
+														</label>
+													</section>
+													
+													<section class="col col-12" style="width: 50%;">Proveedor
+														<label class="select">
+															<select name="proveedor">
+																<?foreach ($proveedores as $key)
+																{?>
+																<option value="<?=$key->id_usuario?>"><?=$key->nombre." ".$key->apellido?> comisión: %<?=$key->comision?></option>	
+																<?}?>
+															</select>
+														</label>
+													</section>
+													
+													<section class="col col-12" style="width: 50%;">País de la mercancía
+														<label class="select">
+															<select id="pais" required name="pais">
+																<?foreach ($pais as $key)
+																{?>
+																<option value="<?=$key->Code?>">
+																	<?=$key->Name?>
+																</option>
+																<?}?>
+															</select>
+														</label>
+													</section>
+													
+													<section class="col col-12" style="width: 50%;">
+														<label class="input">
+															Puntos comisionables
+															<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
+														</label>
+													</section>
+													
+													<section class="col col-12" style="width: 50%;">Impuesto
+														<label class="select">
+															<select name="id_impuesto[]">
+																<?foreach ($impuesto as $key)
+																{?>
+																<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>	
+																<?}?>
+															</select>
+														</label>
+														<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+													</section>
+												
+											</fieldset>
+												
+											<fieldset>
+												<legend>Extra</legend>
+													<section class="col col-12" style="width: 33.4%;">Requiere instalación
+														<div class="inline-group">
+															<label class="radio">
+																<input type="radio" value="1" name="instalacion" checked="">
+																	<i></i>Si</label>
+															<label class="radio">
+																<input type="radio" value="0" name="instalacion">
+																	<i></i>No</label>
+														</div>
+													</section>
+													
+													<section class="col col-12" style="width: 33.3%;">Requiere especificación
+														<div class="inline-group">
+															<label class="radio">
+																<input type="radio" value="1" name="especificacion" checked="">
+																	<i></i>Si</label>
+															<label class="radio">
+																<input type="radio" value="0" name="especificacion">
+																	<i></i>No</label>
+														</div>
+													</section>
+													
+													<section class="col col-12" style="width: 33.3%;">Requiere producción
+														<div class="inline-group">
+															<label class="radio">
+																<input type="radio" value="1" name="produccion" checked="">
+																	<i></i>Si</label>
+															<label class="radio">
+																<input type="radio" value="0" name="produccion">
+																	<i></i>No</label>
+														</div>
+													</section>
+														
+													<section class="col col-12" style="width: 50%; padding-left: 80px;">Producto de importación
+														<div class="inline-group">
+															<label class="radio">
+																<input type="radio" value="1" name="importacion" checked="">
+																	<i></i>Si</label>
+															<label class="radio">
+																<input type="radio" value="0" name="importacion">
+																	<i></i>No</label>
+														</div>
+													</section>
+														
+													<section class="col col-12" style="width: 50%; padding-right: 80px;">Producto de sobrepedido
+														<div class="inline-group">
+															<label class="radio">
+																<input type="radio" value="1" name="sobrepedido" checked="">
+																	<i></i>Si</label>
+															<label class="radio">
+																<input type="radio" value="0" name="sobrepedido">
+																	<i></i>No</label>
+														</div>
+													</section>
+											</fieldset>
+													
+										</div>
+								</div>
+							</fieldset>
+							
+							<button type="submit" class="btn btn-success">
+								Agregar
+							</button>
+						</form>
+					</div>
+				</div>
 																<!-- end widget div -->
-															
-														</article>
+			</article>
 														<!-- END COL -->
-													</div>
+		</div>
 
-												</section>
+	</section>
 												<!-- end widget grid -->
-											</div>
+</div>
 											<!-- END MAIN CONTENT -->
 											<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
 											<script src="/template/js/plugin/markdown/markdown.min.js"></script>
@@ -464,22 +590,22 @@ function agregar(tipo)
 {
 	if(tipo==1)
 	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel").append("<section class='col col-12'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
 	}
 	else
 	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel").append("<section class='col col-12'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
 	}
 }
 function agregar1(tipo)
 {
 	if(tipo==1)
 	{
-		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel1").append("<section class='col col-12'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
 	}
 	else
 	{
-		$("#tel1").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+		$("#tel1").append("<section class='col col-12'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
 	}
 }
 $(function()
@@ -532,7 +658,7 @@ function formulario()
 			+'<input type="text" name="codigo_barras">'
 			+'</label>'
 			+'</section>'
-			+'<section class="col col-3">Grupo'
+			+'<section class="col col-12">Grupo'
 			+'<label class="select">'
 			+'<select name="grupo">'
 			+'<?foreach ($grupo as $key){?>'
@@ -618,7 +744,7 @@ function formulario()
 			+'<input placeholder="En días" type="text" name="entrega" >'
 			+'</label>'
 			+'</section>'
-			+'<section class="col col-3">Impuesto'
+			+'<section class="col col-12">Impuesto'
 			+'<label class="select">'
 			+'<select name="id_impuesto[]">'
 			+'<?foreach ($impuesto as $key){?>'
@@ -630,7 +756,7 @@ function formulario()
 			+'<a href="#" clas="pull-right" onclick="new_impuesto()">Nuevo impuesto<i class="fa fa-plus"></i></a>'
 			+'<a href="#" onclick="kill_impuesto()">Eliminar impuesto<i class="fa fa-plus"></i></a>'
 			+'</section>'
-			+'<section class="col col-3">Proveedor'
+			+'<section class="col col-12">Proveedor'
 			+'<label class="select">'
 			+'<select name="proveedor">'
 			+'<?foreach ($proveedores as $key){?>'
@@ -641,7 +767,7 @@ function formulario()
 			+'</select>'
 			+'</label>'
 			+'</section>'
-			+'<section class="col col-3">País del producto'
+			+'<section class="col col-12">País del producto'
 			+'<label class="select">'
 			+'<select id="pais" required name="pais">'
 			+'<?foreach ($pais as $key){?>'
@@ -651,7 +777,7 @@ function formulario()
 			+'</select>'
 			+'</label>'
 			+'</section>'
-			+'<section class="col col-3">'
+			+'<section class="col col-12">'
 			+'<label class="input">'
 			+'Puntos comisionables'
 			+'<input type="number" min="1" max="" name="puntos_com" id="puntos_com">'
@@ -769,7 +895,7 @@ if(tipo==2)
 		+'<input placeholder="En días" type="text" name="entrega" id="entrega">'
 		+'</label>'
 		+'</section>'
-		+'<section class="col col-3">Impuesto'
+		+'<section class="col col-12">Impuesto'
 		+'<label class="select">'
 		+'<select name="id_impuesto[]">'
 		+'<?foreach ($impuesto as $key){?>'
@@ -781,7 +907,7 @@ if(tipo==2)
 		+'<a href="#" clas="pull-right" onclick="new_impuesto()">Nuevo impuesto<i class="fa fa-plus"></i></a>'
 		+'<a href="#" onclick="kill_impuesto()">Eliminar impuesto<i class="fa fa-plus"></i></a>'
 		+'</section>'
-		+'<section class="col col-3">Proveedor'
+		+'<section class="col col-12">Proveedor'
 		+'<label class="select">'
 		+'<select name="proveedor">'
 		+'<?foreach ($proveedores as $key){?>'
@@ -792,7 +918,7 @@ if(tipo==2)
 		+'</select>'
 		+'</label>'
 		+'</section>'
-		+'<section class="col col-3">País del producto'
+		+'<section class="col col-12">País del producto'
 		+'<label class="select">'
 		+'<select id="pais" required name="pais">'
 		+'<?foreach ($pais as $key){?>'
@@ -802,7 +928,7 @@ if(tipo==2)
 		+'</select>'
 		+'</label>'
 		+'</section>'
-		+'<section class="col col-3">'
+		+'<section class="col col-12">'
 		+'<label class="input">'
 		+'Puntos comisionables'
 		+'<input type="number" min="1" max="" name="puntos_com" id="puntos_com">'
@@ -849,7 +975,7 @@ $("#mymarkdown").markdown({
 		$("#form_mercancia").empty();
 		$("#form_mercancia").append('<div class="row">'
 			+'<fieldset>'
-			+'<section class="col col-3">Tipo de promocion'
+			+'<section class="col col-12">Tipo de promocion'
 			+'<label class="select">'
 			+'<select onchange="tipo_promo()" id="tipo" name="tipo">'
 			+'<?foreach ($promo as $key){?>'
@@ -936,7 +1062,7 @@ $("#mymarkdown").markdown({
 			+'<input placeholder="En días" type="text" name="entrega" id="entrega">'
 			+'</label>'
 			+'</section>'
-			+'<section class="col col-3">Impuesto'
+			+'<section class="col col-12">Impuesto'
 			+'<label class="select">'
 			+'<select name="id_impuesto[]">'
 			+'<?foreach ($impuesto as $key){?>'
@@ -948,7 +1074,7 @@ $("#mymarkdown").markdown({
 			+'<a href="#" clas="pull-right" onclick="new_impuesto()">Nuevo impuesto<i class="fa fa-plus"></i></a>'
 			+'<a href="#" onclick="kill_impuesto()">Eliminar impuesto<i class="fa fa-plus"></i></a>'
 			+'</section>'
-			+'<section class="col col-3">Proveedor'
+			+'<section class="col col-12">Proveedor'
 			+'<label class="select">'
 			+'<select name="proveedor">'
 			+'<?foreach ($proveedores as $key){?>'
@@ -959,7 +1085,7 @@ $("#mymarkdown").markdown({
 			+'</select>'
 			+'</label>'
 			+'</section>'
-			+'<section class="col col-3">País del producto'
+			+'<section class="col col-12">País del producto'
 			+'<label class="select">'
 			+'<select id="pais" required name="pais">'
 			+'<?foreach ($pais as $key){?>'
@@ -969,7 +1095,7 @@ $("#mymarkdown").markdown({
 			+'</select>'
 			+'</label>'
 			+'</section>'
-			+'<section class="col col-3">'
+			+'<section class="col col-12">'
 			+'<label class="input">'
 			+'Puntos comisionables'
 			+'<input type="number" min="1" max="" name="puntos_com" id="puntos_com">'
@@ -1071,7 +1197,7 @@ $("#moneda").append('<fieldset id="moneda_field"> '
 	+'<input placeholder="En días" type="text" name="entrega" id="entrega">'
 	+'</label>'
 	+'</section>'
-	+'<section class="col col-3">Impuesto'
+	+'<section class="col col-12">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
 	+'<?foreach ($impuesto as $key){?>'
@@ -1083,7 +1209,7 @@ $("#moneda").append('<fieldset id="moneda_field"> '
 	+'<a href="#" clas="pull-right" onclick="new_impuesto()">Nuevo impuesto<i class="fa fa-plus"></i></a>'
 	+'<a href="#" onclick="kill_impuesto()">Eliminar impuesto<i class="fa fa-plus"></i></a>'
 	+'</section>'
-	+'<section class="col col-3">Proveedor'
+	+'<section class="col col-12">Proveedor'
 	+'<label class="select">'
 	+'<select name="proveedor">'
 	+'<?foreach ($proveedores as $key){?>'
@@ -1094,7 +1220,7 @@ $("#moneda").append('<fieldset id="moneda_field"> '
 	+'</select>'
 	+'</label>'
 	+'</section>'
-	+'<section class="col col-3">País del producto'
+	+'<section class="col col-12">País del producto'
 	+'<label class="select">'
 	+'<select id="pais" required name="pais">'
 	+'<?foreach ($pais as $key){?>'
@@ -1104,7 +1230,7 @@ $("#moneda").append('<fieldset id="moneda_field"> '
 	+'</select>'
 	+'</label>'
 	+'</section>'
-	+'<section class="col col-3">'
+	+'<section class="col col-12">'
 	+'<label class="input">'
 	+'Puntos comisionables'
 	+'<input type="number" min="1" max="" name="puntos_com" id="puntos_com">'
@@ -1120,7 +1246,7 @@ if(tipo==2)
 	$("#labelextra").append('Costo extra por regalo');
 	$("#tipo_promo").empty();
 	$('#agregar').empty();
-	$("#tipo_promo").append('<section class="col col-3">Mercancia'
+	$("#tipo_promo").append('<section class="col col-12">Mercancia'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="mercancia">'
 		+'<?foreach ($producto as $key){?>'
@@ -1773,7 +1899,7 @@ function new_empresa()
 function agregar_cuenta()
 {
 	
-	$("#cuenta").append('<section class="col col-3">'
+	$("#cuenta").append('<section class="col col-12">'
 		+'<label class="input">CLABE'
 		+'<input required name="clabe[]" placeholder="02112312345678901" type="text">'
 		+'</label>'
@@ -1876,7 +2002,7 @@ function use_mail1()
 }
 function add_impuesto()
 {
-	var code=	'<section class="col col-3">Impuesto'
+	var code=	'<section class="col col-12" style="width: 50%;">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
 	<?foreach ($impuesto as $key)
