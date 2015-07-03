@@ -249,4 +249,10 @@ class mercancia extends CI_Controller
 		echo json_encode($impuestos);
 		
 	}
+	
+	function new_proveedor()
+	{
+		$id=$this->tank_auth->get_user_id();
+		$this->model_mercancia->new_proveedor($id);
+	}
 }
