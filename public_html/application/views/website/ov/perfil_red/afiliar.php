@@ -68,7 +68,7 @@ $(document).ready(function() {
 								})
 								.done(function( msg ) {
 
-									
+									alert(msg);
 									$("#progress").attr('style','width: 100%');
 									bootbox.dialog({
 										message: msg,
@@ -447,7 +447,7 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section class="col col-6">'
 									+'<label class="input"><i class="icon-append fa fa-calendar"></i>'
-									+'<input required id="datepicker_r" type="date" min="1920-12-31" max="1996-12-31" name="nacimiento" placeholder="Fecha de nacimiento">'
+									+'<input required id="datepicker_r" type="date"  name="nacimiento" placeholder="Fecha de nacimiento" readonly="readonly">'
 									+'</label>'
 								+'</section>'
 								+'<section class="col col-6" id="key_red">'
@@ -710,10 +710,18 @@ function botbox(nombre, id, lado)
 		+'</div>'
 		+'</div>'
 		+'<script>'
-		+'$("#datepicker_r").datepicker({'
-					+'dateFormat:"yy-mm-dd",'
-					+'defaultDate: "1970-01-01",});'
-		+'<\/script>',
+		+' $(function()'
+		+ '{'
+		 +	'a = new Date();'
+			+'año = a.getFullYear()-19;'
+			+'$( "#datepicker_r" ).datepicker({'
+			+'changeMonth: true,'
+			+'numberOfMonths: 2,'
+			+'maxDate: año+"-12-31",'
+			+'dateFormat:"yy-mm-dd",'
+			+'changeYear: true'
+			+'});'
+		+'});',
 		title: "Afiliar a "+nombre,
 	});
 	$('.wizard_r').on('finished.fu.wizard', function (e, data) {
@@ -1095,7 +1103,7 @@ function detalles(id)
 																</section>
 																<section class="col col-3">
 																	<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-																		<input required id="datepicker" type="text" name="nacimiento" placeholder="Fecha de nacimiento">
+																		<input required id="datepicker" type="text" name="nacimiento" placeholder="Fecha de nacimiento" readonly="readonly">
 																	</label>
 																</section>
 																<section class="col col-3" id="key">
@@ -1274,7 +1282,7 @@ function detalles(id)
 															</div>
 														</fieldset>
 															<input class='hide' type="text" name="red" id='red' value="<?php echo $_GET['id']; ?>" placeholder="">
-															<input type="text" name="id" value="<?php echo $id; ?>" placeholder="">
+															<input type="text" name="id" value="<?php echo $id; ?>" class="hide">
 															
 													</form>
 												</div>

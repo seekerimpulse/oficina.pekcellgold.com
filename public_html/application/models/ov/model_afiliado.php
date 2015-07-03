@@ -89,8 +89,14 @@ class model_afiliado extends CI_Model{
 			$directo=1;
 		}
 		
-		$this->CrearPerfil($id);
+		$q = $this->db->query("select * from user_profiles where user_id=".$id);
+		$perfil = $q->result();
+		//var_dump($perfil[0]->user_id); exit;
+		if(isset($perfil[0]->user_id)){
+			return true;
+		}
 		
+		$this->CrearPerfil($id);
 		$this->CrearCoaplicante($id);
 		
 		/*################### DATO RED #########################*/
@@ -113,10 +119,7 @@ class model_afiliado extends CI_Model{
 		/*################### DATO AFILIAR #########################*/
 		
 		$directo = 1;
-		if(isset($_POST['sponsor']))
-		{
-			$directo = 0;
-		}
+		
 		$id_debajo = '1';
 		if(isset($_POST['afiliados']) && $_POST['afiliados'] != $id){
 			$id_debajo = $_POST['afiliados'];
@@ -281,8 +284,13 @@ class model_afiliado extends CI_Model{
 		$this->db->query('update users set activated="1" where id="'.$id.'"');
 		$this->EstiloUsuaio($id);
 		$directo=1;
-		
-		$this->CrearPerfil($id);
+		$q = $this->db->query("select * from user_profiles where user_id=".$id);
+		$perfil = $q->result();
+		var_dump($perfil[0]->user_id); exit;
+		if(isset($perfil[0]->user_id)){
+			return true;
+		}else
+			$this->CrearPerfil($id);
 	
 		$this->CrearCoaplicante($id);
 	

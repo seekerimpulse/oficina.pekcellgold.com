@@ -171,6 +171,7 @@ class model_mercancia extends CI_Model {
 		return $mercancia;
 	}
 	function CrearMercancia($sku, $sku2, $tipo, $pais, $proveedor, $real, $costo, $entrega, $costo_prublico, $puntos) {
+		
 		$dato_mercancia = array (
 				"sku" => $sku,
 				"sku_2" => $sku2,
@@ -187,6 +188,7 @@ class model_mercancia extends CI_Model {
 		$this->db->insert ( "mercancia", $dato_mercancia );
 		return mysql_insert_id ();
 	}
+	
 	function ingresarimpuestos($impuestos, $mercancia) {
 		foreach ( $impuestos as $impuesto ) {
 			$dato_impuesto = array (
