@@ -11,11 +11,21 @@
 			</h1>
 		</div>
 	</div>
+<?php if($this->session->flashdata('exito')) {
+		echo '<div class="alert alert-success fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Exito</strong> '.$this->session->flashdata('exito').'
+			</div>'; 
+	}
+?>
 <section id="widget-grid" class="">
 <div class="row" style="background: rgb(255, 255, 255) none repeat scroll 0% 0%;margin-bottom:2rem;">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<legend>Mostrar Redes</legend>
-	<table class="table table-hover">
+		<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -30,12 +40,16 @@
 					<td><?= $red->id;?></td>
 					<td><?= $red->nombre;?></td>
 					<td><?= $red->descripcion;?></td>
-					<td><a onclick="modificar(<?= $red->id;?>)" href="#" title="Modificar">
-	
-	    <i class="fa fa-pencil-square fa-3x">
-	    </i>
-	
-	</a></td>
+					<td>
+					<a onclick="modificar(<?= $red->id;?>)" href="#" title="Modificar">
+					    <i class="txt-color-blue fa fa-pencil fa-3x fa-3x">
+					    </i>
+					</a>
+					<a onclick="eliminar(<?= $red->id;?>)" href="#" title="Modificar">
+						<i class="txt-color-red fa fa-trash-o fa-3x "></i>
+						</i>
+					</a>
+					</td>
 				</tr>
 			<? } ?>
 		</tbody>
@@ -59,5 +73,58 @@ $.ajax({
 	title: 'Modificar Red',
 })//fin done ajax
 });//Fin callback bootbox
+}
+function eliminar(id) {
+
+	$.ajax({
+		type: "POST",
+		url: "/auth/show_dialog",
+		data: {message: '¿ Esta seguro que desea Eliminar la Tipo de red ?'},
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+		message: msg,
+		title: 'Eliminar Tipo de Red',
+		buttons: {
+			success: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function() {
+
+					$.ajax({
+						type: "POST",
+						url: "/bo/admin/kill_tipo_red",
+						data: {id: id}
+					})
+					.done(function( msg )
+					{
+						bootbox.dialog({
+						message: "Se ha eliminado el Tipo de Red.",
+						title: 'Felicitaciones',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								location.href="/bo/tipo_red/mostrar_redes";
+								}
+							}
+						}
+					})//fin done ajax
+					});//Fin callback bootbox
+
+				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
+			}
+		}
+	})
+	});
 }
 </script>

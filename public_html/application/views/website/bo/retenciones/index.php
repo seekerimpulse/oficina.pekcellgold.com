@@ -71,9 +71,9 @@
 											<thead>			                
 												<tr>
 													<th>ID</th>
-													<th>Nombre</th>
-													<th>Valor</th>
-													<th>Duracion</th>
+													<th data-class="expand">Nombre</th>
+													<th data-hide="phone,tablet">Valor</th>
+													<th data-hide="phone,tablet">Duracion</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -244,27 +244,57 @@ function editar(id){
 }
 
 function eliminar(id) {
-	
-	 $.ajax({
+
+	$.ajax({
 		type: "POST",
-		url: "/bo/admin/kill_impuesto",
-		data: {id: id}
-	}).done(function( msg ) {
-							
+		url: "/auth/show_dialog",
+		data: {message: '¿ Esta seguro que desea Eliminar la Retencion ?'},
+	})
+	.done(function( msg )
+	{
 		bootbox.dialog({
-			message: "Retencion Eliminada con exito",
-			title: "Atención",
-			buttons: {
+		message: msg,
+		title: 'Eliminar Retencion',
+		buttons: {
 			success: {
-			label: "Ok!",
+			label: "Aceptar",
 			className: "btn-success",
 			callback: function() {
-			location.href="/bo/configuracion/listar_retenciones";
-					}
+
+					$.ajax({
+						type: "POST",
+						url: "/bo/admin/kill_retencion",
+						data: {id: id}
+					})
+					.done(function( msg )
+					{
+						bootbox.dialog({
+						message: "Se ha eliminado la retencion.",
+						title: 'Felicitaciones',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								location.href="/bo/configuracion/listar_retenciones";
+								}
+							}
+						}
+					})//fin done ajax
+					});//Fin callback bootbox
+
 				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
 			}
-		});
-	});//fin Done ajax		
+		}
+	})
+	});
 }
 
 function estado(estatus, id)

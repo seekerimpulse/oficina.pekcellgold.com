@@ -76,9 +76,9 @@
 											<thead>			                
 												<tr>
 													<th>ID</th>
-													<th>Red</th>
-													<th>Nombre</th>
-													<th>Estatus</th>
+													<th data-class="expand">Red</th>
+													<th data-hide="phone,tablet">Nombre</th>
+													<th data-hide="phone,tablet">Estatus</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -236,27 +236,57 @@ function editar(id){
 }
 
 function eliminar(id) {
-	
-	 $.ajax({
-		type: "POST",
-		url: "/bo/categorias/eliminar_categoria",
-		data: {id: id}
-	}).done(function( msg ) {
-							
-		bootbox.dialog({
+
+		$.ajax({
+			type: "POST",
+			url: "/auth/show_dialog",
+			data: {message: '¿ Esta seguro que desea Eliminar la categoria ?'},
+		})
+		.done(function( msg )
+		{
+			bootbox.dialog({
 			message: msg,
-			title: "Atención",
+			title: 'Eliminar Categoria',
 			buttons: {
-			success: {
-			label: "Ok!",
-			className: "btn-success",
-			callback: function() {
-			location.href="/bo/categorias/index";
+				success: {
+				label: "Aceptar",
+				className: "btn-success",
+				callback: function() {
+
+						$.ajax({
+							type: "POST",
+							url: "/bo/categorias/eliminar_categoria",
+							data: {id: id}
+						})
+						.done(function( msg )
+						{
+							bootbox.dialog({
+							message: "Se ha eliminado la categoria.",
+							title: 'Felicitaciones',
+							buttons: {
+								success: {
+								label: "Aceptar",
+								className: "btn-success",
+								callback: function() {
+									location.href="/bo/categorias/index";
+									}
+								}
+							}
+						})//fin done ajax
+						});//Fin callback bootbox
+
 					}
+				},
+					danger: {
+					label: "Cancelar!",
+					className: "btn-danger",
+					callback: function() {
+
+						}
 				}
 			}
+		})
 		});
-	});//fin Done ajax		
 }
 
 function estado(estatus, id)

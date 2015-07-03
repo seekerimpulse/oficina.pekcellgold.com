@@ -1294,6 +1294,17 @@ class admin extends CI_Controller
 	{
 		$this->model_admin->kill_impuesto();
 	}
+	
+	function kill_retencion()
+	{
+		$this->model_admin->kill_retencion();
+	}
+	
+	function kill_tipo_red()
+	{
+		$this->model_admin->kill_tipo_red();
+	}
+	
 	function update_mercancia()
 	{
 		$this->model_admin->update_mercancia();

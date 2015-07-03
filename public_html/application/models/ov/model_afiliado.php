@@ -211,7 +211,7 @@ class model_afiliado extends CI_Model{
 			"id_user"		=> $id,
 			"id_metodo"		=> 1,
 			"id_estatus"	=> 3,
-			"monto"			=> $plan[0]->precio
+			"monto"			=> 0
 			);
 		$this->db->insert("cobro",$dato_cobro);
 		
@@ -393,7 +393,7 @@ class model_afiliado extends CI_Model{
 			"id_user"		=> $id,
 			"id_metodo"		=> 1,
 			"id_estatus"	=> 3,
-			"monto"			=> $plan[0]->precio
+			"monto"			=> 0
 			);
 		$this->db->insert("cobro",$dato_cobro);
 	
@@ -535,7 +535,7 @@ class model_afiliado extends CI_Model{
 				"id_user"		=> $id,
 				"id_metodo"		=> 1,
 				"id_estatus"	=> 3,
-				"monto"			=> $plan[0]->precio
+				"monto"			=> 0
 		);
 		$this->db->insert("cobro",$dato_cobro);
 	
