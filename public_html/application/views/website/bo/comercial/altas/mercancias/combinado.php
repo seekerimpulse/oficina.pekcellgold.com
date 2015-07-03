@@ -127,15 +127,22 @@
 											<input placeholder="En días" type="text" name="entrega" id="entrega">
 											</label>
 											</section>
-											<section class="col col-3">Impuesto
-											<label class="select">
-											<select name="id_impuesto[]">
-											<?foreach ($impuesto as $key){?>
-											<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>	
-											<?}?>
-											</select>
-											</label>
-											<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+											<section class="col col-3">País del producto
+												<label class="select">
+													<select id="pais" required name="pais" id="pais" onChange="ImpuestosPais()">
+														<?foreach ($pais as $key){?>
+															<option value="<?=$key->Code?>"><?=$key->Name?></option>
+														<?}?>
+													</select>
+												</label>
+											</section>
+											<section class="col col-3" id="impuesto">Impuesto
+												<label class="select">
+													<select name="id_impuesto[]">
+													
+													</select>
+												</label>
+												<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
 											</section>
 											<section class="col col-3">Proveedor
 											<label class="select">
@@ -148,20 +155,11 @@
 											</select>
 											</label>
 											</section>
-											<section class="col col-3">País del producto
-											<label class="select">
-											<select id="pais" required name="pais">
-											<?foreach ($pais as $key){?>
-											<option value="<?=$key->Code?>">
-											<?=$key->Name?></option>
-											<?}?>
-											</select>
-											</label>
-											</section>
+											
 											<section class="col col-3">
 											<label class="input">
-											Puntos comisionables
-											<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
+												Puntos comisionables
+												<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
 											</label>
 											</section>
 											</fieldset></div>
@@ -170,11 +168,13 @@
 											<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"></textarea>
 											</section>
 											<section id="imagenes" class="col col-6">
-											<label class="label">Imágen</label>
-											<div class="input input-file"><span class="button"><input id="img" name="img[]" onchange="this.parentNode.nextSibling.value=this.value" type="file" multiple>Buscar</span>
-											<input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="" type="text">
-											</div><small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br/><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
-											</section>
+														<label class="label">Imágen</label>
+														<div class="input input-file">
+															<span class="button">
+																<input id="img" name="img[]" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="" type="text">
+															</div>
+															<small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br /><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
+														</section>
 											</div>
 											</fieldset>
 											
@@ -196,7 +196,7 @@
 												</section>
 												<!-- end widget grid -->
 											</div>
-											<!-- END MAIN CONTENT -->
+												<!-- END MAIN CONTENT -->
 											<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
 											<script src="/template/js/plugin/markdown/markdown.min.js"></script>
 											<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
@@ -1876,7 +1876,7 @@ function use_mail1()
 }
 function add_impuesto()
 {
-	var code=	'<section class="col col-3">Impuesto'
+	var code=	'<section class="col col-3" id="impuesto">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
 	<?foreach ($impuesto as $key)
@@ -1887,6 +1887,7 @@ function add_impuesto()
 	+'</label>'
 	+'</section>';
 	$("#moneda_field").append(code);
+	ImpuestosPais();
 }
 function add_impuesto_boot()
 {
@@ -2281,5 +2282,33 @@ function new_pack()
 			}
 		}
 	})
+}
+
+function ImpuestosPais(){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#impuesto option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#impuesto');
+		      $('#impuesto select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
 }
 </script>

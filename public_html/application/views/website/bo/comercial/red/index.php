@@ -77,7 +77,7 @@
 													</a>
 												</div>
 												<div class="col-sm-2 link">	
-													<a href="#">
+													<a href="/bo/usuarios/grafico2">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-bar-chart-o fa-3x"></i>
 															<h1>Grafico 2</h1>

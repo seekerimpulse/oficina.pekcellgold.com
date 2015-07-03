@@ -7,6 +7,7 @@ if ($use_username) {
 		'maxlength'	=> $this->config->item('username_max_length', 'tank_auth'),
 		'size'	=> 30,
 	);
+	
 }
 $email = array(
 	'name'	=> 'email',
@@ -21,6 +22,7 @@ $password = array(
 	'value' => set_value('password'),
 	'maxlength'	=> $this->config->item('password_max_length', 'tank_auth'),
 	'size'	=> 30,
+		
 );
 $confirm_password = array(
 	'name'	=> 'confirm_password',

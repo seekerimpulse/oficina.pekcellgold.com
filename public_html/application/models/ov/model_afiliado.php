@@ -211,7 +211,7 @@ class model_afiliado extends CI_Model{
 			"id_user"		=> $id,
 			"id_metodo"		=> 1,
 			"id_estatus"	=> 3,
-			"monto"			=> $plan[0]->precio
+			"monto"			=> 0
 			);
 		$this->db->insert("cobro",$dato_cobro);
 		
@@ -393,7 +393,7 @@ class model_afiliado extends CI_Model{
 			"id_user"		=> $id,
 			"id_metodo"		=> 1,
 			"id_estatus"	=> 3,
-			"monto"			=> $plan[0]->precio
+			"monto"			=> 0
 			);
 		$this->db->insert("cobro",$dato_cobro);
 	
@@ -535,7 +535,7 @@ class model_afiliado extends CI_Model{
 				"id_user"		=> $id,
 				"id_metodo"		=> 1,
 				"id_estatus"	=> 3,
-				"monto"			=> $plan[0]->precio
+				"monto"			=> 0
 		);
 		$this->db->insert("cobro",$dato_cobro);
 	
@@ -565,5 +565,23 @@ class model_afiliado extends CI_Model{
 	function RedAfiliado($id, $red){
 		$query = $this->db->query('select * from red where id_red = "'.$red.'" and id_usuario = "'.$id.'" ');
 		return $query->result();
+	}
+	
+	function ComprasUsuario($id){
+		$q = $this->db->query("SELECT sum(costo) as compras FROM venta where id_user = ".$id.";");
+		$costos = $q->result();
+		return $costos[0]->compras;
+	}
+	
+	function PuntosUsuario($id){
+		$q = $this->db->query("SELECT sum(c.puntos) as puntos FROM comision c, venta v where c.id_venta = v.id_venta and v.id_user = ".$id.";");
+		$puntos = $q->result();
+		return $puntos[0]->puntos;
+	}
+	
+	function ComisionUsuario($id){
+		$q = $this->db->query("SELECT sum(monto) as comision FROM cobro where id_user = ".$id.";");
+		$comision = $q->result();
+		return $comision[0]->comision;
 	}
 }

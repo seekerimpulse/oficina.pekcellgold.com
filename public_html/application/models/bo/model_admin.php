@@ -56,7 +56,14 @@ class model_admin extends CI_Model
 	function get_data_mercancia($tipo,$sku)
 	{
 		if($tipo==1)
-			$q=$this->db->query("select * from producto where id=".$sku);
+			/*$q=$this->db->query("select P.*, TR.nombre nombre_red from producto P, tipo_red TR, cat_grupo_producto 
+					CGP where P.id=".$sku." and 
+					CGP.id_grupo = P.id_grupo and CGP.id_red = TR.id");*/
+			$q=$this->db->query("select P.*, CGP.descripcion descripcion_red from producto P, cat_grupo_producto
+		CGP where P.id=".$sku." and
+		CGP.id_grupo = P.id_grupo");
+		
+		
 		if($tipo==2)
 			$q=$this->db->query("select * from servicio where id=".$sku);
 		if($tipo==3)
@@ -87,9 +94,14 @@ class model_admin extends CI_Model
 	}
 	function get_proveedor()
 	{
-		$q=$this->db->query("select id_usuario, comision, (select nombre from user_profiles where user_id=id_usuario) nombre, 
+		/*$q=$this->db->query("select id_usuario, comision, (select nombre from user_profiles where user_id=id_usuario) nombre, 
 			(select apellido from user_profiles where user_id=id_usuario) apellido
-		 from cat_proveedor");
+		 from cat_proveedor");*/
+		
+		$q=$this->db->query("select UP.user_id, UP.nombre, UP.apellido
+		from proveedor P, user_profiles UP where P.id_proveedor = UP.user_id;");
+		
+		
 		return $q->result();
 	}
 	function get_servicio()
@@ -125,6 +137,11 @@ class model_admin extends CI_Model
 	function get_grupo()
 	{
 		$q=$this->db->query("select * from cat_grupo_producto");
+		return $q->result();
+	}
+	function get_red()
+	{
+		$q=$this->db->query("select * from tipo_red");
 		return $q->result();
 	}
 	function get_mercancia()
@@ -714,13 +731,15 @@ where(a.id_pais=b.Code)");
 	                "estatus"			=>	"ACT"
 	            );
 			$this->db->insert("cat_img",$dato_img);
-			$id_foto=mysql_insert_id();
+			
+			$id_foto = mysql_insert_id();
 
 			$dato_cross_img=array(
 	                "id_mercancia"		=>	$id,
 	                "id_cat_imagen"	=>	$id_foto
 	            );
-			$this->db->insert("cross_merc_img",$dato_cross_img);
+			$this->db->where('id_mercancia', $id);
+			$this->db->update("cross_merc_img",$dato_cross_img);
 		}
 	}
 	function img_merc_promo($id,$data)

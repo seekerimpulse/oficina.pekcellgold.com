@@ -243,10 +243,11 @@ class admin extends CI_Controller
 		$regimen        = $this->model_admin->get_regimen();
 		$zona           = $this->model_admin->get_zona();
 		$merc           = $this->model_admin->mercancia_by_id();
-		$pais            = $this->model_admin->get_pais();
-		$id_merc=$merc[0]->id_tipo_mercancia;
-		$sku=$merc[0]->sku;
-
+		$pais           = $this->model_admin->get_pais_activo();
+		$id_merc 		= $merc[0]->id_tipo_mercancia;
+		$sku			= $merc[0]->sku;
+		$red          = $this->model_admin->get_red();
+		
 		$data_merc 		= $this->model_admin->get_data_mercancia($id_merc,$sku);
 		$img       		= $this->model_admin->get_img_merc();
 		$mercancia 		= $this->model_admin->get_mercancia_espec($_POST['id']);
@@ -256,6 +257,30 @@ class admin extends CI_Controller
 			<h3>Editar mercancía: <b>'.$data_merc[0]->nombre.'</b></h3>';
 		if($id_merc==1)
 		{
+			
+			if (!$this->tank_auth->is_logged_in())
+			{																		// logged in
+			redirect('/auth');
+			}
+			$id=$this->tank_auth->get_user_id();
+			$style = $this->modelo_dashboard->get_style($id);
+			$id_mercancia = $_POST['id'];
+			
+			
+			$this->template->set("id_mercancia",$id_mercancia);
+			$this->template->set("data_merc",$data_merc);
+			$this->template->set("grupo",$grupo);
+			$this->template->set("img",$img);
+			$this->template->set("mercancia",$mercancia);
+			$this->template->set("proveedores",$proveedores);
+			$this->template->set("pais",$pais);
+			$this->template->set("impuestos_merc",$impuestos_merc);
+			$this->template->set("impuesto",$impuesto);
+			$this->template->set("style",$style);
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->build('website/bo/comercial/altas/modificar_producto');
+		/*
 			echo '<fieldset>
 				<section class="col col-6" style="display:none;">
 		            <label class="select"> 
@@ -291,11 +316,11 @@ class admin extends CI_Controller
 		                <input type="text" value="'.$data_merc[0]->codigo_barras.'" name="codigo_barras">
 		            </label>
 		        </section>
-		        <section class="col col-6">Grupo
+		        <section class="col col-6">Red
 					<label class="select"> 
-						<select name="grupo">';
-						foreach ($grupo as $key){
-							echo ($data_merc[0]->id_grupo==$key->id_grupo) ? '<option selected value="'.$key->id_grupo.'">'.$key->descripcion.'</option>' : '<option value="'.$key->id_grupo.'">'.$key->descripcion.'</option>';
+						<select name="red">';
+						foreach ($red as $key){
+							echo ($data_merc[0]->nombre_red==$key->nombre) ? '<option selected value="'.$key->id.'">'.$key->nombre.'</option>' : '<option value="'.$key->id.'">'.$key->nombre.'</option>';
 						}
 						echo '</select>
 					</label>
@@ -305,7 +330,7 @@ class admin extends CI_Controller
 		                <textarea name="descripcion" cols="60" style="min-width: 100%; max-width: 100%" id="mymarkdown">'.$data_merc[0]->descripcion.'</textarea>
 		            </section>
 		             <section id="imagenes2" class="col col-12">
-		                <label class="label">Imágenes actuales</label>';
+		                <label class="label">Imágen actual</label>';
 		                foreach ($img as $key)
 		                {
 		                	echo'<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="'.$key[0]->url.'"></div>';
@@ -550,10 +575,13 @@ class admin extends CI_Controller
 		        </section>
 		    </fieldset>
 
-			<script>$("#mymarkdown").markdown({
-						autofocus:false,
-						savable:false
-					})</script>';
+			<script>
+		    	$("#mymarkdown").markdown({
+					autofocus:false,
+					savable:false
+				})
+		            		
+		   	</script>';*/
 		}
 		if($id_merc==2)
 		{
@@ -683,10 +711,12 @@ class admin extends CI_Controller
 				</section>
 		    </fieldset>
 				
-				<script>$("#mymarkdown").markdown({
+				<script>
+								
+					$("#mymarkdown").markdown({
 							autofocus:false,
 							savable:false
-						})
+					})
 
 					$("#startdate").datepicker({
 						changeMonth: true,
@@ -941,8 +971,9 @@ class admin extends CI_Controller
     }
 
 		echo '</form></div>';
-		echo "Estamos actualizando esta sección";
+		
 	}
+	
 	function new_mercancia()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -1224,6 +1255,7 @@ class admin extends CI_Controller
 	function update_mercancia()
 	{
 		$sku=$this->model_admin->update_mercancia();
+		
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
@@ -1246,6 +1278,7 @@ class admin extends CI_Controller
 		}
 		redirect("/bo/comercial/carrito");
 	}
+	
 	function detalle_paquete()
 	{
 		if (!$this->tank_auth->is_logged_in()) 

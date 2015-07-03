@@ -1409,6 +1409,7 @@ class comercial extends CI_Controller
 		$this->template->set("style",$style);
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		$bancos = $this->model_mercancia->Bancos();
 		
 		$style           = $this->modelo_dashboard->get_style($id);
 		$sexo            = $this->model_admin->sexo();
@@ -1460,6 +1461,7 @@ class comercial extends CI_Controller
 		$this->template->set("zona",$zona);
 		$this->template->set("inscripcion",$inscripcion);
 		$this->template->set("tipo_paquete",$tipo_paquete);
+		$this->template->set("bancos",$bancos);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');

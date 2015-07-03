@@ -216,6 +216,7 @@ class Auth extends CI_Controller
 			}
 			$data['use_username'] = $use_username;
 			$this->load->view('auth/register_form', $data);
+			
 		}
 	}
 
@@ -226,6 +227,7 @@ class Auth extends CI_Controller
 	 */
 	function send_again()
 	{
+		
 		if (!$this->tank_auth->is_logged_in(FALSE)) {							// not logged in or activated
 			redirect('/auth/login/');
 
@@ -250,6 +252,7 @@ class Auth extends CI_Controller
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
+			
 			$this->load->view('auth/send_again_form', $data);
 		}
 	}

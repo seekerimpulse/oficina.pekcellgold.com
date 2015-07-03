@@ -58,11 +58,12 @@
 														<a href="#s1" data-toggle="tab">Genealógico</a>
 													</li>
 													<li>
-														<a href="#s2" data-toggle="tab">Dinámico</a>
+														<a href="#s2" data-toggle="tab">Árbol-1</a>
 													</li>
 													<li>
-														<a href="#s3" data-toggle="tab">Árbol</a>
+														<a href="#s3" data-toggle="tab">Arbol-2</a>
 													</li>
+													
 												</ul>
 												<div id="myTabContent1" class="tab-content padding-10">
 													<div class="tab-pane fade in active" id="s1">
@@ -88,31 +89,8 @@
 		                                                    </ul>
 	                                                  	</div>
 													</div>
+													
 													<div class="tab-pane fade" id="s2">
-														<table id="datatable_fixed_column" class="table table-striped table-bordered" width="100%">
-		          									        <thead>
-		          									            <tr>
-		          									            	<th>Consecutivo</th>
-		          								                    <th>Nombre</th>
-		          								                    <th>Apellido</th>
-		          								                    <th>Afiliado por ti</th>
-		          									            </tr>
-		          									        </thead>
-		          				
-		          									        <tbody>
-		          									        	<?foreach ($afiliados as $afiliado) {
-		          									        	?>
-		          									            <tr>
-		          									                <td><?=$afiliado->id_afiliado?></td>
-		          									                <td><?=$afiliado->afiliado?></td>
-		          									                <td><?=$afiliado->afiliado_p?></td>
-		          									                <td><?echo $afiliado->directo ? 'Si':'No' ?></td>
-		          									            </tr>
-		          									            <?}?>
-		          									        </tbody>
-		          										</table>
-													</div>
-													<div class="tab-pane fade" id="s3">
 														<div class="row">
 															<div class="tree1">
 																<ul>
@@ -145,6 +123,43 @@
 															</div>
 														</div>
 													</div>
+
+													<div class="tab-pane fade" id="s3">
+														<div class="row">
+															<div class="tree1">
+																<ul>
+																	<li>
+																		<a style="background: url('<?=$img_perfil?>'); background-size: cover; background-position: center;" href="#">
+																			<div class="nombre">Tú</div>
+																		</a>
+																		<ul>
+																		<?
+																		$aux=0;
+																		foreach ($afiliadostree as $key) 
+					                                                    {
+					                                                    	$aux++;
+					                                                    	$key->img ? $img=$key->img : $img="/template/img/empresario.jpg";
+					                                                        if($key->debajo_de==$id)
+					                                                        { ?>
+																			<li id="tt<?=$key->id_afiliado?>">
+																				<a class="quitar" style="background: url('<?=$img?>'); background-size: cover; background-position: center;" onclick="subtree2(<?=$key->id_afiliado?>)" href="#"></a>
+																				<div onclick="detalles2(<?=$key->id_afiliado?>)" class="<?=($key->directo==0) ? 'todo' : 'todo1'?>"><?=$key->afiliado?> <?=$key->afiliado_p?><br />Detalles</div>
+																			</li>
+																			<?}
+																		}
+																		
+																		for ( $i = $aux ; $i < $frontales ; $i++){ ?>
+																			<li>
+																				<a href="#">Sin afiliados</a>
+																			</li>
+																		<?} ?>
+																		</ul>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+
 												</div>
 											</div>
                                              <!-- end widget content -->
@@ -345,6 +360,7 @@ Thanks :)*/
 			$("#"+id).append(msg);
 		});
 	}
+     
 
 	function subtree(id)
 	{
@@ -363,6 +379,25 @@ Thanks :)*/
 			$("#t"+id).append(msg);
 		});
 	}
+
+	function subtree2(id)
+	{
+		$("#tt"+id).children(".quitar").attr('onclick','');
+		
+		$.ajax({
+			type: "POST",
+			url: "/ov/perfil_red/subtree2",
+			data: {
+					id: id,
+				 	red: <?php echo $_GET['id']; ?> 
+				 },
+		})
+		.done(function( msg )
+		{
+			$("#tt"+id).append(msg);
+		});
+	}
+	
         jQuery(document).ready(function() {
             
             /* Custom jQuery for the example */
@@ -401,7 +436,32 @@ function detalles(id)
 	{
 		bootbox.dialog({
 			message: msg,
-			title: "Detalles",
+			title: "Informacion Personal",
+			buttons: {
+				success: {
+				label: "Cerrar!",
+				className: "btn-success",
+				callback: function() {
+					//location.href="";
+					}
+				}
+			}
+		});
+	});
+}
+
+function detalles2(id)
+{
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/detalle_usuario2",
+		data: {id: id},
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+			message: msg,
+			title: "Informacion Fiscal",
 			buttons: {
 				success: {
 				label: "Cerrar!",

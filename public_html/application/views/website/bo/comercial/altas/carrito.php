@@ -90,7 +90,6 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?/*TERNARIO   ($key->id_tipo_mercancia==1) ? 'Producto': 'Servicio';*/?>
 												<?foreach ($productos as $key) {?>
 												<tr>
 													<td><?=$key->id?></td>
@@ -102,7 +101,8 @@
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar" href="#" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+													<td class="text-center">
+														<a title="Editar" href="#" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 														<a title="Eliminar" href="#" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
 															<a title="Activar" href="#" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
@@ -1770,15 +1770,6 @@ function editar(id_merc)
 		bootbox.dialog({
 		message: msg,
 		title: 'Edicion',
-		buttons: {
-			success: {
-			label: "Aceptar",
-			className: "btn-success",
-			callback: function() {
-				$("#update_merc").submit();
-				}
-			}
-		}
 	})//fin done ajax
 	});//Fin callback bootbox
 }
