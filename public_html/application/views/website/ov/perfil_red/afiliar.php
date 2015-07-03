@@ -1274,7 +1274,7 @@ function detalles(id)
 															</div>
 														</fieldset>
 															<input class='hide' type="text" name="red" id='red' value="<?php echo $_GET['id']; ?>" placeholder="">
-															<input type="text" name="id" value="<?php echo $id; ?>" placeholder="">
+															<input type="text" name="id" value="<?php echo $id; ?>" class="hide">
 															
 													</form>
 												</div>

@@ -225,21 +225,18 @@ class mercancia extends CI_Controller
 		//Cargamos la libreria con las configuraciones de arriba
 		$this->load->library('upload', $config);
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
-	
+		
 		if (!$this->upload->do_multi_upload('img'))
 		{
 			$error = array('error' => $this->upload->display_errors());
 			print_r($error);
-			var_dump($error); exit;
+			
 		}
 		else
 		{
 	
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-	
-			$this->model_admin->img_merc($sku , $data["upload_data"]);
-	
-	
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
 		}
 		redirect('/bo/comercial/altas');
 	}
