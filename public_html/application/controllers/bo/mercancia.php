@@ -134,7 +134,7 @@ class mercancia extends CI_Controller
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'gif|jpg|png';
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
 		$config['max_width']  		= '4096';
 		$config['max_height']   	= '3112';
 		
@@ -176,7 +176,7 @@ class mercancia extends CI_Controller
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'gif|jpg|png';
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
 		$config['max_width']  		= '4096';
 		$config['max_height']   	= '3112';
 	
@@ -188,14 +188,14 @@ class mercancia extends CI_Controller
 		{
 			$error = array('error' => $this->upload->display_errors());
 			print_r($error);
-			var_dump($error); exit;	
+			
 		}
 		else
 		{
 				
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 				
-			$this->model_admin->img_merc($sku , $data["upload_data"]);
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
 	
 				
 		}
@@ -218,7 +218,7 @@ class mercancia extends CI_Controller
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'gif|jpg|png';
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg|png';
 		$config['max_width']  		= '4096';
 		$config['max_height']   	= '3112';
 	

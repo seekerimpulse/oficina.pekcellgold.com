@@ -1417,7 +1417,7 @@ class comercial extends CI_Controller
 		$civil           = $this->model_admin->edo_civil();
 		$tipo            = $this->model_admin->get_user_type();
 		$tipo_fiscal     = $this->model_admin->tipo_fiscal();
-		$pais            = $this->model_admin->get_pais();
+		$pais            = $this->model_admin->get_pais_activo();
 		$productos       = $this->model_admin->get_mercancia();
 		$estudios        = $this->model_admin->get_estudios();
 		$ocupacion       = $this->model_admin->get_ocupacion();

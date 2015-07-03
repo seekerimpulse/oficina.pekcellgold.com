@@ -67,8 +67,6 @@ $(document).ready(function() {
 								data: $('#checkout-form').serialize()
 								})
 								.done(function( msg ) {
-
-									alert(msg);
 									$("#progress").attr('style','width: 100%');
 									bootbox.dialog({
 										message: msg,
