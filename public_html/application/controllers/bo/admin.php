@@ -779,7 +779,7 @@ class admin extends CI_Controller
 				$id=$this->tank_auth->get_user_id();
 				$style = $this->modelo_dashboard->get_style($id);
 				$id_mercancia = $_POST['id'];
-					
+				
 				
 				$this->template->set("id_mercancia",$id_mercancia);
 				$this->template->set("data_merc",$data_merc);
@@ -832,12 +832,11 @@ class admin extends CI_Controller
 				echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
 				        <section class="col col-8">Productos
 		            <label class="select">
-		                <select class="custom-scroll"  name="producto[]">
-		                <option value="0">Ninguno</option>';
+		                <select class="custom-scroll"  name="producto[]">';
 		                    foreach ($producto as $key){
 		                    	if($key_1->id_producto==$key->id_mercancia)
 								{
-		                        	echo '<option value="'.$key->id_mercancia.'">
+		                        	echo '<option selected value="'.$key->id_mercancia.'">
 		                            '.$key->nombre.' (ACTIVO)</option>';
 		                        }
 								else
@@ -852,40 +851,22 @@ class admin extends CI_Controller
 		        </section>
 		        <section class="col col-4">
 		           <label class="input">Cantidad de productos
-		                <input type="number" min="1" name="n_productos[]" id="prod_qty" value="'.$key_1->id->cantidad_producto.'">
+		                <input type="number" min="1" name="n_productos[]" id="prod_qty" value="'.$key_1->cantidad_producto.'">
 		            </label>
 		        </section>
 		        </div>';
 			}
-	       echo'<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
-		        <section class="col col-8">Productos
-            <label class="select">
-                <select class="custom-scroll"  name="producto[]">
-                <option value="0">Ninguno</option>';
-                    foreach ($producto as $key){
-                        echo '<option value="'.$key->id_mercancia.'">
-                            '.$key->nombre.'</option>';
-                        }
-                echo '</select>
-            </label>
-        </section>
-        <section class="col col-4">
-           <label class="input">Cantidad de productos
-                <input type="number" min="1" name="n_productos[]" id="prod_qty">
-            </label>
-        </section>
-        </div>';
 		foreach($servs as $key_1)
 		{
 			echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="servs">
 		        <section class="col col-8">Servicios
 			            <label class="select">
 			                <select class="custom-scroll" name="servicio[]">
-		                        <option value="0">Ninguno</option>';
+		                        ';
 			                    foreach ($servicio as $key){
 			                    	if($key_1->id->servicio==$key->id_mercancia)
 									{
-			                        echo '<option value="'.$key->id_mercancia.'">'
+			                        echo '<option selected value="'.$key->id_mercancia.'">'
 			                            .$key->nombre.' (ACTIVO)</option>';
 			                        }
 									else 
@@ -899,30 +880,12 @@ class admin extends CI_Controller
 			        </section>
 			        <section class="col col-4">
 			           <label class="input">Cantidad de servicios
-			                <input type="number" min="1" name="n_servicios[]" id="serv_qty" value="'.$key_1->id->cantidad_servicio.'">
+			                <input type="number" min="1" name="n_servicios[]" id="serv_qty" value="'.$key_1->cantidad_servicio.'">
 			            </label>
 			        </section>
 			       </div>';
 		}
 		echo '
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="servs">
-        <section class="col col-8">Servicios
-	            <label class="select">
-	                <select class="custom-scroll" name="servicio[]">
-                        <option value="0">Ninguno</option>';
-	                    foreach ($servicio as $key){
-	                        echo '<option value="'.$key->id_mercancia.'">'
-	                            .$key->nombre.'</option>';
-	                        }
-	                echo '</select>
-	            </label>
-	        </section>
-	        <section class="col col-4">
-	           <label class="input">Cantidad de servicios
-	                <input type="number" min="1" name="n_servicios[]" id="serv_qty">
-	            </label>
-	        </section>
-	       </div>
 		    </div>
 	        </fieldset>
 	        <div id="agregar" class=" text-center row"><a onclick="new_product()">Agregar producto <i class="fa fa-plus"></i></a>  <a  onclick="new_service()">Agregar servicio <i class="fa fa-plus"></i></a></div>
@@ -970,7 +933,7 @@ class admin extends CI_Controller
 	
 							echo'</select>
 						</label>
-						<a href="#" onclick="add_impuesto_boot()">Agregar impuesto<i class="fa fa-plus"></i></a>
+						<a onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
 					</section>';
 				}
         echo '<section class="col col-6">Proveedor
@@ -1020,11 +983,14 @@ class admin extends CI_Controller
                 <small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br/><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
             </section>
         </div>
-    </fieldset>';*/
+    </fieldset>
+            		<footer>
+								<button type="submit" class="btn btn-success">Agregar</button>
+							</footer>';
     }
 
 		echo '</form></div>';
-		
+	*/	
 	}
 	
 	function new_mercancia()
