@@ -243,4 +243,10 @@ class mercancia extends CI_Controller
 		}
 		redirect('/bo/comercial/altas');
 	}
+	
+	function ImpuestaPais(){
+		$impuestos = $this->model_mercancia->ImpuestoPais($_POST['pais']);
+		echo json_encode($impuestos);
+		
+	}
 }

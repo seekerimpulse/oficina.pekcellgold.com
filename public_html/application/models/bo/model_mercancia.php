@@ -303,5 +303,9 @@ function __construct()
 			$this->db->insert("cross_img_promo",$dato_cross_img);
 		}
 	}
-	
+
+	function ImpuestoPais($pais){
+		$q = $this->db->query("SELECT * FROM cat_impuesto where id_pais = '".$pais."'");
+		return $q->result();
+	}
 }

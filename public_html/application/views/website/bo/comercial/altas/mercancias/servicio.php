@@ -110,12 +110,20 @@
 														<input placeholder="En días" type="text" name="entrega" id="entrega">
 														</label>
 													</section>
-													<section class="col col-3">Impuesto
+													<section class="col col-3">País del producto
 														<label class="select">
-															<select name="id_impuesto[]">
-															<?foreach ($impuesto as $key){?>
-																<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>	
+															<select id="pais" required name="pais" onChange="ImpuestosPais()">
+															<?foreach ($pais as $key){?>
+																<option value="<?=$key->Code?>">
+																<?=$key->Name?></option>
 															<?}?>
+															</select>
+														</label>
+													</section>
+													<section class="col col-3" id="impuesto">Impuesto
+														<label class="select">
+															<select name="id_impuesto[]" >
+															
 															</select>
 															
 														</label>
@@ -124,24 +132,15 @@
 													<section class="col col-3">Proveedor
 														<label class="select">
 															<select name="proveedor">
-															<?foreach ($proveedores as $key){?>
+															<?foreach ($proveedores as $key){?>'
 																<option value="<?=$key->id_usuario?>">
-																<?=$key->nombre." ".$key->apellido?> comisión: %
-																<?=$key->comision?></option>
+																	<?=$key->nombre." ".$key->apellido?> comisión: % <?=$key->comision?>
+																</option>
 															<?}?>
 															</select>
 														</label>
 													</section>
-													<section class="col col-3">País del producto
-														<label class="select">
-															<select id="pais" required name="pais">
-															<?foreach ($pais as $key){?>
-																<option value="<?=$key->Code?>">
-																<?=$key->Name?></option>
-															<?}?>
-															</select>
-														</label>
-													</section>
+													
 													<section class="col col-3">
 														<label class="input">
 														Puntos comisionables
@@ -1867,7 +1866,7 @@ function use_mail1()
 }
 function add_impuesto()
 {
-	var code=	'<section class="col col-3">Impuesto'
+	var code=	'<section class="col col-3" id="impuesto">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
 	<?foreach ($impuesto as $key)
@@ -1878,6 +1877,7 @@ function add_impuesto()
 	+'</label>'
 	+'</section>';
 	$("#moneda_field").append(code);
+	ImpuestosPais()
 }
 function add_impuesto_boot()
 {
@@ -2272,5 +2272,33 @@ function new_pack()
 			}
 		}
 	})
+}
+
+function ImpuestosPais(){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#impuesto option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#impuesto');
+		      $('#impuesto select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
 }
 </script>

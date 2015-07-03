@@ -50,8 +50,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = '192.168.1.110';
 //$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'toor';
-$db['default']['password'] = '1994edi';
+$db['default']['username'] = 'root';
+$db['default']['password'] = 'toor';
 $db['default']['database'] = 'OficinaVirtual';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';

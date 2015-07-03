@@ -70,12 +70,14 @@
 												<li data-target="#step2">
 													<span class="badge">2</span>Datos personales<span class="chevron"></span>
 												</li>
+												<?php /* ?>
 												<li data-target="#step3">
 													<span class="badge">3</span>Selección del plan<span class="chevron"></span>
 												</li>
 												<li id="paso4" data-target="#step4">
 													<span class="badge">4</span>Método de pago<span class="chevron"></span>
 												</li>
+												<?php */ ?>
 											</ul>
 											<div id="acciones" class="actions">
 												<button type="button" class="final btn btn-sm btn-primary btn-prev">
@@ -652,7 +654,7 @@ $(document).ready(function() {
 						
 						$.ajax({
 							type: "POST",
-							url: "/auth/register",
+							url: "/ov/perfil_red/crear_user",
 							data: $('#register').serialize()
 						})
 						.done(function( msg1 ) {
