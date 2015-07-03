@@ -1,17 +1,18 @@
 
 <!-- MAIN CONTENT -->
 <div id="content">
-
+	
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
 			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
-
-				<!-- widget div-->
-				<div>
-					<div class="widget-body">
+				
+					<!-- widget div-->
+					<div>
+						<div class="widget-body">
+							
 						<form method="POST" enctype="multipart/form-data"
 							action="/bo/admin/update_mercancia" class="smart-form">
 
@@ -41,7 +42,6 @@
 										</label>
 									</section>
 
-									<div id="tipo_promo">
 
 										<section class="col col-2" style="width: 50%;">
 											<label class="input"><span id="labelextra">Descuento del
@@ -73,26 +73,23 @@
 														
 												<?php foreach ( $prods as $key_1 ) {
 													?>
-											class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
-											<section class="col col-8">
+											
+											<section class="col col-8" style="width: 50%;">
 												Productos <label class="select"> <select
 													class="custom-scroll" name="producto[]">
-														<option value="0">Ninguno</option>
-													        	<?php
-													
-foreach ( $producto as $key ) {
+													        	<?php foreach ( $producto as $key ) {
 														if ($key_1->id_producto == $key->id_mercancia) {
 															?>
-													                <option value='<?php $key->id_mercancia?>'>
-													                            <?php $key->nombre.' (ACTIVO)'?> 
+													                <option selected value='<?php $key->id_mercancia?>'>
+													                            <?php echo $key->nombre.' (ACTIVO)'?> 
 													                </option>
 													                <?php } else { ?>
-																	<option value='<?php $key->id_mercancia?>'>
-													                            <?php $key->nombre?>
+																	<option value='<?php echo $key->id_mercancia?>'>
+													                            <?php echo $key->nombre?>
 													                </option>
 												<?php
 														
-}
+																}
 													}
 													?>
 														</select>
@@ -101,33 +98,46 @@ foreach ( $producto as $key ) {
 												
 												<?php
 												
-}
+													}
 												?>
-												<section class="col col-4" style="width: 50%;">
-												<label class="input">Cantidad de productos <input
-													type="number" min="1" name="n_productos[]" id="prod_qty">
-												</label>
-											</section>
-
-											<section class="col col-8" style="width: 50%;">
-												Servicios <label class="select"> <select
-													class="custom-scroll" name="servicio[]">
-														<option value="0">Ninguno</option>
-													<?foreach ($servicio as $key){?>
-														<option value="<?=$key->id_mercancia?>">
-														<?=$key->nombre?></option>
-													<?}?>
-													</select>
-												</label>
-											</section>
-
 											<section class="col col-4" style="width: 50%;">
-												<label class="input">Cantidad de servicios <input
-													type="number" min="1" name="n_servicios[]" id="serv_qty">
+												<label class="input">Cantidad de productos 
+													<input type="number" min="1" name="n_productos[]" id="prod_qty" value='<?php echo $key_1->id->cantidad_producto?>'>
 												</label>
 											</section>
-
-										</div>
+											
+											<?php foreach($servs as $key_1)
+												{?>
+													<section class="col col-8" style="width: 50%;">Servicios
+														<label class="select">
+													    	<select class="custom-scroll" name="servicio[]">
+												            	
+													    	<?php foreach ($servicio as $key){
+													    		
+													              	if($key_1->id->servicio==$key->id_mercancia)
+																	{?>
+													                	<option selected value='<?php echo $key->id_mercancia?>'>
+													                            <?php echo $key->nombre.' (ACTIVO)'?>
+													                    </option>
+													        <?php }	
+													        		else 
+																	{?>
+																		<option value='<?php echo $key->id_mercancia?>'>
+													                            <?php echo $key->nombre?>
+																		</option>
+															<?php }
+																		}?>
+													        </select>
+													    </label>
+													</section>
+											<?php }?>
+												
+											<section class="col col-4" style="width: 50%;">
+												<label class="input">Cantidad de servicios
+												        <input type="number" min="1" name="n_servicios[]" id="serv_qty" value='<?php echo $key_1->id->cantidad_servicio?>'>
+											        </label>
+											</section>
+										
 								
 								</fieldset>
 
@@ -270,20 +280,18 @@ foreach ( $img as $key ) {
 	</section>
 	<!-- end widget grid -->
 </div>
-<!-- END MAIN CONTENT -->
-<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
-<script src="/template/js/plugin/markdown/markdown.min.js"></script>
-<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
-<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
-<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
-<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
-<script
-	src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
-<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-<script
-	src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-<script src="/template/js/validacion.js"></script>
-<script type="text/javascript">
+	<!-- END MAIN CONTENT -->
+											<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
+											<script src="/template/js/plugin/markdown/markdown.min.js"></script>
+											<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
+											<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
+											<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+											<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+											<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+											<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+											<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+											<script src="/template/js/validacion.js"></script>
+											<script type="text/javascript">
 
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
@@ -1255,7 +1263,7 @@ $('#finishdate').datepicker({
 }
 function new_product()
 {
-	$('#prods').append('<section class="col col-8" >Productos'
+	$('#prods').append('<section class="col col-8">Productos'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
 		+'<option value="0">Ninguno</option>'
@@ -1952,31 +1960,28 @@ function use_mail1()
 }
 function add_impuesto()
 {
-	var code=	'<section class="col col-3" style="width: 50%;">Impuesto '
+	var code=	'<section class="col col-3" id="impuesto">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
-	<?
-	
-foreach ( $impuesto as $key ) {
-		echo "+'<option value=" . $key->id_impuesto . ">" . $key->descripcion . " " . $key->porcentaje . "%" . "</option>'";
-	}
-	?>
+	<?foreach ($impuesto as $key)
+	{
+		echo "+'<option value=".$key->id_impuesto.">".$key->descripcion." ".$key->porcentaje."%"."</option>'";
+	}?>
 	+'</select>'
 	+'</label>'
 	+'</section>';
 	$("#moneda_field").append(code);
+	ImpuestosPais();
 }
 function add_impuesto_boot()
 {
 	var code=	'<section class="col col-6">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
-	<?
-	
-foreach ( $impuesto as $key ) {
-		echo "+'<option value=" . $key->id_impuesto . ">" . $key->descripcion . " " . $key->porcentaje . "%" . "</option>'";
-	}
-	?>
+	<?foreach ($impuesto as $key)
+	{
+		echo "+'<option value=".$key->id_impuesto.">".$key->descripcion." ".$key->porcentaje."%"."</option>'";
+	}?>
 	+'</select>'
 	+'</label>'
 	+'</section>';
@@ -2361,5 +2366,33 @@ function new_pack()
 			}
 		}
 	})
+}
+
+function ImpuestosPais(){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#impuesto option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#impuesto');
+		      $('#impuesto select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
 }
 </script>

@@ -188,7 +188,7 @@ class model_admin extends CI_Model
 							
 							where M.sku = C.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=3 and 
 							CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and 
-							C.id_red = TR.id ;");
+							C.id_red = TR.id");
 		return $q->result();
 	}
 	
