@@ -88,12 +88,12 @@
 				        <td>
 				        	
 				        	<?if($afiliado->estatus=='Desactivado'){?>
-				        	<a title="Desbloquear" href="#" onclick="estado_afiliado(1,<?=$afiliado->id?>)" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
+				        	<a title="Desbloquear"  onclick="estado_afiliado(1,<?=$afiliado->id?>)" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
 							<?}else{?>
-							<a title="Bloquear" href="#" onclick="estado_afiliado(2,<?=$afiliado->id?>)" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
+							<a title="Bloquear"  onclick="estado_afiliado(2,<?=$afiliado->id?>)" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
 							<?}?>
 							
-					        <a title="Editar" href="#" onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+					        <a title="Editar"  onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 						</td>
 				        
 				    </tr>
