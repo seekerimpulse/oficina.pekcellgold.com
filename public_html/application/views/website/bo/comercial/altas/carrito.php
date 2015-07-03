@@ -1773,6 +1773,7 @@ function editar(id_merc)
 	})//fin done ajax
 	});//Fin callback bootbox
 }
+
 function eliminar(id)
 {
 	bootbox.dialog({

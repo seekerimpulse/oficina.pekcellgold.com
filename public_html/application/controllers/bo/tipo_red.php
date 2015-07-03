@@ -61,6 +61,7 @@ class tipo_red extends CI_Controller{
 		$capacidadRed = $this->model_tipo_red->traerCapacidadRed();
 
 		$this->model_tipo_red->actualizar($_POST['id'],$_POST['nombre'],$_POST['descripcion'],$capacidadRed[0]->frontal,$capacidadRed[0]->profundidad);
+		$this->session->set_flashdata('exito', 'Se han Actualizado los datos');
 		redirect("/bo/tipo_red/mostrar_redes");
 	}
 	

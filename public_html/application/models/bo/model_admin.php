@@ -345,6 +345,7 @@ where(a.id_pais=b.Code)");
 		}
 		if($_POST['tipo_merc']==2)
 		{
+			
 			$sku_q=$this->db->query("SELECT sku from mercancia where id=".$_POST['id_merc']);
 			$sku_res=$sku_q->result();
 			$sku=$sku_res[0]->sku;
@@ -353,7 +354,8 @@ where(a.id_pais=b.Code)");
 					"concepto"     => $_POST['concepto'],
 					"descripcion"  => $_POST['descripcion'],
 					"fecha_inicio" => $_POST['fecha_inicio'],
-					"fecha_fin"    => $_POST['fecha_fin']
+					"fecha_fin"    => $_POST['fecha_fin'],
+					"id_red"    => $_POST['red']
 	            );
 
 			$this->db->where('id', $sku);
@@ -733,7 +735,8 @@ where(a.id_pais=b.Code)");
 			$this->db->insert("cat_img",$dato_img);
 			
 			$id_foto = mysql_insert_id();
-
+			
+			
 			$dato_cross_img=array(
 	                "id_mercancia"		=>	$id,
 	                "id_cat_imagen"	=>	$id_foto
@@ -816,6 +819,11 @@ where(a.id_pais=b.Code)");
 	function kill_retencion()
 	{
 		$this->db->query("delete from cat_retencion where id_retencion=".$_POST["id"]);
+	}
+	
+	function kill_tipo_red()
+	{
+		$this->db->query("delete from tipo_red where id=".$_POST["id"]);
 	}
 	
 	function get_dato_pais()

@@ -265,10 +265,15 @@
 																	}?>
 																</select>
 															</label>
-															<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+															
 														</section>
 													<?}?>
-
+													
+													<section class="col col-6" style="width: 50%">
+														<br>
+														<br>
+														<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+													</section>
 												
 											</fieldset>
 												
@@ -405,8 +410,17 @@
 											<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 											<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 											<script src="/template/js/validacion.js"></script>
+<script>
+		    	
+		            		
+		   	</script>
 											<script type="text/javascript">
 
+
+$("#mymarkdown").markdown({
+	autofocus:false,
+	savable:false
+})
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
 $(document).ready(function() {

@@ -304,7 +304,6 @@ function index()
 		$data["pais"]=$pais;
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/comprar',$data);
 	}
@@ -742,7 +741,7 @@ function index()
 							if($detalles[0]->descripcion)
 							{
 								echo"
-									<textarea class='font-sm' readonly>".$detalles[0]->descripcion."</textarea>";
+									<textarea style='margin-top: 2rem;margin-left: -24rem;' class='font-sm' readonly>".$detalles[0]->descripcion."</textarea>";
 							}
 
 				break;
@@ -770,7 +769,7 @@ function index()
 							if($detalles[0]->descripcion)
 							{
 								echo"
-									<textarea class='font-sm' readonly>".$detalles[0]->descripcion."</textarea>";
+									<textarea style='margin-top: 2rem;margin-left: -24rem;' class='font-sm' readonly>".$detalles[0]->descripcion."</textarea>";
 							}
 				break;
 			case 3:
