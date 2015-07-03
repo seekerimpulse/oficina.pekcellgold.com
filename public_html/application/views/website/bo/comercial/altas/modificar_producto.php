@@ -240,21 +240,35 @@
 													<section class="col col-12" style="width: 50%;">
 														<label class="input">
 															Puntos comisionables
-															<input type="number" min="1" max="" name="puntos_com" id="puntos_com">
+															<input type="number" min="1" max="" value='<?php echo $mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
 													
-													<section class="col col-12" style="width: 50%;">Impuesto
-														<label class="select">
-															<select name="id_impuesto[]">
-																<?foreach ($impuesto as $key)
-																{?>
-																<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>	
-																<?}?>
-															</select>
-														</label>
-														<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
-													</section>
+													<?foreach($impuestos_merc as $merc)
+													{?>	
+														<section class="col col-6">Impuesto
+															<label class="select">
+																<select name="id_impuesto[]">
+																	<?foreach ($impuesto as $key){
+																		if($merc->id_impuesto==$key->id_impuesto && $key->id_pais==$mercancia[0]->pais)
+																		{?>
+																			<option selected value='<?php echo $key->id_impuesto?>'>
+																				<?php echo $key->descripcion.' '.$key->porcentaje.' % (ACTIVO)'?>
+																			</option>
+																		<?}
+																		else if($key->id_pais==$mercancia[0]->pais)
+																		{?>
+																			<option value='<?php echo $key->id_impuesto?>'>
+																				<?php echo $key->descripcion.' '.$key->porcentaje.' %'?>
+																			</option>
+																		<?}
+																	}?>
+																</select>
+															</label>
+															<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+														</section>
+													<?}?>
+
 												
 											</fieldset>
 												
@@ -262,56 +276,102 @@
 												<legend>Extra</legend>
 													<section class="col col-12" style="width: 33.4%;">Requiere instalación
 														<div class="inline-group">
-															<label class="radio">
-																<input type="radio" value="1" name="instalacion" checked="">
-																	<i></i>Si</label>
-															<label class="radio">
-																<input type="radio" value="0" name="instalacion">
-																	<i></i>No</label>
+															<?if($data_merc[0]->instalacion==1){?>
+																<label class="radio">
+															    	<input type="radio" value="1" checked name="instalacion"><i></i>Si
+															    </label>
+															    <label class="radio">
+															    	<input type="radio" value="0" name="instalacion"><i></i>No
+															    </label>
+															<?}	else {?>
+																<label class="radio">
+															        <input type="radio" value="1" name="instalacion"><i></i>Si
+															    </label>
+															    <label class="radio">
+															        <input type="radio" value="0" checked name="instalacion"><i></i>No
+															    </label>
+															<?}?> 
 														</div>
 													</section>
+
 													
 													<section class="col col-12" style="width: 33.3%;">Requiere especificación
 														<div class="inline-group">
-															<label class="radio">
-																<input type="radio" value="1" name="especificacion" checked="">
-																	<i></i>Si</label>
-															<label class="radio">
-																<input type="radio" value="0" name="especificacion">
-																	<i></i>No</label>
+															<?if($data_merc[0]->especificacion==1){?>
+																<label class="radio">
+															    	<input type="radio" value="1" checked name="especificacion"><i></i>Si
+															    </label>
+															    <label class="radio">
+															    	<input type="radio" value="0" name="especificacion"><i></i>No
+															    </label>
+															<?}	else {?>
+																<label class="radio">
+															        <input type="radio" value="1" name="especificacion"><i></i>Si
+															    </label>
+															    <label class="radio">
+															        <input type="radio" value="0" checked name="especificacion"><i></i>No
+															    </label>
+															<?}?> 
 														</div>
 													</section>
 													
 													<section class="col col-12" style="width: 33.3%;">Requiere producción
 														<div class="inline-group">
-															<label class="radio">
-																<input type="radio" value="1" name="produccion" checked="">
-																	<i></i>Si</label>
-															<label class="radio">
-																<input type="radio" value="0" name="produccion">
-																	<i></i>No</label>
+															<?if($data_merc[0]->produccion==1){?>
+																<label class="radio">
+															    	<input type="radio" value="1" checked name="produccion"><i></i>Si
+															    </label>
+															    <label class="radio">
+															    	<input type="radio" value="0" name="produccion"><i></i>No
+															    </label>
+															<?}	else {?>
+																<label class="radio">
+															        <input type="radio" value="1" name="produccion"><i></i>Si
+															    </label>
+															    <label class="radio">
+															        <input type="radio" value="0" checked name="produccion"><i></i>No
+															    </label>
+															<?}?> 
 														</div>
 													</section>
 														
 													<section class="col col-12" style="width: 50%; padding-left: 80px;">Producto de importación
 														<div class="inline-group">
-															<label class="radio">
-																<input type="radio" value="1" name="importacion" checked="">
-																	<i></i>Si</label>
-															<label class="radio">
-																<input type="radio" value="0" name="importacion">
-																	<i></i>No</label>
+															<?if($data_merc[0]->importacion==1){?>
+																<label class="radio">
+															    	<input type="radio" value="1" checked name="importacion"><i></i>Si
+															    </label>
+															    <label class="radio">
+															    	<input type="radio" value="0" name="importacion"><i></i>No
+															    </label>
+															<?}	else {?>
+																<label class="radio">
+															        <input type="radio" value="1" name="importacion"><i></i>Si
+															    </label>
+															    <label class="radio">
+															        <input type="radio" value="0" checked name="importacion"><i></i>No
+															    </label>
+															<?}?> 
 														</div>
 													</section>
 														
 													<section class="col col-12" style="width: 50%; padding-right: 80px;">Producto de sobrepedido
 														<div class="inline-group">
-															<label class="radio">
-																<input type="radio" value="1" name="sobrepedido" checked="">
-																	<i></i>Si</label>
-															<label class="radio">
-																<input type="radio" value="0" name="sobrepedido">
-																	<i></i>No</label>
+														<?if($data_merc[0]->sobrepedido==1){?>
+																<label class="radio">
+															    	<input type="radio" value="1" checked name="sobrepedido"><i></i>Si
+															    </label>
+															    <label class="radio">
+															    	<input type="radio" value="0" name="sobrepedido"><i></i>No
+															    </label>
+															<?}	else {?>
+																<label class="radio">
+															        <input type="radio" value="1" name="sobrepedido"><i></i>Si
+															    </label>
+															    <label class="radio">
+															        <input type="radio" value="0" checked name="sobrepedido"><i></i>No
+															    </label>
+															<?}?>
 														</div>
 													</section>
 											</fieldset>
@@ -369,6 +429,8 @@ $(document).ready(function() {
 	};
 
 	$('#dt_basic').dataTable({
+		retrieve: true,
+    paging: false,
 		"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
 		"t"+
 		"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
@@ -2019,7 +2081,9 @@ function add_impuesto()
 	+'<select name="id_impuesto[]">'
 	<?foreach ($impuesto as $key)
 	{
+		if ($key->id_pais == $mercancia[0]->pais) {
 		echo "+'<option value=".$key->id_impuesto.">".$key->descripcion." ".$key->porcentaje."%"."</option>'";
+		}
 	}?>
 	+'</select>'
 	+'</label>'

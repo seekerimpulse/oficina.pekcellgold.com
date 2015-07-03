@@ -308,11 +308,11 @@ where(a.id_pais=b.Code)");
 					"codigo_barras"  => $_POST['codigo_barras'],
 					"min_venta"      => $_POST['min_venta'],
 					"max_venta"      => $_POST['max_venta'],
-					//"instalacion"    => $_POST['instalacion'],
-					//"especificacion" => $_POST['especificacion'],
-					//"produccion"     => $_POST['produccion'],
-					//"importacion"    => $_POST['importacion'],
-					//"sobrepedido"    => $_POST['sobrepedido']
+					"instalacion"    => $_POST['instalacion'],
+					"especificacion" => $_POST['especificacion'],
+					"produccion"     => $_POST['produccion'],
+					"importacion"    => $_POST['importacion'],
+					"sobrepedido"    => $_POST['sobrepedido']
 	            );
 
 			$this->db->where('id', $sku);
@@ -325,19 +325,19 @@ where(a.id_pais=b.Code)");
 					"costo"            	 	=> $_POST['costo'],
 					"entrega"           	=> $_POST['entrega'],
 					"costo_publico"    		=> $_POST['costo_publico'],
-					//"puntos_comisionables"	=> $_POST['puntos_com']
+					"puntos_comisionables"	=> $_POST['puntos_com']
 	            );
 			$this->db->where('id', $_POST['id_merc']);
 			$this->db->update('mercancia', $dato_mercancia); 
-			//$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
-			/*foreach($_POST['id_impuesto'] as $impuesto)
+			$this->db->query("delete from cross_merc_impuesto where id_mercancia=".$_POST['id_merc']);
+			foreach($_POST['id_impuesto'] as $impuesto)
 			{
 				$dato_impuesto=array(
 					"id_mercancia"	=> $_POST['id_merc'],
 					"id_impuesto"	=> $impuesto
 				);
 				$this->db->insert("cross_merc_impuesto",$dato_impuesto);
-			}*/
+			}
 			// Produces:
 			// UPDATE mytable 
 			// SET title = '{$title}', name = '{$name}', date = '{$date}'

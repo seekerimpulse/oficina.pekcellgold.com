@@ -274,6 +274,8 @@ class admin extends CI_Controller
 			$this->template->set("mercancia",$mercancia);
 			$this->template->set("proveedores",$proveedores);
 			$this->template->set("pais",$pais);
+			$this->template->set("impuestos_merc",$impuestos_merc);
+			$this->template->set("impuesto",$impuesto);
 			$this->template->set("style",$style);
 			$this->template->set_theme('desktop');
 			$this->template->set_layout('website/main');
