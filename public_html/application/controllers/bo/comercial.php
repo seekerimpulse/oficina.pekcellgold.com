@@ -375,7 +375,7 @@ class comercial extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->red_tabla();
+		redirect('/bo/comercial/red_tabla');
 	}
 
 	function cambiar_estado_afiliado()

@@ -500,6 +500,17 @@ class Auth extends CI_Controller
 		$this->session->set_flashdata('message', $message);
 		redirect('/auth/');
 	}
+	
+	/**
+	 * Show info message
+	 *
+	 * @param	string
+	 * @return	void
+	 */
+	function show_dialog()
+	{
+		echo $_POST['message'];
+	}
 
 	/**
 	 * Send email message of given type (activate, forgot_password, etc.)

@@ -799,6 +799,11 @@ where(a.id_pais=b.Code)");
 		$this->db->query("delete from cat_retencion where id_retencion=".$_POST["id"]);
 	}
 	
+	function kill_tipo_red()
+	{
+		$this->db->query("delete from tipo_red where id=".$_POST["id"]);
+	}
+	
 	function get_dato_pais()
 	{
 		$q=$this->db->query("select CL.Language, CL.estatus estatus, CM.estatus estatus_m, CM.codigo_moneda codigo_moneda, CM.moneda moneda, C.estatus estado_pais

@@ -52,12 +52,12 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-		                <th>Imagen</th>
-		                <th>Usuario</th>
-			            <th>Nombre</th>
-			            <th>Apellido</th>
-				        <th>e-mail</th>
-				        <th>Tipo usuario</th>
+		                <th data-class="expand">Imagen</th>
+		                <th data-hide="phone,tablet">Usuario</th>
+			            <th data-hide="phone,tablet">Nombre</th>
+			            <th data-hide="phone,tablet">Apellido</th>
+				        <th data-hide="phone,tablet">e-mail</th>
+				        <th data-hide="phone,tablet">Tipo usuario</th>
 				        <th>Accion</th>
 			        </tr>
 			    </thead>

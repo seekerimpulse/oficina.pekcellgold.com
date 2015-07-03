@@ -71,9 +71,9 @@
 											<thead>			                
 												<tr>
 													<th>ID</th>
-													<th>Nombre</th>
-													<th>Porcentaje</th>
-													<th>Pais</th>
+													<th data-class="expand">Nombre</th>
+													<th data-hide="phone,tablet">Porcentaje</th>
+													<th data-hide="phone,tablet">Pais</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -234,27 +234,57 @@ function editar(id){
 }
 
 function eliminar(id) {
-	
-	 $.ajax({
-		type: "POST",
-		url: "/bo/admin/kill_impuesto",
-		data: {id: id}
-	}).done(function( msg ) {
-							
-		bootbox.dialog({
-			message: "Impuesto Eliminado con exito",
-			title: "Atención",
+
+		$.ajax({
+			type: "POST",
+			url: "/auth/show_dialog",
+			data: {message: '¿ Esta seguro que desea Eliminar el impuesto ?'},
+		})
+		.done(function( msg )
+		{
+			bootbox.dialog({
+			message: msg,
+			title: 'Eliminar Impuesto',
 			buttons: {
-			success: {
-			label: "Ok!",
-			className: "btn-success",
-			callback: function() {
-			location.href="/bo/configuracion/listar_impuestos";
+				success: {
+				label: "Aceptar",
+				className: "btn-success",
+				callback: function() {
+
+						$.ajax({
+							type: "POST",
+							url: "/bo/admin/kill_impuesto",
+							data: {id: id}
+						})
+						.done(function( msg )
+						{
+							bootbox.dialog({
+							message: "Se ha eliminado el impuesto.",
+							title: 'Felicitaciones',
+							buttons: {
+								success: {
+								label: "Aceptar",
+								className: "btn-success",
+								callback: function() {
+									location.href="/bo/configuracion/listar_impuestos";
+									}
+								}
+							}
+						})//fin done ajax
+						});//Fin callback bootbox
+
 					}
+				},
+					danger: {
+					label: "Cancelar!",
+					className: "btn-danger",
+					callback: function() {
+
+						}
 				}
 			}
+		})
 		});
-	});//fin Done ajax		
 }
 
 function estado(estatus, id)
