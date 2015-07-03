@@ -585,6 +585,29 @@ class admin extends CI_Controller
 		}
 		if($id_merc==2)
 		{
+			if (!$this->tank_auth->is_logged_in())
+			{																		// logged in
+			redirect('/auth');
+			}
+			$id=$this->tank_auth->get_user_id();
+			$style = $this->modelo_dashboard->get_style($id);
+			$id_mercancia = $_POST['id'];
+			
+				
+			$this->template->set("id_mercancia",$id_mercancia);
+			$this->template->set("data_merc",$data_merc);
+			$this->template->set("red",$red);
+			$this->template->set("img",$img);
+			$this->template->set("mercancia",$mercancia);
+			$this->template->set("proveedores",$proveedores);
+			$this->template->set("pais",$pais);
+			$this->template->set("impuestos_merc",$impuestos_merc);
+			$this->template->set("impuesto",$impuesto);
+			$this->template->set("style",$style);
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->build('website/bo/comercial/altas/modificar_servicio');
+		/*
 		    echo '<fieldset>
 		    	<section class="col col-6" style="display:none;">
 		            <label class="select"> 
@@ -622,11 +645,13 @@ class admin extends CI_Controller
 		            <section style="padding-left: 0px;" class="col col-6">Descripcion
 		                <textarea name="descripcion" style="max-width: 100%" cols="60" id="mymarkdown">'.$data_merc[0]->descripcion.'</textarea>
 		            </section>';
+		            
 		            foreach ($img as $key)
 		                {
 		                	echo'<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="'.$key[0]->url.'"></div>';
 		                }
 					echo'
+					
 		            <section id="imagenes" class="col col-12">
 		                <label class="label">Imágen</label>
 		                <div class="input input-file"><span class="button"><input id="img" name="img[]" onchange="this.parentNode.nextSibling.value=this.value" type="file" multiple>Buscar</span>
@@ -740,12 +765,40 @@ class admin extends CI_Controller
 						onSelect : function(selectedDate) {
 							$("#startdate").datepicker("option", "maxDate", selectedDate);
 						}
-					});</script>';
+					});</script>';*/
 			}
 			if($id_merc==3)
 			{
 				$prods=$this->model_admin->get_prod_combinado($_POST['id']);
 				$servs=$this->model_admin->get_serv_combinado($_POST['id']);
+				
+				if (!$this->tank_auth->is_logged_in())
+				{																		// logged in
+				redirect('/auth');
+				}
+				$id=$this->tank_auth->get_user_id();
+				$style = $this->modelo_dashboard->get_style($id);
+				$id_mercancia = $_POST['id'];
+					
+				
+				$this->template->set("id_mercancia",$id_mercancia);
+				$this->template->set("data_merc",$data_merc);
+				$this->template->set("red",$red);
+				$this->template->set("img",$img);
+				$this->template->set("mercancia",$mercancia);
+				$this->template->set("proveedores",$proveedores);
+				$this->template->set("pais",$pais);
+				$this->template->set("impuestos_merc",$impuestos_merc);
+				$this->template->set("impuesto",$impuesto);
+				$this->template->set("prods",$prods);
+				$this->template->set("servs",$servs);
+				$this->template->set("producto",$producto);
+				$this->template->set("servicio",$servicio);
+				$this->template->set("style",$style);
+				$this->template->set_theme('desktop');
+				$this->template->set_layout('website/main');
+				$this->template->build('website/bo/comercial/altas/modificar_combinado');
+				/*
 				echo '
 			<fieldset>
 				<legend>Datos <span id="tipo_mercancia_txt">del paquete</span></legend>
@@ -967,7 +1020,7 @@ class admin extends CI_Controller
                 <small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br/><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
             </section>
         </div>
-    </fieldset>';
+    </fieldset>';*/
     }
 
 		echo '</form></div>';
@@ -1243,7 +1296,8 @@ class admin extends CI_Controller
 	}
 	function update_mercancia()
 	{
-		$sku=$this->model_admin->update_mercancia();
+		$this->model_admin->update_mercancia();
+		$sku = $_POST['id_merc'];
 		
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
