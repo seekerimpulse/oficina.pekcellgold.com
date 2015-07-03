@@ -50,9 +50,9 @@ class model_afiliado extends CI_Model{
 		$this->db->insert("user_profiles",$dato_profile);
 		
 		$perfil=2;
-		if($_POST['tipo_plan']==0){
+		/*if($_POST['tipo_plan']==0){
 			$perfil=3;
-		}
+// 		}*/
 		
 		$dato_permiso=array(
 			"id_user"   => $id,

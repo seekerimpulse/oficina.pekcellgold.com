@@ -70,7 +70,7 @@
 								</section>
 							</fieldset>
 						</form>
-						<form method="POST" action="/bo/admin/new_proveedor"
+						<form method="POST"
 							id="proveedor" class="smart-form" novalidate="novalidate">
 							<fieldset>
 								<legend>Datos personales del proveedor</legend>
@@ -292,7 +292,7 @@
 									<div id="cuenta" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 										<section class="col col-3">Banco
 											<label class="select"> 
-											<select class="custom-scroll" name="banco">
+											<select class="custom-scroll" name="banco[]" id="banco">
 												<?foreach ($bancos as $key){?>
 												<option value="<?=$key->clave ?>">
 													<?=$key->descripcion?></option>
@@ -301,7 +301,7 @@
 											</label>
 										</section>
 										<section class="col col-3">
-											<label class="input">CLAVE <input id="cuenta" required name="clabe[]" placeholder="02112312345678901" type="text">
+											<label class="input">Cuenta <input id="cuenta" required name="Cuenta[]" placeholder="02112312345678901" type="text">
 											</label>
 										</section>
 									</div>
@@ -402,8 +402,8 @@
 
 
 							<footer>
-								<button type="button" onclick="new_proveedor()"
-									class="btn btn-primary">Agregar</button>
+								<a type="button" onclick="new_proveedor()"
+									class="btn btn-primary">Agregar</a>
 							</footer>
 						</form>
 					</div>
@@ -424,6 +424,7 @@
 	<script type="text/javascript">
 function new_proveedor()
 {
+	
 	///auth/register
 	$.ajax({
 		type: "POST",
@@ -431,6 +432,7 @@ function new_proveedor()
 		data: $('#register1').serialize()
 	})
 	.done(function( msg ) {
+		
 		var email=$("#email1").val();
 		$("#proveedor").append("<input value='"+email+"' type='hidden' name='mail_important'>");
 		$.ajax({
@@ -438,10 +440,10 @@ function new_proveedor()
 			url: "/bo/mercancia/new_proveedor",
 			data: $('#proveedor').serialize()
 			})
-			.done(function( msg ) {
+			.done(function( msg1) {
 				
 				bootbox.dialog({
-					message: "Se ha afiliado al usuario"+msg,
+					message: "Se ha creado el proveedor"+msg1,
 					title: "Atención",
 					buttons: {
 						success: {
@@ -602,11 +604,20 @@ function agregar1(tipo)
 function agregar_cuenta()
 {
 	
-	$("#cuenta").append('<section class="col col-3">'
-							+'<label class="input">CLAVE'
-								+'<input required name="clabe[]" placeholder="02112312345678901" type="text">'
-							+'</label>'
-						+'</section>');
+	$("#cuenta").append('<section class="col col-3">Banco'
+			+'<label class="select"> '
+			+'<select class="custom-scroll" name="banco[]" id="banco">'
+				+'<?foreach ($bancos as $key){?>'
+				+'<option value="<?=$key->clave ?>">'
+					+'<?=$key->descripcion?></option>'
+				+'<?}?>'
+			+'</select>'
+			+'</label>'
+		+'</section>'
+		+'<section class="col col-3">'
+			+'<label class="input">Cuenta <input id="cuenta" required name="Cuenta[]" placeholder="02112312345678901" type="text">'
+			+'</label>'
+		+'</section>');
 }
 
 
@@ -665,5 +676,26 @@ function add_impuesto()
 					+'</label>'
 				+'</section>';
 	$("#moneda_field").append(code);
+}
+
+function codpos()
+{
+	var pais = $("#pais").val();
+	if(pais=="MEX")
+	{
+		var cp=$("#cp").val();
+		$.ajax({
+			type: "POST",
+			url: "/ov/perfil_red/cp",
+			data: {cp: cp},
+		})
+		.done(function( msg )
+		{
+			$("#colonia").remove();
+			$("#municipio").remove();
+			$("#estado").remove();
+			$("#dir").append(msg);
+		})
+	}
 }
 </script>

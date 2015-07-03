@@ -27,6 +27,7 @@ class comercial extends CI_Controller
 		$this->load->model('model_user_profiles');
 		$this->load->model('model_coaplicante');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/model_mercancia');
 		$this->load->model('ov/modelo_compras');
 	}
 
@@ -1592,5 +1593,11 @@ class comercial extends CI_Controller
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/altas/carrito');		
+	}
+	
+	function new_proveedor()
+	{
+		$id=$this->tank_auth->get_user_id();
+		$this->model_mercancia->new_proveedor($id);
 	}
 }

@@ -423,25 +423,19 @@ class model_mercancia extends CI_Model {
 		$this->db->insert ( "proveedor", $dato_proveedor );
 		
 		/* ################### FIN DATO PROVEEDOR ######################### */
-		
-		foreach ( $_POST ['clabe'] as $key ) {
-			$cuenta = substr ( $key, 7, - 1 );
-			$clave = substr ( $key, 0, - 15 );
-			
-			$banco = $this->db->query ( 'select * from cat_banco where clave="' . $clave . '"' );
-			$banco = $banco->result ();
-			if (! $banco) {
-				$banco [0]->descripcion = 'Ninguno';
-			}
+		$cuentas = $_POST ['Cuenta'];
+		$bancos = $_POST ['banco'];
+		for ($i = 0 ; $i < count($cuentas) ; $i++){
 			
 			$dato_cat_cuenta = array (
 					"id_user" => $id_nuevo,
-					"cuenta" => $cuenta,
-					"banco" => $banco [0]->descripcion,
+					"cuenta" => $cuentas[$i],
+					"banco" => $bancos[$i],
 					"estatus" => 'ACT' 
 			);
 			$this->db->insert ( "cat_cuenta", $dato_cat_cuenta );
 		}
+	
 	}
 	
 	function Bancos(){
