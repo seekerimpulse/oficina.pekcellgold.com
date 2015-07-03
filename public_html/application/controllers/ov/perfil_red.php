@@ -16,6 +16,7 @@ class perfil_red extends CI_Controller
 		$this->load->model('ov/model_afiliado');
 		$this->load->model('model_tipo_red');
 		$this->load->model('model_planes');
+		$this->load->model('ov/modelo_dashboard');
 	}
 
 	function index()
@@ -251,10 +252,96 @@ class perfil_red extends CI_Controller
 		
 	}
 	
+	function subtree2()
+	{
+		$id_red=$_POST['red'];
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$frontales= $frontales[0]->frontal;
+		$afiliados = $this->model_perfil_red->get_afiliados($id_red, $_POST['id']);
+	
+		$nombre=$this->model_perfil_red->get_name($_POST['id']);
+		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
+	
+		if($afiliados)
+		{
+	
+			$usuario=array();
+			foreach ($afiliados as $id_afiliado)
+			{
+				$usuario[]=$this->model_perfil_red->datos_perfil($id_afiliado->id_afiliado);
+			}
+	
+	
+			foreach ($usuario as $afiliado)
+			{
+	
+				$image 			 = $this->model_perfil_red->get_images($afiliado[0]->user_id);
+				$img_perfil='/template/img/empresario.jpg';
+				foreach ($image as $img)
+				{
+					$cadena=explode(".", $img->img);
+					if($cadena[0]=="user")
+					{
+						$img_perfil=$img->url;
+					}
+				}
+	
+				if(sizeof($afiliados) == 0)
+				{
+	
+					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
+	
+					for($i=$aux; $i < $frontales; $i++){
+						echo "
+						<li>
+							<a href='javascript:void(0)'>No tiene afiliado</a>
+			            </li>";
+					}
+	
+				}
+				else
+				{
+					$aux++;
+					($afiliados[0]->directo==0) ? $todo='todo' : $todo='todo1';
+					echo "
+					<li id='tt".$afiliado[0]->user_id."'>
+		            	<a class='quitar' onclick='subtree2(".$afiliado[0]->user_id.")' style='background: url(".$img_perfil."); background-size: cover; background-position: center;' href='javascript:void(0)'></a>
+		            	<div onclick='detalles2(".$afiliado[0]->user_id.")' class='".$todo."'>".$afiliado[0]->nombre." ".$afiliado[0]->apellido."<br />Detalles</div>
+		            </li>";
+	
+				}
+	
+			}
+			if($aux > 0){
+				for($i=$aux; $i < $frontales; $i++){
+					echo "
+						<li>
+							<a href='javascript:void(0)'>No tiene afiliado</a>
+			            </li>";
+				}
+			}
+			echo "</ul>";
+		}
+		else
+		{
+			$nombre=$this->model_perfil_red->get_name($_POST['id']);
+			$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
+			echo "<ul>";
+			for($i=0; $i < $frontales; $i++){
+				echo "
+						<li>
+							<a href='javascript:void(0)'>No tiene afiliado</a>
+			            </li>";
+			}
+			echo "</ul>";
+		}
+	
+	}
+	
 	function detalle_usuario()
 	{
 		$image 			 = $this->model_perfil_red->get_images($_POST['id']);
-
+		
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
 		{
@@ -265,13 +352,23 @@ class perfil_red extends CI_Controller
 			}
 		}
 
+		$pais=$this->modelo_dashboard->get_user_country_code($_POST['id']);
+		
 		$usuario =$this->model_perfil_red->datos_perfil($_POST['id']);
 		$edad    =$this->model_perfil_red->edad($_POST['id']);
 		$telefonos    =$this->model_perfil_red->telefonos($_POST['id']);
 		$dir    =$this->model_perfil_red->dir($_POST['id']);
 		echo '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
-		echo '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><img alt="'.$usuario[0]->nombre.'" src="'.$img_perfil.'" style="max-width: 100%; max-height: 100%"></div>
-		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"><div class="row">Id: <b>'.$_POST["id"].'</b></div>';
+		echo '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<img alt="'.$usuario[0]->nombre.'" src="'.$img_perfil.'" style="max-width: 100%; max-height: 100%">
+			</div>';
+		echo '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<div class="demo-icon-font">Pais
+					<img class="flag flag-'.strtolower($pais).'" >
+               	</div>';
+		echo '
+				<div class="row">Id: <b>'.$_POST["id"].'</b></div>';
+		
 		echo '<div class="row">Nombre: <b>'.$usuario[0]->nombre.'</b></div>';
 		echo '<div class="row">Apellido: <b>'.$usuario[0]->apellido.'</b></div>';
 		echo '<div class="row">Nacimiento: <b>'.$usuario[0]->nacimiento.'</b></div>';
@@ -298,6 +395,44 @@ class perfil_red extends CI_Controller
 		echo '</div>';
 		echo '</div></div></div>';
 	}
+	
+	function detalle_usuario2()
+	{
+		$img_perfil = $this->imagenPerfil($_POST['id']);
+	
+		$pais=$this->modelo_dashboard->get_user_country_code($_POST['id']);
+	
+		$usuario = $this->model_perfil_red->datos_perfil($_POST['id']);
+		$compras = $this->model_afiliado->ComprasUsuario($_POST['id']);
+		$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
+		$comision  = $this->model_afiliado->ComisionUsuario($_POST['id']);
+		
+		$this->template->set("img_perfil",$img_perfil);
+		$this->template->set("id",$_POST['id']);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("compras",$compras);
+		$this->template->set("puntos",$puntos);
+		$this->template->set("comision",$comision);
+		$this->template->set("pais",$pais);
+		$this->template->build('website/ov/perfil_red/detallesAfiliado2');
+		
+	}
+	
+	function imagenPerfil($id){
+		$image 			 = $this->model_perfil_red->get_images($_POST['id']);
+		
+		$img_perfil="/template/img/empresario.jpg";
+		foreach ($image as $img)
+		{
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$img_perfil=$img->url;
+			}
+		}
+		return $img_perfil;
+	}
+	
 	function afiliar()
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -478,11 +613,13 @@ class perfil_red extends CI_Controller
 		$id_afiliado=$this->model_perfil_red->get_id();
 		echo "El usuario <b>".$_POST['nombre']."&nbsp; ".$_POST['apellido']."</b> ha quedado afiliado con el id <b>".$id_afiliado[0]->id."</b>";
 	}
+	
 	function actualizar()
 	{
 		$id=$this->tank_auth->get_user_id();
 		$this->model_perfil_red->actualizar($id);
 	}
+	
 	function cp()
 	{
 		if(strlen($_POST['cp'])>3)
@@ -545,6 +682,7 @@ class perfil_red extends CI_Controller
 			}
 		}
 	}
+	
 	function cp_red()
 	{
 		if(strlen($_POST['cp'])>3)
@@ -607,6 +745,7 @@ class perfil_red extends CI_Controller
 			}
 		}
 	}
+	
 	function foto()
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -660,6 +799,7 @@ class perfil_red extends CI_Controller
 			echo "</ul>";
 		}
 	}
+	
 	function sube_foto($tipo)
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -766,6 +906,7 @@ class perfil_red extends CI_Controller
 			$this->model_perfil_red->img_user_tomar($id);
 		}
 	}
+	
 	function por_pagar()
 	{
 		echo
@@ -967,5 +1108,15 @@ class perfil_red extends CI_Controller
 	
 	function CambioFase(){
 		$this->model_afiliado->CambiarFase($_POST['id'], $_POST['red'], $_POST['fase']);
+	}
+	
+	function MensajeFase(){
+		$id = $_POST['id'];
+		$red = $_POST['red'];
+		
+		$this->template->set("id",$id);
+		$this->template->set("red",$red);
+		
+		$this->template->build('website/ov/perfil_red/fases');
 	}
 }

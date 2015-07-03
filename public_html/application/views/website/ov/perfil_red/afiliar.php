@@ -461,52 +461,7 @@
 											</div>
 										</div>
 										<?}	elseif($premium == '0'){ ?> 
-											<h1>   Solo puedes tener <?php echo $red_frontales[0]->frontal ?>, pero puedes afiliar en red"</h1>
-											<div id="faseuno" class="col-xs-12 col-sm-6 col-md-3">
-													            <div class="panel panel-success pricing-big">
-													                <div class="panel-heading">
-													                    <h3 class="panel-title">
-													                       <i class="fa fa-plane"></i> Fase 1</h3>
-													                </div>
-													                <div class="panel-body no-padding text-align-center">
-													                    <div class="the-price">
-													                        <h1>
-													                            <strong>$0 USD</strong></h1>
-													                    </div>
-																		<div class="price-features">
-																			<ul class="list-unstyled text-left">
-																	          	<li><i class="fa fa-check text-success"></i> <strong></strong> Afiliar Usuarios a profundidad</li>
-																	        </ul>
-																		</div>
-													                </div>
-													                <div class="panel-footer text-align-center">
-													                    <a id="fase1" href="javascript:void(0);" class="btn btn-primary btn-block" role="button">Seleccionar</a>
-													                </div>
-													            </div>
-													        </div>
-													        
-												<div id="fasedos" class="col-xs-12 col-sm-6 col-md-3">
-													            <div class="panel panel-success pricing-big">
-													                <div class="panel-heading">
-													                    <h3 class="panel-title">
-													                       <i class="fa fa-plane"></i> Fase 2</h3>
-													                </div>
-													                <div class="panel-body no-padding text-align-center">
-													                    <div class="the-price">
-													                        <h1>
-													                            <strong>$10 USD</strong></h1>
-													                    </div>
-																		<div class="price-features">
-																			<ul class="list-unstyled text-left">
-																	          	<li><i class="fa fa-check text-success"></i> <strong></strong> Afiliar Usuarios a Frontal sin limites</li>
-																	        </ul>
-																		</div>
-													                </div>
-													                <div class="panel-footer text-align-center">
-													                    <a id="fase2" href="javascript:void(0);" class="btn btn-primary btn-block" role="button">Seleccionar</a>
-													                </div>
-													            </div>
-													        </div>
+											<a id="fases"  onclick="SelecionarFase()">Mas informacion</a>
 										<?php } else {?>
 										<h1>   Solo puedes tener <?php echo $red_frontales[0]->frontal ?>, pero puedes afiliar en red"</h1>
 											<?php }?>
@@ -834,37 +789,34 @@ $("#plan4").click(function(event) {
 	$("#plancuatro").addClass('packselected');
 });
 
-$("#fase1").click(function() {
+function SelecionarFase ()
+{
+	alert("s");
 	$.ajax({
 		type: "POST",
-		url: "/ov/perfil_red/CambioFase",
+		url: "/ov/perfil_red/MensajeFase",
 		data: {
-			id: <?php echo $id ?>,
-			red: <?php echo $_GET['id'] ?>,
-			fase: '1'
-				},
-	}).done(function(msg) {
-		alert('Has Cambiado de fase'+msg);
-		location.reload();
-	})
-});
-
-$("#fase2").click(function() {
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/CambioFase",
-		data: {
-			id: <?php echo $id ?>,
-			red: <?php echo $_GET['id'] ?>,
-			fase: '2'
-				},
-	})
-	.done(function(msg)
+			id: <?php echo $id; ?>,
+			red: <?php echo $_GET['id']; ?> }
+	}).done(function( msg )
 	{
-		alert('Has Cambiado de fase'+msg);
-		location.reload();
+		bootbox.dialog({
+			message: msg,
+			title: "Selecione un fase para continuar",
+			buttons: {
+				success: {
+				label: "Ok!",
+				className: "btn-success",
+				callback: function() {
+					location.href="";
+					}
+				}
+			}
+		})
 	})
-});
+	pageSetUp();
+}
+
 /*
 CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
 $("input").click(function() {
@@ -989,7 +941,7 @@ function agregar_red(tipo)
 }
  $(function()
  {
- 	año = new Date();
+ 	a = new Date();
 	año = a.getFullYear()-19;
 	$( "#datepicker" ).datepicker({
 	changeMonth: true,
