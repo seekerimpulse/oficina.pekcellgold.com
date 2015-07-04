@@ -4,8 +4,8 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-				<a href="/bo/comercial/red"><i class="fa fa-home"></i> Inicio</a> <span>>
-					afiliar </span>
+				<a href="/bo"><i class="fa fa-home"></i> Inicio</a> <span>>
+					Proveedor </span>
 			</h1>
 		</div>
 	</div>
@@ -58,13 +58,13 @@
 								</section>
 								<section class="col col-3">
 									<label class="input"> <i class="icon-prepend fa fa-lock"></i> <input
-										required type="password" name="password"
+										required type="password" name="password" id="password"
 										placeholder="Contraseña">
 									</label>
 								</section>
 								<section class="col col-3">
 									<label class="input"> <i class="icon-prepend fa fa-lock"></i> <input
-										required type="password" name="confirm_password"
+										required type="password" name="confirm_password" id="confirm_password"
 										placeholder="Repite contraseña">
 									</label>
 								</section>
@@ -77,20 +77,20 @@
 								<div class="row">
 									<section class="col col-3">
 										<label class="input"> <i class="icon-prepend fa fa-user"></i>
-											<input required type="text" name="nombre"
+											<input required type="text" name="nombre" id="nombre"
 											placeholder="Nombre">
 										</label>
 									</section>
 									<section class="col col-3">
 										<label class="input"> <i class="icon-prepend fa fa-user"></i>
-											<input required type="text" name="apellido"
+											<input required type="text" name="apellido" id="apellido"
 											placeholder="Apellido">
 										</label>
 									</section>
 									<section class="col col-3">
 										<label class="input"> <i class="icon-append fa fa-calendar"></i>
 											<input required id="datepicker1" type="text"
-											name="nacimiento" placeholder="Fecha de nacimiento">
+											name="nacimiento" placeholder="Fecha de nacimiento" readonly="readonly">
 										</label>
 									</section>
 								</div>
@@ -421,42 +421,87 @@
 		</div>
 		<!-- END ROW -->
 	</section>
-	<script type="text/javascript">
+</div>
+
+<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+<script type="text/javascript">
 function new_proveedor()
 {
-	
-	///auth/register
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/crear_user",
-		data: $('#register1').serialize()
-	})
-	.done(function( msg ) {
-		
-		var email=$("#email1").val();
-		$("#proveedor").append("<input value='"+email+"' type='hidden' name='mail_important'>");
-		$.ajax({
-			type: "POST",
-			url: "/bo/mercancia/new_proveedor",
-			data: $('#proveedor').serialize()
+	var ids = new Array( 
+			"#nombre",
+		 	"#apellido",
+		 	"#datepicker1",
+		 	"#cp",
+		 	"#username1",
+		 	"#email1",
+		 	"#password",
+		 	"#confirm_password"
+		 	
+		 );
+		var mensajes = new Array( 
+			"Por favor ingresa tu nombre",
+		 	"Por favor ingresa tu apellido",
+		 	"Por favor ingresa tu fecha de nacimiento",
+		 	"Por favor ingresa tu código postal",
+		 	"Por favor ingresa un nombre de usuario",
+		 	"Por favor ingresa un correo",
+		 	"Por favor ingresa una contraseña",
+		 	"Por favor confirma tu contraseña"
+		 );
+
+		var idss=new Array(
+			"#username1"
+		);
+		var mensajess=new Array(
+			"El nombre de usuario no puede contener espacios en blanco"
+		);
+		var validacion_ = valida_espacios(idss,mensajess);
+		var validacion = valida_vacios(ids,mensajes);
+		if(validacion&&validacion_)
+		{
+			//auth/register
+			$.ajax({
+				type: "POST",
+				url: "/ov/perfil_red/crear_user",
+				data: $('#register1').serialize()
 			})
-			.done(function( msg1) {
+			.done(function( msg ) {
 				
-				bootbox.dialog({
-					message: "Se ha creado el proveedor"+msg1,
-					title: "Atención",
-					buttons: {
-						success: {
-						label: "Ok!",
-						className: "btn-success",
-						callback: function() {
-							location.href="";
+				var email=$("#email1").val();
+				$("#proveedor").append("<input value='"+email+"' type='hidden' name='mail_important'>");
+				$.ajax({
+					type: "POST",
+					url: "/bo/mercancia/new_proveedor",
+					data: $('#proveedor').serialize()
+					})
+					.done(function( msg1) {
+						alert(msg1)
+						bootbox.dialog({
+							message: "Se ha creado el proveedor"+msg1,
+							title: "Atención",
+							buttons: {
+								success: {
+								label: "Ok!",
+								className: "btn-success",
+								callback: function() {
+									location.href="";
+									}
+								}
 							}
-						}
-					}
-				});
+						});
+					});
 			});
-	});
+		}else{
+			$.smallBox({
+			      title: "<h1>Atención</h1>",
+			      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
+			      color: "#C46A69",
+			      icon : "fa fa-warning fadeInLeft animated",
+			      timeout: 4000
+			    });
+			}
 }
 
 function new_empresa()

@@ -19,10 +19,7 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function CrearPerfil($id){
-		if(!isset($_POST['tipo_afiliado']))
-		{
-			$_POST['tipo_afiliado'] = 2;
-		}
+		$_POST['tipo_afiliado'] = 2;
 		
 		if(!isset($_POST['tipo_plan']))
 			$_POST['tipo_plan'] = 1;

@@ -992,6 +992,7 @@ class admin extends CI_Controller
 		echo '</form></div>';
 	*/	
 	}
+	}
 	
 	function new_mercancia()
 	{

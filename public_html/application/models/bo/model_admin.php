@@ -99,7 +99,7 @@ class model_admin extends CI_Model
 		 from cat_proveedor");*/
 		
 		$q=$this->db->query("select UP.user_id, UP.nombre, UP.apellido
-		from proveedor P, user_profiles UP where P.id_proveedor = UP.user_id;");
+		from user_profiles UP where UP.id_tipo_usuario = 3");
 		
 		
 		return $q->result();

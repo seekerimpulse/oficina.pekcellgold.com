@@ -254,7 +254,7 @@ class model_mercancia extends CI_Model {
 		
 		$id_afiliador = $id_afiliador->result ();
 		
-		if ($id_afiliador [0]->id)
+		if ($id_afiliador[0]->id)
 			$id_nuevo = $id_afiliador [0]->id;
 		else
 			$id_nuevo = $id_afiliador->id;
@@ -422,8 +422,9 @@ class model_mercancia extends CI_Model {
 				"credito_suspendido" => $_POST ['credito_suspendido'],
 				"estatus" => 'ACT' 
 		);
-		$this->db->insert ( "proveedor", $dato_proveedor );
 		
+		$this->db->insert ( "proveedor", $dato_proveedor );
+		var_dump($dato_proveedor); exit;
 		/* ################### FIN DATO PROVEEDOR ######################### */
 		$cuentas = $_POST ['Cuenta'];
 		$bancos = $_POST ['banco'];
