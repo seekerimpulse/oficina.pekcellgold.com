@@ -79,7 +79,7 @@ class model_afiliado extends CI_Model{
 		
 		$this->db->query('update users set activated="1" where id="'.$id.'"');
 		$this->EstiloUsuaio($id);
-		$directo=0;
+		$directo=1;
 		if(!isset($_POST['afiliados']))
 		{
 			$_POST['afiliados']=$id;
@@ -88,7 +88,6 @@ class model_afiliado extends CI_Model{
 		
 		$q = $this->db->query("select * from user_profiles where user_id=".$id);
 		$perfil = $q->result();
-		//var_dump($perfil[0]->user_id); exit;
 		if(isset($perfil[0]->user_id)){
 			return true;
 		}

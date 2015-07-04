@@ -477,7 +477,7 @@ function new_proveedor()
 					data: $('#proveedor').serialize()
 					})
 					.done(function( msg1) {
-						alert(msg1)
+					
 						bootbox.dialog({
 							message: "Se ha creado el proveedor"+msg1,
 							title: "Atención",
