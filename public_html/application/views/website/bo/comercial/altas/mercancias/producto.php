@@ -176,7 +176,7 @@
 													
 													<section class="col col-3">País de la mercancía
 														<label class="select">
-															<select id="pais" required name="pais" onChange="ImpuestosPais()"">
+															<select id="pais" required name="pais" onChange="ImpuestosPais()">
 																<?foreach ($pais as $key)
 																{?>
 																<option value="<?=$key->Code?>">

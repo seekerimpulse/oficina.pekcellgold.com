@@ -165,7 +165,7 @@
 													
 													<section class="col col-12" style="width: 50%;">País de la mercancía
 														<label class="select">
-															<select id="pais" required name="pais">
+															<select id="pais2" required name="pais" onChange="ImpuestosPais()">
 																<?foreach ($pais as $key)
 																{	if ($mercancia[0]->pais == $key->Code){?>
 																		<option selected value="<?=$key->Code?>">
@@ -190,7 +190,7 @@
 													
 													<?foreach($impuestos_merc as $merc)
 													{?>	
-														<section class="col col-6">Impuesto
+														<section class="col col-6" id="impuesto">Impuesto
 															<label class="select">
 																<select name="id_impuesto[]">
 																	<?foreach ($impuesto as $key){
@@ -1936,7 +1936,7 @@ function use_mail1()
 }
 function add_impuesto()
 {
-	var code=	'<section class="col col-3" style="width: 50%;">Impuesto'
+	var code=	'<section class="col col-3" id="impuesto">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
 	<?foreach ($impuesto as $key)
@@ -1947,6 +1947,34 @@ function add_impuesto()
 	+'</label>'
 	+'</section>';
 	$("#moneda_field").append(code);
+	ImpuestosPais();
+}
+function ImpuestosPais(){
+	var pa = $("#pais2").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#impuesto option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#impuesto');
+		      $('#impuesto select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
 }
 function add_impuesto_boot()
 {

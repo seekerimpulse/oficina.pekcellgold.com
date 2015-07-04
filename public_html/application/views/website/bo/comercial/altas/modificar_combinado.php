@@ -50,7 +50,7 @@
 											</label>
 										</section>
 
-										<section class="col col-12" style="width: 50%;">
+										<section class="col col-12" style="width: 100%;">
 											RED <label class="select"> <select name="red">
 																<?foreach ( $red as $key ) {
 																	
@@ -70,83 +70,136 @@
 											</select>
 											</label>
 										</section>
-														
-												<?php foreach ( $prods as $key_1 ) {
-													?>
-											
-											<section class="col col-8" style="width: 50%;">
-												Productos <label class="select"> <select
-													class="custom-scroll" name="producto[]">
-													        	<?php foreach ( $producto as $key ) {
-														if ($key_1->id_producto == $key->id_mercancia) {
-															?>
-													                <option selected value='<?php $key->id_mercancia?>'>
-													                            <?php echo $key->nombre.' (ACTIVO)'?> 
-													                </option>
-													                <?php } else { ?>
-																	<option value='<?php echo $key->id_mercancia?>'>
-													                            <?php echo $key->nombre?>
-													                </option>
-												<?php
-														
-																}
-													}
-													?>
-														</select>
-												</label>
-											</section>
 												
-												<?php
-												
-													}
-												?>
-											<section class="col col-4" style="width: 50%;">
-												<label class="input">Cantidad de productos 
-													<input type="number" min="1" name="n_productos[]" id="prod_qty" value='<?php echo $key_1->id->cantidad_producto?>'>
-												</label>
-											</section>
-											
-											<?php foreach($servs as $key_1)
+
+										        <?if ($prods==null) {?>
+										        	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
+														<section class="col col-8"  style="width: 50%">Productos
+												           	<label class="select">
+												               	<select class="custom-scroll"  name="producto[]">
+												                   	<?foreach ($producto as $key){
+												                    	?>
+																			<option value= '<? echo $key->id?>'>
+												                            	<? echo $key->nombre?>
+												                            </option>
+																		<?
+																	}?>
+																				
+											                	</select>
+											            	</label>
+											        	</section>
+											        
+											        	<section class="col col-4"  style="width: 50%">
+											           		<label class="input">Cantidad de productos
+											                	<input type="number" min="1" name="n_productos[]" id="prod_qty" >
+											            	</label>
+											        	</section>
+											        </div>
+											        <?
+										        } foreach($prods as $key_1)
 												{?>
-													<section class="col col-8" style="width: 50%;">Servicios
-														<label class="select">
-													    	<select class="custom-scroll" name="servicio[]">
-												            	
-													    	<?php foreach ($servicio as $key){
-													    		
-													              	if($key_1->id->servicio==$key->id_mercancia)
-																	{?>
-													                	<option selected value='<?php echo $key->id_mercancia?>'>
-													                            <?php echo $key->nombre.' (ACTIVO)'?>
-													                    </option>
-													        <?php }	
-													        		else 
-																	{?>
-																		<option value='<?php echo $key->id_mercancia?>'>
-													                            <?php echo $key->nombre?>
-																		</option>
-															<?php }
+													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="prods">
+														<section class="col col-8"  style="width: 50%">Productos
+												           	<label class="select">
+												               	<select class="custom-scroll"  name="producto[]">
+												                   	<?foreach ($producto as $key){
+												                    	if($key_1->id_producto == $key->id)
+																		{?>
+												                        	<option selected value= '<? echo $key->id?>' >
+												                            	<? echo $key->nombre?> (ACTIVO)
+												                            </option>
+												                        <?}
+																		else
+																		{?>
+																			<option value= '<? echo $key->id?>'>
+												                            	<? echo $key->nombre?>
+												                            </option>
+																		<?}
+																	}?>
+																				
+											                	</select>
+											            	</label>
+											        	</section>
+											        
+											        	<section class="col col-4"  style="width: 50%">
+											           		<label class="input">Cantidad de productos
+											                	<input type="number" min="1" name="n_productos[]" id="prod_qty" value= '<? echo $key_1->cantidad_producto?>'>
+											            	</label>
+											        	</section>
+											        </div>
+												<?}?>
+
+												<div id="agregar" class=" text-center row">
+
+													<a onclick="new_product()">Agregar producto 
+														<i class="fa fa-plus">
+														</i>
+													</a>  
+												</div>		
+
+												<?if ($servs==null) {?>
+													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="servs">
+												        <section class="col col-8"  style="width: 50%">Servicios
+												            <label class="select">
+												                <select class="custom-scroll" name="servicio[]">
+												                        <?foreach ($servicio as $key){?>
+													                    	
+																				<option value='<? echo $key->id?>'>
+													                            	<? echo $key->nombre ?>
+													                            </option>
+																		<?}?>
+													            </select>
+													        </label>
+													    </section>
+													    
+													    <section class="col col-4"  style="width: 50%">
+													       <label class="input">Cantidad de servicios
+													            <input type="number" min="1" name="n_servicios[]" id="serv_qty" >
+													        </label>
+													    </section>
+													</div>
+												<?} 
+												foreach($servs as $key_1)
+												{?>
+													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="servs">
+												        <section class="col col-8"  style="width: 50%">Servicios
+												            <label class="select">
+												                <select class="custom-scroll" name="servicio[]">
+												                        <?foreach ($servicio as $key){
+													                    	if($key_1->id_servicio==$key->id)
+																			{?>
+														                        <option selected value='<? echo $key->id?>'>
+														                            <? echo $key->nombre?> (ACTIVO)
+														                        </option>
+													                        <?}
+																			else 
+																			{?>
+																				<option value='<? echo $key->id?>'>
+													                            	<? echo $key->nombre ?>
+													                            </option>
+																			<?}
 																		}?>
-													        </select>
-													    </label>
-													</section>
-											<?php }?>
+													            </select>
+													        </label>
+													    </section>
+													    
+													    <section class="col col-4"  style="width: 50%">
+													       <label class="input">Cantidad de servicios
+													            <input type="number" min="1" name="n_servicios[]" id="serv_qty" value='<? echo $key_1->cantidad_servicio?>'>
+													        </label>
+													    </section>
+													</div>
+												<?}?>
 												
-											<section class="col col-4" style="width: 50%;">
-												<label class="input">Cantidad de servicios
-												        <input type="number" min="1" name="n_servicios[]" id="serv_qty" value='<?php echo $key_1->id->cantidad_servicio?>'>
-											        </label>
-											</section>
-										
+												<div id="agregar1" class=" text-center row">
+
+													<a  onclick="new_service()">Agregar servicio 
+														<i class="fa fa-plus">
+														</i>
+													</a>
+												</div>
 								
 								</fieldset>
-
-								<div id="agregar" class=" text-center row">
-									<a onclick="new_product()">Agregar producto <i
-										class="fa fa-plus"></i></a> <a onclick="new_service()">Agregar
-										servicio <i class="fa fa-plus"></i>
-									</a>
-								</div>
 
 								<div id="moneda">
 									<fieldset id="moneda_field">
@@ -154,73 +207,101 @@
 										<legend>Moneda y país</legend>
 
 										<section class="col col-2" style="width: 50%;">
-											<label class="input"> Costo real <input type="text"
-												name="real" id="real">
+											<label class="input"> Costo real 
+												<input type="text" name="real" id="real" value='<? echo $mercancia[0]->real?>'>
 											</label>
 										</section>
 
 										<section class="col col-2" style="width: 50%;">
-											<label class="input">Costo distribuidores <input type="text"
-												name="costo" id="costo">
+											<label class="input">Costo distribuidores
+											 	<input type="text" name="costo" id="costo" value='<? echo $mercancia[0]->costo?>'>
 											</label>
 										</section>
 
 										<section class="col col-2" style="width: 50%;">
-											<label class="input">Costo publico <input type="text"
-												name="costo_publico" id="costo_publico">
+											<label class="input">Costo publico 
+												<input type="text" name="costo_publico" id="costo_publico" value='<? echo $mercancia[0]->costo_publico?>'>
 											</label>
 										</section>
 
 										<section class="col col-2" style="width: 50%;">
-											<label class="input"> Tiempo mínimo de entrega <input
-												placeholder="En días" type="text" name="entrega"
-												id="entrega">
+											<label class="input"> Tiempo mínimo de entrega 
+												<input placeholder="En días" type="text" name="entrega" id="entrega" value='<? echo $mercancia[0]->entrega?>'>
 											</label>
 										</section>
 
-										<section class="col col-3" style="width: 50%;">
-											Proveedor <label class="select"> <select name="proveedor">
-												<?foreach ($proveedores as $key){?>
-												<option value="<?=$key->id_usuario?>">
-												<?=$key->nombre." ".$key->apellido?> comisión: %
-												<?=$key->comision?></option>
-												<?}?>
+										<section class="col col-12" style="width: 50%;">Proveedor
+											<label class="select">
+												<select name="proveedor">
+													<?foreach ($proveedores as $key)
+														{ if ($mercancia[0]->id_proveedor == $key->user_id){?>
+															<option selected value="<?=$key->user_id?>">
+																<?=$key->nombre." ".$key->apellido?>
+															</option>	
+														<?}	else{?>
+															<option value="<?=$key->user_id?>">
+																<?=$key->nombre." ".$key->apellido?>
+															</option>
+														<?}?>
+													<?}?>
+												</select>
+											</label>
+										</section>
+													
+										<section class="col col-12" style="width: 50%;">País de la mercancía
+											<label class="select">
+												<select id="pais2" required name="pais" onChange="ImpuestosPais()">
+													<?foreach ($pais as $key)
+													{	if ($mercancia[0]->pais == $key->Code){?>
+															<option selected value="<?=$key->Code?>">
+																<?=$key->Name?>
+															</option>
+														<?}else{?>
+															<option value="<?=$key->Code?>">
+																<?=$key->Name?>
+															</option>
+														<?}?>
+													<?}?>
 												</select>
 											</label>
 										</section>
 
 										<section class="col col-3" style="width: 50%;">
-											País del producto <label class="select"> <select id="pais"
-												required name="pais">
-												<?foreach ($pais as $key){?>
-												<option value="<?=$key->Code?>">
-												<?=$key->Name?></option>
-												<?}?>
-												</select>
+											<label class="input"> Puntos comisionables 
+												<input type="number" min="1" max="" name="puntos_com" id="puntos_com" value='<? echo $mercancia[0]->puntos_comisionables?>'>
 											</label>
 										</section>
 
-										<section class="col col-3" style="width: 50%;">
-											<label class="input"> Puntos comisionables <input
-												type="number" min="1" max="" name="puntos_com"
-												id="puntos_com">
-											</label>
+										<?foreach($impuestos_merc as $merc)
+													{?>	
+														<section class="col col-6" id="impuesto">Impuesto
+															<label class="select">
+																<select name="id_impuesto[]">
+																<?foreach ($impuesto as $key){
+																		if($merc->id_impuesto==$key->id_impuesto && $key->id_pais==$mercancia[0]->pais)
+																		{?>
+																			<option selected value='<?php echo $key->id_impuesto?>'>
+																				<?php echo $key->descripcion.' '.$key->porcentaje.' % (ACTIVO)'?>
+																			</option>
+																		<?}
+																		else if($key->id_pais==$mercancia[0]->pais)
+																		{?>
+																			<option value='<?php echo $key->id_impuesto?>'>
+																				<?php echo $key->descripcion.' '.$key->porcentaje.' %'?>
+																			</option>
+																		<?}
+																	}?>	
+																</select>
+															</label>
+														</section>
+													<?}?>
+										
+										<section class="col col-6" style="width: 50%">
+											<br>
+											<br>
+											<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
 										</section>
 
-										<section class="col col-3" style="width: 50%;">
-											Impuesto <label class="select"> <select name="id_impuesto[]">
-												<?foreach ($impuesto as $key){?>
-												<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>	
-												<?}?>
-												</select>
-											</label>
-
-										</section>
-
-										<section class="col col-3" style="width: 50%;">
-											<br> <a href="#" onclick="add_impuesto()">Agregar impuesto<i
-												class="fa fa-plus"></i></a>
-										</section>
 									</fieldset>
 								</div>
 
@@ -238,7 +319,7 @@
 										<label class="label"> Imágen actual </label>
 															<?php
 															
-foreach ( $img as $key ) {
+										foreach ( $img as $key ) {
 																echo '<div class="no-padding col-xs-12 col-sm-12 col-md-6 col-lg-6"><img style="max-height: 150px;" src="' . $key [0]->url . '"></div>';
 															}
 															?>
@@ -1263,7 +1344,7 @@ $('#finishdate').datepicker({
 }
 function new_product()
 {
-	$('#prods').append('<section class="col col-8">Productos'
+	$('#prods').append('<section class="col col-8" style="width: 50%">Productos'
 		+'<label class="select">'
 		+'<select class="custom-scroll"  name="producto[]">'
 		+'<option value="0">Ninguno</option>'
@@ -1274,7 +1355,7 @@ function new_product()
 		+'</select>'
 		+'</label>'
 		+'</section>'
-		+'<section class="col col-4">'
+		+'<section class="col col-4" style="width: 50%">'
 		+'<label class="input">Cantidad de productos'
 		+'<input type="number" min="1" name="n_productos[]">'
 		+'</label>'
@@ -1282,7 +1363,7 @@ function new_product()
 }
 function new_service()
 {
-	$('#servs').append('<section class="col col-8">Servicios'
+	$('#servs').append('<section class="col col-8" style="width: 50%">Servicios'
 		+'<label class="select">'
 		+'<select class="custom-scroll" name="servicio[]">'
 		+'<option value="0">Ninguno</option>'
@@ -1293,7 +1374,7 @@ function new_service()
 		+'</select>'
 		+'</label>'
 		+'</section>'
-		+'<section class="col col-4">'
+		+'<section class="col col-4" style="width: 50%">'
 		+'<label class="input">Cantidad de servicios'
 		+'<input type="number" min="1" name="n_servicios[]">'
 		+'</label>'
@@ -1973,6 +2054,24 @@ function add_impuesto()
 	$("#moneda_field").append(code);
 	ImpuestosPais();
 }
+/*
+function add_impuesto()
+{
+	var code=	'<section class="col col-12" style="width: 50%;">Impuesto'
+	+'<label class="select">'
+	+'<select name="id_impuesto[]">'
+	//foreach ($impuesto as $key)
+	/*{
+		if ($key->id_pais == $mercancia[0]->pais) {
+		echo "+'<option value=".$key->id_impuesto.">".$key->descripcion." ".$key->porcentaje."%"."</option>'";
+		}
+	}?>
+	+'</select>'
+	+'</label>'
+	+'</section>';
+	$("#moneda_field").append(code);
+}
+*/
 function add_impuesto_boot()
 {
 	var code=	'<section class="col col-6">Impuesto'
@@ -2369,7 +2468,7 @@ function new_pack()
 }
 
 function ImpuestosPais(){
-	var pa = $("#pais").val();
+	var pa = $("#pais2").val();
 	
 	$.ajax({
 		type: "POST",
@@ -2395,4 +2494,33 @@ function ImpuestosPais(){
 	      }
 	});
 }
+
+/*
+function ImpuestosPais(){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#impuesto option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#impuesto');
+		      $('#impuesto select').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
+}*/
 </script>
