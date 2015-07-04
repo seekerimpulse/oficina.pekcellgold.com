@@ -1529,7 +1529,7 @@ $.ajax({
 				})//fin done ajax*/
 	$.each( $('.pais_check:checked'), function( i, val ) {
 
-				  	//alert($(val).val());
+				  	
 				  	$.ajax({
 				  		type: "POST",
 				  		url: "/bo/admin/actualiza_pais",

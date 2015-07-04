@@ -65,7 +65,7 @@ class mercancia extends CI_Controller
 		
 		$style           = $this->modelo_dashboard->get_style($id);
 		$productos       = $this->model_admin->get_mercancia();
-		$proveedores	 = $this->model_admin->get_proveedor();
+		$proveedores	 = $this->model_admin->get_proveedor2($_GET['id']);
 		$promo			 = $this->model_admin->get_promo();
 		$grupo			 = $this->model_admin->get_grupo();
 		$servicio		 = $this->model_admin->get_servicio();
@@ -153,11 +153,11 @@ class mercancia extends CI_Controller
 			
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			
-			$this->model_admin->img_merc($sku , $data["upload_data"]);
-
+			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
+			redirect('/bo/comercial/altas');
 			
 		}
-		redirect('/bo/comercial/altas');
+		
 	}
 	
 	function CrearProducto(){
@@ -192,14 +192,13 @@ class mercancia extends CI_Controller
 		}
 		else
 		{
-				
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 				
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
 	
-				
+			redirect('/bo/comercial/altas');
 		}
-		redirect('/bo/comercial/altas');
+		
 	}
 	
 	function CrearCombinado(){

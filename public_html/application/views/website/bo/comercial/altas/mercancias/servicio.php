@@ -54,11 +54,11 @@
 													</section>
 													<section class="col col-2">
 														<label class="input">Fecha de inicio
-														<input required type="text" name="fecha_inicio" id="startdate" /> </label>
+														<input required type="text" name="fecha_inicio" id="startdate" readonly="readonly" /> </label>
 													</section>
 													<section class="col col-2">
 														<label class="input">Fecha de termino
-														<input type="text" name="fecha_fin" id="finishdate" /> </label>
+														<input type="text" name="fecha_fin" id="finishdate" readonly="readonly"/> </label>
 													</section>
 													<section class="col col-3">RED
 															<label class="select">

@@ -395,9 +395,10 @@ class model_mercancia extends CI_Model {
 				"id_usuario" => $id_nuevo,
 				"comision" => $_POST ['comision'] 
 		);
+		
 		$this->db->insert ( "cat_proveedor", $dato_cat_proveedor );
 		
-		$id_proveedor = mysql_insert_id ();
+		$id_proveedor = mysql_insert_id();
 		
 		$dato_proveedor = array (
 				"id_proveedor" => $id_proveedor,
@@ -424,7 +425,7 @@ class model_mercancia extends CI_Model {
 		);
 		
 		$this->db->insert ( "proveedor", $dato_proveedor );
-		var_dump($dato_proveedor); exit;
+		
 		/* ################### FIN DATO PROVEEDOR ######################### */
 		$cuentas = $_POST ['Cuenta'];
 		$bancos = $_POST ['banco'];

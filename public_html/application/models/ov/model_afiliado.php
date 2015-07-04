@@ -283,7 +283,6 @@ class model_afiliado extends CI_Model{
 		$directo=1;
 		$q = $this->db->query("select * from user_profiles where user_id=".$id);
 		$perfil = $q->result();
-		var_dump($perfil[0]->user_id); exit;
 		if(isset($perfil[0]->user_id)){
 			return true;
 		}else

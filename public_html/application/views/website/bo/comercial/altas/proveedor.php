@@ -190,7 +190,7 @@
 									<label class="select">Selecciona el tipo de proveedor <select
 										id="tipo_proveedor" required name="tipo_proveedor">
 								<? foreach ( $tipo_proveedor as $key ) {
-									echo '<option value="' . $key->id . '">' . $key->descripcion . '</option>';
+									echo '<option value="'.$key->id_tipo.'">' . $key->descripcion . '</option>';
 								}
 								?>
 							</select>
