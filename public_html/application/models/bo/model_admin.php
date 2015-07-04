@@ -92,6 +92,7 @@ class model_admin extends CI_Model
 	{
 		$q=$this->db->query('delete from mercancia where id='.$_POST['id']);
 	}
+
 	function get_proveedor()
 	{
 		/*$q=$this->db->query("select id_usuario, comision, (select nombre from user_profiles where user_id=id_usuario) nombre, 
@@ -124,16 +125,16 @@ class model_admin extends CI_Model
 		}
 		return $q->result();
 	}
-	
+
 	function get_servicio()
 	{
-		$q=$this->db->query("Select a.nombre, b.id id_mercancia from servicio a, mercancia b where a.id=b.sku 
+		$q=$this->db->query("Select a.nombre,a.id, b.id id_mercancia from servicio a, mercancia b where a.id=b.sku 
 			and b.id_tipo_mercancia=2");
 		return $q->result();
 	}
 	function get_producto()
 	{
-		$q=$this->db->query("Select a.nombre, b.id id_mercancia from producto a, mercancia b where a.id=b.sku 
+		$q=$this->db->query("Select a.nombre,a.id, b.id id_mercancia from producto a, mercancia b where a.id=b.sku 
 			and b.id_tipo_mercancia=1");
 		return $q->result();
 	}
@@ -277,6 +278,7 @@ where(a.id_pais=b.Code)");
 	function get_impuestos_mercancia($id)
 	{
 		$q=$this->db->query("SELECT id_impuesto FROM cross_merc_impuesto WHERE id_mercancia=".$id);
+
 		return $q->result();
 	}
 	function new_empresa()
@@ -415,13 +417,37 @@ where(a.id_pais=b.Code)");
 			$dato_combinado=array(
 					"nombre"       => $_POST['nombre'],
 					"descripcion"  => $_POST['descripcion'],
-					"descuento"    => $_POST['descuento']
+					"descuento"    => $_POST['descuento'],
+					"id_red"	   => $_POST['red']
 	            );
 
 			$this->db->where('id', $sku);
 			$this->db->update('combinado', $dato_combinado); 
+
 			$n=0;
 			$this->db->query("delete from cross_combinado where id_combinado=".$sku);
+/*
+			foreach($_POST['producto'] as $producto)
+			{
+					$dato_cross_combinado=array(
+							"id_combinado"      => $sku,
+							"id_producto"       => $producto,
+							"cantidad_producto" => $_POST['n_productos']
+			        );
+					
+					$this->db->insert("cross_combinado",$dato_cross_combinado);
+			}
+
+			foreach($_POST['servicio'] as $servicio)
+			{
+					$dato_cross_combinado=array(
+							"id_servicio"       => $servicio,
+							"cantidad_servicio" => $_POST['n_servicios']
+			        );
+					$this->db->where("id_combinado",$sku);
+					$this->db->update("cross_combinado",$dato_cross_combinado);
+			}*/
+			
 			if(!isset($_POST['n_productos']))$_POST['n_productos']=0;
 			if(!isset($_POST['n_servicios']))$_POST['n_servicios']=0;
 			$productos   = $_POST['producto'];
@@ -431,7 +457,7 @@ where(a.id_pais=b.Code)");
 			$producto    = sizeof($_POST['producto']);
 			$servicio    = sizeof($_POST['servicio']);
 
-			if($producto<$servicio)
+			if($productos<$servicios)
 			{
 				if ($n_productos[0]==0)
 				{
@@ -467,7 +493,7 @@ where(a.id_pais=b.Code)");
 					}
 				}
 			}
-			if($producto>$servicio)
+			if($productos>$servicios)
 			{
 				if($n_servicios[0]==0)
 				{
@@ -503,7 +529,7 @@ where(a.id_pais=b.Code)");
 					}
 				}
 			}
-			if ($producto==$servicio)
+			if ($productos==$servicios)
 			{
 				foreach ($_POST['producto'] as $key)
 				{
@@ -518,6 +544,7 @@ where(a.id_pais=b.Code)");
 					$n++;
 				}
 			}
+			//////////////////////////////////////////////////////////////////////////////////////////////
 			$dato_mercancia=array(
 					"pais"          	    => $_POST['pais'],
 					"id_proveedor"      	=> $_POST['proveedor'],
