@@ -70,7 +70,7 @@
 											<select class="custom-scroll"  name="producto[]">
 											<option value="0">Ninguno</option>
 											<?foreach ($producto as $key){?>
-											<option value="<?=$key->id_mercancia?>">
+											<option value="<?=$key->id?>">
 											<?=$key->nombre?></option>
 											<?}?>
 											</select>
@@ -88,7 +88,7 @@
 											<select class="custom-scroll" name="servicio[]">
 											<option value="0">Ninguno</option>
 											<?foreach ($servicio as $key){?>
-											<option value="<?=$key->id_mercancia?>">
+											<option value="<?=$key->id?>">
 											<?=$key->nombre?></option>
 											<?}?>
 											</select>
