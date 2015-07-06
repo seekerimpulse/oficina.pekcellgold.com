@@ -259,6 +259,11 @@ class model_mercancia extends CI_Model {
 		else
 			$id_nuevo = $id_afiliador->id;
 		
+		$q = $this->db->query("select * from user_profiles where user_id=".$id_nuevo);
+		$perfil = $q->result();
+		if(isset($perfil[0]->user_id)){
+			return true;
+		}
 		$directo = 0;
 		if (! isset ( $_POST ['afiliados'] )) {
 			$_POST ['afiliados'] = $id;
@@ -273,6 +278,7 @@ class model_mercancia extends CI_Model {
 		$this->db->insert ( "estilo_usuario", $dato_style );
 		
 		/* ################ PERFIL DEL USUARIO ######################### */
+		
 		$dato_profile = array (
 				"user_id" => $id_nuevo,
 				"id_sexo" => $_POST ['sexo'],
