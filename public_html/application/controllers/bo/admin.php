@@ -230,7 +230,7 @@ class admin extends CI_Controller
 	}
 	function edit_merc()
 	{
-		$proveedores    = $this->model_admin->get_proveedor();
+		
 		$promo          = $this->model_admin->get_promo();
 		$grupo          = $this->model_admin->get_grupo();
 		$servicio       = $this->model_admin->get_servicio();
@@ -253,8 +253,10 @@ class admin extends CI_Controller
 		$mercancia 		= $this->model_admin->get_mercancia_espec($_POST['id']);
 		$impuestos_merc	= $this->model_admin->get_impuestos_mercancia($_POST['id']);
 		
-		echo '<div class="row"><form class="smart-form" id="update_merc" method="post" action="/bo/admin/update_mercancia" enctype="multipart/form-data" novalidate="novalidate">  
-			<h3>Editar mercancía: <b>'.$data_merc[0]->nombre.'</b></h3>';
+		
+		echo '<div class="row">
+				<form class="smart-form" id="update_merc" method="post" action="/bo/admin/update_mercancia" enctype="multipart/form-data" novalidate="novalidate">  
+			<h3><center><b>Editar mercancía '.$data_merc[0]->nombre.'</b></center></h3>';
 		if($id_merc==1)
 		{
 			
@@ -265,7 +267,7 @@ class admin extends CI_Controller
 			$id=$this->tank_auth->get_user_id();
 			$style = $this->modelo_dashboard->get_style($id);
 			$id_mercancia = $_POST['id'];
-			
+			$proveedores    = $this->model_admin->get_proveedor2(1);
 			
 			$this->template->set("id_mercancia",$id_mercancia);
 			$this->template->set("data_merc",$data_merc);
@@ -593,7 +595,7 @@ class admin extends CI_Controller
 			$style = $this->modelo_dashboard->get_style($id);
 			$id_mercancia = $_POST['id'];
 			
-				
+			$proveedores    = $this->model_admin->get_proveedor2(2);
 			$this->template->set("id_mercancia",$id_mercancia);
 			$this->template->set("data_merc",$data_merc);
 			$this->template->set("red",$red);
@@ -771,7 +773,7 @@ class admin extends CI_Controller
 			{
 				$prods=$this->model_admin->get_prod_combinado($_POST['id']);
 				$servs=$this->model_admin->get_serv_combinado($_POST['id']);
-				
+				$proveedores    = $this->model_admin->get_proveedor2(3);
 				if (!$this->tank_auth->is_logged_in())
 				{																		// logged in
 				redirect('/auth');

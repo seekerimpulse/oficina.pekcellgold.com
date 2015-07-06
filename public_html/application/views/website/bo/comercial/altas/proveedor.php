@@ -237,7 +237,7 @@
 									</section>
 									<section class="col col-2">
 										País <label class="select"> <select id="pais" required
-											name="pais">
+											name="pais" onChange="ImpuestosPais()"> 
 													<? foreach ( $pais as $key ) { ?>
 													<option value="<?=$key->Code?>">
 														<?=$key->Name?>
@@ -370,7 +370,8 @@
 										</label>
 									</section>
 									<section class="col col-3">
-										<label class="select">Impuesto <select name="impuesto">
+										<label class="select">Impuesto 
+										<select name="impuesto" id="impuesto">
 									<?foreach ($impuesto as $key){?>
 									<option value="<?=$key->id_impuesto?>"><?=$key->descripcion." ".$key->porcentaje."%"?></option>
 									<?}?>
@@ -742,5 +743,33 @@ function codpos()
 			$("#dir").append(msg);
 		})
 	}
+}
+
+function ImpuestosPais(){
+	var pa = $("#pais").val();
+	
+	$.ajax({
+		type: "POST",
+		url: "/bo/mercancia/ImpuestaPais",
+		data: {pais: pa}
+	})
+	.done(function( msg )
+	{
+		$('#impuesto option').each(function() {
+		    
+		        $(this).remove();
+		    
+		});
+		datos=$.parseJSON(msg);
+	      for(var i in datos){
+		      var impuestos = $('#impuesto');
+		      $('#impuesto').each(function() {
+				  $(this).append('<option value="'+datos[i]['id_impuesto']+'">'+datos[i]['descripcion']+' '+datos[i]['porcentaje']+'</option>');
+			    
+			});
+	    	  
+	        
+	      }
+	});
 }
 </script>
