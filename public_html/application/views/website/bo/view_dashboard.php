@@ -122,7 +122,7 @@ $ci->load->model("model_permissions");?>
 												//if($permiso){
 												?>
 												<div class="col-sm-4">
-													<a href="#">
+													<a href="oficinaVirtual/">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-desktop fa-3x"></i>
 															<h5>Oficina Virtual</h5>
