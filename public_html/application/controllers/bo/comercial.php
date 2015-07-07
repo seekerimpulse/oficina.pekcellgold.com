@@ -181,14 +181,16 @@ class comercial extends CI_Controller
 
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
+		
 		$archivos=$this->modelo_comercial->get_files();
 		$info=$this->modelo_comercial->get_info();
-		$presentaciones=$this->modelo_comercial->get_presentaciones();
+		$presentaciones = $this->modelo_comercial->get_presentaciones();
 		$ebooks=$this->modelo_comercial->get_ebooks();
 		$videos=$this->modelo_comercial->get_video();
 		$eventos=$this->modelo_comercial->get_evento();
 		$noticias=$this->modelo_comercial->get_new();
 		$cupones=$this->modelo_comercial->get_cupon();
+		
 		$data=array();	
 		$data['cupones']=$cupones;
 		$data["noticias"]=$noticias;
@@ -210,6 +212,7 @@ class comercial extends CI_Controller
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/oficina_virtual',$data);
 	}
+	
 	function ver_noticia()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -751,6 +754,7 @@ class comercial extends CI_Controller
 		}
 		redirect('/bo/comercial/oficina_virtual');
 	}
+	
 	function sube_presentacion()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -779,6 +783,7 @@ class comercial extends CI_Controller
 		{
 			//echo 'Holis';
 			//echo $ruta;
+			
 			$error = array('error' => $this->upload->display_errors());
 		}
 		else
@@ -807,6 +812,7 @@ class comercial extends CI_Controller
 		}  
 		redirect('/bo/comercial/oficina_virtual');
 	}
+	
 	function sube_ebook()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -1167,6 +1173,7 @@ class comercial extends CI_Controller
 		$data=json_decode($data,true);
 		$this->db->query('update encuesta set estatus="'.$data['tipo'].'" where id_encuesta='.$data['id']);
 	}
+	
 	function editar_archivo()
 	{
 		$data=$_GET["info"];
@@ -1188,6 +1195,7 @@ class comercial extends CI_Controller
 			$this->db->query('update cupon set codigo="'.$data['grupo'].'", descripcion="'.$data['desc'].'" where id_cupon='.$data['id']);
 		}
 	}
+	
 	function buscar_usr()
 	{
 		$users=$this->modelo_comercial->get_users($_GET['nombre']);
