@@ -61,6 +61,7 @@ class presentaciones extends CI_Controller
 		$this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/oficinaVirtual/presentaciones/alta');
 	}
+	
 	function listar()
 	{
 		if (!$this->tank_auth->is_logged_in())
@@ -85,93 +86,139 @@ class presentaciones extends CI_Controller
 		$this->template->build('website/bo/oficinaVirtual/presentaciones/listar');
 	}
 	
-function sube_presentacion()
+	function sube_presentacion()
+		{
+			if (!$this->tank_auth->is_logged_in()) 
+			{																		// logged in
+				redirect('/auth');
+			}
+	
+			$id=$this->tank_auth->get_user_id();
+	
+			//Checamos si el directorio del usuario existe, si no, se crea
+			if(!is_dir(getcwd()."/media/".$id))
+			{
+				mkdir(getcwd()."/media/".$id, 0777);
+			}
+	
+			$ruta="/media/".$id."/";
+			//definimos la ruta para subir la imagen
+			$config['upload_path'] 		= getcwd().$ruta;
+			$config['allowed_types'] 	= 'ppt|pptx|odp';
+	
+			//Cargamos la libreria con las configuraciones de arriba
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+			
+			if ($_POST['grupo_frm']=="0"){
+				$error = "Debe seleccionar un grupo para la presentacion.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/presentaciones/alta');
+			}
+			else if ($_POST['nombre_publico']==""){
+				$error = "Debe escribir un nombre para la presentacion.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/presentaciones/alta');
+			}
+			else if ($_POST['desc_frm']==""){
+				$error = "Debe escribir una descripcion para la presentacion.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/presentaciones/alta');
+			}
+			
+			
+				//exit();
+			//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
+			if (!$this->upload->do_upload('userfile'))
+			{
+				//echo 'Holis';
+				//echo $ruta;
+				//$error = array('error' => $this->upload->display_errors());
+				
+				$error = "El tipo de archivo que esta cargando no esta permitido.";
+				
+				
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/presentaciones/alta');
+				//var_dump($this->upload->data() , "									",$error);
+				//exit();
+			}
+			else
+			{
+				$data = array('upload_data' => $this->upload->data());
+				$nombre=$data['upload_data']['file_name'];
+				$filename=strrev($nombre);
+				$explode=explode(".",$filename);
+				$nombre=strrev($explode[1]);
+				$extencion=strrev($explode[0]);
+				$ext=strtolower($extencion);
+				//var_dump($this->upload->data(), "									bien");
+				//exit();
+				if($ext=="pptx") 
+				{
+					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
+					values ('.$id.','.$_POST['grupo_frm'].',4,"'.$_POST['desc_frm'].'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
+				}
+				elseif ($ext=="ppt") 
+				{ 
+					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
+					values ('.$id.','.$_POST['grupo_frm'].',3,"'.$_POST['desc_frm'].'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
+				}
+				elseif ($ext=="odp")
+				{
+					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico)
+					values ('.$id.','.$_POST['grupo_frm'].',8,"'.$_POST['desc_frm'].'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
+				}
+				//echo 'ptm';
+				redirect('/bo/presentaciones/listar');
+				
+			}  
+			
+		}
+	
+	function borrar_archivo()
 	{
-		if (!$this->tank_auth->is_logged_in()) 
+		$data=$_GET["info"];
+		$data=json_decode($data,true);
+		$this->db->query('delete from archivo where id_archivo='.$data['id']);
+		if(unlink($data['file'])){
+			echo "File Deleted.";
+		}
+	}
+	
+	function get_presentacion()
+	{
+		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
-			redirect('/auth');
+		redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
-
-		//Checamos si el directorio del usuario existe, si no, se crea
-		if(!is_dir(getcwd()."/media/".$id))
-		{
-			mkdir(getcwd()."/media/".$id, 0777);
-		}
-
-		$ruta="/media/".$id."/";
-		//definimos la ruta para subir la imagen
-		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'ppt|pptx|odp|.odp|.ppt';
-
-		//Cargamos la libreria con las configuraciones de arriba
-		$this->load->library('upload', $config);
-		$this->upload->initialize($config);
+		$usuario=$this->general->get_username($id);
 		
-		if ($_POST['grupo_frm']=="0"){
-			$error = "Debe seleccionar un grupo para la presentacion.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/presentaciones/alta');
-		}
-		else if ($_POST['nombre_publico']==""){
-			$error = "Debe escribir un nombre para la presentacion.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/presentaciones/alta');
-		}
-		else if ($_POST['desc_frm']==""){
-			$error = "Debe escribir una descripcion para la presentacion.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/presentaciones/alta');
-		}
+		$style=$this->modelo_dashboard->get_style($id);
 		
+		$this->template->set("style",$style);
 		
-			//exit();
-		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
-		if (!$this->upload->do_upload('userfile'))
-		{
-			//echo 'Holis';
-			//echo $ruta;
-			//$error = array('error' => $this->upload->display_errors());
-			
-			$error = "El tipo de archivo que esta cargando no esta permitido.";
-			
-			
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/presentaciones/alta');
-			//var_dump($this->upload->data() , "									",$error);
-			//exit();
-		}
-		else
-		{
-			$data = array('upload_data' => $this->upload->data());
-			$nombre=$data['upload_data']['file_name'];
-			$filename=strrev($nombre);
-			$explode=explode(".",$filename);
-			$nombre=strrev($explode[1]);
-			$extencion=strrev($explode[0]);
-			$ext=strtolower($extencion);
-			//var_dump($this->upload->data(), "									bien");
-			//exit();
-			if($ext=="pptx") 
-			{
-				$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
-				values ('.$id.','.$_POST['grupo_frm'].',4,"'.$_POST['desc_frm'].'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
-			}
-			elseif ($ext=="ppt") 
-			{ 
-				$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
-				values ('.$id.','.$_POST['grupo_frm'].',3,"'.$_POST['desc_frm'].'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
-			}
-			elseif ($ext=="odp")
-			{
-				$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico)
-				values ('.$id.','.$_POST['grupo_frm'].',8,"'.$_POST['desc_frm'].'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
-			}
-			//echo 'ptm';
-			redirect('/bo/presentaciones/listar');
-			
-		}  
+		$id_presentacion = $_POST["id"];
+		$presentacion = $this->modelo_comercial->get_presentacion($id_presentacion);
+		$this->template->set("presentacion",$presentacion);
+		
+		$grupos=$this->modelo_comercial->get_groups();
+		$this->template->set("grupos",$grupos);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->build('website/bo/oficinaVirtual/presentaciones/modificar');
+	}
+	
+	function editar_archivo()
+	{
+		$data=$_GET["info"];
+		$data=json_decode($data,true);
+
+		$this->db->query('update archivo set id_grupo='.$data['grupo'].', descripcion="'.$data['desc'].'" where id_archivo='.$data['id']);
 		
 	}
+	
 }

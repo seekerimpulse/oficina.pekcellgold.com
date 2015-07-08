@@ -319,4 +319,14 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id;');
 		if(isset($otro))
 			$this->db->query('Update afiliar set lado='.$contrario.' where id_afiliado='.$otro);
 	}
+	
+	function get_presentacion($id)
+	{
+		$q=$this->db->query('SELECT A.id_archivo, A.id_grupo, A.nombre_publico, A.descripcion, A.ruta, CTA.descripcion extension
+	
+FROM archivo A, cat_tipo_archivo CTA
+	
+WHERE A.id_archivo = '.$id.' and A.id_tipo = CTA.id_tipo');
+		return $q->result();
+	}
 }

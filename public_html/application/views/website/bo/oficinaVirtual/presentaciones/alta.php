@@ -49,8 +49,8 @@
 	
 	<form class="smart-form col-xs-12 col-sm-6 col-md-7 col-lg-6" id="reporte-form" method="POST"  action="sube_presentacion" enctype="multipart/form-data">
 		
-		<div class="row">'
-			<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos" style="padding-right: 100px ! important;">'
+		<div class="row">
+			<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos" style="padding-right: 100px ! important;">
 				<label class="label" style="padding-left: 50px;">
 				Grupo
 				</label>
