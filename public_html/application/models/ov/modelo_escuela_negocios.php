@@ -62,8 +62,8 @@ class modelo_escuela_negocios extends CI_Model
 	}
 	function get_evento()
 	{
-		$q=$this->db->query('SELECT a.username usuario, b.id_tipo tipo, b.id_color color, b.nombre nombre, b.descripcion descripcion, b.inicio inicio, b.fin fin from users a, 
-		evento b where a.id=b.id_usuario');
+		$q=$this->db->query('SELECT a.username usuario,b.id, b.id_tipo tipo, b.id_color color, b.nombre nombre, b.descripcion descripcion, b.inicio inicio, b.fin fin , b.url from users a, 
+		evento b where a.id=b.id_usuario and estatus="ACT"');
 		return $q->result();
 	}
 	function get_comments()
