@@ -13,6 +13,16 @@
 						</h1>
 					</div>
 				</div>
+<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+?>				
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
@@ -35,7 +45,78 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
+<div class="row">
+	
+	<form class="smart-form col-xs-12 col-sm-6 col-md-7 col-lg-6" id="reporte-form" method="POST"  action="sube_presentacion" enctype="multipart/form-data">
+		
+		<div class="row">'
+			<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos" style="padding-right: 100px ! important;">'
+				<label class="label" style="padding-left: 50px;">
+				Grupo
+				</label>
+				
+				<label class="select" style="padding-left: 50px;">
+						<select name="grupo_frm">
+							<option value="0">
+								Selecciona el grupo
+							</option>
+								<?php for($o=0;$o<sizeof($grupos);$o++)
+								{
+									echo '<option value="'.$grupos[$o]->id.'">'.$grupos[$o]->descripcion.'</option>';
+								}
+							?>
+						</select>
+					<i></i>
+				</label>
+			</section>
+		</div>
+										
+		<div class="row">
+			<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos" style="padding-right: 100px ! important;">
+				<label class="label" style="padding-left: 50px;">
+					Nombre de la presentacion
+				</label>
+				
+				<label class="input" style="padding-left: 50px;">	
+					<input name="nombre_publico" placeholder="Nombre" type="text" id="nombre_publico">
+				</label>	
+			</section>
+		</div>
+		
+		<div class="row">
+			<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos" style="padding-right: 100px ! important;">
+				<label class="label" style="padding-left: 50px;">
+					Descripcion
+				</label>
+				<label class="textarea" style="padding-left: 50px;">							
+					<textarea rows="3" class="custom-scroll" name="desc_frm"></textarea>
+				</label>
+			</section>
+		</div>
+		
+		<div class="row" class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos" style="padding-right: 100px ! important;">
+		<section>
+		
+		
+			<label class="label" style="padding-left: 65px;">Archivo</label>
+			<div class="input input-file" style="padding-left: 65px;">
+			<span class="button"><input id="file" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input name="file_nme" placeholder="Seleccione un archivo" readonly="" id="file_frm" type="text">
+			</div>
+		</section>
 
+		</div>
+		
+		<div class="row">
+			<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-6" id="div_subir" style="padding-right: 100px ! important;">
+																			
+				<div class="col col-lg-6 col-md-6 col-sm-7 col-xs-9" style="padding-left: 50px;">
+					<input type="submit" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="boton_subir" value="Subir archivo">
+				</div>
+			</section>
+		</div>
+		
+	</form>
+</div>
 										 </div>
 									</div>
 								</fieldset>
@@ -72,4 +153,19 @@
 	text-decoration: none !important;
 }
 </style>
-			
+		
+<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+		<script src="/template/js/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
+		<script src="/template/js/plugin/bootbox/bootbox.min.js"></script>
+		<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
+		<script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+		<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
+
+<script type="text/javascript">	
+	
+</script>

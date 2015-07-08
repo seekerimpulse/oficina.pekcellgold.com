@@ -89,6 +89,8 @@
 								</li>
 							</ul>
 							<div id="myTabContent1" class="tab-content padding-10">
+							
+							///////////////////////////////////////////////////////////////////////////////////////////////////
 								<div class="tab-pane fade in active" id="s1">
 									<section id="widget-grid" class="">
 				
@@ -147,21 +149,21 @@
 																</thead>
 																<tbody>
 																	
-																	<?php for($i=0;$i<sizeof($presentaciones);$i++)
+																	<?php foreach ($presentaciones as $presentacion)
 																	{
 																		echo 
 																		"<tr>
-																			<td>".($i+1)."</td>
-																			<td>".$presentaciones[$i]->n_publico."</td>
-																			<td>".$presentaciones[$i]->usuario."</td>
-																			<td>".$presentaciones[$i]->grupo."</td>
-																			<td>".$presentaciones[$i]->fecha."</td>
-																			<td>".$presentaciones[$i]->descripcion."</td>
+																			<td>".$presentacion->id."</td>
+																			<td>".$presentacion->n_publico."</td>
+																			<td>".$presentacion->nombreUsuario." ".$presentacion->apellidoUsuario."</td>
+																			<td>".$presentacion->grupo."</td>
+																			<td>".$presentacion->fecha."</td>
+																			<td>".$presentacion->descripcion."</td>
 																			
 																			<td class='text-center'>
-																				<a class='txt-color-blue' onclick='' href='".$presentaciones[$i]->ruta."' title='Descargar'><i class='fa fa-download'></i></a>
-																				<a class='txt-color-red' style='cursor: pointer;' onclick='delete_file(".$presentaciones[$i]->id.",\"".$presentaciones[$i]->ruta."\")' title='Eliminar'><i class='fa fa-trash-o'></i></a>
-																				<a class='txt-color-green' style='cursor: pointer;' onclick='editar(1,".$presentaciones[$i]->id.")'  title='Editar'><i class='fa fa-edit'></i></a>
+																				<a class='txt-color-blue' onclick='' href='".$presentacion->ruta."' title='Descargar'><i class='fa fa-download'></i></a>
+																				<a class='txt-color-red' style='cursor: pointer;' onclick='delete_file(".$presentacion->id.",\"".$presentacion->ruta."\")' title='Eliminar'><i class='fa fa-trash-o'></i></a>
+																				<a class='txt-color-green' style='cursor: pointer;' onclick='editar(1,".$presentacion->id.")'  title='Editar'><i class='fa fa-edit'></i></a>
 																			</td>
 																		</tr>";
 																	} ?>
@@ -187,7 +189,9 @@
 																</section>
 																<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12" id="buscarcomb">
 																	<label class="input">
-																		<a id="eliminar_carro" class="btn btn-primary btn-sm col-xs-12 col-lg-12 col-md-12 col-sm-12" onclick="nuevo_archivo(1)"><i class='fa fa-desktop'></i>&nbsp;Nueva Presentacion</a>
+																		<a id="eliminar_carro" class="btn btn-primary btn-sm col-xs-12 col-lg-12 col-md-12 col-sm-12" onclick="nuevo_archivo(1)">
+																		<i class='fa fa-desktop'>
+																		</i>&nbsp;Nueva Presentacion</a>
 																	</label>
 																</section>
 															</div>
@@ -202,6 +206,7 @@
 									
 									</section>
 								</div>
+								///////////////////////////////
 								<div class="tab-pane fade" id="s2">
 									<section id="widget-grid" class="">
 				
@@ -1838,6 +1843,7 @@
 				var grupo=$("#grupo_frm").val();
 				var desc=$("#desc_frm").val();
 				var datos={'grupo':grupo,'desc':desc,'tipo':tipo,'id':id};
+				
 				$.ajax({
 					 data:{info:JSON.stringify(datos)},
 			         type: "get",
