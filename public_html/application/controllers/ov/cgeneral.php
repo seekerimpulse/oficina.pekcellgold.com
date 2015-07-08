@@ -13,8 +13,9 @@ class cgeneral extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/modelo_general');
 		$this->load->model('ov/general');
+		$this->load->model('model_tipo_red');
 	}
-	function web_personal()
+	function soporte_tecnico()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
@@ -23,14 +24,16 @@ class cgeneral extends CI_Controller
 
 		$id=$this->tank_auth->get_user_id();
 		$style=$this->general->get_style($id);
-
+		$redes = $this->model_tipo_red->listarTodos();
+		
 		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/general/personal');
+		$this->template->build('website/ov/general/soporte_tecnico');
 	}
 	
 	function chat()

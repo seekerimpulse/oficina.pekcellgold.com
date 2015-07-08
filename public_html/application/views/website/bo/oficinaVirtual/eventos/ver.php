@@ -193,7 +193,7 @@
 			        events: [
 			        <?php for($i=0;$i<sizeof($eventos);$i++)
 						{
-						switch($eventos[$i]->color)
+												switch($eventos[$i]->color)
 						{
 							case 1:
 								$color="bg-color-darken";

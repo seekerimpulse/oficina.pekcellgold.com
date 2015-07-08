@@ -1,120 +1,79 @@
-			<!-- MAIN CONTENT -->
-			<div id="content" >
-				<div class="row">
-					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-						<h1 class="page-title txt-color-blueDark">
-							
-							<!-- PAGE HEADER -->
-							<i class="fa-fw fa fa-home"></i> 
-								<a href="/bo/dashboard"> Menu</a> 
-							<span>>
-								<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a href="/bo/oficinaVirtual/eventos"> Eventos</a> > Alta
-							</span>
-						</h1>
-					</div>
-				</div>
-	<section id="widget-grid" class="">
-		<!-- START ROW -->
-		<div class="row">
-			<!-- NEW COL START -->
-			<article class="col-sm-12 col-md-12 col-lg-12">
-				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1" data-widget-colorbutton="false"
-          data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-sortable="false"
-          data-widget-fullscreenbutton="false" data-widget-custombutton="false" data-widget-collapsed="false">
-					<div>
-
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body no-padding smart-form">
-                <fieldset>
-                  <div class="contenidoBotones">
-					<div class="row">
-							<div class="">
-										<div>
-											<div class="widget-body">
-												<form id="add-event-form" class="smart-form col-sm-6 col-md-6 col-lg-6">
+<form id="evento" class="smart-form"  novalidate="novalidate">
 													<fieldset>
 														<div class="form-group">
 															<b>Selecciona el icono del evento</b>
 															<div class="btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
-																<label class="btn btn-default active">
-																	<input type="radio" name="iconselect" id="icon-1" value="fa-info" checked>
+																<label class="btn btn-default <?php if ($evento[0]->id_tipo=='1') echo 'active'; ?>">
+																	<input type="radio" name="iconselect" id="icon-1" value="fa-info" <?php if ($evento[0]->id_tipo=='1') echo 'checked'; ?>>
 																	<i class="fa fa-info text-muted"></i> </label>
-																<label class="btn btn-default">
-																	<input type="radio" name="iconselect" id="icon-2" value="fa-warning">
+																<label class="btn btn-default <?php if ($evento[0]->id_tipo=='2') echo 'active'; ?>">
+																	<input type="radio" name="iconselect" id="icon-2" value="fa-warning" <?php if ($evento[0]->id_tipo=='2') echo 'checked'; ?>>
 																	<i class="fa fa-warning text-muted"></i> </label>
-																<label class="btn btn-default">
-																	<input type="radio" name="iconselect" id="icon-3" value="fa-check">
+																<label class="btn btn-default <?php if ($evento[0]->id_tipo=='3') echo 'active'; ?>">
+																	<input type="radio" name="iconselect" id="icon-3" value="fa-check" <?php if ($evento[0]->id_tipo=='3') echo 'checked'; ?>>
 																	<i class="fa fa-check text-muted"></i> </label>
-																<label class="btn btn-default">
-																	<input type="radio" name="iconselect" id="icon-4" value="fa-user">
+																<label class="btn btn-default <?php if ($evento[0]->id_tipo=='4') echo 'active'; ?>">
+																	<input type="radio" name="iconselect" id="icon-4" value="fa-user" <?php if ($evento[0]->id_tipo=='4') echo 'checked'; ?>>
 																	<i class="fa fa-user text-muted"></i> </label>
-																<label class="btn btn-default">
-																	<input type="radio" name="iconselect" id="icon-5" value="fa-lock">
+																<label class="btn btn-default <?php if ($evento[0]->id_tipo=='5') echo 'active'; ?>">
+																	<input type="radio" name="iconselect" id="icon-5" value="fa-lock" <?php if ($evento[0]->id_tipo=='5') echo 'checked'; ?>>
 																	<i class="fa fa-lock text-muted"></i> </label>
-																<label class="btn btn-default">
-																	<input type="radio" name="iconselect" id="icon-6" value="fa-clock-o">
+																<label class="btn btn-default <?php if ($evento[0]->id_tipo=='6') echo 'active'; ?>">
+																	<input type="radio" name="iconselect" id="icon-6" value="fa-clock-o" <?php if ($evento[0]->id_tipo=='6') echo 'checked'; ?>>
 																	<i class="fa fa-clock-o text-muted"></i> </label>
 															</div>
 														</div><br>
 														<div class="form-group">
 															<b>Titulo del Evento</b>
-															<input class="form-control"  id="title_ev" name="title" type="text" placeholder="Titulo del Evento">
+															<input class="form-control"  id="title_ev" name="title" type="text" 
+															placeholder="Titulo del Evento" value="<?php echo $evento[0]->nombre; ?>">
 														</div><br>
 														<div class="form-group">
 															<b>Descripcion del Evento</b>
-															<textarea class="form-control" placeholder="Por favor sea breve" rows="3" maxlength="140" id="description_ev"></textarea>
+															<textarea class="form-control" placeholder="Por favor sea breve" rows="3" maxlength="140" id="description_ev"><?php echo $evento[0]->descripcion; ?></textarea>
 															<p class="note">Tama&ntilde;o maximo 140 caracteres</p>
 														</div><br>
 														<div class="form-group">
 															<b>Lugar del Evento</b>
-															<input class="form-control"  id="lugar_ev" name="title"  type="text" placeholder="Lugar del Evento">
+															<input class="form-control"  id="lugar_ev" name="title"  type="text" placeholder="Lugar del Evento" value="<?php echo $evento[0]->lugar; ?>">
 														</div><br>
 														<div class="form-group">
 															<b>Costo del Evento</b>
-															<input class="form-control"  id="costo_ev" name="title" maxlength="10" type="textju8ie" value="0" onChange="validarSiNumero(this.value);">
+															<input class="form-control"  id="costo_ev" name="title" maxlength="10" type="textju8ie" value="<?php echo $evento[0]->costo; ?>" onChange="validarSiNumero(this.value);">
 														</div><br>
 														<div class="form-group">
 															<b>Direccion</b>
-															<textarea class="form-control" placeholder="Direccion" rows="3" id="direccion_ev"></textarea>
+															<textarea class="form-control" placeholder="Direccion" rows="3" id="direccion_ev"><?php echo $evento[0]->direccion; ?></textarea>
 														</div><br>
 														<div class="form-group">
 															<b>URL del mapa</b>
-															<input class="form-control"  id="url_ev" name="title" type="text" placeholder="http://maps.google.com...">
-														</div>
-														<a href="/media/Maps.pdf" target="_blank"><h2 class="row-seperator-header"><i class="fa fa-question-circle"></i> ¿ No sabes cual es la url del mapa ?</h2></a>
-														<br>
+															<input class="form-control"  id="url_ev" name="title" type="text" placeholder="http://maps.google.com..." value="<?php echo htmlentities($evento[0]->url); ?>">
+														</div><br>
 														<div class="form-group">
 															<b>Observaciones</b>
-															<textarea class="form-control" placeholder="Por favor sea breve" rows="3" maxlength="50" id="observacion_ev"></textarea>
+															<textarea class="form-control" placeholder="Por favor sea breve" rows="3" maxlength="50" id="observacion_ev"><?php echo $evento[0]->observaciones; ?></textarea>
 															<p class="note">Tama&ntilde;o maximo 50 caracteres</p>
 														</div><br>
 														<div class="form-group">
 															<b>Selecciona el color del evento</b>
 															<div class="btn-group btn-group-justified btn-select-tick" data-toggle="buttons">
-																<label class="btn bg-color-darken active">
-																	<input type="radio" name="priority" id="option1" value="bg-color-darken txt-color-white" checked>
+																<label class="btn bg-color-darken <?php if ($evento[0]->id_color=='1') echo 'active'; ?>">
+																	<input type="radio" name="priority" id="option1" value="bg-color-darken txt-color-white" <?php if ($evento[0]->id_color=='1') echo 'checked'; ?>>
 																	<i class="fa fa-check txt-color-white"></i> </label>
-																<label class="btn bg-color-blue">
-																	<input type="radio" name="priority" id="option2" value="bg-color-blue txt-color-white">
+																<label class="btn bg-color-blue <?php if ($evento[0]->id_color=='2') echo 'active'; ?>">
+																	<input type="radio" name="priority" id="option2" value="bg-color-blue txt-color-white" <?php if ($evento[0]->id_color=='2') echo 'checked'; ?>>
 																	<i class="fa fa-check txt-color-white"></i> </label>
-																<label class="btn bg-color-orange">
-																	<input type="radio" name="priority+" id="option3" value="bg-color-orange txt-color-white">
+																<label class="btn bg-color-orange <?php if ($evento[0]->id_color=='3') echo 'active'; ?>">
+																	<input type="radio" name="priority+" id="option3" value="bg-color-orange txt-color-white" <?php if ($evento[0]->id_color=='3') echo 'checked'; ?>>
 																	<i class="fa fa-check txt-color-white"></i> </label>
-																<label class="btn bg-color-greenLight">
-																	<input type="radio" name="priority" id="option4" value="bg-color-greenLight txt-color-white">
+																<label class="btn bg-color-greenLight <?php if ($evento[0]->id_color=='4') echo 'active'; ?>">
+																	<input type="radio" name="priority" id="option4" value="bg-color-greenLight txt-color-white" <?php if ($evento[0]->id_color=='4') echo 'checked'; ?>>
 																	<i class="fa fa-check txt-color-white"></i> </label>
-																<label class="btn bg-color-blueLight">
-																	<input type="radio" name="priority" id="option5" value="bg-color-blueLight txt-color-white">
+																<label class="btn bg-color-blueLight <?php if ($evento[0]->id_color=='5') echo 'active'; ?>">
+																	<input type="radio" name="priority" id="option5" value="bg-color-blueLight txt-color-white" <?php if ($evento[0]->id_color=='5') echo 'checked'; ?>>
 																	<i class="fa fa-check txt-color-white"></i> </label>
-																<label class="btn bg-color-red">
-																	<input type="radio" name="priority" id="option6" value="bg-color-red txt-color-white">
+																<label class="btn bg-color-red <?php if ($evento[0]->id_color=='6') echo 'active'; ?>">
+																	<input type="radio" name="priority" id="option6" value="bg-color-red txt-color-white" <?php if ($evento[0]->id_color=='6') echo 'checked'; ?>>
 																	<i class="fa fa-check txt-color-white"></i> </label>
 															</div>
 														</div><br>
@@ -122,7 +81,7 @@
 															<div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 																<section class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
 																	<label class="input"> <i class="icon-append fa fa-calendar"></i>
-																		<input type="text" name="startdate" id="startdate" placeholder="Fecha de Inicio">
+																		<input type="text" name="startdate" id="startdate" placeholder="Fecha de Inicio" value="<?php $date = date_create(''.$evento[0]->inicio.''); echo date_format($date, 'd-m-Y'); ?>">
 																	</label>
 																</section>
 																<section class="col col-lg-3 col-md-3 col-sm-3 col-xs-6">
@@ -228,7 +187,7 @@
 															<div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 																<section class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
 																	<label class="input"> <i class="icon-append fa fa-calendar"></i>
-																		<input type="text" name="finishdate" id="finishdate" placeholder="Fecha de Finalizacion">
+																		<input type="text" name="finishdate" id="finishdate" placeholder="Fecha de Finalizacion" value="<?php $date = date_create(''.$evento[0]->inicio.''); echo date_format($date, 'd-m-Y'); ?>">
 																	</label>
 																</section>
 																<section class="col col-lg-3 col-md-3 col-sm-3 col-xs-6">
@@ -332,53 +291,31 @@
 														</div>
 													</fieldset>
 													
-													<button style="margin-left: 3rem;" class="btn btn-success" type="button" id="new_evento" onclick="agregar_evento()" >
-														Agregar evento
-													</button>
+								<a class="btn btn-success" onclick="enviar()">
+									Guardar
+								</a>
 													</div>
 												</form>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-				</fieldset>
-				</div>
-						<!-- end widget content -->
 
-					</div>
-					<!-- end widget div -->
-				</div>
-				<!-- end widget -->
-			</article>
-			<!-- END COL -->
-		</div>
-				<div class="row">         
-			        <!-- a blank row to get started -->
-			        <div class="col-sm-12">
-			            <br />
-			            <br />
-			        </div>
-		        </div>
-			</div>
-    </section>			
-			<!-- END MAIN CONTENT -->
-
-<style>
-.link
-{
-	margin: 0.5rem;
-}
-.minh
-{
-	padding: 50px;
-}
-.link a:hover
-{
-	text-decoration: none !important;
-}
-</style>
+<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script type="text/javascript">
+
+<?php 
+$hour_ini = date("H", strtotime($evento[0]->inicio));
+$minutes_ini = date("i", strtotime($evento[0]->inicio));
+
+$hour_fin = date("H", strtotime($evento[0]->fin));
+$minutes_fin = date("i", strtotime($evento[0]->fin));
+?>
+
+$("#hora_ini").val("<?php echo $hour_ini?>");
+$("#minuto_ini").val("<?php echo $minutes_ini?>");
+
+$("#hora_fin").val("<?php echo $hour_fin?>");
+$("#minuto_fin").val("<?php echo $minutes_fin?>");
+
 $('#startdate').datepicker({
 	dateFormat : 'dd-mm-yy',
 	prevText : '<i class="fa fa-chevron-left"></i>',
@@ -396,7 +333,7 @@ $('#finishdate').datepicker({
 		$('#startdate').datepicker('option', 'maxDate', selectedDate);
 	}
 });
-function agregar_evento()
+function enviar()
 {
 	if($('#icon-1').is(':checked'))
 	{
@@ -457,8 +394,9 @@ function agregar_evento()
 	var lugar=$("#lugar_ev").val();
 	var costo=$("#costo_ev").val();
 	var direct=$("#direccion_ev").val();
-	var urlEvento=$("#url_ev").val();
+	var url=$("#url_ev").val();
 	var observ=$("#observacion_ev").val();
+	var id='<?php echo $evento[0]->id; ?>'
 
 	if(costo=='')
 	{
@@ -496,15 +434,29 @@ function agregar_evento()
 					}
 					else
 					{
-						var datos={'tipo':tipo,'color':color,'nombre':nombre,'descripcion':descripcion,'dia_ini':dia_ini,'dia_fin':dia_fin,'hora_ini':hora_ini,'hora_fin':hora_fin,'minuto_ini':minuto_ini,'minuto_fin':minuto_fin,'lugar':lugar,'costo':costo,'direccion':direct,'url':urlEvento,'observacion':observ};
-						$.ajax({
-							 data:{info:JSON.stringify(datos)},
-					         type: "get",
-					         url: "nuevo_evento",
-					         success: function(){
-					              location.href="/bo/eventos/listar";
-					         }
-						});
+						var datos={'id':id,'tipo':tipo,'color':color,'nombre':nombre,'descripcion':descripcion,'dia_ini':dia_ini,'dia_fin':dia_fin,'hora_ini':hora_ini,'hora_fin':hora_fin,'minuto_ini':minuto_ini,'minuto_fin':minuto_fin,'lugar':lugar,'costo':costo,'direccion':direct,'url':url,'observaciones':observ};
+						
+						 $.ajax({
+												url: "/bo/eventos/actualizar_evento",
+												data:{info:JSON.stringify(datos)},
+										        type: "get"
+											})
+											.done(function( msg ) {
+												
+														bootbox.dialog({
+															message: msg,
+															title: "Atención",
+															buttons: {
+																success: {
+																label: "Ok!",
+																className: "btn-success",
+																callback: function() {
+																	location.href="/bo/eventos/listar";
+																	}
+																}
+															}
+														});
+											});//fin Done ajax
 					}
 				}
 				
@@ -519,4 +471,4 @@ function validarSiNumero(numero){
       $("#costo_ev").val('')
     }
   }
-</script>			
+</script>

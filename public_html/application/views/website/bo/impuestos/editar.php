@@ -19,7 +19,7 @@
 								<input type="number" name="porcentaje" required placeholder="porcentaje" style="width: 50%;" class="form-control" value="<?php echo $impuesto[0]->porcentaje; ?>" required>
 							</fieldset>
 							<footer>
-								<a class="btn btn-primary" onclick="enviar()">
+								<a class="btn btn-success" onclick="enviar()">
 									Guardar
 								</a>
 							</footer>

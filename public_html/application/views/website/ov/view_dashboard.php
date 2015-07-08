@@ -459,6 +459,20 @@
 										<fieldset>
 											<legend>Comunicación</legend>
 											<div class="row">
+											<?php $permiso=$ci->model_permissions->check($id,'soporte_tecnico');
+												if($permiso){
+												?>
+												<div class="col-sm-12">
+													<a href="cgeneral/soporte_tecnico">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-support fa-3x"></i>
+															<h5>Soporte Técnico</h5>
+														</div>
+													</a>
+												</div>
+												<?php }?>
+											</div>
+											<div class="row">
 												<?php $permiso=$ci->model_permissions->check($id,'mensajes');
 												if($permiso){
 												?>
@@ -467,20 +481,6 @@
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-comments-o fa-3x"></i>
 															<h5>Mensajes</h5>
-														</div>
-													</a>
-												</div>
-												<?php }?>
-											</div>
-											<div class="row">
-											<?php $permiso=$ci->model_permissions->check($id,'web_personal');
-												if($permiso){
-												?>
-												<div class="col-sm-12">
-													<a href="cgeneral/web_personal">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-globe fa-3x"></i>
-															<h5>Web personal</h5>
 														</div>
 													</a>
 												</div>

@@ -483,9 +483,7 @@ class escuela_negocios extends CI_Controller
 					<tr>
 						<th class='text-center'><h5 class='text-primary'><strong>DIRECCION</strong></h5></th>
 						<td class='text-center'><h6>".$evento[0]->direccion."</h6></td>
-						<td class='text-center' colspan='2'>
-							<div id='googleMap' style='width:250px;height:190px;'></div>
-						</td>
+
 					</tr>
 				</table>
 				<table class='table table-striped table-forum hidden-lg hidden-md'>
@@ -515,16 +513,17 @@ class escuela_negocios extends CI_Controller
 						<th class='text-center'><h5 class='text-primary'><strong>DIRECCION</strong></h5></th>
 						<td class='text-center'><h6>".$evento[0]->direccion."</h6></td>
 					</tr>
-					<tr hidden-xs>
-						<td class='text-center' colspan='2'>
-							<div id='googleMap' style='width:250px;height:190px;'></div>
-						</td>
-					</tr>
-					<tr hidden-sm>
-						<td class='text-center' colspan='2'>
-							<div id='googleMap' style='width:150px;height:114px;'></div>
-						</td>
-					</tr>
-				</table>";
+				</table>
+				<div id='googleMap' style='width:100%;height:100%;'>".$evento[0]->url."
+				</div>
+				<script>
+					$('iframe').each(
+					     function(index, elem) {
+					         elem.setAttribute('width','100%');
+					     }
+					 );
+				</script>		
+				"
+			;
 	}
 }

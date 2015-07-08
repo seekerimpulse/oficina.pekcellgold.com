@@ -199,10 +199,70 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 	}
 	function get_evento()
 	{
-		$q=$this->db->query('SELECT b.id id, a.username usuario, b.id_tipo tipo, b.id_color color, b.nombre nombre, b.descripcion descripcion, b.inicio inicio, b.fin fin 
+		$q=$this->db->query('SELECT b.id id, a.username usuario, b.id_tipo tipo, b.id_color color, b.nombre nombre, b.descripcion descripcion, b.inicio inicio, b.fin fin, b.url url, b.estatus estatus 
 		from users a, evento b where a.id=b.id_usuario order by b.inicio asc');
 		return $q->result();
 	}
+	function get_eventos_activos()
+	{
+		$q=$this->db->query('SELECT b.id id, a.username usuario, b.id_tipo tipo, b.id_color color, b.nombre nombre, b.descripcion descripcion, b.inicio inicio, b.fin fin, b.url url, b.estatus estatus
+		from users a, evento b where a.id=b.id_usuario and estatus="ACT" order by b.inicio asc');
+		return $q->result();
+	}
+	function get_evento_id($id)
+	{
+		$q=$this->db->query('SELECT *
+		from users a, evento b where a.id=b.id_usuario and b.id='.$id.' order by b.inicio asc');
+		return $q->result();
+	}
+	
+	function actualizar_evento(){
+		$data=$_GET["info"];
+		$data=json_decode($data,true);
+		$id=$data['id'];
+		$tipo=$data['tipo'];
+		$color=$data['color'];
+		$nombre=$data['nombre'];
+
+		$desc=$data['descripcion'];
+		$lugar=$data['lugar'];
+		$costo=$data['costo'];
+		$direccion=$data['direccion'];
+		$observaciones=$data['observaciones'];
+		$dia_ini=$data['dia_ini'];
+		$hora_ini=$data['hora_ini'];
+		$minuto_ini=$data['minuto_ini'];
+		$dia_fin=$data['dia_fin'];
+		$hora_fin=$data['hora_fin'];
+		$minuto_fin=$data['minuto_fin'];
+		$url=$data['url'];
+		$ano_ini=substr($dia_ini, 6);
+		$mes_ini=substr($dia_ini, 3,2);
+		$dia_ini=substr($dia_ini, 0,2);
+		$ano_fin=substr($dia_fin, 6);
+		$mes_fin=substr($dia_fin, 3,2);
+		$dia_fin=substr($dia_fin, 0,2);
+		$inicio=$ano_ini.'-'.$mes_ini.'-'.$dia_ini.' '.$hora_ini.':'.$minuto_ini.':00';
+		$fin=$ano_fin.'-'.$mes_fin.'-'.$dia_fin.' '.$hora_fin.':'.$minuto_fin.':00';
+		
+		$datos = array(
+				'id_tipo' => $tipo,
+				'id_color'	  => $color,
+				'nombre'	  => $nombre,
+				'descripcion' => $desc,
+				'inicio'	  => $inicio,
+				'fin'	  => $fin,
+				'lugar' => $lugar,
+				'costo'	  => $costo,
+				'direccion'	  => $direccion,
+				'observaciones'	  => $observaciones,
+				'url'	  => $url
+		);
+		$this->db->where('id',$id);
+		$this->db->update('evento', $datos);
+		return true;
+	}
+	
 	function get_comments()
 	{
 		$q=$this->db->query('SELECT a.*, b.username FROM comentario a, users b WHERE a.autor=b.id order by fecha DESC');
