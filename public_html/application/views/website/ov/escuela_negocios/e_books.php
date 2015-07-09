@@ -62,7 +62,6 @@
 													<th data-hide="phone">ID</th>
 													<th></th>
 													<th data-class="expand">Nombre</th>
-													<th>Usuario</th>
 													<th data-hide="phone">Grupo</th>
 													<th data-hide="phone,tablet">Fecha</th>
 													<th data-hide="phone,tablet">Descripci&oacute;n</th>
@@ -80,7 +79,6 @@
 															<a href='".$ebooks[$i]->ruta."'><img src='".$ebooks[$i]->img."' style='max-height:90px;'></a>
 														</td>
 														<td style='vertical-align: middle;'>".$ebooks[$i]->n_publico."</td>
-														<td style='vertical-align: middle;'>".$ebooks[$i]->usuario."</td>
 														<td style='vertical-align: middle;'>".$ebooks[$i]->grupo."</td>
 														<td style='vertical-align: middle;'>".$ebooks[$i]->fecha."</td>
 														<td style='vertical-align: middle;'>".$ebooks[$i]->descripcion."</td>
