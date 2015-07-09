@@ -33,7 +33,9 @@
 										<div class="row col-xs-12 col-md-12 col-sm-12 col-lg-12">
 											<div class="row">
 												<form class="smart-form" id="reporte-form" method="post" action="editar_noticia" enctype="multipart/form-data">
-													
+													<input name="id_noticia" class="hide" type="text" id="id_noticia" value='<?php echo $noticia[0]->id;?>'>
+													<input name="ruta" class="hide" type="text" id="ruta" value='<?php echo $noticia[0]->imagen;?>'>
+			
 													<div class="row">
 														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
 															<label class="label">Nombre</label>
@@ -56,7 +58,7 @@
 														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
 															<label class="label">Imagen</label>
 															<div class="input input-file">
-																<span class="button"><input required id="userfile" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input placeholder='<?= $nombre;?>' readonly="" type="text" id="file_frm" name="file_nme">
+																<span class="button"><input id="userfile" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input placeholder='<?= $nombre;?>' readonly="" type="text" id="file_frm" name="file_nme">
 															</div>
 														</section>
 													</div>

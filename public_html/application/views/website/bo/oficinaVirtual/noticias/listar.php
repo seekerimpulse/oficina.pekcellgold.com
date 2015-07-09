@@ -16,6 +16,16 @@
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
+		<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+?>	
 			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->

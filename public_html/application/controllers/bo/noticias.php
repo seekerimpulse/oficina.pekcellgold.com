@@ -216,11 +216,21 @@ class noticias extends CI_Controller
 
 	function editar_noticia()
 	{
+		if ($_POST['nombre_frm']==""){
+			$error = "Debe escribir un nombre para la presentacion.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/noticias/listar');
+		}
+		else if ($_POST['desc_frm']==""){
+			$error = "Debe escribir una descripcion para la presentacion.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/noticias/listar');
+		}
 		if ($_POST["file_nme"]==''){
-			$this->db->query('update noticia set nombre = '.$_POST['nombre_frm'].',
+			$this->db->query('update noticia set nombre = "'.$_POST['nombre_frm'].'",
 							contenido = "'.$_POST['desc_frm'].'"
-							where id = "'.$_POST["id_presentacion"].'"');
-			redirect('/bo/presentaciones/listar');
+							where id = "'.$_POST["id_noticia"].'"');
+			redirect('/bo/noticias/listar');
 		}
 		else {
 				
@@ -240,7 +250,7 @@ class noticias extends CI_Controller
 			$ruta="/media/".$id."/";
 			//definimos la ruta para subir la imagen
 			$config['upload_path'] 		= getcwd().$ruta;
-			$config['allowed_types'] 	= 'ppt|pptx|odp';
+			$config['allowed_types'] 	= 'jpg|png|gif|jpeg';
 				
 			//Cargamos la libreria con las configuraciones de arriba
 			$this->load->library('upload', $config);
@@ -250,12 +260,8 @@ class noticias extends CI_Controller
 			//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 			if (!$this->upload->do_upload('userfile'))
 			{
-				$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
-							descripcion = "'.$_POST['desc_frm'].'",
-							nombre_publico = "'.$_POST["nombre_publico"].'"
-							where id_archivo = "'.$_POST["id_presentacion"].'"');
 				echo "<script> alert('El archivo que estas ingresando no es valido.');
-						location.href = '/bo/presentaciones/listar';</script>";
+						location.href = '/bo/noticias/listar';</script>";
 				//redirect('/bo/presentaciones/listar');
 			}
 			else
@@ -269,42 +275,13 @@ class noticias extends CI_Controller
 				$ext=strtolower($extencion);
 				//var_dump($this->upload->data(), "									bien");
 				//exit();
-				if($ext=="pptx")
-				{
-					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
-							id_tipo = 4,
-							descripcion = "'.$_POST['desc_frm'].'",
-							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
-							nombre_publico = "'.$_POST["nombre_publico"].'"
-							where id_archivo = "'.$_POST["id_presentacion"].'"');
-				}
-				elseif ($ext=="ppt")
-				{
-					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
-							id_tipo = 3,
-							descripcion = "'.$_POST['desc_frm'].'",
-							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
-							nombre_publico = "'.$_POST["nombre_publico"].'"
-							where id_archivo = "'.$_POST["id_presentacion"].'"');
-				}
-				elseif ($ext=="odp")
-				{
-					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
-							id_tipo = 8,
-							descripcion = "'.$_POST['desc_frm'].'",
-							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
-							nombre_publico = "'.$_POST["nombre_publico"].'"
-							where id_archivo = "'.$_POST["id_presentacion"].'"');
-				}
-				//echo 'ptm';
-				redirect('/bo/presentaciones/listar');
-					
+				$this->db->query('update noticia set nombre = "'.$_POST['nombre_frm'].'",
+							contenido = "'.$_POST['desc_frm'].'",
+							imagen = "'.$ruta.$nombre.".".$ext.'"
+							where id = "'.$_POST["id_noticia"].'"');
+				redirect('/bo/noticias/listar');				
 			}
 		}
-		/*$data=$_GET["info"];
-			$data=json_decode($data,true);
 	
-			$this->db->query('update archivo set id_grupo='.$data['grupo'].', descripcion="'.$data['desc'].'" where id_archivo='.$data['id']);
-			*/
 	}
 }
