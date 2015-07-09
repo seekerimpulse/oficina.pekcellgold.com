@@ -214,11 +214,103 @@ class presentaciones extends CI_Controller
 	
 	function editar_archivo()
 	{
-		$data=$_GET["info"];
+		if ($_POST["file_nme"]==''){
+			$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
+							descripcion = "'.$_POST['desc_frm'].'",
+							nombre_publico = "'.$_POST["nombre_publico"].'"
+							where id_archivo = "'.$_POST["id_presentacion"].'"');
+			redirect('/bo/presentaciones/listar');
+		}
+		else {
+			
+			if (!$this->tank_auth->is_logged_in())
+			{																		// logged in
+				redirect('/auth');
+			}
+			
+			$id	= $this->tank_auth->get_user_id();
+			
+			//Checamos si el directorio del usuario existe, si no, se crea
+			if(!is_dir(getcwd()."/media/".$id))
+			{
+				mkdir(getcwd()."/media/".$id, 0777);
+			}
+			
+			$ruta="/media/".$id."/";
+			//definimos la ruta para subir la imagen
+			$config['upload_path'] 		= getcwd().$ruta;
+			$config['allowed_types'] 	= 'ppt|pptx|odp';
+			
+			//Cargamos la libreria con las configuraciones de arriba
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+				
+			//exit();
+			//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
+			if (!$this->upload->do_upload('userfile'))
+			{
+				$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
+							descripcion = "'.$_POST['desc_frm'].'",
+							nombre_publico = "'.$_POST["nombre_publico"].'"
+							where id_archivo = "'.$_POST["id_presentacion"].'"');
+				echo "<script> alert('El archivo que estas ingresando no es valido.');
+						location.href = '/bo/presentaciones/listar';</script>";
+				//redirect('/bo/presentaciones/listar');
+			}
+			else
+			{
+				$data = array('upload_data' => $this->upload->data());
+				$nombre=$data['upload_data']['file_name'];
+				$filename=strrev($nombre);
+				$explode=explode(".",$filename);
+				$nombre=strrev($explode[1]);
+				$extencion=strrev($explode[0]);
+				$ext=strtolower($extencion);
+				//var_dump($this->upload->data(), "									bien");
+				//exit();
+				if($ext=="pptx")
+				{
+					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
+							id_tipo = 4,
+							descripcion = "'.$_POST['desc_frm'].'",
+							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
+							nombre_publico = "'.$_POST["nombre_publico"].'"
+							where id_archivo = "'.$_POST["id_presentacion"].'"');
+				}
+				elseif ($ext=="ppt")
+				{
+					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
+							id_tipo = 3,
+							descripcion = "'.$_POST['desc_frm'].'",
+							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
+							nombre_publico = "'.$_POST["nombre_publico"].'"
+							where id_archivo = "'.$_POST["id_presentacion"].'"');
+				}
+				elseif ($ext=="odp")
+				{
+					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
+							id_tipo = 8,
+							descripcion = "'.$_POST['desc_frm'].'",
+							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
+							nombre_publico = "'.$_POST["nombre_publico"].'"
+							where id_archivo = "'.$_POST["id_presentacion"].'"');
+				}
+				//echo 'ptm';
+				redirect('/bo/presentaciones/listar');
+			
+			}
+		}
+		/*$data=$_GET["info"];
 		$data=json_decode($data,true);
 
 		$this->db->query('update archivo set id_grupo='.$data['grupo'].', descripcion="'.$data['desc'].'" where id_archivo='.$data['id']);
-		
+		*/
 	}
-	
+
+	function estado_presentacion(){
+			$data=$_POST["info"];
+			$data=json_decode($data,true);
+			$this->db->query("update archivo set status = '".$data['estado']."' where id_archivo = '".$data['id']."'");
+			return true;
+	}
 }

@@ -61,7 +61,6 @@
 												<tr>
 													<th data-hide="phone">ID</th>
 													<th data-class="expand">Nombre</th>
-													<th>Usuario</th>
 													<th data-hide="phone">Grupo</th>
 													<th data-hide="phone,tablet">Fecha</th>
 													<th data-hide="phone,tablet">Descripci&oacute;n</th>
@@ -77,7 +76,6 @@
 													"<tr>
 														<td>".($i+1)."</td>
 														<td>".$presentaciones[$i]->n_publico."</td>
-														<td>".$presentaciones[$i]->usuario."</td>
 														<td>".$presentaciones[$i]->grupo."</td>
 														<td>".$presentaciones[$i]->fecha."</td>
 														<td>".$presentaciones[$i]->descripcion."</td>

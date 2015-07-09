@@ -36,23 +36,35 @@
                   <div class="contenidoBotones">
                   
 	                  
-	                  <div class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
-							<div class="col-xs-3 col-md-4 col-sm-4 col-lg-4">
+	                  <div class="row col-xs-12 col-md-6 col-sm-4 col-lg-5 pull-right">
+							<div class="col-xs-2 col-md-4 col-sm-4 col-lg-2">
 								<center>
 								<a title='Descargar' class="txt-color-blue"><i class="fa fa-download fa-3x"></i></a>
 								<br>Descargar
 								</center>
 							</div>
-							<div class="col-xs-3 col-md-4 col-sm-4 col-lg-4">
+							<div class="col-xs-2 col-md-4 col-sm-4 col-lg-2">
 							<center>	
 								<a title="Eliminar" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 								<br>Eliminar
 								</center>
 							</div>
-							<div class="col-xs-3 col-md-4 col-sm-4 col-lg-4">
+							<div class="col-xs-2 col-md-4 col-sm-4 col-lg-2">
 								<center>
-									<a title="Editar" class="txt-color-green"><i class="fa fa-edit fa-3x"></i></a>
+									<a title="Editar" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 									<br>Editar
+								</center>
+							</div>
+							<div class="col-xs-2 col-md-4 col-sm-4 col-lg-2">
+								<center>
+									<a title="Activado" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+									<br>Activado
+								</center>
+							</div>
+							<div class="col-xs-2 col-md-4 col-sm-4 col-lg-2">
+								<center>
+									<a title="Desactivado" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+									<br>Desactivado
 								</center>
 							</div>
 					</div>
@@ -92,21 +104,30 @@
 																	<?php foreach ($presentaciones as $presentacion)
 																	{
 																		echo 
-																		"<tr>
-																			<td>".$presentacion->id."</td>
-																			<td>".$presentacion->n_publico."</td>
-																			<td>".$presentacion->nombreUsuario." ".$presentacion->apellidoUsuario."</td>
-																			<td>".$presentacion->grupo."</td>
-																			<td>".$presentacion->fecha."</td>
-																			<td>".$presentacion->descripcion."</td>
+																		'<tr>
+																			<td>'.$presentacion->id.'</td>
+																			<td>'.$presentacion->n_publico.'</td>
+																			<td>'.$presentacion->nombreUsuario.' '.$presentacion->apellidoUsuario.'</td>
+																			<td>'.$presentacion->grupo.'</td>
+																			<td>'.$presentacion->fecha.'</td>
+																			<td>'.$presentacion->descripcion.'</td>
 																			
-																			<td class='text-center'>
-																				<a class='txt-color-blue' onclick='' href='".$presentacion->ruta."' title='Descargar'><i class='fa fa-download fa-3x'></i></a>
-																				<a class='txt-color-red' style='cursor: pointer;' onclick='delete_file(".$presentacion->id.",\"".$presentacion->ruta."\")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
-																				<a class='txt-color-green' style='cursor: pointer;' onclick='editar(".$presentacion->id.")'  title='Editar'><i class='fa fa-edit fa-3x'></i></a>
+																			<td class="text-center">
+																				<a class="txt-color-blue" onclick="" href="'.$presentacion->ruta.'" title="Descargar"><i class="fa fa-download fa-3x"></i></a>
+																				<a class="txt-color-red" style="cursor: pointer;" onclick="delete_file("'.$presentacion->id.'",\""'.$presentacion->ruta.'"\")" title="Eliminar"><i class="fa fa-trash-o fa-3x"></i></a>
+																				<a class="txt-color-blue" style="cursor: pointer;" onclick="editar("'.$presentacion->id.'")"  title="Editar"><i class="fa fa-pencil fa-3x"></i></a>
+          																		';
+																				 if ($presentacion->status=='ACT'){?>
+																				
+          																			<a class="txt-color-green"  onclick="estado_presentacion('DES','<?php echo $presentacion->id; ?>')" title="Desactivar"><i class="fa fa-check-square-o fa-3x"></i></a>
+																			<?php }
+																			else {?>
+																				<a class="txt-color-green" onclick="estado_presentacion('ACT','<?php echo $presentacion->id; ?>')" title="Activar"><i class="fa fa-square-o fa-3x"></i></a>
+																				<?php }?>
+          																
 																			</td>
-																		</tr>";
-																	} ?>
+																		</tr>
+																<?php	} ?>
 																	
 																</tbody>
 															</table>
@@ -247,27 +268,74 @@
 			pageSetUp();
 
 		})
-		
-		function delete_file(id,file)
+
+		function delete_file(id,file) {
+			
+			$.ajax({
+				type: "POST",
+				url: "/auth/show_dialog",
+				data: {message: '¿ Esta seguro que desea Eliminar la presentacion ?'},
+			})
+			.done(function( msg )
 			{
-				if (confirm('¿Esta seguro de borrar este archivo?')) {
-					var datos={'id':id,'file':file};
-					$.ajax({
-						data:{info:JSON.stringify(datos)},
-				        type: "get",
-				        url: "borrar_archivo",
-				        success: function(){
-				             alert("Se ha eliminado el archivo");
-				             location.href = '/bo/presentaciones/listar';
-				        }
-					});
-				    // Save it!
-				} else {
-				    // Do nothing!
+				bootbox.dialog({
+				message: msg,
+				title: 'Eliminar Presentacion',
+				buttons: {
+					success: {
+					label: "Aceptar",
+					className: "btn-success",
+					callback: function() {
+							var datos={'id':id,'file':file};
+							$.ajax({
+								type: "GET",
+								url: "borrar_archivo",
+								data:{info:JSON.stringify(datos)}
+							})
+							.done(function( msg )
+							{
+								bootbox.dialog({
+								message: "Se ha eliminado la Presentacion.",
+								title: 'Felicitaciones',
+								buttons: {
+									success: {
+									label: "Aceptar",
+									className: "btn-success",
+									callback: function() {
+										location.href="/bo/presentaciones/listar";
+										}
+									}
+								}
+							})//fin done ajax
+							});//Fin callback bootbox
+
+						}
+					},
+						danger: {
+						label: "Cancelar!",
+						className: "btn-danger",
+						callback: function() {
+
+							}
+					}
 				}
-				
-				
-			}
+			})
+			});
+	}
+
+		function estado_presentacion(estatus, id)
+		{		
+			var datos={'id':id,'estado':estatus};
+			$.ajax({
+				type: "post",
+				url: "estado_presentacion",
+				data:{info:JSON.stringify(datos)}
+				}).done(function( msg )
+						{
+							location.href = "/bo/presentaciones/listar";
+						
+					});
+		}
 		
 		function editar(id)
 		{

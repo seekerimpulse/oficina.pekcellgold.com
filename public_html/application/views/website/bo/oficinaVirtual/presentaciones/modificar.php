@@ -10,10 +10,12 @@
 	}
 ?>	
 	<div class="row">
-	<form class="smart-form col-xs-12 col-sm-6 col-md-7 col-lg-12" id="reporte-form" method="POST"  action="editar_presentacion" enctype="multipart/form-data">
+	<form class="smart-form col-xs-12 col-sm-6 col-md-7 col-lg-12" id="reporte-form" method="post" enctype="multipart/form-data" action = "editar_archivo">
 		<?php $nombre = substr ( $presentacion[0]->ruta,9);?>
 		<div class="row">
 			<input name="id_presentacion" class="hide" type="text" id="id_presentacion" value='<?php echo $presentacion[0]->id_archivo;?>'>
+			<input name="ruta" class="hide" type="text" id="ruta" value='<?php echo $presentacion[0]->ruta;?>'>
+			<input name="nombre_archivo" class="hide" type="text" id="nombre_archivo" value='<?php echo $nombre;?>'>
 			
 		
 			<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos" style="padding-right: 70px ! important;">
@@ -22,7 +24,7 @@
 				</label>
 				
 				<label class="select" style="padding-left: 50px;">
-						<select name="grupo_frm">
+						<select name="grupo_frm" id="grupo_frm">
 							<?php for($o=0;$o<sizeof($grupos);$o++){
 								
 								if($grupos[$o]->id == $presentacion[0]->id_grupo){
@@ -46,7 +48,7 @@
 				</label>
 				
 				<label class="input" style="padding-left: 50px;">	
-					<input name="nombre_publico" placeholder="Nombre" type="text" id="nombre_publico" value='<?php echo $presentacion[0]->nombre_publico;?>'>
+					<input required name="nombre_publico" placeholder="Nombre" type="text" id="nombre_publico" value='<?php echo $presentacion[0]->nombre_publico;?>'>
 				</label>	
 			</section>
 		</div>
@@ -57,7 +59,7 @@
 					Descripcion
 				</label>
 				<label class="textarea" style="padding-left: 50px;">							
-					<textarea rows="3" class="custom-scroll" name="desc_frm"><?php echo $presentacion[0]->descripcion;?></textarea>
+					<textarea required rows="3" class="custom-scroll" name="desc_frm" id="desc_frm"><?php echo $presentacion[0]->descripcion;?></textarea>
 				</label>
 			</section>
 		</div>
@@ -68,7 +70,7 @@
 		
 			<label class="label" style="padding-left: 65px;">Archivo</label>
 			<div class="input input-file" style="padding-left: 65px;">
-			<span class="button"><input id="file" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input name="file_nme" value='<?php echo $nombre;?>' readonly="" id="file_frm" type="text">
+			<span class="button"><input id="userfile" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input name="file_nme" placeholder='<?php echo $nombre;?>' readonly="" id="file_frm" type="text">
 			</div>
 		</section>
 		
@@ -78,7 +80,7 @@
 			<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-6" id="div_subir" style="padding-right: 70px ! important;">
 																			
 				<div class="col col-lg-6 col-md-6 col-sm-7 col-xs-9" style="padding-left: 50px;">
-					<input type="submit" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="boton_subir" value="Actualizar archivo" on>
+					<input type="submit" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="boton_subir" value="Actualizar archivo" onclick = "agregar_presentacion()">
 				</div>
 			</section>
 		</div>
@@ -101,16 +103,43 @@
 	text-decoration: none !important;
 }
 </style>
-		
-		<script src="/template/js/plugin/bootbox/bootbox.min.js"></script>
-		<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
-		<script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-		<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
-		<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
-		<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
-		<script src="/template/js/validacion.js"></script>
-		<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 
 <script type="text/javascript">	
+							
+function agregar_presentacion()
+{
 	
+	var grupo = $("#grupo_frm").val();
+	var nombre_publico = $("#nombre_publico").val();
+	var descripcion = $("#desc_frm").val();
+	var archivo = $("#userfile").val();
+	var ruta = $("#ruta").val();
+	var id_presentacion = $("#id_presentacion").val();
+	var la_ruta_tiene_algo_nuevo = true;
+	var nombre_archivo = $("#nombre_archivo").val();
+	
+	if(grupo==0)
+	{
+		alert('Olvidaste elegir un grupo para la presentacion');
+	}
+	else
+	{
+		if(nombre_publico=='')
+		{
+			alert('Olvidaste escribir un nombre para la presentacion');
+		}
+		else
+		{
+			if(descripcion=='')
+			{
+				alert('Olvidaste escribir una descripcion para la presentacion');
+			}
+			else
+			{
+			}
+			
+		}
+	}
+	
+}
 </script>

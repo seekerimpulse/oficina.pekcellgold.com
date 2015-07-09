@@ -159,7 +159,7 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 	function get_presentaciones()
 	{
 		$q=$this->db->query('SELECT A.id_archivo id, CG.descripcion grupo, UP.nombre nombreUsuario, UP.apellido apellidoUsuario,
- A.fecha fecha,A.nombre_publico n_publico, A.descripcion descripcion, A.ruta ruta 
+ A.fecha fecha,A.nombre_publico n_publico, A.descripcion descripcion, A.ruta ruta, A.status 
 
 FROM cat_grupo CG, users U, archivo A, user_profiles UP 
 
@@ -167,6 +167,7 @@ WHERE A.id_tipo in (3,4,8,9,10,11,12,13,14,15,16,17,18,19,20,22) and
 CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id;');
 		return $q->result();
 	}
+
 	function get_ebooks()
 	{
 		$q=$this->db->query('SELECT a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion descripcion,c.ruta ruta, d.url img, 

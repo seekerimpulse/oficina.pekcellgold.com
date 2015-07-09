@@ -103,7 +103,7 @@ class escuela_negocios extends CI_Controller
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		
-		$presentaciones=$this->modelo_escuela_negocios->get_presentaciones();
+		$presentaciones=$this->modelo_escuela_negocios->get_presentaciones_activas();
 		$data=array();
 		$data["presentaciones"]=$presentaciones;
 		
