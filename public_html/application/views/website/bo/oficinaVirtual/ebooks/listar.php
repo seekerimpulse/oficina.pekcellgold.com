@@ -47,26 +47,32 @@
 					<div class="widget-body">
 						<div class="tab-pane">
 
-							<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
-								<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
+							<div class="row col-xs-12 col-md-12 col-sm-8 col-lg-5 pull-right">
+								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
+									<center>
+										<a title="Descargar" href="#" class="txt-color-blue">
+										<i class='fa fa-download fa-3x'></i></a> <br>Descargar
+									</center>
+								</div>
+								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Editar" href="#" class="txt-color-blue"><i
 											class="fa fa-pencil fa-3x"></i></a> <br>Editar
 									</center>
 								</div>
-								<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
+								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Eliminar" href="#" class="txt-color-red"><i
 											class="fa fa-trash-o fa-3x"></i></a> <br>Eliminar
 									</center>
 								</div>
-								<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
+								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Desactivar" href="#" class="txt-color-green"><i
 											class="fa fa-square-o fa-3x"></i></a> <br>Desactivado
 									</center>
 								</div>
-								<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
+								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Activar" href="#" class="txt-color-green"><i
 											class="fa fa-check-square-o fa-3x"></i></a> <br>Activado
@@ -105,7 +111,7 @@
 										<td class='text-center'>
 											<a class='txt-color-blue' onclick='' href='<?php echo $ebook->ruta ?>' title='Descargar' target="_blank"><i class='fa fa-download fa-3x'></i></a>
 											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_ebook("<?php echo $ebook->id; ?> ","<?php echo $ebook->ruta; ?>")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
-											<a class='txt-color-green' style='cursor: pointer;' onclick='editar_ebook(<?php echo $ebook->id; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
+											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_ebook(<?php echo $ebook->id; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
 											<?php if ($ebook->estado == 'ACT') {?>
 												<a title="Desactivar" onclick="estado_ebook('DES','<?php echo $ebook->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 											<?php }else {?>
@@ -286,7 +292,7 @@ function estado_ebook(estatus, id)
 		.done(function( msg ) {
 			bootbox.dialog({
 				message: msg,
-				title: 'Modificar Evento',
+				title: 'Modificar E-Book',
 					});
 		});//fin Done ajax
 	}

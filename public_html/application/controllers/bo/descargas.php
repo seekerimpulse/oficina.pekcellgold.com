@@ -13,6 +13,8 @@ class descargas extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/modelo_comercial');
+		$this->load->model('bo/model_descargas');
 		$this->load->model('bo/general');
 	}
 	function index()
@@ -45,9 +47,12 @@ class descargas extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
+		
+		$grupos=$this->modelo_comercial->get_groups();
+		$this->template->set("grupos",$grupos);
+		
 		$style=$this->modelo_dashboard->get_style($id);
-	
+		
 		$this->template->set("style",$style);
 	
 		$this->template->set_theme('desktop');
@@ -62,6 +67,114 @@ class descargas extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		$archivos = $this->model_descargas->Archivos();
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style($id);
+		
+		$this->template->set("style",$style);
+		$this->template->set("archivos",$archivos);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/oficinaVirtual/descargas/listar');
+	}
+	
+	function CrearArchivo(){
+		$grupo = $_POST['grupo'];
+		$nombre_ebook = $_POST['nombre'];
+		$descripcion = $_POST['descripcion'];
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		
+		$id = $this->tank_auth->get_user_id();
+		
+		//Checamos si el directorio del usuario existe, si no, se crea
+		if(!is_dir(getcwd()."/media/archivos/"))
+		{
+			mkdir(getcwd()."/media/archivos/", 0777);
+		}
+		
+		$ruta="/media/archivos/";
+		//definimos la ruta para subir el archivo
+		$config['upload_path'] 		= getcwd().$ruta;
+		$config['allowed_types'] 	= '*';
+		
+		//Cargamos la libreria con las configuraciones de arriba
+		$this->load->library('upload', $config);
+		
+		$this->upload->initialize($config);
+		
+		if ($grupo == "0"){
+			$error = "Debe seleccionar un grupo para el archivo.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/descargas/alta');
+		}
+		
+		if(!isset($nombre) && !isset($descripcion)){
+			$error = "Debe darle un nombre y descripcion para el archivo.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/descargas/alta');
+		}
+		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
+		if (!$this->upload->do_upload('userfile1'))
+		{	
+			$error = "El tipo de archivo que esta cargando no esta permitido.";
+			$error = array('error' => $this->upload->display_errors());
+			var_dump($error); exit;
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/descargas/alta');
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
+			
+			$nombre = $data['upload_data']['file_name'];
+			$filename = strrev($nombre);
+			$explode = explode(".",$filename);
+			$extencion = strrev($explode[0]);
+			$ext=strtolower($extencion);
+
+			$this->model_descargas->CrearArchivo($id, $grupo, $ext,$nombre_ebook, $descripcion, $ruta.$nombre);
+			redirect('/bo/descargas/listar');
+		}
+		
+	}
+	
+	function cambiar_estado_archivo(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id = $_POST['id'];
+		$estado = $_POST['estado'];
+		$this->model_descargas->CambiarEstado($id, $estado);
+	}
+	
+	function eliminar_archivo(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id = $_POST['id'];
+		$url = $this->model_descargas->EliminarArchivo($id);
+	
+		if(unlink($url)){
+				echo "File Deleted.";
+		}
+	}
+	
+	function editar_archivo(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
@@ -70,10 +183,88 @@ class descargas extends CI_Controller
 	
 		$this->template->set("style",$style);
 	
+		
+		$archivos = $this->model_descargas->consultar_archivo($_POST["id"]);
+		
+	
+		$this->template->set("archivos",$archivos);
+	
+		$grupos=$this->modelo_comercial->get_groups();
+		$this->template->set("grupos",$grupos);
+	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
-		$this->template->set_partial('header', 'website/bo/header');
-		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/oficinaVirtual/descargas/listar');
+		$this->template->build('website/bo/oficinaVirtual/descargas/modificar');
+	}
+	
+	function ActualizarEbook(){
+		$grupo = $_POST['grupo'];
+		$nombre_ebook = $_POST['nombre'];
+		$descripcion = $_POST['descripcion'];
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+	
+		//Checamos si el directorio del usuario existe, si no, se crea
+		if(!is_dir(getcwd()."/media/ebooks/"))
+		{
+			mkdir(getcwd()."/media/ebooks/", 0777);
+		}
+	
+		$ruta="/media/ebooks/";
+		//definimos la ruta para subir el archivo
+		$config['upload_path'] 		= getcwd().$ruta;
+		$config['allowed_types'] 	= 'pdf|png|jpg|jpeg|PNG';
+	
+		//Cargamos la libreria con las configuraciones de arriba
+		$this->load->library('upload', $config);
+	
+		$this->upload->initialize($config);
+	
+		if ($grupo == "0"){
+			$error = "Debe seleccionar un grupo para el ebook.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/ebooks/listar');
+		}
+	
+		if(!isset($nombre) && !isset($descripcion)){
+			$error = "Debe darle un nombre y descripcion al ebook.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/ebooks/listar');
+		}
+	
+		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
+		if (!$this->upload->do_upload('userfile1')){
+			$extension =  explode('.', $_FILES['userfile1']['name']);
+			if(isset($extension[1])){
+				$error = "El tipo de archivo que esta cargando no esta permitido para el ebook debe ser un pdf.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/ebooks/listar');
+			}
+			$this->model_ebook->ActualizarEbook2($_POST['id'], $grupo, $nombre_ebook, $descripcion);
+		} else {
+			$data = array('upload_data' => $this->upload->data());
+	
+			$nombre = $data['upload_data']['file_name'];
+			$filename = strrev($nombre);
+			$explode = explode(".",$filename);
+			$extencion = strrev($explode[0]);
+			$ext=strtolower($extencion);
+			if($ext=="pdf")
+			{
+				$this->model_ebook->ActualizarEbook($_POST['id'], $id, $grupo, $nombre_ebook, $descripcion, $ruta.$nombre);
+	
+			}else {
+				$error = "El tipo de archivo que esta cargando no esta permitido para el ebook debe ser un pdf.";
+				$this->session->set_flashdata('error', $error);
+	
+				redirect('/bo/ebooks/listar');
+			}
+		}
+	
 	}
 }
