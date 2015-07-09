@@ -22,31 +22,24 @@
 						<div class="well well-noticia">
 							<div class="row">
 								<blockquote>
-									<? if(isset($_GET["idnw"]))
-									{?>
+								
 										<h1><p class="text-left font-lg"><strong><?=$noticia[0]->nombre?></strong></p></h1>
-										<?}?>
+										
 									
 									</br></br>
 									<p class="text-center" style="text-align: justify;">
-										<? if(isset($_GET["idnw"]))
-										{?>
+										
 											<img src="<?=$noticia[0]->imagen?>" class="noticia-imagen">
-										<?}?>
+										
 									</p>
 									</br>
-									<?foreach($parrafos as $parrafo)
-									{
-										if(strlen($parrafo)<2)
-										{
-										}else{?>
+									
 										<blockquote class="parrafo-noticia-2">
 											<p>
-												<?=$parrafo?>
+												<?=$noticia[0]->contenido?>
 											</p>
 										</blockquote>
-										<?}
-									}?>
+									
 									
 								</blockquote>
 								
@@ -69,8 +62,6 @@
 
 		<!-- PAGE RELATED PLUGIN(S) -->
 			<script type="text/javascript">
-		
-		// DO NOT REMOVE : GLOBAL FUNCTIONS!
 		
 		$(document).ready(function() {
 			

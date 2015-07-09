@@ -194,8 +194,8 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id;');
 	}
 	function get_new()
 	{
-		$q=$this->db->query('SELECT b.id id, a.username usuario, b.nombre nombre, b.contenido contenido, b.imagen imagen, b.fecha fecha FROM users a, noticia b 
-		WHERE a.id=b.id_usuario order by fecha desc');
+		$q=$this->db->query('SELECT b.id id, a.username usuario, b.nombre nombre, b.contenido contenido, b.imagen imagen, b.fecha fecha, b.status FROM users a, noticia b 
+		WHERE a.id=b.id_usuario order by id');
 		return $q->result();
 	}
 	function noticia_espec($id)

@@ -114,8 +114,8 @@
 																			
 																			<td class="text-center">
 																				<a class="txt-color-blue" onclick="" href="'.$presentacion->ruta.'" title="Descargar"><i class="fa fa-download fa-3x"></i></a>
-																				<a class="txt-color-red" style="cursor: pointer;" onclick="delete_file("'.$presentacion->id.'",\""'.$presentacion->ruta.'"\")" title="Eliminar"><i class="fa fa-trash-o fa-3x"></i></a>
-																				<a class="txt-color-blue" style="cursor: pointer;" onclick="editar("'.$presentacion->id.'")"  title="Editar"><i class="fa fa-pencil fa-3x"></i></a>
+																				<a class="txt-color-red" style="cursor: pointer;" onclick="delete_file('.$presentacion->id.',\''.$presentacion->ruta.'\')" title="Eliminar"><i class="fa fa-trash-o fa-3x"></i></a>
+																				<a class="txt-color-blue" style="cursor: pointer;" onclick="editar('.$presentacion->id.')"  title="Editar"><i class="fa fa-pencil fa-3x"></i></a>
           																		';
 																				 if ($presentacion->status=='ACT'){?>
 																				
@@ -354,7 +354,5 @@
 			})//fin done ajax
 			});//Fin callback bootbox
 
-		}
-
-	
+		}	
 </script>

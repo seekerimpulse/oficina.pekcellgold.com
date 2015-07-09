@@ -251,6 +251,7 @@ class comercial extends CI_Controller
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/bo/comercial/ver_noticia',$data);
 	}
+	
 	function crear_encuesta()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
