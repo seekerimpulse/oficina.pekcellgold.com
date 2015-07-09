@@ -99,7 +99,7 @@ $confirm_new_password = array(
 		<td style="color: red;"><?php echo form_error($confirm_new_password['name']); ?><?php echo isset($errors[$confirm_new_password['name']])?$errors[$confirm_new_password['name']]:''; ?></td>
 	</tr>
 </table><br>
-<input name="change" value="Change Password" type="submit" class="btn btn-success">
+<input name="change" value="Cambiar Contraseña" type="submit" class="btn btn-success">
 <?php echo form_close(); ?>
 
 

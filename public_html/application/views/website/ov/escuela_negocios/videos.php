@@ -292,7 +292,7 @@
 			function video(vid,name)
 			{
 				bootbox.dialog({
-					message: '<div style="text-align:center;"><video style="margin-bottom: 5%;" controls><source src="'+vid+'" type="video/mp4">No es soportado por su navegador</video></div>',
+					message: '<div style="text-align:center;"><video style="width:60%;" controls><source src="'+vid+'" type="video/mp4">No es soportado por su navegador</video></div>',
 					title: ""+name+"",
 					className: "video-bootbox",
 				});
@@ -310,7 +310,7 @@
 					var video=url.substring(igual+1,andversa);
 				}
 				bootbox.dialog({
-					message: '<div style="text-align:center;"><iframe style="margin-bottom: 5%; width:420px; height:315px;" src="http://www.youtube.com/embed/'+video+'"></iframe></div>',
+					message: '<div style="text-align:center;"><iframe style="width:100%; height:45rem;" src="http://www.youtube.com/embed/'+video+'"></iframe></div>',
 					title: ""+nombre+"",
 					className: "video-bootbox",
 				});

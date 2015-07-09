@@ -91,7 +91,25 @@ if ($this->config->item('use_username', 'tank_auth')) {
 								</header>
 
 								<fieldset>
+			<?php
 									
+				if(isset($data['errors']))
+				{
+
+				if(isset($data['errors']['login']))
+					{
+										
+					echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-times"></i>
+								<strong>Error!</strong> El email no existe.
+							</div>';
+					}
+				}
+									
+								?>
 									<section>
 										<label class="label">Correo</label>
 										<label class="input"> <i class="icon-append fa fa-user"></i>

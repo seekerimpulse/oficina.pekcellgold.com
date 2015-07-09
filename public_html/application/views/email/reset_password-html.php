@@ -269,7 +269,7 @@ Por favor , mantenga en sus registros para que no se olvide.<br />
 <br />
 <?php if (strlen($username) > 0) { ?>Tu usuario: <?php echo $username; ?><br /><?php } ?>
 Tu correo: <?php echo $email; ?><br />
-<?php /* Your new password: <?php echo $new_password; ?><br /> */ ?>
+Tu nueva contraseña: <?php echo $new_password; ?><br />
 <br />
 <br />
 Gracias,<br />
