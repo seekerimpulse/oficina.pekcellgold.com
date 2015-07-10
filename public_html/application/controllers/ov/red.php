@@ -76,7 +76,124 @@ class red extends CI_Controller
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/perfil_red/red');		
-	}	
+		$this->template->build('website/ov/perfil_red/arboles/red');		
+	}
+
+	function red_genealogico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$frontales = $frontales[0]->frontal;
+		$id            = $this->tank_auth->get_user_id();
+		$style         = $this->general->get_style($id);
+		$id_red        = $_GET['id'];
+		$afiliados     = $this->model_perfil_red->get_afiliados_($id_red, $id);
+		$afiliadostree = $this->model_perfil_red->get_afiliados($id_red, $id);
+	
+		$image=$this->model_perfil_red->get_images($id);
+		$user="/template/img/empresario.jpg";
+		foreach ($image as $img) {
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$user=$img->url;
+			}
+		}
+	
+		$this->template->set("user",$user);
+		$this->template->set("style",$style);
+		$this->template->set("id",$id);
+		$this->template->set("frontales",$frontales);
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("afiliadostree",$afiliadostree);
+		$this->template->set("img_perfil",$user);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/perfil_red/arboles/genealogico');
+	}
+	
+	function red_arbol1()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$frontales = $frontales[0]->frontal;
+		$id            = $this->tank_auth->get_user_id();
+		$style         = $this->general->get_style($id);
+		$id_red        = $_GET['id'];
+		$afiliados     = $this->model_perfil_red->get_afiliados_($id_red, $id);
+		$afiliadostree = $this->model_perfil_red->get_afiliados($id_red, $id);
+	
+		$image=$this->model_perfil_red->get_images($id);
+		$user="/template/img/empresario.jpg";
+		foreach ($image as $img) {
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$user=$img->url;
+			}
+		}
+	
+		$this->template->set("user",$user);
+		$this->template->set("style",$style);
+		$this->template->set("id",$id);
+		$this->template->set("frontales",$frontales);
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("afiliadostree",$afiliadostree);
+		$this->template->set("img_perfil",$user);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/perfil_red/arboles/arbol1');
+	}
+	
+	function red_arbol2()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$frontales 	 = $this->model_tipo_red->ObtenerFrontales();
+		$frontales = $frontales[0]->frontal;
+		$id            = $this->tank_auth->get_user_id();
+		$style         = $this->general->get_style($id);
+		$id_red        = $_GET['id'];
+		$afiliados     = $this->model_perfil_red->get_afiliados_($id_red, $id);
+		$afiliadostree = $this->model_perfil_red->get_afiliados($id_red, $id);
+	
+		$image=$this->model_perfil_red->get_images($id);
+		$user="/template/img/empresario.jpg";
+		foreach ($image as $img) {
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$user=$img->url;
+			}
+		}
+	
+		$this->template->set("user",$user);
+		$this->template->set("style",$style);
+		$this->template->set("id",$id);
+		$this->template->set("frontales",$frontales);
+		$this->template->set("afiliados",$afiliados);
+		$this->template->set("afiliadostree",$afiliadostree);
+		$this->template->set("img_perfil",$user);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/perfil_red/arboles/arbol2');
+	}
 
 }
