@@ -13,6 +13,16 @@
 						</h1>
 					</div>
 				</div>
+				<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+?>	
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
@@ -33,9 +43,48 @@
 						<!-- widget content -->
 						<div class="widget-body no-padding smart-form">
                 <fieldset>
-                  <div class="contenidoBotones">
-										<div class="row">
-
+                  <div class="contenidoBotones" style="padding-left: 50px; padding-right: 50px;">
+										<div class="row col-xs-12 col-md-6 col-sm-12 col-lg-5">
+											<div class="row">
+												<form class="smart-form" id="reporte-form" method="post" action="sube_noticia" enctype="multipart/form-data">
+													
+													<div class="row">
+														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
+															<label class="label">Nombre</label>
+															<label class="input">
+																<input required type="text" placeholder="Nombre"  name="nombre_frm">
+															</label>
+														</section>
+													</div>
+													
+													<div class="row">
+														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
+															<label class="label">Descripcion</label>
+															<label class="textarea">								
+																<textarea required rows="3" class="custom-scroll" name="desc_frm"></textarea> 
+															</label>
+														</section>
+													</div>
+													
+													<div class="row">
+														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
+															<label class="label">Imagen</label>
+															<div class="input input-file">
+																<span class="button"><input required id="userfile" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input placeholder="Seleccione un archivo" readonly="" type="text" id="file_frm" name="file_nme">
+															</div>
+														</section>
+													</div>
+													
+													<div class="row">
+														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="div_subir">
+															<div class="col col-lg-8 col-md-8 col-sm-8 col-xs-8"></div>
+															<div class="col col-lg-4 col-md-4 col-sm-4 col-xs-4" >
+																<input type="submit" class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="boton_subir" value="Agregar noticia">
+															</div>
+														</section>
+													</div>
+												</form>
+											</div>
 										 </div>
 									</div>
 								</fieldset>

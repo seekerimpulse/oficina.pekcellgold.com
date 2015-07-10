@@ -37,9 +37,13 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -58,9 +62,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-	
-		$id=1;
-		$usuario = $this->general->get_username($id);
+
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 		
@@ -85,7 +94,15 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-		$id = $this->tank_auth->get_user_id();
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
 		$style         = $this->general->get_style($id);
 		
 		$afiliados     = $this->model_perfil_red->get_tabla();
@@ -107,9 +124,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-	
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -129,9 +151,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-	
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -152,9 +179,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-	
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -174,8 +206,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -219,8 +257,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -251,14 +295,21 @@ class comercial extends CI_Controller
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/bo/comercial/ver_noticia',$data);
 	}
+	
 	function crear_encuesta()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
 			redirect('/auth');
 		}
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -647,8 +698,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -706,8 +763,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-		//echo 'heey';
+		
 		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -763,6 +826,12 @@ class comercial extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -819,8 +888,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -879,8 +954,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-		//echo 'heey';
+		
 		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -931,8 +1012,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-		//echo 'heey';
+		
 		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -984,6 +1071,16 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		
 		$data=$_GET["info"];
 		$data=json_decode($data,true);
 		$tipo=$data['tipo'];
@@ -1035,8 +1132,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -1344,6 +1447,16 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		
 		$data=$_GET["info"];
 		$data=json_decode($data,true);
 		$tipo=$data['tipo'];
@@ -1408,9 +1521,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -1484,9 +1602,14 @@ class comercial extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -1548,6 +1671,11 @@ class comercial extends CI_Controller
 
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 

@@ -214,6 +214,22 @@ class presentaciones extends CI_Controller
 	
 	function editar_archivo()
 	{
+		
+		if ($_POST['grupo_frm']=="0"){
+			$error = "Debe seleccionar un grupo para la presentacion.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/presentaciones/listar');
+		}
+		else if ($_POST['nombre_publico']==""){
+			$error = "Debe escribir un nombre para la presentacion.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/presentaciones/listar');
+		}
+		else if ($_POST['desc_frm']==""){
+			$error = "Debe escribir una descripcion para la presentacion.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/presentaciones/listar');
+		}
 		if ($_POST["file_nme"]==''){
 			$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
 							descripcion = "'.$_POST['desc_frm'].'",
@@ -249,10 +265,6 @@ class presentaciones extends CI_Controller
 			//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 			if (!$this->upload->do_upload('userfile'))
 			{
-				$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
-							descripcion = "'.$_POST['desc_frm'].'",
-							nombre_publico = "'.$_POST["nombre_publico"].'"
-							where id_archivo = "'.$_POST["id_presentacion"].'"');
 				echo "<script> alert('El archivo que estas ingresando no es valido.');
 						location.href = '/bo/presentaciones/listar';</script>";
 				//redirect('/bo/presentaciones/listar');

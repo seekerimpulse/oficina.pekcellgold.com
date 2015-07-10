@@ -78,7 +78,7 @@
 				</label>
 				
 				<label class="input" style="padding-left: 50px;">	
-					<input name="nombre_publico" placeholder="Nombre" type="text" id="nombre_publico">
+					<input required name="nombre_publico" placeholder="Nombre" type="text" id="nombre_publico">
 				</label>	
 			</section>
 		</div>
@@ -89,7 +89,7 @@
 					Descripcion
 				</label>
 				<label class="textarea" style="padding-left: 50px;">							
-					<textarea rows="3" class="custom-scroll" name="desc_frm"></textarea>
+					<textarea required rows="3" class="custom-scroll" name="desc_frm"></textarea>
 				</label>
 			</section>
 		</div>
@@ -100,7 +100,7 @@
 		
 			<label class="label" style="padding-left: 65px;">Archivo</label>
 			<div class="input input-file" style="padding-left: 65px;">
-			<span class="button"><input id="file" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input name="file_nme" placeholder="Seleccione un archivo" readonly="" id="file_frm" type="text">
+			<span class="button"><input required id="file" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input name="file_nme" placeholder="Seleccione un archivo" readonly="" id="file_frm" type="text">
 			</div>
 		</section>
 

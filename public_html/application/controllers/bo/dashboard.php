@@ -56,9 +56,13 @@ class dashboard extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		
-		
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
 		$style=$this->general->get_style($id);
 		
 		$datatable=$this->modelo_billetera->PagosClientes();

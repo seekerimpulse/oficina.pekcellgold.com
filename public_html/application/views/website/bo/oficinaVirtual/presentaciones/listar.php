@@ -13,6 +13,16 @@
 						</h1>
 					</div>
 				</div>
+				<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+?>	
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
@@ -114,8 +124,8 @@
 																			
 																			<td class="text-center">
 																				<a class="txt-color-blue" onclick="" href="'.$presentacion->ruta.'" title="Descargar"><i class="fa fa-download fa-3x"></i></a>
-																				<a class="txt-color-red" style="cursor: pointer;" onclick="delete_file("'.$presentacion->id.'",\""'.$presentacion->ruta.'"\")" title="Eliminar"><i class="fa fa-trash-o fa-3x"></i></a>
-																				<a class="txt-color-blue" style="cursor: pointer;" onclick="editar("'.$presentacion->id.'")"  title="Editar"><i class="fa fa-pencil fa-3x"></i></a>
+																				<a class="txt-color-red" style="cursor: pointer;" onclick="delete_file('.$presentacion->id.',\''.$presentacion->ruta.'\')" title="Eliminar"><i class="fa fa-trash-o fa-3x"></i></a>
+																				<a class="txt-color-blue" style="cursor: pointer;" onclick="editar('.$presentacion->id.')"  title="Editar"><i class="fa fa-pencil fa-3x"></i></a>
           																		';
 																				 if ($presentacion->status=='ACT'){?>
 																				
@@ -354,7 +364,5 @@
 			})//fin done ajax
 			});//Fin callback bootbox
 
-		}
-
-	
+		}	
 </script>

@@ -22,9 +22,14 @@ class admin extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -42,9 +47,14 @@ class admin extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 		
 		$style           = $this->modelo_dashboard->get_style($id);
 		$sexo            = $this->model_admin->sexo();
@@ -110,6 +120,16 @@ class admin extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		
 		$id=$this->tank_auth->get_user_id();
 		$style = $this->modelo_dashboard->get_style($id);
 		$pais = $this->model_admin->get_pais();
@@ -129,6 +149,15 @@ class admin extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
 		
 		if(isset($_POST['pais_check']))
 		{
@@ -264,6 +293,16 @@ class admin extends CI_Controller
 			{																		// logged in
 			redirect('/auth');
 			}
+			
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+			
+			
 			$id=$this->tank_auth->get_user_id();
 			$style = $this->modelo_dashboard->get_style($id);
 			$id_mercancia = $_POST['id'];
@@ -591,7 +630,15 @@ class admin extends CI_Controller
 			{																		// logged in
 			redirect('/auth');
 			}
-			$id=$this->tank_auth->get_user_id();
+			
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
 			$style = $this->modelo_dashboard->get_style($id);
 			$id_mercancia = $_POST['id'];
 			
@@ -778,6 +825,16 @@ class admin extends CI_Controller
 				{																		// logged in
 				redirect('/auth');
 				}
+				
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+				
+				
 				$id=$this->tank_auth->get_user_id();
 				$style = $this->modelo_dashboard->get_style($id);
 				$id_mercancia = $_POST['id'];
@@ -1002,6 +1059,14 @@ class admin extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		if(!isset($_POST['proveedor']))
 			$_POST['proveedor']='Ninguno';
@@ -1062,6 +1127,11 @@ class admin extends CI_Controller
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
 			redirect('/auth');
+		}
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
 		}
 		
 		$dato_pais=$this->model_admin->get_dato_pais();
@@ -1308,6 +1378,13 @@ class admin extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		
 		$id_paquete   = $_POST['id'];
 		$paquete_merc = $this->model_admin->get_paquete_mercancia($id_paquete);
 		$detalles     = $this->model_admin->detalle_paquete($id_paquete);
@@ -1321,6 +1398,16 @@ class admin extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		
 		echo "Por favor sea paciente estamos trabajando en actualizar esta sección";
 
 	}

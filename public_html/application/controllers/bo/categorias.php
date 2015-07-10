@@ -21,6 +21,14 @@ class categorias extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
+
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 		
 		$id              = $this->tank_auth->get_user_id();
 		$style           = $this->general->get_style($id);
@@ -39,6 +47,14 @@ class categorias extends CI_Controller
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
 		}
 		
 		$id              = $this->tank_auth->get_user_id();
