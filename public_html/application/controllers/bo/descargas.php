@@ -195,7 +195,7 @@ class descargas extends CI_Controller
 	
 	function ActualizarArchivo(){
 		$grupo = $_POST['grupo'];
-		$nombre_ebook = $_POST['nombre'];
+		$nomre_archivo = $_POST['nombre'];
 		$descripcion = $_POST['descripcion'];
 		$estado = $_POST['estado'];
 	
@@ -242,7 +242,7 @@ class descargas extends CI_Controller
 				$this->session->set_flashdata('error', $error);
 				
 			}
-			$this->model_descargas->ActualizarArchivo2($_POST['id'], $id ,$grupo, $nombre_ebook, $descripcion, $estado);
+			$this->model_descargas->ActualizarArchivo2($_POST['id'], $id ,$grupo, $nomre_archivo, $descripcion, $estado);
 		} else {
 			$data = array('upload_data' => $this->upload->data());
 	
@@ -252,7 +252,7 @@ class descargas extends CI_Controller
 			$extencion = strrev($explode[0]);
 			$ext=strtolower($extencion);
 			
-			$this->model_descargas->ActualizarArchvo($_POST['id'], $id, $grupo, $nombre_ebook, $descripcion, $ruta.$nombre, $estado);
+			$this->model_descargas->ActualizarArchvo($_POST['id'], $id, $grupo, $ext,$nomre_archivo, $descripcion, $ruta.$nombre, $estado);
 			
 			
 		}

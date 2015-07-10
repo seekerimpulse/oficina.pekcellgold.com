@@ -54,7 +54,7 @@
 			<div class="row">
 				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
 					id="busquedatodos">
-					<label class="label">Grupo</label> <label class="select"> 
+					<label class="label">Estado</label> <label class="select"> 
 						<select name="estado" id="estado" required>
 								<?php if($archivo[0]->status == "ACT") { ?>
 										<option value="ACT" selected>Activado</option>
