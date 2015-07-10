@@ -91,7 +91,9 @@ class model_ebook extends CI_Model
 	}
 	
 	function ActualizarEbook($id_archivo, $id, $grupo, $nombre, $descripcion, $ruta){
-		
+		$archivo = $this->consultar_ebook($id_archivo);
+		$this->load->helper("file");
+		unlink($_SERVER['DOCUMENT_ROOT'].$archivo[0]->ruta);
 		$datos = array(
 				'id_grupo'   => $grupo,
 				'descripcion'	=> $descripcion,
@@ -117,9 +119,14 @@ class model_ebook extends CI_Model
 	}
 	
 	function ActualizarImagenEbook($ebook, $url, $nombre_completo, $nombre, $extencion){
-	
+		$this->load->helper("file");
 		$q = $this->db->query("select * from cross_img_archivo where id_archivo = ".$ebook);
 		$cross = $q->result();
+		
+		$q = $this->db->query("select * from cat_img where id_img = ".$cross[0]->id_img);
+		$archivo = $q->result();
+		
+		unlink($_SERVER['DOCUMENT_ROOT'].$archivo[0]->url);
 		
 		$datos = array(
 				'url' => $url,

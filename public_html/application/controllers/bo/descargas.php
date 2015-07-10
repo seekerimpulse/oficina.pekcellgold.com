@@ -127,7 +127,6 @@ class descargas extends CI_Controller
 		{	
 			$error = "El tipo de archivo que esta cargando no esta permitido.";
 			$error = array('error' => $this->upload->display_errors());
-			var_dump($error); exit;
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/descargas/alta');
 		}
@@ -164,8 +163,7 @@ class descargas extends CI_Controller
 		}
 		$id = $_POST['id'];
 		$url = $this->model_descargas->EliminarArchivo($id);
-	
-		if(unlink($url)){
+		if(unlink($_SERVER['DOCUMENT_ROOT'].$url)){
 				echo "File Deleted.";
 		}
 	}
@@ -187,20 +185,19 @@ class descargas extends CI_Controller
 		$archivos = $this->model_descargas->consultar_archivo($_POST["id"]);
 		
 	
-		$this->template->set("archivos",$archivos);
-	
+		$this->template->set("archivo",$archivos);
+		
 		$grupos=$this->modelo_comercial->get_groups();
 		$this->template->set("grupos",$grupos);
 	
-		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
 		$this->template->build('website/bo/oficinaVirtual/descargas/modificar');
 	}
 	
-	function ActualizarEbook(){
+	function ActualizarArchivo(){
 		$grupo = $_POST['grupo'];
 		$nombre_ebook = $_POST['nombre'];
 		$descripcion = $_POST['descripcion'];
+		$estado = $_POST['estado'];
 	
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -210,15 +207,15 @@ class descargas extends CI_Controller
 		$id = $this->tank_auth->get_user_id();
 	
 		//Checamos si el directorio del usuario existe, si no, se crea
-		if(!is_dir(getcwd()."/media/ebooks/"))
+		if(!is_dir(getcwd()."/media/archivos/"))
 		{
-			mkdir(getcwd()."/media/ebooks/", 0777);
+			mkdir(getcwd()."/media/archivos/", 777);
 		}
 	
-		$ruta="/media/ebooks/";
+		$ruta="/media/archivos/";
 		//definimos la ruta para subir el archivo
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'pdf|png|jpg|jpeg|PNG';
+		$config['allowed_types'] 	= '*';
 	
 		//Cargamos la libreria con las configuraciones de arriba
 		$this->load->library('upload', $config);
@@ -226,26 +223,26 @@ class descargas extends CI_Controller
 		$this->upload->initialize($config);
 	
 		if ($grupo == "0"){
-			$error = "Debe seleccionar un grupo para el ebook.";
+			$error = "Debe seleccionar un grupo para al archivo.";
 			$this->session->set_flashdata('error', $error);
-			redirect('/bo/ebooks/listar');
+			redirect('/bo/descargas/listar');
 		}
 	
 		if(!isset($nombre) && !isset($descripcion)){
-			$error = "Debe darle un nombre y descripcion al ebook.";
+			$error = "Debe darle un nombre y descripcion al archivo.";
 			$this->session->set_flashdata('error', $error);
-			redirect('/bo/ebooks/listar');
+			redirect('/bo/descargas/listar');
 		}
 	
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 		if (!$this->upload->do_upload('userfile1')){
 			$extension =  explode('.', $_FILES['userfile1']['name']);
 			if(isset($extension[1])){
-				$error = "El tipo de archivo que esta cargando no esta permitido para el ebook debe ser un pdf.";
+				$error = "El tipo de archivo que esta cargando no esta permitido.";
 				$this->session->set_flashdata('error', $error);
-				redirect('/bo/ebooks/listar');
+				
 			}
-			$this->model_ebook->ActualizarEbook2($_POST['id'], $grupo, $nombre_ebook, $descripcion);
+			$this->model_descargas->ActualizarArchivo2($_POST['id'], $id ,$grupo, $nombre_ebook, $descripcion, $estado);
 		} else {
 			$data = array('upload_data' => $this->upload->data());
 	
@@ -254,17 +251,11 @@ class descargas extends CI_Controller
 			$explode = explode(".",$filename);
 			$extencion = strrev($explode[0]);
 			$ext=strtolower($extencion);
-			if($ext=="pdf")
-			{
-				$this->model_ebook->ActualizarEbook($_POST['id'], $id, $grupo, $nombre_ebook, $descripcion, $ruta.$nombre);
-	
-			}else {
-				$error = "El tipo de archivo que esta cargando no esta permitido para el ebook debe ser un pdf.";
-				$this->session->set_flashdata('error', $error);
-	
-				redirect('/bo/ebooks/listar');
-			}
+			
+			$this->model_descargas->ActualizarArchvo($_POST['id'], $id, $grupo, $nombre_ebook, $descripcion, $ruta.$nombre, $estado);
+			
+			
 		}
-	
+		redirect('/bo/descargas/listar');
 	}
 }

@@ -202,7 +202,7 @@ class ebooks extends CI_Controller
 		$urls = $this->model_ebook->EliminarEbook($id);
 		
 		foreach ($urls as $url){
-			if(unlink($url)){
+			if(unlink($_SERVER['DOCUMENT_ROOT'].$url)){
 				echo "File Deleted.";
 			}
 		}
@@ -231,8 +231,6 @@ class ebooks extends CI_Controller
 		$grupos=$this->modelo_comercial->get_groups();
 		$this->template->set("grupos",$grupos);
 		
-		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
 		$this->template->build('website/bo/oficinaVirtual/ebooks/modificar');
 	}
 	
