@@ -42,12 +42,10 @@
 									</p>
 									</br>
 									
-										<blockquote class="parrafo-noticia-2">
 											<p>
-												<?=$noticia[0]->contenido?>
+												<?=html_entity_decode($noticia[0]->contenido); ?>
 											</p>
-										</blockquote>
-									
+										
 									
 								</blockquote>
 								

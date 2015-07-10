@@ -120,7 +120,7 @@
 																			<td>'.$presentacion->nombreUsuario.' '.$presentacion->apellidoUsuario.'</td>
 																			<td>'.$presentacion->grupo.'</td>
 																			<td>'.$presentacion->fecha.'</td>
-																			<td>'.$presentacion->descripcion.'</td>
+																			<td>'.html_entity_decode($presentacion->descripcion).'</td>
 																			
 																			<td class="text-center">
 																				<a class="txt-color-blue" onclick="" href="'.$presentacion->ruta.'" title="Descargar"><i class="fa fa-download fa-3x"></i></a>

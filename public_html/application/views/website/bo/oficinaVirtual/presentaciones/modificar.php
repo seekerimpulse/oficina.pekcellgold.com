@@ -59,7 +59,7 @@
 					Descripcion
 				</label>
 				<label class="textarea" style="padding-left: 50px;">							
-					<textarea required rows="3" class="custom-scroll" name="desc_frm" id="desc_frm"><?php echo $presentacion[0]->descripcion;?></textarea>
+					<textarea required rows="3" class="custom-scroll" name="desc_frm" id="desc_frm"><?php echo html_entity_decode($presentacion[0]->descripcion);?></textarea>
 				</label>
 			</section>
 		</div>

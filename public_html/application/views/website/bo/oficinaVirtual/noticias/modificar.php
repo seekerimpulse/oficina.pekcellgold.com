@@ -40,7 +40,7 @@
 														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
 															<label class="label">Nombre</label>
 															<label class="input">
-																<input required type="text" placeholder="Nombre"  name="nombre_frm" value='<?= $noticia[0]->nombre;?>'>
+																<input required type="text" placeholder="Nombre"  name="nombre_frm" value='<?= html_entity_decode($noticia[0]->nombre);?>'>
 															</label>
 														</section>
 													</div>
@@ -49,7 +49,7 @@
 														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
 															<label class="label">Descripcion</label>
 															<label class="textarea">								
-																<textarea required rows="3" class="custom-scroll" name="desc_frm"><?= $noticia[0]->contenido;?></textarea> 
+																<textarea required rows="3" class="custom-scroll" name="desc_frm"><?= html_entity_decode($noticia[0]->contenido);?></textarea> 
 															</label>
 														</section>
 													</div>

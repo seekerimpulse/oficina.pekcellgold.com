@@ -23,8 +23,13 @@ class informacion extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+	$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -44,8 +49,13 @@ class informacion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+	$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -64,9 +74,13 @@ class informacion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+	$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->set("style",$style);
@@ -99,6 +113,12 @@ class informacion extends CI_Controller
 		}
 		//echo 'heey';
 		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -109,7 +129,7 @@ class informacion extends CI_Controller
 		$ruta="/media/".$id."/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'jpg|png|gif';
+		$config['allowed_types'] 	= 'jpg|png|gif|jpeg';
 	
 		//Cargamos la libreria con las configuraciones de arriba
 		$this->load->library('upload', $config);
@@ -165,9 +185,13 @@ class informacion extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -178,12 +202,24 @@ class informacion extends CI_Controller
 		$this->template->set("informacion",$informacion);
 	
 		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
 		$this->template->build('website/bo/oficinaVirtual/informacion/modificar');
 	}
 	
 	function editar_info()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
 		if ($_POST['nombre_frm']==""){
 			$error = "Debe escribir un nombre para la informacion.";
 			$this->session->set_flashdata('error', $error);
@@ -206,12 +242,7 @@ class informacion extends CI_Controller
 		}
 		else {
 	
-			if (!$this->tank_auth->is_logged_in())
-			{																		// logged in
-				redirect('/auth');
-			}
-	
-			$id	= $this->tank_auth->get_user_id();
+			
 	
 			//Checamos si el directorio del usuario existe, si no, se crea
 			if(!is_dir(getcwd()."/media/".$id))

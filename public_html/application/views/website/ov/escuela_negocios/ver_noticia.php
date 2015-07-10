@@ -35,18 +35,13 @@
 										<?}?>
 									</p>
 									</br>
-									<?foreach($parrafos as $parrafo)
-									{
-										if(strlen($parrafo)<2)
-										{
-										}else{?>
+									
 										<blockquote class="parrafo-noticia-2">
 											<p>
-												<?=$parrafo?>
+												<?=$parrafos?>
 											</p>
 										</blockquote>
-										<?}
-									}?>
+									
 									
 								</blockquote>
 								
