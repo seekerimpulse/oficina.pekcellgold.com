@@ -75,7 +75,7 @@
 											</div>
 										</div>
 										<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-											<div style="padding-left: 100px; padding-right: 100px;">
+											<div style="padding-left: 30px; padding-right: 30px;">
 												
 												<header>
 													<h2 class="font-md"><strong>Noticias</strong> <i></i></h2>				
@@ -87,7 +87,7 @@
 															<?php 
 															for($i=0;$i<sizeof($noticias);$i++)
 															{
-																$texto=json_encode($noticias[$i]->contenido);
+																$texto=json_encode(html_entity_decode($noticias[$i]->contenido));
 																$texto=trim($texto);
 																echo
 																'<li>	
@@ -101,18 +101,19 @@
 																		<p style="font-size:15px;">
 																			<a href="ver_noticia?idnw='.$noticias[$i]->id.'"><strong>'.$noticias[$i]->nombre.'</strong></a>
 																		</p>
-																		<p style="text-align:justify; padding-right:3%;">'
+																		
+																		<p style="text-align:justify; padding-right:3%;" >'
 																			.substr($noticias[$i]->contenido, 0, 100).
 																			'... <a href="ver_noticia?idnw='.$noticias[$i]->id.'" >ver mas</a>
-																			&nbsp;&nbsp;&nbsp;<a class="txt-color-red" style="cursor: pointer;" onclick="delete_new('.$noticias[$i]->id.')" title="Eliminar"><i class="fa fa-trash-o fa-3x"></i></a>
+																			&nbsp;&nbsp;&nbsp;<a class="txt-color-red " style="cursor: pointer;" onclick="delete_new('.$noticias[$i]->id.')" title="Eliminar"><i class="fa fa-trash-o fa-3x"></i></a>
 																			&nbsp;&nbsp;&nbsp;<a class="txt-color-blue"  style="cursor: pointer;" onclick="editar('.$noticias[$i]->id.')"  title="Editar"><i class="fa fa-pencil fa-3x"></i></a>
                 															';
                 												if ($noticias[$i]->status=='ACT'){
-	                												echo '&nbsp;&nbsp;&nbsp;<a class="txt-color-green"  style="cursor: pointer;" onclick="estado_presentacion('."'DES'".','.$noticias[$i]->id.')"  title="Desactivar"><i class="fa fa-check-square-o fa-3x"></i></a>';
+	                												echo '&nbsp;&nbsp;&nbsp;<a class="txt-color-green "  style="cursor: pointer;" onclick="estado_presentacion('."'DES'".','.$noticias[$i]->id.')"  title="Desactivar"><i class="fa fa-check-square-o fa-3x"></i></a>';
                 												}
                 												else echo '&nbsp;&nbsp;&nbsp;<a class="txt-color-green"  style="cursor: pointer;" onclick="estado_presentacion('."'ACT'".','.$noticias[$i]->id.')"  title="Activar"><i class="fa fa-square-o fa-3x"></i></a>';
 																		'</p>
-													
+														
 																	</div>
 																</li>';
 															}

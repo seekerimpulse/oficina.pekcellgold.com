@@ -68,7 +68,7 @@
 											<tbody>
 												<?php for($i=0;$i<sizeof($infos);$i++)
 												{
-													$texto=json_encode($infos[$i]->descripcion);
+													$texto=json_encode(html_entity_decode($infos[$i]->descripcion));
 													$texto=trim($texto);
 													echo 
 													"<tr>
@@ -76,7 +76,7 @@
 														<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->nombre."</td>
 														<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->fecha."</td>
 														<td style='vertical-align: middle;'>".substr($infos[$i]->descripcion, 0, 100)."...
-															<a href='javascript:void(0);' onclick='vermas(".$texto.",\"".$infos[$i]->fecha."\",\"".$infos[$i]->nombre."\")'>ver mas</a></p>
+															<a href='javascript:void(0);' onclick='vermas(".$texto.",\"".$infos[$i]->ruta."\",\"".$infos[$i]->nombre."\")'>ver mas</a></p>
 														</td>
 														
 													</tr>";
@@ -123,13 +123,13 @@
 								+'<thead>'
 									+'<tr>'
 										+'<th colspan="2">Contenido</th>'
-										+'<th class="text-center hidden-xs hidden-sm" style="width: 100px;">Fecha</th>'
+										+'<th class="text-center hidden-xs hidden-sm" style="width: 100px;">Imagen</th>'
 									+'</tr>'
 								+'</thead>'
 								+'<tbody>'
 									+'<tr>'
 										+'<td class="text-center">'+texto+'<td>'	
-										+'<td class="text-center">'+date+'<td>'					
+										+'<td class="text-center"><img src = '+date+' style="max-height:90px"><td>'					
 								+'</tbody>'
 							+'</table>';
 				bootbox.dialog({

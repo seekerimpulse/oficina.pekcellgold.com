@@ -1,18 +1,4 @@
-			<!-- MAIN CONTENT -->
-			<div id="content" >
-				<div class="row">
-					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-						<h1 class="page-title txt-color-blueDark">
-							
-							<!-- PAGE HEADER -->
-							<i class="fa-fw fa fa-home"></i> 
-								<a href="/bo/dashboard"> Menu</a> 
-							<span>>
-								<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a href="/bo/oficinaVirtual/informacion"> Informacion</a> > Alta
-							</span>
-						</h1>
-					</div>
-				</div>
+
 							<?php if($this->session->flashdata('error')) {
 		echo '<div class="alert alert-danger fade in">
 								<button class="close" data-dismiss="alert">
@@ -23,15 +9,14 @@
 			</div>'; 
 	}
 ?>	
+<?php $nombre = substr ( $informacion[0]->img,9);?>
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
 			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1" data-widget-colorbutton="false"
-          data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-sortable="false"
-          data-widget-fullscreenbutton="false" data-widget-custombutton="false" data-widget-collapsed="false">
+				
 					<div>
 
 						<!-- widget edit box -->
@@ -44,16 +29,19 @@
 						<div class="widget-body no-padding smart-form">
                 <fieldset>
                   <div class="contenidoBotones">
-										<div class="row" style="padding-left: 30px; padding-right: 30px;">
+										<div class="row" style="padding-left: 50px; padding-right: 20px;">
 											
-											<div class="row col-xs-11 col-sm-5 col-md-5 col-lg-5" >
-												<form class="smart-form" id="reporte-form" method="post" action="sube_info" enctype="multipart/form-data">
+											<div class="row col-xs-11 col-sm-5 col-md-5 col-lg-12" >
+												<form class="smart-form" id="reporte-form" method="post" action="editar_info" enctype="multipart/form-data">
+													
+													<input name="id_informacion" class="hide" type="text" id="id_informacion" value='<?php echo $informacion[0]->id;?>'>
+													<input name="ruta" class="hide" type="text" id="ruta" value='<?php echo $informacion[0]->img;?>'>
 													
 													<div class="row">
 														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
 															<label class="label">Nombre</label>
 															<label class="input">
-																<input required type="text" placeholder="Nombre"  name="nombre_frm">
+																<input required type="text" placeholder="Nombre"  name="nombre_frm" value='<?= $informacion[0]->nombre;?>'>
 															</label>
 														</section>
 													</div>
@@ -62,7 +50,7 @@
 														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
 															<label class="label">Descripcion</label>
 															<label class="textarea">								
-																<textarea required rows="3" class="custom-scroll" name="desc_frm"></textarea>
+																<textarea required rows="3" class="custom-scroll" name="desc_frm"><?= html_entity_decode($informacion[0]->descripcion);?></textarea>
 															</label>
 														</section>
 													</div>
@@ -72,7 +60,7 @@
 														<section>
 															<label class="label">Imagen</label>
 															<div class="input input-file">
-																<span class="button"><input id="file" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input required placeholder="Seleccione un archivo" readonly="" type="text" id="file_frm" name="file_nme">
+																<span class="button"><input id="file" name="userfile" onchange="this.parentNode.nextSibling.value = this.value" type="file">Buscar</span><input required placeholder="<?= $nombre; ?>" readonly="" type="text" id="file_frm" name="file_nme">
 															</div>
 														</section>
 													</div>
@@ -97,7 +85,7 @@
 
 					</div>
 					<!-- end widget div -->
-				</div>
+				
 				<!-- end widget -->
 			</article>
 			<!-- END COL -->

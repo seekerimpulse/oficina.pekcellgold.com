@@ -190,13 +190,14 @@ class noticias extends CI_Controller
 			$nombre=strrev($explode[1]);
 			$extencion=strrev($explode[0]);
 			$ext=strtolower($extencion);
+			$descripcion = $_POST['desc_frm'];
+			$descripcion = htmlentities($descripcion);
 			//echo 'se supone que se debo de subir';
-			if($ext=="jpg"||$ext="png"||$ext="gif")
-			{
+			
 				//echo 'insert into noticia (id_usuario,nombre,contenido,imagen) values ('.$id.',"'.$_POST['nombre_frm'].'","'.$_POST['desc_frm'].'","'.$ruta.$_POST['file_nme'].'")';
 				$this->db->query('insert into noticia (id_usuario,nombre,contenido,imagen,status)
-				values ('.$id.',"'.$_POST['nombre_frm'].'","'.$_POST['desc_frm'].'","'.$ruta.$nombre.".".$ext.'","'.ACT.'")');
-			}
+				values ('.$id.',"'.$_POST['nombre_frm'].'","'.$descripcion.'","'.$ruta.$nombre.".".$ext.'","'.ACT.'")');
+			
 			//echo 'ptm';
 				
 				
