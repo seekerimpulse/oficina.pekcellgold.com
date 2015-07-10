@@ -48,31 +48,31 @@
 						<div class="tab-pane">
 
 							<div class="row col-xs-12 col-md-12 col-sm-8 col-lg-5 pull-right">
-								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
+								<div class="col-xs-6 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Descargar" href="#" class="txt-color-blue">
 										<i class='fa fa-download fa-3x'></i></a> <br>Descargar
 									</center>
 								</div>
-								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
+								<div class="col-xs-6 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Editar" href="#" class="txt-color-blue"><i
 											class="fa fa-pencil fa-3x"></i></a> <br>Editar
 									</center>
 								</div>
-								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
+								<div class="col-xs-6 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Eliminar" href="#" class="txt-color-red"><i
 											class="fa fa-trash-o fa-3x"></i></a> <br>Eliminar
 									</center>
 								</div>
-								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
+								<div class="col-xs-6 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Desactivar" href="#" class="txt-color-green"><i
 											class="fa fa-square-o fa-3x"></i></a> <br>Desactivado
 									</center>
 								</div>
-								<div class="col-xs-2 col-md-2 col-sm-2 col-lg-2">
+								<div class="col-xs-6 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Activar" href="#" class="txt-color-green"><i
 											class="fa fa-check-square-o fa-3x"></i></a> <br>Activado
@@ -84,8 +84,8 @@
 								<thead>
 									<tr>
 										<th data-hide="phone">ID</th>
-										<th >Nombre</th>
-										<th data-class="expand">Usuario</th>
+										<th data-class="expand">Nombre</th>
+										<th data-hide="phone">Usuario</th>
 										<th data-hide="phone">Grupo</th>
 										<th data-hide="phone,tablet">Fecha</th>
 										<th data-hide="phone,tablet">Descripci&oacute;n</th>
@@ -98,7 +98,7 @@
 									<tr>
 										<td><?php echo $archivo->id; ?></td>
 										<td><?php echo $archivo->n_publico; ?></td>
-										<td><?php echo $archivo->usuario_nombre.' '.$archivo->usuario_apellido; ?></td>
+										<td><?php echo $archivo->usuario; ?></td>
 										<td><?php echo $archivo->grupo; ?></td>
 										<td><?php echo $archivo->fecha; ?></td>
 										<td><?php echo $archivo->descripcion; ?></td>
