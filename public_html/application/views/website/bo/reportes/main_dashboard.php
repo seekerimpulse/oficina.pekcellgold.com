@@ -32,7 +32,16 @@
 									
 									<label class="select">
 										<select id="tipo-reporte">
-											<option value="0" selected="" disabled="">Tipo de reporte</option>
+										<option value="0" selected="" >Ventas empresa</option>
+										<option value="1" selected="" >Ventas por Oficinas Virtuales</option>
+										<option value="2" selected="" >Ventas por telemarketing</option>
+										<option value="3" selected="" >Ventas por CEDIs</option>
+										<option value="4" selected="" >Ventas web personales</option>
+										<option value="5" selected="" >Pedidos / Ctas x cobrar</option>
+										<option value="6" selected="" >Facturacion / Pedidos cobrados</option>
+										<option value="7" selected="" >Afiliados</option>
+										<option value="8" selected="" >Afiliados nuevos en el mes</option>
+										<!--  	<option value="0" selected="" disabled="">Tipo de reporte</option>
 											<option value="1">Usuarios SIO</option>
 											<option value="2">Usuarios Telemarketing</option>
 											<option value="3">Usuario CEDI</option>
@@ -58,7 +67,7 @@
 											<option value="23">Pedidos / Cuentas por cobrar</option>
 											<option value="24">Facturacion / Pedidos Cobrados</option>
 											<option value="25">Afiliados</option>
-											<option value="26">Afiliados nuevos del Mes</option>
+											<option value="26">Afiliados nuevos del Mes</option> -->
 										</select> <i></i> </label>
 								</section>
 								<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">

@@ -66,7 +66,7 @@
 													<a href="/bo/comercial/oficina_virtual">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-desktop fa-3x"></i>
-															<h1>Oficina Virtual</h1>
+															<h1>Oficina Virtual <br><br></h1>
 														</div>
 													</a>
 												</div>
