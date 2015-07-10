@@ -150,7 +150,7 @@ class escuela_negocios extends CI_Controller
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		
-		$videos=$this->modelo_escuela_negocios->get_video();
+		$videos=$this->modelo_escuela_negocios->get_video_activos();
 		$data=array();
 		$data['videos']=$videos;
 		$grupos=$this->modelo_escuela_negocios->get_groups();
@@ -176,15 +176,14 @@ class escuela_negocios extends CI_Controller
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 
-		$this->template->set("usuario",$usuario);
-		$archivos=$this->modelo_escuela_negocios->get_files();
-		$data=array();
-		$data["files"]=$archivos;
+		$archivos = $this->modelo_escuela_negocios->get_files();
+		
+		$this->template->set("archivos",$archivos);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/escuela_negocios/descargas',$data);
+		$this->template->build('website/ov/escuela_negocios/descargas');
 	}
 	
 	function crm()

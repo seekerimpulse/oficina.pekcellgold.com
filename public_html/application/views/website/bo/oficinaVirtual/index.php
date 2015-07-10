@@ -36,6 +36,14 @@
                   <div class="contenidoBotones" style="margin-left: 6%;">
 										<div class="row">
 											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 link">
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
+													<a href="/bo/oficinaVirtual/grupos">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-group fa-3x"></i>
+															<h5>Grupos</h5>
+														</div>
+													</a>
+												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
 													<a href="/bo/oficinaVirtual/presentaciones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
@@ -97,14 +105,6 @@
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-ticket fa-3x"></i>
 															<h5>Cupones/Boletos</h5>
-														</div>
-													</a>
-												</div>
-												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-													<a href="/bo/oficinaVirtual/reconocimientos">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-star fa-3x"></i>
-															<h5>Reconocimientos</h5>
 														</div>
 													</a>
 												</div>

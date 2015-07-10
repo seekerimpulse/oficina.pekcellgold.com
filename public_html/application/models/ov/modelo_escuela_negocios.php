@@ -2,6 +2,10 @@
 
 class modelo_escuela_negocios extends CI_Model
 {
+	function __construct(){
+		parent::__construct();
+	}
+	
 	function get_groups()
 	{
 		$q=$this->db->query('select * from cat_grupo');
@@ -14,9 +18,17 @@ class modelo_escuela_negocios extends CI_Model
 	}
 	function get_video()
 	{
-		$q=$this->db->query('SELECT c.id_archivo id,c.id_grupo id_grp, a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion 
+		$q = $this->db->query('SELECT c.id_archivo id,c.id_grupo id_grp, a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion 
 		descripcion,c.ruta ruta, e.url img, c.id_tipo tipo FROM cat_grupo a, users b, archivo c, cross_img_archivo d, cat_img e WHERE c.id_tipo in (2,8)
 		and a.id=c.id_grupo and b.id=c.id_usuario and c.id_archivo=d.id_archivo and e.id_img=d.id_img');
+		return $q->result();
+	}
+	
+	function get_video_activos()
+	{
+		$q=$this->db->query('SELECT c.id_archivo id,c.id_grupo id_grp, a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion
+		descripcion,c.ruta ruta, e.url img, c.id_tipo tipo FROM cat_grupo a, users b, archivo c, cross_img_archivo d, cat_img e WHERE c.id_tipo in (2,8)
+		and a.id=c.id_grupo and b.id=c.id_usuario and c.id_archivo=d.id_archivo and e.id_img=d.id_img and c.status="ACT"');
 		return $q->result();
 	}
 	function get_presentaciones()
@@ -45,8 +57,9 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id and A.status="A
 	}
 	function get_files()
 	{
-		$q=$this->db->query('SELECT c.status estado, c.id_archivo id, a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,
-		c.descripcion descripcion,c.ruta ruta, c.id_tipo tipo FROM cat_grupo a, users b, archivo c WHERE a.id=c.id_grupo and b.id=c.id_usuario and id_tipo=9');
+		$q = $this->db->query("SELECT a.descripcion grupo, concat(b.nombre,' ',b.apellido) usuario,c.fecha fecha,c.nombre_publico n_publico, cta.descripcion tipo, c.descripcion descripcion,c.ruta ruta, c.id_archivo id 
+							FROM cat_grupo a, user_profiles b, archivo c, cat_tipo_archivo cta
+							WHERE a.id = c.id_grupo and b.user_id= c.id_usuario and cta.id_tipo = c.id_tipo and c.status='ACT' and c.id_tipo != 21");
 		return $q->result();
 	}
 	function get_info()

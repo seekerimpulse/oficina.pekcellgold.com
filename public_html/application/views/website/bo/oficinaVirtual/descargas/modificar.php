@@ -13,7 +13,7 @@
 		?>	
 	<div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<form class="smart-form" id="reporte-form" method="post"
-			action="Actualizararchivo" enctype="multipart/form-data">
+			action="ActualizarArchivo" enctype="multipart/form-data">
 			<input type="text" name="id" value="<?php echo $archivo[0]->id_archivo; ?>" class="hide">
 			<div class="row">
 				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
@@ -50,6 +50,23 @@
 							id="descripcion" required><?php echo $archivo[0]->descripcion; ?></textarea>
 					</label>
 				</section>
+			</div>
+			<div class="row">
+				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
+					id="busquedatodos">
+					<label class="label">Estado</label> <label class="select"> 
+						<select name="estado" id="estado" required>
+								<?php if($archivo[0]->status == "ACT") { ?>
+										<option value="ACT" selected>Activado</option>
+										<option value="DES">Desactivado</option>
+									<?php }else{ ?>
+										<option value="ACT">Activado</option>
+										<option value="DES" selected>Desactivado</option>
+								<?php } ?>
+							</select>
+					</label>
+				</section>
+
 			</div>
 			<div class="row">
 

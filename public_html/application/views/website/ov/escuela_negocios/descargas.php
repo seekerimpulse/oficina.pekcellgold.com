@@ -64,50 +64,27 @@
 													<th data-class="expand">Tipo</th>
 													<th>Usuario</th>
 													<th data-hide="phone">Grupo</th>
-													<th data-hide="phone,tablet">Fecha</th>
 													<th data-hide="phone,tablet">Descripci&oacute;n</th>
+													<th data-hide="phone,tablet">Fecha</th>
+													
 													<th></th>
 												</tr>
 											</thead>
 											<tbody>
-												<?php for($i=0;$i<sizeof($files);$i++)
-												{
-													switch($files[$i]->tipo)
-													{
-														case 1:
-															$tipo='E-Book';
-															break;
-														case 2:
-															$tipo='Video';
-															break;
-														case 3:
-															$tipo='Presentacion';
-															break;
-														case 4:
-															$tipo='Presentacion';
-															break;
-														case 5:
-															$tipo='Imagen';
-															break;
-														default:
-															$tipo='-';
-															break;
-													}
-													echo 
-													"<tr>
-														<td>".($i+1)."</td>
-														<td>".$files[$i]->n_publico."</td>
-														<td>".$tipo."</td>
-														<td>".$files[$i]->usuario."</td>
-														<td>".$files[$i]->grupo."</td>
-														<td>".$files[$i]->fecha."</td>
-														<td>".$files[$i]->descripcion."</td>
+												<?php foreach ($archivos as $archivo){ ?>
+												<tr>
+														<td><?php echo $archivo->id; ?></td>
+														<td><?php echo $archivo->n_publico; ?></td>
+														<td><?php echo $archivo->tipo; ?></td>
+														<td><?php echo $archivo->usuario; ?></td>
+														<td><?php echo $archivo->grupo; ?></td>
+														<td><?php echo $archivo->descripcion; ?></td>
+														<td><?php echo $archivo->fecha; ?></td>
 														<td style='text-align:center;'>
-																<a class='btn btn-success' target='_blank' href='".$files[$i]->ruta."'><i class='fa fa-download fa-lg'></i></a>
-															
+															<a class='btn btn-success' target='_blank' href='<?php echo $archivo->ruta; ?>'><i class='fa fa-download fa-lg'></i></a>
 														</td>
-													</tr>";
-												} ?>
+													</tr>
+												<?php } ?>
 											</tbody>
 										</table>
 				

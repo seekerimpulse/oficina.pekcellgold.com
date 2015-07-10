@@ -22,9 +22,14 @@ class eventos extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-
-		$id=$this->tank_auth->get_user_id();
+		
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -44,8 +49,13 @@ class eventos extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$eventos=$this->modelo_comercial->get_evento();
 		$data["eventos"]=$eventos;
@@ -67,8 +77,13 @@ class eventos extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 		$eventos=$this->modelo_comercial->get_evento();
@@ -88,6 +103,15 @@ class eventos extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
 		$data=$_GET["info"];
 		$data=json_decode($data,true);
 		$tipo=$data['tipo'];
@@ -150,8 +174,16 @@ class eventos extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
+
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		
 		$style=$this->general->get_style($id);
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);

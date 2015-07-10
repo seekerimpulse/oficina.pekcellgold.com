@@ -23,8 +23,13 @@ class videos extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -44,8 +49,13 @@ class videos extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 		$videos=$this->modelo_comercial->get_video();
@@ -67,8 +77,13 @@ class videos extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 		$videos=$this->modelo_comercial->get_video();
@@ -92,8 +107,13 @@ class videos extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 		$videos=$this->modelo_comercial->get_video();
@@ -116,7 +136,13 @@ function sube_video()	{
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -235,7 +261,13 @@ function sube_video_youtube()
 			redirect('/auth');
 		}
 		//echo 'heey';
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
@@ -273,7 +305,7 @@ function sube_video_youtube()
 				$imgn=mysql_insert_id();
 	
 				$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico)
-				values ('.$id.','.$_POST['grupo_frm'].',8,"'.$_POST['desc_frm'].'","'.$_POST["url"].'","ACT","'.$_POST["nombre_publico"].'")');
+				values ('.$id.','.$_POST['grupo_frm'].',21,"'.$_POST['desc_frm'].'","'.$_POST["url"].'","ACT","'.$_POST["nombre_publico"].'")');
 				$video=mysql_insert_id();
 				$this->db->query('insert into cross_img_archivo	values ('.$video.','.$imgn.')');
 			}
@@ -288,6 +320,14 @@ function sube_video_youtube()
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
+		}
+		
+				$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
 		}
 	
 		$id=$this->tank_auth->get_user_id();
@@ -316,6 +356,11 @@ function sube_video_youtube()
 		$id=$data['video'];
 		$coment=$data['comentario'];
 		$this->db->query('insert into comentario (comentario,id_video,autor) values ("'.$coment.'"," '.$id.'","'.$id_user.'")');
+	}
+	
+	function cambiar_estado_video(){
+		$this->db->query("update archivo set status = '".$_POST['estado']."' where id_archivo=".$_POST["id"]);
+		
 	}
 	
 	function kill_video(){

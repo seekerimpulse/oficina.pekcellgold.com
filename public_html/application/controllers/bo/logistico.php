@@ -23,8 +23,13 @@ class logistico extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -45,8 +50,13 @@ class logistico extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -82,8 +92,13 @@ class logistico extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -109,8 +124,13 @@ class logistico extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 		
@@ -138,8 +158,13 @@ class logistico extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -160,8 +185,13 @@ class logistico extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 		$almacenes=$this->modelo_logistico->get_almacenes();
@@ -183,8 +213,13 @@ class logistico extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 		$archivos=$this->modelo_logistico->get_files($id);

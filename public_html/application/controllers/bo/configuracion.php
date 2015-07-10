@@ -22,8 +22,13 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -43,8 +48,13 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -64,8 +74,13 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -85,8 +100,13 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -106,8 +126,13 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -127,8 +152,14 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		};
+		
 		$retenciones 	 = $this->model_admin->get_retencion();
 		
 		$style=$this->modelo_dashboard->get_style($id);
@@ -177,8 +208,13 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 	
@@ -198,8 +234,15 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		
 		$paises            = $this->model_admin->get_pais_activo();
 		
 		$style=$this->modelo_dashboard->get_style($id);
@@ -220,8 +263,15 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+			$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		
 		$impuestos 	 = $this->model_admin->get_impuestos();
 	
 		$style=$this->modelo_dashboard->get_style($id);

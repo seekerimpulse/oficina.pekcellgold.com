@@ -73,7 +73,7 @@
 															{
 																echo	'<a href="javascript:void(0);" onclick="video(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><img style="margin-left: 1rem; height: 20rem; width: 30rem;" class="col-lg-12 col-md-12 video_img" style="max-height: 90px;" src="'.$videos[$j]->img.'"></a>';
 															}
-															if($videos[$j]->tipo==8)
+															if($videos[$j]->tipo==21)
 															{
 																echo	'<a href="javascript:void(0);" onclick="video_youtube(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><img style="margin-left: 1rem; height: 20rem; width: 30rem;" class="col-lg-12 col-md-12 video_img" style="max-height: 90px;" src="'.$videos[$j]->img.'"></a>';
 															}															
@@ -86,7 +86,7 @@
 																{
 																	echo	'<p><strong>'.$videos[$j]->n_publico.'</strong></p>';
 																}
-																if($videos[$j]->tipo==8)
+																if($videos[$j]->tipo==21)
 																{
 																	echo	'<p><strong>'.$videos[$j]->n_publico.'</strong></p>';
 																}		
@@ -151,7 +151,7 @@
 																	{
 																		echo	'<a style="height: 7rem ! important;" class="btn bg-color-greenLight txt-color-white" href="javascript:void(0);" onclick="video(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><i class="fa fa-eye fa-3x"></i></a>';
 																	}
-																	if($videos[$j]->tipo==8)
+																	if($videos[$j]->tipo==21)
 																	{
 																		echo	'<a style="height: 7rem ! important;" class="btn bg-color-greenLight txt-color-white" href="javascript:void(0);" onclick="video_youtube(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><i class="fa fa-eye fa-3x"></i></a>';
 																	}	
@@ -168,6 +168,13 @@
 																	<li>
 																		<a style="height: 7rem ! important;" class="btn bg-color-red txt-color-white" href="javascript:void(0);" onclick="eliminar('.$videos[$j]->id.')"><i class="fa fa-trash-o fa-4x"></i></a>
 																	</li>
+																	<li>';
+																	if($videos[$j]->status=='ACT')
+																		echo '<a style="height: 7rem ! important;" class="btn txt-color-green" href="javascript:void(0);" onclick="estado(\'DES\','.$videos[$j]->id.')"><i class="fa fa-check-square-o fa-4x"></i></a>';
+																	else 
+																		echo '<a style="height: 7rem ! important;" class="btn txt-color-green" href="javascript:void(0);" onclick="estado(\'ACT\','.$videos[$j]->id.')"><i class="fa fa-square-o fa-4x"></i></a>';
+																	
+																	echo '</li>
 																</ul><br>
 															</div>
 															<div class="col-md-1 hidden-sm hidden-xs hidden-lg" style="vertical-align:middle;">
@@ -177,7 +184,7 @@
 																	{
 																		echo	'<a class="btn bg-color-greenLight txt-color-white" href="javascript:void(0);" onclick="video(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><i class="fa fa-eye fa-3x"></i></a>';
 																	}
-																	if($videos[$j]->tipo==8)
+																	if($videos[$j]->tipo==21)
 																	{
 																		echo	'<a class="btn bg-color-greenLight txt-color-white" href="javascript:void(0);" onclick="video_youtube(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><i class="fa fa-eye fa-3x"></i></a>';
 																	}
@@ -202,6 +209,9 @@
 																	</li>
 																	<li>
 																		<a class="btn bg-color-red txt-color-white" href="javascript:void(0);" onclick="eliminar('.$videos[$j]->id.')"><i class="fa fa-trash-o"></i>Eliminar</a>
+																	</li>
+																	<li>
+																		<a class="btn bg-color-red txt-color-white" href="javascript:void(0);" onclick="estado('.$videos[$j]->id.')"><i class="fa fa-check-square-o"></i>Activar</a>
 																	</li>
 																</ul>
 															</div>
@@ -401,14 +411,14 @@
 				
 			$.ajax({
 				type: "POST",
-				url: "/bo/configuracion/cambiar_estado_impuesto",
+				url: "/bo/videos/cambiar_estado_video",
 				data: {
 					id:id, 
 					estado: estatus
 				},
 				}).done(function( msg )
 						{
-							location.href = "/bo/configuracion/listar_impuestos";
+							location.href = "/bo/videos/listar";
 						
 					})
 			}

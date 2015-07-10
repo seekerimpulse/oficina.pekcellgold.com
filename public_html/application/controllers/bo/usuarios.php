@@ -22,6 +22,13 @@ class usuarios extends CI_Controller
 		if (!$this->tank_auth->is_logged_in()){																		// logged in
 		redirect('/auth');
 		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 		
 		$id              =  2;
 		$sexo            = $this->model_perfil_red->sexo();
@@ -89,6 +96,13 @@ class usuarios extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 		
 		
 		$id              = 2;
@@ -151,6 +165,15 @@ class usuarios extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
 	
 		$id              = 2;
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
@@ -211,6 +234,14 @@ class usuarios extends CI_Controller
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
 		}
 	
 	
