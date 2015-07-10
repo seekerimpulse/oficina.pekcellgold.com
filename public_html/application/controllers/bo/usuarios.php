@@ -151,7 +151,7 @@ class usuarios extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
-		$this->template->set("premium",$premium);
+		
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -221,7 +221,7 @@ class usuarios extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
-		$this->template->set("premium",$premium);
+		
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -291,7 +291,6 @@ class usuarios extends CI_Controller
 		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
-		$this->template->set("premium",$premium);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
