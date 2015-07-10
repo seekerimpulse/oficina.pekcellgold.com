@@ -24,8 +24,13 @@ class ebooks extends CI_Controller
 			redirect('/auth');
 		}
 
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 
 		$style=$this->modelo_dashboard->get_style($id);
 
@@ -45,8 +50,13 @@ class ebooks extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
 		$this->template->set("style",$style);
@@ -67,8 +77,13 @@ class ebooks extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 		
 		$ebooks=$this->model_ebook->ebooks();
 		$style=$this->modelo_dashboard->get_style($id);
@@ -93,7 +108,13 @@ class ebooks extends CI_Controller
 			redirect('/auth');
 		}
 		
-		$id = $this->tank_auth->get_user_id();
+				$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 		
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/ebooks/"))
@@ -188,7 +209,8 @@ class ebooks extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-		$id = $_POST['id'];
+		
+				$id = $_POST['id'];
 		$estado = $_POST['estado'];
 		$this->model_ebook->CambiarEstado($id, $estado);
 	}
