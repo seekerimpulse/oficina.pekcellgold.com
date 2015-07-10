@@ -22,7 +22,7 @@ class modelo_escuela_negocios extends CI_Model
 	function get_presentaciones()
 	{
 		$q=$this->db->query('SELECT c.id_archivo id, a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion descripcion,c.ruta ruta FROM cat_grupo a, 
-		users b, archivo c WHERE c.id_tipo in (3,4) and a.id=c.id_grupo and b.id=c.id_usuario');
+		users b, archivo c WHERE c.id_tipo in (3,4,8,9,10,11,12,13,14,15,16,17,18,19,20,22) and a.id=c.id_grupo and b.id=c.id_usuario');
 		return $q->result();
 	}
 	function get_presentaciones_activas()
@@ -54,6 +54,11 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id and A.status="A
 		$q=$this->db->query('SELECT b.username usuario,c.fecha fecha,c.descripcion descripcion,c.nombre nombre, c.img ruta FROM users b, informacion c WHERE b.id=c.id_usuario');
 		return $q->result();
 	}
+	function get_info_activas()
+	{
+		$q=$this->db->query('SELECT b.username usuario,c.fecha fecha,c.descripcion descripcion,c.nombre nombre, c.img ruta FROM users b, informacion c WHERE b.id=c.id_usuario and c.status="ACT"');
+		return $q->result();
+	}
 	function get_cupon($id)
 	{
 		$q=$this->db->query('SELECT a.id_cupon, a.codigo, a.descripcion, a.fecha_adicion from cupon a, cross_usuario_cupon b where a.id_cupon=b.id_cupon and a.estado="ACT" 
@@ -64,6 +69,12 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id and A.status="A
 	{
 		$q=$this->db->query('SELECT b.id id_noticia, a.username usuario, b.nombre nombre, b.contenido contenido, b.imagen imagen, b.fecha fecha FROM users a, noticia b 
 		WHERE a.id=b.id_usuario order by fecha desc');
+		return $q->result();
+	}
+	function get_new_activas()
+	{
+		$q=$this->db->query('SELECT b.id id_noticia, a.username usuario, b.nombre nombre, b.contenido contenido, b.imagen imagen, b.fecha fecha FROM users a, noticia b
+		WHERE a.id=b.id_usuario and b.status="ACT" order by fecha desc');
 		return $q->result();
 	}
 	function noticia_espec($id)

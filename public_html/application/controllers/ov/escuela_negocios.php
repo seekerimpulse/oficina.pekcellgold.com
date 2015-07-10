@@ -45,7 +45,7 @@ class escuela_negocios extends CI_Controller
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		
-		$noticias=$this->modelo_escuela_negocios->get_new();
+		$noticias=$this->modelo_escuela_negocios->get_new_activas();
 		$data=array();
 		$data["noticias"]=$noticias;
 		$this->template->set_theme('desktop');
@@ -240,7 +240,7 @@ class escuela_negocios extends CI_Controller
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("usuario",$usuario);
-		$info=$this->modelo_escuela_negocios->get_info();
+		$info=$this->modelo_escuela_negocios->get_info_activas();
 		$data=array();
 		$data['infos']=$info;
 		$this->template->set_theme('desktop');

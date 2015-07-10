@@ -52,7 +52,7 @@
 												<?php 
 													for($i=0;$i<sizeof($noticias);$i++)
 													{
-														$texto=json_encode($noticias[$i]->contenido);
+														$texto=json_encode(html_entity_decode($noticias[$i]->contenido));
 														$texto=trim($texto);
 														echo
 														"<li>	

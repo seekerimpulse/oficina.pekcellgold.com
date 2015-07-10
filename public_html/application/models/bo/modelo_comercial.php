@@ -183,8 +183,13 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id;');
 	}
 	function get_info() 
 	{
-		$q=$this->db->query('SELECT c.id id, b.username usuario,c.fecha fecha,c.descripcion descripcion,c.nombre nombre, c.img ruta FROM users b, informacion c 
+		$q=$this->db->query('SELECT c.id id, b.username usuario,c.fecha fecha,c.descripcion descripcion,c.nombre nombre, c.img ruta, c.status FROM users b, informacion c 
 		WHERE b.id=c.id_usuario');
+		return $q->result();
+	}
+	function informacion_espec($id)
+	{
+		$q=$this->db->query('SELECT * FROM informacion WHERE id='.$id);
 		return $q->result();
 	}
 	function get_cupon()

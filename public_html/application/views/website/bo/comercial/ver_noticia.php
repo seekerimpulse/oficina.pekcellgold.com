@@ -6,8 +6,16 @@
 				
 					<!-- col -->
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<h1 class="page-title txt-color-blueDark"><!-- PAGE HEADER --><a href="/ov/dashboard"><i class="fa fa-home"></i> Inicio </a><span>>
-							<a href="oficina_virtual">Oficina Virtual</a> > Noticia > <?=$noticia[0]->nombre?></span></h1>
+												<h1 class="page-title txt-color-blueDark">
+							
+							<!-- PAGE HEADER -->
+							<i class="fa-fw fa fa-home"></i> 
+								<a href="/bo/dashboard"> Menu</a> 
+							<span>>
+								<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a href="/bo/oficinaVirtual/noticias"> Noticias</a> > Listar
+							</span>
+						</h1>
+					
 					</div>
 					<!-- end col -->
 				
