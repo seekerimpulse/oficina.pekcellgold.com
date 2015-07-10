@@ -141,9 +141,27 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 	}
 	function get_groups()
 	{
+		$q=$this->db->query('select * from cat_grupo where estatus="ACT"');
+		return $q->result();
+	}
+	
+	function get_groups_all()
+	{
 		$q=$this->db->query('select * from cat_grupo');
 		return $q->result();
 	}
+	
+	function get_groups_id($id)
+	{
+		$q=$this->db->query('select * from cat_grupo where id="'.$id.'"');
+		return $q->result();
+	}
+	
+	function actualizar_grupo(){
+		$this->db->query('UPDATE cat_grupo SET descripcion="'.$_POST['descripcion'].'" WHERE id="'.$_POST['id'].'"');
+		return true;
+	}
+	
 	function get_tipo_archivo($ext)
 	{
 		$q=$this->$this->db->query('select id from cat_tipo_archivo where descripcion= '.$ext);
@@ -152,7 +170,7 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 	function get_video()
 	{
 		$q=$this->db->query('SELECT c.id_archivo id,c.id_grupo id_grp, a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion 
-		descripcion,c.ruta ruta, e.url img, c.id_tipo tipo FROM cat_grupo a, users b, archivo c, cross_img_archivo d, cat_img e WHERE c.id_tipo in (2,8)
+		descripcion,c.ruta ruta, e.url img, c.id_tipo tipo,c.status FROM cat_grupo a, users b, archivo c, cross_img_archivo d, cat_img e WHERE c.id_tipo in (2,21)
 		and a.id=c.id_grupo and b.id=c.id_usuario and c.id_archivo=d.id_archivo and e.id_img=d.id_img');
 		return $q->result();
 	}

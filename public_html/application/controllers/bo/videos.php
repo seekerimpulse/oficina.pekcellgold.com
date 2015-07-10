@@ -273,7 +273,7 @@ function sube_video_youtube()
 				$imgn=mysql_insert_id();
 	
 				$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico)
-				values ('.$id.','.$_POST['grupo_frm'].',8,"'.$_POST['desc_frm'].'","'.$_POST["url"].'","ACT","'.$_POST["nombre_publico"].'")');
+				values ('.$id.','.$_POST['grupo_frm'].',21,"'.$_POST['desc_frm'].'","'.$_POST["url"].'","ACT","'.$_POST["nombre_publico"].'")');
 				$video=mysql_insert_id();
 				$this->db->query('insert into cross_img_archivo	values ('.$video.','.$imgn.')');
 			}
@@ -316,6 +316,11 @@ function sube_video_youtube()
 		$id=$data['video'];
 		$coment=$data['comentario'];
 		$this->db->query('insert into comentario (comentario,id_video,autor) values ("'.$coment.'"," '.$id.'","'.$id_user.'")');
+	}
+	
+	function cambiar_estado_video(){
+		$this->db->query("update archivo set status = '".$_POST['estado']."' where id_archivo=".$_POST["id"]);
+		
 	}
 	
 	function kill_video(){

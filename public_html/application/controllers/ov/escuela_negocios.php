@@ -150,7 +150,7 @@ class escuela_negocios extends CI_Controller
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		
-		$videos=$this->modelo_escuela_negocios->get_video();
+		$videos=$this->modelo_escuela_negocios->get_video_activos();
 		$data=array();
 		$data['videos']=$videos;
 		$grupos=$this->modelo_escuela_negocios->get_groups();

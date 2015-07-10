@@ -27,7 +27,7 @@
 
 							</fieldset>
 							<footer>
-								<a class="btn btn-primary" onclick="enviar()">
+								<a class="btn btn-success" onclick="enviar()">
 									Guardar
 								</a>
 							</footer>
