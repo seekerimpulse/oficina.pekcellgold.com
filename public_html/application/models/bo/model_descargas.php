@@ -52,14 +52,18 @@ class model_descargas extends CI_Model
 	}
 	
 	
-	function ActualizarArchvo($id_archivo, $id, $grupo, $nombre, $descripcion, $ruta, $estado){
+	function ActualizarArchvo($id_archivo, $id, $grupo, $tipo ,$nombre, $descripcion, $ruta, $estado){
 		$archivo = $this->consultar_archivo($id_archivo);
 		$this->load->helper("file");
 		unlink($_SERVER['DOCUMENT_ROOT'].$archivo[0]->ruta);
-		
+		$extencion = $this->BuscarTipo($tipo);
+		if ($extencion == null){
+			return false;
+		}
 		$datos = array(
 				'id_grupo'   => $grupo,
 				'id_usuario' => $id,
+				'id_tipo' => $extencion,
 				'descripcion'	=> $descripcion,
 				'ruta'  => $ruta,
 				'status' => $estado,

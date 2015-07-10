@@ -85,10 +85,11 @@
 									<tr>
 										<th data-hide="phone">ID</th>
 										<th data-class="expand">Nombre</th>
+										<th data-hide="phone">Tipo</th>	
 										<th data-hide="phone">Usuario</th>
-										<th data-hide="phone">Grupo</th>
-										<th data-hide="phone,tablet">Fecha</th>
+										<th data-hide="phone,tablet">Grupo</th>
 										<th data-hide="phone,tablet">Descripci&oacute;n</th>
+										<th data-hide="phone,tablet">Fecha</th>
 										<th>Acciones</th>
 
 									</tr>
@@ -98,10 +99,11 @@
 									<tr>
 										<td><?php echo $archivo->id; ?></td>
 										<td><?php echo $archivo->n_publico; ?></td>
+										<td><?php echo $archivo->tipo; ?></td>
 										<td><?php echo $archivo->usuario; ?></td>
 										<td><?php echo $archivo->grupo; ?></td>
-										<td><?php echo $archivo->fecha; ?></td>
 										<td><?php echo $archivo->descripcion; ?></td>
+										<td><?php echo $archivo->fecha; ?></td>
 										<td class='text-center'>
 											<a class='txt-color-blue' onclick='' href='<?php echo $archivo->ruta ?>' title='Descargar' target="_blank"><i class='fa fa-download fa-3x'></i></a>
 											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_archivo("<?php echo $archivo->id; ?> ","<?php echo $archivo->ruta; ?>")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>

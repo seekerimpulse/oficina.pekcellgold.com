@@ -64,8 +64,9 @@
 													<th data-class="expand">Tipo</th>
 													<th>Usuario</th>
 													<th data-hide="phone">Grupo</th>
-													<th data-hide="phone,tablet">Fecha</th>
 													<th data-hide="phone,tablet">Descripci&oacute;n</th>
+													<th data-hide="phone,tablet">Fecha</th>
+													
 													<th></th>
 												</tr>
 											</thead>
@@ -77,8 +78,8 @@
 														<td><?php echo $archivo->tipo; ?></td>
 														<td><?php echo $archivo->usuario; ?></td>
 														<td><?php echo $archivo->grupo; ?></td>
-														<td><?php echo $archivo->fecha; ?></td>
 														<td><?php echo $archivo->descripcion; ?></td>
+														<td><?php echo $archivo->fecha; ?></td>
 														<td style='text-align:center;'>
 															<a class='btn btn-success' target='_blank' href='<?php echo $archivo->ruta; ?>'><i class='fa fa-download fa-lg'></i></a>
 														</td>
