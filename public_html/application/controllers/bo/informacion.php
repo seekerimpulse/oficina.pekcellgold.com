@@ -290,4 +290,34 @@ class informacion extends CI_Controller
 		}
 	
 	}
+	
+	function ver_informacion()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+	
+		$id_informacion = $_GET['id'];
+		$informacion = $this->modelo_comercial->informacion_espec($id_informacion);
+		$this->template->set("informacion",$informacion);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/oficinaVirtual/informacion/ver_informacion');
+	}
+	
 }

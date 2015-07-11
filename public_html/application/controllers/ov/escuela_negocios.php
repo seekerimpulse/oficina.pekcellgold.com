@@ -240,6 +240,7 @@ class escuela_negocios extends CI_Controller
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("usuario",$usuario);
+		
 		$info=$this->modelo_escuela_negocios->get_info_activas();
 		$data=array();
 		$data['infos']=$info;
@@ -248,6 +249,40 @@ class escuela_negocios extends CI_Controller
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/escuela_negocios/informacion',$data);
+	}
+	
+	function ver_informacion()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$style=$this->general->get_style($id);
+		$this->template->set("style",$style);
+		$this->template->set("usuario",$usuario);
+		$data=array();
+		
+			$data["informacion"]=$this->modelo_escuela_negocios->informacion_espec($_GET["id"]);
+			$index=1;
+			$parrafos=array();
+			$i=0;
+			/*while($index>0)
+				{
+	
+				$index=strpos($texto, "<br />");
+				$parrafos[$i]=substr($texto,0,$index);
+				$texto=substr($texto,$index+6);
+				$i++;
+			}*/
+		
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/escuela_negocios/ver_informacion',$data);
 	}
 	
 	function conferencias()

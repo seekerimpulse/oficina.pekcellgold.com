@@ -76,7 +76,7 @@
 														<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->nombre."</td>
 														<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->fecha."</td>
 														<td style='vertical-align: middle;'>".substr($infos[$i]->descripcion, 0, 100)."...
-															<a href='javascript:void(0);' onclick='vermas(".html_entity_decode($texto).",\"".$infos[$i]->ruta."\",\"".$infos[$i]->nombre."\")'>ver mas</a></p>
+															<a href='ver_informacion?id=".$infos[$i]->id."' >ver mas</a></p>
 														</td>
 														
 													</tr>";

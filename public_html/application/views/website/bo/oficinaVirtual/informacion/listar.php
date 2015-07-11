@@ -121,7 +121,7 @@
 																			<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->usuario."</td>
 																			<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->fecha."</td>
 																			<td style='vertical-align: middle;'>".substr($infos[$i]->descripcion, 0, 100)."...
-																				<a href='javascript:void(0);' onclick='vermas_info(".$texto.",\"".$infos[$i]->usuario."\",\"".$infos[$i]->ruta."\",\"".$infos[$i]->nombre."\")'>ver mas</a></p>
+																				<a href='ver_informacion?id=".$infos[$i]->id."'>ver mas</a></p>
 																				
 																			</td>
 																			
@@ -347,13 +347,21 @@
 			});
 		}
 
-		function vermas_info(texto,autor,img,titulo)
+		function vermas_info(id)
 		{
-			bootbox.dialog({
-				message: '<div style="text-align:justify;"><p>'+texto+'</p><p><strong>'+autor+'</strong></p><br><img src="'+img+'" width="150"></div>',
-				title: ""+titulo+"",
-				
-			});
+			$.ajax({
+				type: "POST",
+				url: "ver_informacion",
+				data: {id:id}
+			})
+			.done(function( msg )
+			{
+				bootbox.dialog({
+					//closeButton: false,
+				message: msg,
+				title: 'Información',
+			})//fin done ajax
+			});//Fin callback bootbox
 		}
 
 		function editar(id)

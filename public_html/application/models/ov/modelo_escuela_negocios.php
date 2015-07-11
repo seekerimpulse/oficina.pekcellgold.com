@@ -69,9 +69,16 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id and A.status="A
 	}
 	function get_info_activas()
 	{
-		$q=$this->db->query('SELECT b.username usuario,c.fecha fecha,c.descripcion descripcion,c.nombre nombre, c.img ruta FROM users b, informacion c WHERE b.id=c.id_usuario and c.status="ACT"');
+		$q=$this->db->query('SELECT b.username usuario,c.fecha fecha,c.descripcion descripcion,c.nombre nombre, c.img ruta, c.id FROM users b, informacion c WHERE b.id=c.id_usuario and c.status="ACT"');
 		return $q->result();
 	}
+	
+	function informacion_espec($id)
+	{
+		$q=$this->db->query('SELECT * FROM informacion WHERE id='.$id);
+		return $q->result();
+	}
+	
 	function get_cupon($id)
 	{
 		$q=$this->db->query('SELECT a.id_cupon, a.codigo, a.descripcion, a.fecha_adicion from cupon a, cross_usuario_cupon b where a.id_cupon=b.id_cupon and a.estado="ACT" 
