@@ -238,131 +238,92 @@
 	    	<h3 class="section-title style2 text-center"><span>NUESTROS PRODUCTOS</span></h3>
 	    		<div class="">
 	      			<div class="row xsResponse" id="mercancias">
-	      				<?php
-	      					for($productos=0;$productos<sizeof($prod);$productos++)
-							{
-					
-									echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
-									    	<div class="producto">
-										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class=""></i>
-										        </a>
-									          
-									          		<div class="image"> <a onclick="detalles('.$prod[$productos]->id.',1)"><img src="'.$prod[$productos]->img.'" alt="img" class="img-responsive"></a>
-									              		<div class="promotion">   </div>
-									            	</div>
-									            	<div class="description">
-									              		<h4><a href="">'.$prod[$productos]->nombre.'</a></h4>
-     						              			</div>
-									            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
-									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-									       </div>
-								       </div>
-								';
-
-							}
-							for($servicios=0;$servicios<sizeof($serv);$servicios++)
-							{
-								echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
-									    	<div class="producto">
-										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class=""></i>
-										        </a>
-									          
-									          		<div class="image"> <a onclick="detalles('.$serv[$servicios]->id.',2)"><img src="'.$serv[$servicios]->img.'" alt="img" class="img-responsive"></a>
-									              		<div class="promotion">  </div>
-									            	</div>
-									            	<div class="description">
-									              		<h4><a href="">'.$serv[$servicios]->nombre.'</a></h4>
-									              	</div>
-									            	<div class="price"> <span>$ '.$serv[$servicios]->costo.'</span> </div>
-									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-									       </div>
-								       </div>
-								';
-							}
-							for($combinados=0;$combinados<sizeof($comb);$combinados++)
-							{
-								echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
-									    	<div class="producto">
-										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class=""></i>
-										        </a>
-									          
-									          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id.',3)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
-									              		<div class="promotion">  <span class="discount">'.$comb[$combinados]->descuento.'% DESCUENTO</span></div>
-									            	</div>
-									            	<div class="description">
-									              		<h4><a href="">'.$comb[$combinados]->nombre.'</a></h4>
-									              	</div>
-									            	<div class="price"> <span>$ '.$comb[$combinados]->costo.'</span> </div>
-									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',3,'.$comb[$combinados]->descuento.')"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-									       </div>
-								       </div> 
-								';
-							}/*
-							for($promocion_p=0;$promocion_p<sizeof($prom_p);$promocion_p++)
-							{
-								echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-									    	<div class="producto">
-										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class=""></i>
-										        </a>
-									          
-									          		<div class="image"> <a onclick="detalles('.$prom_p[$promocion_p]->id_promocion.',4)"><img src="'.$prom_p[$promocion_p]->img.'" alt="img" class="img-responsive"></a>
-									              		<div class="promotion">  </div>
-									            	</div>
-									            	<div class="description">
-									              		<h4><a href="">'.$prom_p[$promocion_p]->nombre.'</a></h4>
-							              		
-									              	</div>
-									            	<div class="price"> <span>$ '.$prom_p[$promocion_p]->costo.'</span> </div>
-									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prom_p[$promocion_p]->id_promocion.',4,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-									       </div>
-								       </div>
-								';
-							}
-							for($promocion_s=0;$promocion_s<sizeof($prom_s);$promocion_s++)
-							{
-								echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-									    	<div class="producto">
-										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class=""></i>
-										        </a>
-									          
-									          		<div class="image"> <a onclick="detalles('.$prom_s[$promocion_s]->id_promocion.',5)"><img src="'.$prom_s[$promocion_s]->img.'" alt="img" class="img-responsive"></a>
-									              		<div class="promotion">  </div>
-									            	</div>
-									            	<div class="description">
-									              		<h4><a href="">'.$prom_s[$promocion_s]->nombre.'</a></h4>
-									              	</div>
-									            	<div class="price"> <span>$ '.$prom_s[$promocion_s]->costo.'</span> </div>
-									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prom_s[$promocion_s]->id_promocion.',5,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-									       </div>
-								       </div>
-								';
-							}
-							for($promocion_c=0;$promocion_c<sizeof($prom_c);$promocion_c++)
-							{
-								echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
-									    	<div class="producto">
-										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
-										        	<i class=""></i>
-										        </a>
-									          
-									          		<div class="image"> <a onclick="detalles('.$prom_c[$promocion_c]->id_promocion.',6)"><img src="'.$prom_c[$promocion_c]->img.'" alt="img" class="img-responsive"></a>
-									              		<div class="promotion">  </div>
-									            	</div>
-									            	<div class="description">
-									              		<h4><a href="">'.$prom_c[$promocion_c]->nombre.'</a></h4>
-									              	</div>
-									            	<div class="price"> <span>$ '.$prom_c[$promocion_c]->costo.'</span> </div>
-									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prom_c[$promocion_c]->id_promocion.',6,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
-									       </div>
-								       </div>
-								';
-							}*/
-	      				 ?>
+	      									<!-- start row -->
+					<div class="row">
+	
+						<div class="col-sm-12">
+				
+							<div class="row">
+				
+								<div class="col-sm-12 col-md-12 col-lg-12">
+				
+									<!-- well -->
+									<div class="well">
+										<div id="myCarousel-2" class="carousel slide">
+											<ol class="carousel-indicators">
+												<li data-target="#myCarousel-2" data-slide-to="0" class="active"></li>
+												<li data-target="#myCarousel-2" data-slide-to="1" class=""></li>
+												<li data-target="#myCarousel-2" data-slide-to="2" class=""></li>
+											</ol>
+											<div class="carousel-inner">
+												<!-- Slide 1 -->
+												<div class="item active">
+													<img src="/template/img/demo/pinkost.png" alt="">
+													<div class="carousel-caption caption-right">
+												<!--  		<h4>Title 1</h4>
+														<p>
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
+														<br>
+														<a href="javascript:void(0);" class="btn btn-info btn-sm">Read more</a> -->
+													</div>
+												</div>
+												<!-- Slide 2 -->
+												<div class="item">
+													<img src="/template/img/demo/KosTable1.png" alt="">
+													<div class="carousel-caption caption-left">
+													<!--  	<h4>Title 2</h4>
+														<p>
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
+														<br>
+														<a href="javascript:void(0);" class="btn btn-danger btn-sm">Read more</a> -->
+													</div>
+												</div>
+												<!-- Slide 3 -->
+												<div class="item">
+													<img src="/template/img/demo/game-kost-1.png" alt="">
+												<!--	<div class="carousel-caption">
+														<h4>A very long thumbnail title here to fill the space</h4>
+														<br>
+													</div> -->
+												</div>
+												<div class="item">
+													<img src="/template/img/demo/Vpskost1.png" alt="">
+												<!--	<div class="carousel-caption">
+														<h4>A very long thumbnail title here to fill the space</h4>
+														<br>
+													</div> -->
+												</div>
+												<div class="item">
+													<img src="/template/img/demo/appkkost1.png" alt="">
+												<!--	<div class="carousel-caption">
+														<h4>A very long thumbnail title here to fill the space</h4>
+														<br>
+													</div> -->
+												</div>
+												<div class="item">
+													<img src="/template/img/demo/pekeylogo.png" alt="">
+												<!--	<div class="carousel-caption">
+														<h4>A very long thumbnail title here to fill the space</h4>
+														<br>
+													</div> -->
+												</div>
+											</div>
+											<a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
+											<a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
+										</div>
+				
+									</div>
+									<!-- end well-->
+				
+								</div>
+				
+							</div>
+				
+						</div>
+				
+					</div>
 				        
 				        <!--/.item--> 
 	      			</div>
@@ -981,4 +942,34 @@
 			  
 });
 			
+		</script>
+		<script type="text/javascript">
+		
+		// DO NOT REMOVE : GLOBAL FUNCTIONS!
+		
+		$(document).ready(function() {
+			
+			pageSetUp();
+			
+			/*
+			 * Autostart Carousel
+			 */
+			$('.carousel.slide').carousel({
+				interval : 3000,
+				cycle : true
+			});
+			$('.carousel.fade').carousel({
+				interval : 3000,
+				cycle : true
+			});
+		
+			// Fill all progress bars with animation
+			
+			$('.progress-bar').progressbar({
+				display_text : 'fill'
+			});
+			
+				
+		})
+
 		</script>

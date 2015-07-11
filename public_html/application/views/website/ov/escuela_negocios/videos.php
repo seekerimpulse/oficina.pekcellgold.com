@@ -115,7 +115,7 @@
 															{
 																echo	'<a href="javascript:void(0);" onclick="video(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><img class="col-lg-12 col-md-12 video_img" src="'.$videos[$j]->img.'"></a>';
 															}
-															if($videos[$j]->tipo==8)
+															if($videos[$j]->tipo==21)
 															{
 																echo	'<a href="javascript:void(0);" onclick="video_youtube(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><img class="col-lg-12 col-md-12 video_img" src="'.$videos[$j]->img.'"></a>';
 															}															
@@ -128,7 +128,7 @@
 																{
 																	echo	'<p><strong>'.$videos[$j]->n_publico.'</strong></p>';
 																}
-																if($videos[$j]->tipo==8)
+																if($videos[$j]->tipo==21)
 																{
 																	echo	'<p><strong>'.$videos[$j]->n_publico.'</strong></p>';
 																}		
@@ -193,7 +193,7 @@
 																	{
 																		echo	'<a class="btn bg-color-greenLight txt-color-white" href="javascript:void(0);" onclick="video(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><i class="fa fa-eye fa-4x"></i></a>';
 																	}
-																	if($videos[$j]->tipo==8)
+																	if($videos[$j]->tipo==21)
 																	{
 																		echo	'<a class="btn bg-color-greenLight txt-color-white" href="javascript:void(0);" onclick="video_youtube(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><i class="fa fa-eye fa-4x"></i></a>';
 																	}	
@@ -214,7 +214,7 @@
 																	{
 																		echo	'<a class="btn bg-color-greenLight txt-color-white" href="javascript:void(0);" onclick="video(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><i class="fa fa-eye fa-3x"></i></a>';
 																	}
-																	if($videos[$j]->tipo==8)
+																	if($videos[$j]->tipo==21)
 																	{
 																		echo	'<a class="btn bg-color-greenLight txt-color-white" href="javascript:void(0);" onclick="video_youtube(\''.$videos[$j]->ruta.'\',\''.$videos[$j]->n_publico.'\')"><i class="fa fa-eye fa-3x"></i></a>';
 																	}
@@ -360,6 +360,7 @@
 			         url: "insert_coment",
 			         success: function(){
 			              alert("Tu comentario fue añadido con exito");
+			              location.href="/ov/escuela_negocios/videos";
 			         }
 				});
 			}

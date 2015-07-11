@@ -8,9 +8,9 @@
 							
 							<!-- PAGE HEADER -->
 							<i class="fa-fw fa fa-home"></i> 
-								<a href="/bo/dashboard"> Menu</a> 
+								<a href="/ov/dashboard"> Menu</a> 
 							<span>>
-								<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a href="/bo/oficinaVirtual/eventos"> Eventos</a> > Ver
+								<a href="/ov/escuela_negocios/eventos"> Eventos</a> > Ver
 							</span>
 						</h1>
 					</div>

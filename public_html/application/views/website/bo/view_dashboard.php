@@ -135,7 +135,7 @@ $ci->load->model("model_permissions");?>
 											//	if($permiso){
 												?>
 												<div class="col-sm-4">
-													<a href="#">
+													<a href="/bo/reportes">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-book fa-3x"></i>
 															<h5>Reportes</h5>

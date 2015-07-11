@@ -19,7 +19,7 @@ class modelo_escuela_negocios extends CI_Model
 	function get_video()
 	{
 		$q = $this->db->query('SELECT c.id_archivo id,c.id_grupo id_grp, a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion 
-		descripcion,c.ruta ruta, e.url img, c.id_tipo tipo FROM cat_grupo a, users b, archivo c, cross_img_archivo d, cat_img e WHERE c.id_tipo in (2,8)
+		descripcion,c.ruta ruta, e.url img, c.id_tipo tipo FROM cat_grupo a, users b, archivo c, cross_img_archivo d, cat_img e WHERE c.id_tipo in (2,21)
 		and a.id=c.id_grupo and b.id=c.id_usuario and c.id_archivo=d.id_archivo and e.id_img=d.id_img');
 		return $q->result();
 	}
@@ -27,7 +27,7 @@ class modelo_escuela_negocios extends CI_Model
 	function get_video_activos()
 	{
 		$q=$this->db->query('SELECT c.id_archivo id,c.id_grupo id_grp, a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion
-		descripcion,c.ruta ruta, e.url img, c.id_tipo tipo FROM cat_grupo a, users b, archivo c, cross_img_archivo d, cat_img e WHERE c.id_tipo in (2,8)
+		descripcion,c.ruta ruta, e.url img, c.id_tipo tipo FROM cat_grupo a, users b, archivo c, cross_img_archivo d, cat_img e WHERE c.id_tipo in (2,21)
 		and a.id=c.id_grupo and b.id=c.id_usuario and c.id_archivo=d.id_archivo and e.id_img=d.id_img and c.status="ACT"');
 		return $q->result();
 	}
