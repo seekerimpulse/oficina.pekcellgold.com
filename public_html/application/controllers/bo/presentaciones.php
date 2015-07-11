@@ -173,22 +173,24 @@ class presentaciones extends CI_Controller
 				$nombre=strrev($explode[1]);
 				$extencion=strrev($explode[0]);
 				$ext=strtolower($extencion);
+				$descripcion = $_POST['desc_frm'];
+				$descripcion = htmlentities($descripcion);
 				//var_dump($this->upload->data(), "									bien");
 				//exit();
 				if($ext=="pptx") 
 				{
 					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
-					values ('.$id.','.$_POST['grupo_frm'].',4,"'.$_POST['desc_frm'].'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
+					values ('.$id.','.$_POST['grupo_frm'].',4,"'.$descripcion.'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
 				}
 				elseif ($ext=="ppt") 
 				{ 
 					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico) 
-					values ('.$id.','.$_POST['grupo_frm'].',3,"'.$_POST['desc_frm'].'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
+					values ('.$id.','.$_POST['grupo_frm'].',3,"'.$descripcion.'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
 				}
 				elseif ($ext=="odp")
 				{
 					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico)
-					values ('.$id.','.$_POST['grupo_frm'].',8,"'.$_POST['desc_frm'].'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
+					values ('.$id.','.$_POST['grupo_frm'].',8,"'.$descripcion.'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
 				}
 				//echo 'ptm';
 				redirect('/bo/presentaciones/listar');
@@ -234,7 +236,6 @@ class presentaciones extends CI_Controller
 		$this->template->set("grupos",$grupos);
 		
 		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
 		$this->template->build('website/bo/oficinaVirtual/presentaciones/modificar');
 	}
 	
@@ -257,8 +258,10 @@ class presentaciones extends CI_Controller
 			redirect('/bo/presentaciones/listar');
 		}
 		if ($_POST["file_nme"]==''){
+			$descripcion = $_POST['desc_frm'];
+			$descripcion = htmlentities($descripcion);
 			$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
-							descripcion = "'.$_POST['desc_frm'].'",
+							descripcion = "'.$descripcion.'",
 							nombre_publico = "'.$_POST["nombre_publico"].'"
 							where id_archivo = "'.$_POST["id_presentacion"].'"');
 			redirect('/bo/presentaciones/listar');
@@ -310,13 +313,15 @@ class presentaciones extends CI_Controller
 				$nombre=strrev($explode[1]);
 				$extencion=strrev($explode[0]);
 				$ext=strtolower($extencion);
+				$descripcion = $_POST['desc_frm'];
+				$descripcion = htmlentities($descripcion);
 				//var_dump($this->upload->data(), "									bien");
 				//exit();
 				if($ext=="pptx")
 				{
 					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
 							id_tipo = 4,
-							descripcion = "'.$_POST['desc_frm'].'",
+							descripcion = "'.$descripcion.'",
 							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
 							nombre_publico = "'.$_POST["nombre_publico"].'"
 							where id_archivo = "'.$_POST["id_presentacion"].'"');
@@ -325,7 +330,7 @@ class presentaciones extends CI_Controller
 				{
 					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
 							id_tipo = 3,
-							descripcion = "'.$_POST['desc_frm'].'",
+							descripcion = "'.$descripcion.'",
 							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
 							nombre_publico = "'.$_POST["nombre_publico"].'"
 							where id_archivo = "'.$_POST["id_presentacion"].'"');
@@ -334,7 +339,7 @@ class presentaciones extends CI_Controller
 				{
 					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
 							id_tipo = 8,
-							descripcion = "'.$_POST['desc_frm'].'",
+							descripcion = "'.$descripcion.'",
 							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
 							nombre_publico = "'.$_POST["nombre_publico"].'"
 							where id_archivo = "'.$_POST["id_presentacion"].'"');

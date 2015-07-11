@@ -69,14 +69,14 @@
 												<?php for($i=0;$i<sizeof($infos);$i++)
 												{
 													$texto=json_encode(html_entity_decode($infos[$i]->descripcion));
-													$texto=trim($texto);
+														$texto=trim($texto);
 													echo 
 													"<tr>
 														<td style='text-align:center; vertical-align: middle;'>".($i+1)."</td>
 														<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->nombre."</td>
 														<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->fecha."</td>
 														<td style='vertical-align: middle;'>".substr($infos[$i]->descripcion, 0, 100)."...
-															<a href='javascript:void(0);' onclick='vermas(".$texto.",\"".$infos[$i]->ruta."\",\"".$infos[$i]->nombre."\")'>ver mas</a></p>
+															<a href='javascript:void(0);' onclick='vermas(".html_entity_decode($texto).",\"".$infos[$i]->ruta."\",\"".$infos[$i]->nombre."\")'>ver mas</a></p>
 														</td>
 														
 													</tr>";
@@ -122,16 +122,16 @@
 				var mensaje='<table class="table table-striped table-forum">'
 								+'<thead>'
 									+'<tr>'
-										+'<th colspan="2">Contenido</th>'
+										+'<th >Contenido</th>'
 										+'<th class="text-center hidden-xs hidden-sm" style="width: 100px;">Imagen</th>'
 									+'</tr>'
-								+'</thead>'
+								+'<\/thead>'
 								+'<tbody>'
 									+'<tr>'
-										+'<td class="text-center">'+texto+'<td>'	
-										+'<td class="text-center"><img src = '+date+' style="max-height:90px"><td>'					
-								+'</tbody>'
-							+'</table>';
+										+'<td class="text-center">'+texto+'</td>'	
+										+'<td class="text-center"><img src = '+date+' style="max-height:90px"></td>'					
+								+'<\/tbody>'
+							+'<\/table>';
 				bootbox.dialog({
 					message: mensaje,
 					title: ""+titulo+"",
@@ -140,40 +140,3 @@
 			}
 			
 		</script>
-		<script type="text/javascript">
-		
-		// DO NOT REMOVE : GLOBAL FUNCTIONS!
-		
-		$(document).ready(function() {
-			
-			pageSetUp();
-			
-			/* // DOM Position key index //
-		
-			l - Length changing (dropdown)
-			f - Filtering input (search)
-			t - The Table! (datatable)
-			i - Information (records)
-			p - Pagination (paging)
-			r - pRocessing 
-			< and > - div elements
-			<"#id" and > - div with an id
-			<"class" and > - div with a class
-			<"#id.class" and > - div with an id and class
-			
-			Also see: http://legacy.datatables.net/usage/features
-			*/	
-
-			/* BASIC ;*/
-				var responsiveHelper_dt_basic = undefined;
-				var responsiveHelper_datatable_fixed_column = undefined;
-				var responsiveHelper_datatable_col_reorder = undefined;
-				var responsiveHelper_datatable_tabletools = undefined;
-				
-				var breakpointDefinition = {
-					tablet : 1024,
-					phone : 480
-				};
-	
-				$('#dt_basic').dataTable({
-					"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-

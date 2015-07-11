@@ -72,15 +72,16 @@ class escuela_negocios extends CI_Controller
 			$index=1;
 			$parrafos=array();
 			$i=0;
-			$texto=nl2br($data["noticia"][0]->contenido);
-			while($index>0)
+			$texto=html_entity_decode($data["noticia"][0]->contenido);
+			/*while($index>0)
 			{
 				
 				$index=strpos($texto, "<br />");
 				$parrafos[$i]=substr($texto,0,$index);
 				$texto=substr($texto,$index+6);
 				$i++;
-			}
+			}*/
+			$parrafos = $texto;
 			$data["parrafos"]=$parrafos;
 		}
 		

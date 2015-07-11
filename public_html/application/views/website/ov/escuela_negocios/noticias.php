@@ -67,7 +67,7 @@
 																	<a href='ver_noticia?idnw=".$noticias[$i]->id_noticia."'><strong>".$noticias[$i]->nombre."</strong></a>
 																</p>
 																<p style='text-align:justify; padding-right:3%;'>"
-																	.substr($noticias[$i]->contenido, 0, 100).
+																	.substr($texto, 0, 100).
 																"... <a href='ver_noticia?idnw=".$noticias[$i]->id_noticia."'>ver mas</a></p>
 																<p><strong>"
 																	.$noticias[$i]->usuario.

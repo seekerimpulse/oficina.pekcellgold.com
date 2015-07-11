@@ -119,10 +119,8 @@ class noticias extends CI_Controller
 		
 		$data=array();
 		
-		if(isset($_GET["idnw"]))
-		{
 			$data["noticia"]=$this->modelo_comercial->noticia_espec($_GET["idnw"]);
-		}
+		
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -248,6 +246,18 @@ class noticias extends CI_Controller
 
 	function editar_noticia()
 	{
+		if (!$this->tank_auth->is_logged_in())
+			{																		// logged in
+				redirect('/auth');
+			}
+				
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 		if ($_POST['nombre_frm']==""){
 			$error = "Debe escribir un nombre para la presentacion.";
 			$this->session->set_flashdata('error', $error);
@@ -259,19 +269,16 @@ class noticias extends CI_Controller
 			redirect('/bo/noticias/listar');
 		}
 		if ($_POST["file_nme"]==''){
+			$descripcion = $_POST['desc_frm'];
+			$descripcion = htmlentities($descripcion);
 			$this->db->query('update noticia set nombre = "'.$_POST['nombre_frm'].'",
-							contenido = "'.$_POST['desc_frm'].'"
+							contenido = "'.$descripcion.'"
 							where id = "'.$_POST["id_noticia"].'"');
 			redirect('/bo/noticias/listar');
 		}
 		else {
 				
-			if (!$this->tank_auth->is_logged_in())
-			{																		// logged in
-				redirect('/auth');
-			}
-				
-			$id	= $this->tank_auth->get_user_id();
+			
 				
 			//Checamos si el directorio del usuario existe, si no, se crea
 			if(!is_dir(getcwd()."/media/".$id))
@@ -305,10 +312,12 @@ class noticias extends CI_Controller
 				$nombre=strrev($explode[1]);
 				$extencion=strrev($explode[0]);
 				$ext=strtolower($extencion);
+				$descripcion = $_POST['desc_frm'];
+				$descripcion = htmlentities($descripcion);
 				//var_dump($this->upload->data(), "									bien");
 				//exit();
 				$this->db->query('update noticia set nombre = "'.$_POST['nombre_frm'].'",
-							contenido = "'.$_POST['desc_frm'].'",
+							contenido = "'.$descripcion.'",
 							imagen = "'.$ruta.$nombre.".".$ext.'"
 							where id = "'.$_POST["id_noticia"].'"');
 				redirect('/bo/noticias/listar');				
