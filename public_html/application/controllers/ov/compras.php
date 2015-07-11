@@ -47,7 +47,7 @@ function index()
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
-		$this->template->set("style",$style);
+	//	$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$productos=$this->modelo_compras->get_productos();
 		$redes = $this->model_tipo_red->listarTodos();
@@ -238,7 +238,7 @@ function index()
 		$this->template->set("redes", $redes);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
+      //  $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/carrito',$data);
 	}
