@@ -126,7 +126,6 @@ class descargas extends CI_Controller
 		if (!$this->upload->do_upload('userfile1'))
 		{	
 			$error = "El tipo de archivo que esta cargando no esta permitido.";
-			$error = array('error' => $this->upload->display_errors());
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/descargas/alta');
 		}

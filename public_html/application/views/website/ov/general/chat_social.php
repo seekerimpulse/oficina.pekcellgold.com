@@ -7,9 +7,14 @@
 				</span>
 				<span>>
 					chat
+					<a href="/cometchat/admin/index.php" >HOme</a>	
 				</span>
 			</h1>
 		</div>
 	</div>
+	
 <link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
 <script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>
+<script>
+
+</script>

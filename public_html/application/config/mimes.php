@@ -133,7 +133,9 @@ $mimes = array(	'hqx'	=>	'application/mac-binhex40',
 				'odf'                          => 'application/vnd.oasis.opendocument.formula',
 				'key'                          => 'application/vnd.apple.keynote',
 				'numbers'                      => 'application/vnd.apple.numbers',
-				'pages'                        => 'application/vnd.apple.pages'
+				'pages'                        => 'application/vnd.apple.pages',
+				'7z'						   => 'application/x-7z-compressed',
+				'rar'						   => 'application/x-rar-compressed',
 				
 			);
 

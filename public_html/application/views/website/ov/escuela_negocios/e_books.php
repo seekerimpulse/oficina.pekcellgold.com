@@ -83,7 +83,7 @@
 														<td style='vertical-align: middle;'>".$ebooks[$i]->fecha."</td>
 														<td style='vertical-align: middle;'>".$ebooks[$i]->descripcion."</td>
 														<td style='text-align:center; vertical-align: middle;'>
-																<a class='btn btn-success' target='_blank' href='".$ebooks[$i]->ruta."'><i class='fa fa-download fa-lg'></i></a>
+																<a class='btn btn-success' target='_blank' href='".$ebooks[$i]->ruta."' download='".$ebooks[$i]->n_publico."'><i class='fa fa-download fa-lg'></i></a>
 															
 														</td>
 													</tr>";
