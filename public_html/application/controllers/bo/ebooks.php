@@ -147,7 +147,9 @@ class ebooks extends CI_Controller
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 		if (!$this->upload->do_upload('userfile1'))
 		{	
-			$error = "El tipo de archivo que esta cargando no esta permitido.";
+			$error = "El tipo de archivo que esta cargando no esta permitido para el ebook debe ser un pdf.";
+			//$error = array('error' => $this->upload->display_errors());
+			//var_dump($error); exit;
 			$this->session->set_flashdata('error', $error);
 			
 			redirect('/bo/ebooks/alta');

@@ -78,9 +78,9 @@
 											<thead>			                
 												<tr>
 													<th data-hide="phone">ID</th>
-													<th>NOMBRE</th>
-													<th>IMAGEN</th>
-													<th>RED</th>
+													<th data-class="expand">NOMBRE</th>
+													<th data-hide="phone">IMAGEN</th>
+													<th data-hide="phone">RED</th>
 													<th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> TIPO</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> ALTA</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO REAL</th>
@@ -102,12 +102,12 @@
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
 													<td class="text-center">
-														<a title="Editar"  onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-														<a title="Eliminar"  onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+														<a title="Editar"  style="cursor: pointer;" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
-															<a title="Activar"  onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 														<?}else{?>
-															<a title="Desactivar"  onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+															<a title="Desactivar" style="cursor: pointer;" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 														<?}?>
 													</td>
 												</tr>
@@ -124,12 +124,12 @@
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar"  onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-														<a title="Eliminar"  onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
-															<a title="Activar"  onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 														<?}else{?>
-															<a title="Desactivar"  onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+															<a title="Desactivar" style="cursor: pointer;" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 														<?}?>
 													</td>
 												</tr>
@@ -146,12 +146,12 @@
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
 													<td><?=$key->costo_publico?></td>
-													<td class="text-center"><a title="Editar"  onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-														<a title="Eliminar"  onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+													<td class="text-center"><a title="Editar" style="cursor: pointer;" onclick="editar(<?=$key->id?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+														<a title="Eliminar" style="cursor: pointer;" onclick="eliminar(<?=$key->id?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 														<?if($key->estatus=='DES'){?>
-															<a title="Activar"  onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+															<a title="Activar" style="cursor: pointer;" onclick="estatus(1,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 														<?}else{?>
-															<a title="Desactivar"  onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+															<a title="Desactivar" style="cursor: pointer;" onclick="estatus(2,<?=$key->id?>)" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 														<?}?>
 													</td>
 												</tr>

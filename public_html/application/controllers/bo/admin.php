@@ -318,8 +318,6 @@ class admin extends CI_Controller
 			$this->template->set("impuestos_merc",$impuestos_merc);
 			$this->template->set("impuesto",$impuesto);
 			$this->template->set("style",$style);
-			$this->template->set_theme('desktop');
-			$this->template->set_layout('website/main');
 			$this->template->build('website/bo/comercial/altas/modificar_producto');
 		/*
 			echo '<fieldset>
@@ -653,8 +651,6 @@ class admin extends CI_Controller
 			$this->template->set("impuestos_merc",$impuestos_merc);
 			$this->template->set("impuesto",$impuesto);
 			$this->template->set("style",$style);
-			$this->template->set_theme('desktop');
-			$this->template->set_layout('website/main');
 			$this->template->build('website/bo/comercial/altas/modificar_servicio');
 		/*
 		    echo '<fieldset>
@@ -854,8 +850,6 @@ class admin extends CI_Controller
 				$this->template->set("producto",$producto);
 				$this->template->set("servicio",$servicio);
 				$this->template->set("style",$style);
-				$this->template->set_theme('desktop');
-				$this->template->set_layout('website/main');
 				$this->template->build('website/bo/comercial/altas/modificar_combinado');
 				/*
 				echo '

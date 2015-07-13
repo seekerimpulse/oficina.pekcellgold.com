@@ -78,7 +78,7 @@
 														<td>".$presentaciones[$i]->n_publico."</td>
 														<td>".$presentaciones[$i]->grupo."</td>
 														<td>".$presentaciones[$i]->fecha."</td>
-														<td>".$presentaciones[$i]->descripcion."</td>
+														<td>".html_entity_decode($presentaciones[$i]->descripcion)."</td>
 														<td style='text-align:center;'>
 																<a class='btn btn-success' href='".$presentaciones[$i]->ruta."'><i class='fa fa-download fa-lg'></i></a>
 															

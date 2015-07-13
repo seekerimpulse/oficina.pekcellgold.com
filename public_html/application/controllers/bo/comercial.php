@@ -1710,10 +1710,10 @@ class comercial extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$this->template->set("proveedores",$proveedores);
-		$this->template->set("promo",$promo);
+		//$this->template->set("promo",$promo);
 		$this->template->set("grupo",$grupo);
 		$this->template->set("servicios",$servicios);
-		$this->template->set("producto",$producto);
+//		$this->template->set("producto",$producto);
 		$this->template->set("combinados",$combinados);
 		$this->template->set("impuesto",$impuesto);
 		$this->template->set("tipo_mercancia",$tipo_mercancia);

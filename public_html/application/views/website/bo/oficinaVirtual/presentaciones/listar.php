@@ -123,16 +123,16 @@
 																			<td>'.html_entity_decode($presentacion->descripcion).'</td>
 																			
 																			<td class="text-center">
-																				<a class="txt-color-blue" onclick="" href="'.$presentacion->ruta.'" title="Descargar"><i class="fa fa-download fa-3x"></i></a>
+																				<a class="txt-color-blue" style="cursor: pointer;" onclick="" href="'.$presentacion->ruta.'" title="Descargar"><i class="fa fa-download fa-3x"></i></a>
 																				<a class="txt-color-red" style="cursor: pointer;" onclick="delete_file('.$presentacion->id.',\''.$presentacion->ruta.'\')" title="Eliminar"><i class="fa fa-trash-o fa-3x"></i></a>
 																				<a class="txt-color-blue" style="cursor: pointer;" onclick="editar('.$presentacion->id.')"  title="Editar"><i class="fa fa-pencil fa-3x"></i></a>
           																		';
 																				 if ($presentacion->status=='ACT'){?>
 																				
-          																			<a class="txt-color-green"  onclick="estado_presentacion('DES','<?php echo $presentacion->id; ?>')" title="Desactivar"><i class="fa fa-check-square-o fa-3x"></i></a>
+          																			<a class="txt-color-green" style="cursor: pointer;" onclick="estado_presentacion('DES','<?php echo $presentacion->id; ?>')" title="Desactivar"><i class="fa fa-check-square-o fa-3x"></i></a>
 																			<?php }
 																			else {?>
-																				<a class="txt-color-green" onclick="estado_presentacion('ACT','<?php echo $presentacion->id; ?>')" title="Activar"><i class="fa fa-square-o fa-3x"></i></a>
+																				<a class="txt-color-green" style="cursor: pointer;" onclick="estado_presentacion('ACT','<?php echo $presentacion->id; ?>')" title="Activar"><i class="fa fa-square-o fa-3x"></i></a>
 																				<?php }?>
           																
 																			</td>
