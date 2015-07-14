@@ -121,7 +121,7 @@
 																			<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->usuario."</td>
 																			<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->fecha."</td>
 																			<td style='vertical-align: middle;'>".substr($infos[$i]->descripcion, 0, 100)."...
-																				<a href='ver_informacion?id=".$infos[$i]->id."'>ver mas</a></p>
+																				<a style='cursor: pointer;' href='ver_informacion?id=".$infos[$i]->id."'>ver mas</a></p>
 																				
 																			</td>
 																			

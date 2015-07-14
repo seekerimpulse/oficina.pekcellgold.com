@@ -63,7 +63,7 @@
 					</center>
 				</div>
 			</div>
-			<form name="formulario" action="/bo/comercial/actualizar_tabla" method="post">
+			<form name="formulario" action="/bo/comercial/actualizar_tabla?id_red=<?=$id_red?>" method="post">
 			
 			<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-12">
 			<br>

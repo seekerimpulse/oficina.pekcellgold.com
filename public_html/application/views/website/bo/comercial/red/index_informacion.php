@@ -6,9 +6,15 @@
 							
 							<!-- PAGE HEADER -->
 							<i class="fa-fw fa fa-home"></i> 
-								<a href="/bo/dashboard"> Menu</a> 
+							<a href="/bo/dashboard"> Menu</a> 
 							<span>>
-								<a href="/bo/comercial">Comercial</a> > Red
+								<a href="/bo/comercial">Comercial</a>
+							</span>
+							<span>>
+								<a href="/bo/comercial/red">Red</a>
+							</span>
+							<span>>
+								<a href="/bo/comercial/tipos_de_red">Selección de Red</a> > Información
 							</span>
 						</h1>
 					</div>
@@ -36,31 +42,47 @@
                   <fieldset>
 										<div class="row">
 											<div class="col-sm-12 col-md-12 col-lg-12">
-												<div class="col-sm-2 link">
-													<a href="/bo/usuarios/alta">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-															<i class="fa fa-edit fa-3x"></i>
-															<h1>Alta</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-2 link">
-													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-times fa-3x"></i>
-															<h1>Baja</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-2 link">
-													<a href="/bo/comercial/tipos_de_red">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-info fa-3x"></i>
-															<h1>Información</h1>
-														</div>
-													</a>
-												</div>
 												
+												<div class="col-sm-2 link">
+													<a href="/bo/usuarios/geneologico">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-sitemap fa-3x"></i>
+															<h1>Genialogico</h1>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-2 link">
+													<a href="/bo/comercial/red_tabla">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-list-ol fa-3x"></i>
+															<h1>Consecutivo</h1>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-2 link">	
+													<a href="/bo/usuarios/grafico1">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-bar-chart-o fa-3x"></i>
+															<h1>Grafico 1</h1>
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-2 link">	
+													<a href="/bo/usuarios/grafico2">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-bar-chart-o fa-3x"></i>
+															<h1>Grafico 2</h1>
+														</div>
+													</a>
+												</div>	
+												<div class="col-sm-2 link">	
+													<a href="#">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-bar-chart-o fa-3x"></i>
+															<h1>Grafico 3</h1>
+														</div>
+													</a>
+												</div>	
 											</div>
 										 </div>
 									</div>
