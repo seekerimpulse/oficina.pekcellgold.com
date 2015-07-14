@@ -20,21 +20,68 @@ class compras extends CI_Controller
 function index()
 {
 	if (!$this->tank_auth->is_logged_in()) 
-	{	 // logged in
-		redirect('/auth');
-	}
-
-	$id=$this->tank_auth->get_user_id();
-	$usuario=$this->general->get_username($id);
-	$style=$this->general->get_style($id);
-	$this->template->set("style",$style);
-	$this->template->set("usuario",$usuario);
-
-	$this->template->set_theme('desktop');
-	$this->template->set_layout('website/main');
-	$this->template->set_partial('header', 'website/ov/header');
-	$this->template->set_partial('footer', 'website/ov/footer');
-	$this->template->build('website/ov/perfil_red/perfil');
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$style=$this->general->get_style($id);
+		$this->template->set("style",$style);
+		$this->template->set("usuario",$usuario);
+		$direccion=$this->modelo_compras->get_direccion_comprador($id);
+		$pais=$this->modelo_compras->get_pais();
+		$info_compras=Array();
+		$producto=0;
+		if($this->cart->contents())
+		{ 
+			foreach ($this->cart->contents() as $items) 
+			{	
+				$imgn=$this->modelo_compras->get_img($items['id']);
+				if(isset($imgn[0]->url))
+				{
+					$imagen=$imgn[0]->url;
+				}
+				else
+				{
+					$imagen="";
+				}
+				switch($items['name'])
+				{
+					case 1:
+						$detalles=$this->modelo_compras->detalles_productos($items['id']);
+						break;
+					case 2:
+						$detalles=$this->modelo_compras->detalles_servicios($items['id']);
+						break;
+					case 3:
+						$detalles=$this->modelo_compras->comb_espec($items['id']);
+						break;
+					case 4:
+						$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+						break;
+					case 5:
+						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
+						break;
+					case 6:
+						$detalles=$this->modelo_compras->detalles_prom_comb($items['id']);
+						break;
+				}
+				$info_compras[$producto]=Array(
+					"imagen" => $imagen,
+					"nombre" => $detalles[0]->nombre
+				);
+				$producto++;
+			} 
+		} 
+		$data=array();
+		$data["direccion"]=$direccion;
+		$data["compras"]=$info_compras;
+		$data["pais"]=$pais;
+		$this->template->set_theme('desktop');
+        $this->template->set_layout('website/main');
+        $this->template->set_partial('header', 'website/ov/header');
+        $this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/compra_reporte/iniciar_transacion',$data);
 }
 
 	
@@ -395,7 +442,36 @@ function index()
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		if(isset($_GET['transactionState'])){
+			//if($_GET['transactionState'] == '1'){
+				$extra1 = explode("-", $_GET['extra1']);
+				$id_mercancia = $extra1[0];
+				$cantidad = $extra1[1];
+				$error = "La transacion se a realizado con exito.";
+				$this->session->set_flashdata('error', $error);
+				
+				$producto_continua = array();
+				foreach ($this->cart->contents() as $producto){
+					
+					if($producto['id'] == $id_mercancia){
+						
+						$this->cart->destroy();
+						
+					}else{
+						$add_cart = array(
+								'id'      => $producto['id'],
+								'qty'     => $producto['qty'],
+								'price'   => $producto['price'],
+								'name'    => $producto['name'],
+								'options' => $producto['options']
+						);
+						$producto_continua[] = $add_cart;
+					}
+				}
+				$this->cart->insert($producto);
+			//}
+			
+		}
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
@@ -896,19 +972,15 @@ function index()
 		$data=$_GET["info"];
 		$data=json_decode($data,true);
 		$id=$data['id'];
+		
 		$cantidad_disp=$this->modelo_compras->get_cantidad_almacen($id);
-		if(!isset($cantidad_disp[0]->cantidad))
+	
+		if(!isset($cantidad_disp[0]->cantidad)  && ($data['tipo'] == '1') && $cantidad_disp[0]->cantidad*1<$data['qty']*1)
 		{
 			echo "Error";
 		}
 		else 
 		{
-			if($cantidad_disp[0]->cantidad*1<$data['qty']*1)
-			{
-				echo "Error";
-			}
-			else 
-			{
 				switch($data['tipo'])
 				{
 					case 1:
@@ -927,7 +999,7 @@ function index()
 				           'qty'     => $data['qty'],
 				           'price'   => $costo_total,
 				           'name'    => $data['tipo'],
-				           'options' => array(	'prom_id' => 0)
+				           'options' => array(	'prom_id' => 0, 'time' => time())
 			        		);
 						break;
 						
@@ -946,7 +1018,7 @@ function index()
 				           'qty'     => $data['qty'],
 				           'price'   => $costo_total,
 				           'name'    => $data['tipo'],
-				           'options' => array(	'prom_id' => 0)
+				           'options' => array(	'prom_id' => 0, 'time' => time())
 			        		);
 						break;
 						
@@ -968,7 +1040,7 @@ function index()
 				           'qty'     => $data['qty'],
 				           'price'   => $costo_total,
 				           'name'    => $data['tipo'],
-				           'options' => array(	'prom_id' => 0)
+				           'options' => array(	'prom_id' => 0, 'time' => time())
 			        		);
 						break;
 					case 4:
@@ -987,7 +1059,7 @@ function index()
 				           'qty'     => $data['qty'],
 				           'price'   => $costo_total,
 				           'name'    => $data['tipo'],
-				           'options' => array(	'prom_id' => $detalles[0]->id_promocion)
+				           'options' => array(	'prom_id' => $detalles[0]->id_promocion, 'time' => time())
 			        		);
 						break;
 					case 5:
@@ -1005,7 +1077,7 @@ function index()
 				           'qty'     => $data['qty'],
 				           'price'   => $costo_total,
 				           'name'    =>	$data['tipo'],
-				           'options' => array(	'prom_id' => $detalles[0]->id_promocion)
+				           'options' => array(	'prom_id' => $detalles[0]->id_promocion, 'time' => time())
 			        		);
 						break;
 					case 6:
@@ -1023,7 +1095,7 @@ function index()
 				           'qty'     => $data['qty'],
 				           'price'   => $costo_total,
 				           'name'    => $data['tipo'],
-				           'options' => array(	'prom_id' => $detalles[0]->id_promocion)
+				           'options' => array(	'prom_id' => $detalles[0]->id_promocion, 'time' => time())
 			        		);
 						break;
 					default:
@@ -1193,7 +1265,7 @@ function index()
 		          
 		        </div>
 		        <!--/.search-box --> ';
-			}
+			
 		}
 		
 	} 
@@ -2828,6 +2900,7 @@ function index()
 		$this->modelo_compras->hacer_compra();
 		redirect('/ov/dashboard');
 	}
+	
 	function verificar_carro()
 	{
 		$prod=0;
@@ -2843,5 +2916,65 @@ function index()
 			echo "no";
 		}
 	}
-	
+
+	function EnviarPayuLatam(){
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/compra_reporte/prueba');
+	}
+	function registrarVenta(){
+		$estado = $_POST['state_pol'];
+		$productos = $this->cart->contents();
+		$referencia = $_POST['reference_sale'];
+		$id_usuario = $_POST['extra2'];
+		$extra1 = explode("-", $_POST['extra1']);
+		$id_mercancia = $extra1[0];
+		$cantidad = $extra1[1];
+		$firma = $_POST['sign'];
+		$metodo_pago = $_POST['payment_method_id'];
+		$respuesta = $_POST['response_code_pol'];
+		$fecha = $_POST['transaction_date'];
+		$moneda = $_POST['currency'];
+		$email = $_POST['email_buyer'];
+		$direcion_envio = $_POST['shipping_address'];
+		$telefono = $_POST['phone'];
+		$identificado_transacion = $_POST['transaction_id'];
+		$medio_pago = $_POST['payment_method_name'];
+		$costo = $_POST['value'];
+		
+		if($id_usuario == 0){
+			$id_usuario = $this->tank_auth->get_user_id();
+		}
+		//if($estado == 1){
+			$venta = $this->modelo_compras->registrar_venta($id_usuario, $costo, $metodo_pago);
+			$this->modelo_compras->registrar_envio($venta, $id_usuario, $direcion_envio , $telefono, $email);
+			$this->modelo_compras->registrar_factura($venta, $id_usuario, $direcion_envio , $telefono, $email);
+			
+			$puntos = $this->modelo_compras->registrar_venta_mercancia($id_mercancia, $venta, $cantidad);
+			$total = $this->modelo_compras->registrar_impuestos($id_mercancia);
+			$this->modelo_compras->registrar_puntos($id_usuario, $id_mercancia, $cantidad, $costo, $total, $venta, $puntos);
+			$producto_continua = array();
+			foreach ($productos as $producto){
+				if($producto['id'] == $id_mercancia){
+					
+					$this->cart->destroy();
+				}else{
+					$add_cart = array(
+							'id'      => $producto['id'],
+							'qty'     => $producto['qty'],
+							'price'   => $producto['price'],
+							'name'    => $producto['name'],
+							'options' => $producto['options']
+					);
+					$producto_continua[] = $add_cart;
+				}
+			}
+			$this->cart->insert($producto);
+			
+		//}
+		
+		
+	}
 }

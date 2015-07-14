@@ -182,570 +182,34 @@
 				<div class="widget-body">
 	
 					<div class="row">
-						<? if(isset($_GET['usr']))
+						<? /*if(isset($_GET['usr']))
 						{ ?>
-						<form id="wizard-1" novalidate="novalidate" action="hacer_compra?tipo=<?=$_GET["tipo"]?>&usr=<?=$_GET["usr"]?>" method="post">
+							<form id="wizard-1" novalidate="novalidate" action="hacer_compra?tipo=<?=$_GET["tipo"]?>&usr=<?=$_GET["usr"]?>" method="post">
 						<? } else {?>
-						<form id="wizard-1" novalidate="novalidate" action="hacer_compra?tipo=<?=$_GET["tipo"]?>" method="post">
-						<? } ?>
+							<form id="wizard-1" novalidate="novalidate" action="hacer_compra?tipo=<?=$_GET["tipo"]?>" method="post">
+						<? } */?>
 							<div id="bootstrap-wizard-1" class="col-sm-12">
-								<div class="form-bootstrapWizard">
-									<ul class="bootstrapWizard form-wizard">
-										<li class="active" data-target="#step1">
-											<a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title">Datos para Envio</span> </a>
-										</li>
-										<li data-target="#step2">
-											<a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title">Facturaci&oacute;n</span> </a>
-										</li>
-										<li data-target="#step3">
-											<a href="#tab3" data-toggle="tab"> <span class="step">3</span> <span class="title">Forma de Pago</span> </a>
-										</li>
-										<li data-target="#step4">
-											<a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Confirmar</span> </a>
-										</li>
-									</ul>
-									<div class="clearfix"></div>
-								</div>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab1">
 										<br>
-										<h3><strong>1 </strong> - Datos para envio</h3>
-	
-										<div class="row">
-	
-							                <div class="col-xs-12 col-sm-6">
-							                  <div class="form-group required">
-							                    <label for="InputName">Nombre <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="nombre_envio" id="nombre_envio" placeholder="Nombre" value="<?=$direccion[0]->nombre?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputLastName">Apellidos <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="apellido_envio" id="apellido_envio" placeholder="Apellidos" value="<?=$direccion[0]->apellido?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputEmail">Correo<sup>*</sup>  </label>
-							                    <input required type="text" class="form-control" name="correo_envio" id="correo_envio" placeholder="correo@dominio.com" value="<?=$direccion[0]->email?>">
-							                  </div>
-							                  <div class="form-group">
-							                    <label for="InputCompany">Compa&ntilde;ia </label>
-							                    <input type="text" class="form-control" name="compania_envio" id="compania_envio" placeholder="Compañia">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputMobile">Telefono Celular</label>
-							                    <input type="tel"  name="celular_envio" class="form-control" id="celular_envio">
-							                  </div>
-							                  <div class="form-group">
-							                    <label for="InputAdditionalInformation">Informacion Adicional</label>
-							                    <textarea rows="3" cols="26" name="info_envio" id="info_envio" class="form-control" id="InputAdditionalInformation"></textarea>
-							                  </div>
-							                </div>
-							                <div class="col-xs-12 col-sm-6">
-							                  
-							                  <div class="form-group required">
-							                    <label for="InputCountry">País<sup>*</sup> </label>
-							                      <select required class="form-control" required aria-required="true" id="pais_envio" name="pais_envio">
-							                      	<option value="">Selecciona un Pais</option>
-							                      	<?foreach ($pais as $key)
-													  {
-														  if($key->Code==$direccion[0]->pais)
-														  {?>
-															<option value="<?=$key->Code?>" selected>
-																<?=$key->Name?>
-															</option>
-														   <?}else{?>
-														   	<option value="<?=$key->Code?>">
-																<?=$key->Name?>
-															</option>
-														  <?}
-													  }?>
-							                      </select>
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputZip">Codigo Postal <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="cp_envio" id="cp_envio" placeholder="" value="<?=$direccion[0]->cp?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputAddress">Calle<sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="calle_envio" id="calle_envio" placeholder="Calle" value="<?=$direccion[0]->calle?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputAddress2">Colonia<sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="colonia_envio" id="colonia_envio" placeholder="Colonia" value="<?=$direccion[0]->colonia?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputCity">Municipio <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="municipio_envio" id="municipio_envio" placeholder="Municipio" value="<?=$direccion[0]->municipio?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputCity">Estado <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="estado_envio" id="estado_envio" placeholder="Estado" value="<?=$direccion[0]->estado?>">
-							                  </div>
-							                  
-							                  
-							                </div>
-							                  
-							               
-										</div>
-	
-									</div>
-									<div class="tab-pane" id="tab2">
-										<br>
-										<h3><strong>2</strong> - Facturaci&oacute;n</h3>
-	
-										<div class="row">
-	
-											<div class="col-xs-12 col-sm-12">
-								                <label class="checkbox-inline" for="checkboxes-0">
-								                  <input name="envio_dir" id="envio_dir" value="1" type="checkbox">
-								                  Facturar a la direccion de envio </label>
-								                <hr>
-								            </div>
-							                <div class="col-xs-12 col-sm-6">
-							                  <div class="form-group required">
-							                    <label for="InputName">Nombre <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="nombre_fac" id="nombre_fac" placeholder="Nombre" value="<?=$direccion[0]->nombre?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputLastName">Apellidos <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="apellido_fac" id="apellido_fac" placeholder="Apellidos" value="<?=$direccion[0]->apellido?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputMobile">RFC<sup>*</sup></label>
-							                    <input  required type="tel"  class="form-control" name="rfc_fac" id="rfc_fac" value="<?=$direccion[0]->keyword?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputEmail">Correo<sup>*</sup>  </label>
-							                    <input required type="text" class="form-control" name="correo_fac" id="correo_fac" placeholder="correo@dominio.com" value="<?=$direccion[0]->email?>">
-							                  </div>
-							                  <div class="form-group">
-							                    <label for="InputCompany">Compa&ntilde;ia </label>
-							                    <input type="text" class="form-control" name="compania_fac" id="compania_fac" placeholder="Compañia">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputMobile">Telefono Celular</label>
-							                    <input type="tel"  name="celular_fac" class="form-control" id="celular_fac">
-							                  </div>
-							                  
-							                </div>
-							                <div class="col-xs-12 col-sm-6">
-							                  
-							                  <div class="form-group required">
-							                    <label for="InputCountry">País<sup>*</sup> </label>
-							                      <select required class="form-control" required aria-required="true" id="pais_fac" name="pais_fac">
-							                      <option value="">Selecciona un Pais</option>
-							                      <?foreach ($pais as $key)
-												  {
-													  if($key->Code==$direccion[0]->pais)
-													  {?>
-														<option value="<?=$key->Code?>" selected>
-															<?=$key->Name?>
-														</option>
-													   <?}else{?>
-													   	<option value="<?=$key->Code?>">
-															<?=$key->Name?>
-														</option>
-													  <?}
-												  }?>
-	                     						 </select>
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputZip">Codigo Postal <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="cp_fac" id="cp_fac" placeholder="" value="<?=$direccion[0]->cp?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputAddress">Calle<sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="calle_fac" id="calle_fac" placeholder="Calle" value="<?=$direccion[0]->calle?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputAddress2">Colonia<sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="colonia_fac" id="colonia_fac" placeholder="Colonia" value="<?=$direccion[0]->colonia?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputCity">Municipio <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="municipio_fac" id="municipio_fac" placeholder="Municipio" value="<?=$direccion[0]->municipio?>">
-							                  </div>
-							                  <div class="form-group required">
-							                    <label for="InputCity">Estado <sup>*</sup> </label>
-							                    <input required type="text" class="form-control" name="estado_fac" id="estado_fac" placeholder="Estado" value="<?=$direccion[0]->estado?>">
-							                  </div>
-							                  
-							                  
-							                </div>
-										</div>
-									</div>
-									<div class="tab-pane" id="tab3">
-										<br>
-										<h3><strong>3</strong> - Forma de Pago</h3>
-										<div class="row userInfo">
-										<? if($_GET['tipo']==3)
-									  	{?>
-								  			
-											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group required" style="text-align:center;">
-								  				<section class="col col-lg-12 col-sm-12 col-xs-12 col-md-12">
-								  				<p><strong>Selecciona la fecha de la siguente compra</strong></p>
-													<label class="input"> <i class="icon-append fa fa-calendar"></i>
-														<input class="form-control" type="text" name="startdate" id="startdate" required="" placeholder="Fecha de compra">
-													</label>
-												</section>
-								  			</div>
-								  			<select class="form-control" required aria-required="true" id="pago" name="pago" style="display:none;">
-				                                  <option value="5">Deposito en Efectivo</option>
-				                                  <option value="1" selected="">Tarjeta de Credito</option>
-				                                  <option value="2">Tarjeta de Debito</option>
-				                                  <option value="3">Paypal</option>
-			                                </select>
-											<div class="panel-body">
-					                        	<p>Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-					                          	<br>
-					                          	<div class="panel open">
-					                            	<div class="creditCard">
-					                              		<div class="cartBottomInnerRight paymentCard"> 
-					                              		</div>
-					                              		<div class="col-xs-12 col-sm-6">
-										                  <div class="form-group required">
-											                  <label for="InputCountry">Banco<sup>*</sup> </label>
-										                      <select class="form-control" required aria-required="true" id="banco_taj" name="banco_taj_c">
-								                                  <option value="">Banco</option>
-								                                  <option value="1">01 - VISA</option>
-								                                  <option value="2">02 - Master Card</option>
-								                                  <option value="3">03 - American Express</option>
-							                                  </select>
-				                  						  </div>
-										                  <div class="form-group required">
-										                    <label for="InputLastName">Numero de la Tarjeta<sup>*</sup> </label>
-										                    <input required id="numero_taj_c" class="form-control" type="text" name="numero_taj_c">
-										                  </div>
-				                  							
-										                  <div class="form-group required">
-										                    <label for="InputZip">Titular de la Tarjeta <sup>*</sup> </label>
-										                    <input required type="text" class="form-control" name="titular_taj_c" id="titular_taj_c">
-										                  </div>
-				                  
-										                </div>
-										                <div class="col-xs-12 col-sm-6">
-				                  
-				                  
-										                  <div class="form-group required">
-										                  	<div class="col-xs-12 col-sm-6">
-											                    <label for="InputAddress">Mes de Vencimineto<sup>*</sup> </label>
-											                    <select class="form-control" required aria-required="true" name="mes_taj_c" id="mes_taj_c">
-							                                      <option value="">Month</option>
-							                                      <option value="1">01 - Enero</option>
-							                                      <option value="2">02 - Febrero</option>
-							                                      <option value="3">03 - Marzo</option>
-							                                      <option value="4">04 - Abril</option>
-							                                      <option value="5">05 - Mayo</option>
-							                                      <option value="6">06 - Junio</option>
-							                                      <option value="7">07 - Julio</option>
-							                                      <option value="8">08 - Agosto</option>
-							                                      <option value="9">09 - Septiembre</option>
-							                                      <option value="10">10 - Octubre</option>
-							                                      <option value="11">11 - Noviembre</option>
-							                                      <option value="12">12 - Diciembre</option>
-							                                    </select>
-											                </div>
-											                <div class="col-xs-12 col-sm-6">
-											                    <label for="InputAddress">A&ntilde;o de vencimiento<sup>*</sup> </label>
-											                    <select class="form-control" required aria-required="true" name="ano_taj_c" id="ano_taj_c">
-							                                      <option value="">Año</option>
-							                                      <option value="2013">2013</option>
-							                                      <option value="2014">2014</option>
-							                                      <option value="2015">2015</option>
-							                                      <option value="2016">2016</option>
-							                                      <option value="2017">2017</option>
-							                                      <option value="2018">2018</option>
-							                                      <option value="2019">2019</option>
-							                                      <option value="2020">2020</option>
-							                                      <option value="2021">2021</option>
-							                                      <option value="2022">2022</option>
-							                                      <option value="2023">2023</option>
-							                                    </select>
-											                </div>
-										                  </div>
-										                  <div class="form-group required">
-										                    <label for="InputAddress2">Codigo de Verificacion<sup>*</sup> </label>
-										                    <input required type="text" class="form-control" name="code_taj_c" id="code_taj_c">
-										                  </div>
-						                  				 </div>
-						                  				 <div class="form-group">
-										                    <input type="checkbox" name="salvar_taj_c" id="salvar_taj_c">
-												            <label for="saveInfoid">&nbsp;Guardar la información de mi tarjeta de Crédito</label>
-										                  </div>
-										               </div>
-		                              		
-						                              	
-						                             
-						                            <!--creditCard-->
-						                            
-						                          	</div>
-												</div>
-											<? } 
-											else
-											{?>
-									            <div class="col-lg-12">
-												  	
-									               <p>Seleccione el metodo para pagar su orden.</p>
-									                <hr>
-									            </div>
-									            <select class="form-control" required aria-required="true" id="pago" name="pago" style="display:none;">
-					                                  <option value="5" selected="">Deposito en Efectivo</option>
-					                                  <option value="1">Tarjeta de Credito</option>
-					                                  <option value="2">Tarjeta de Debito</option>
-					                                  <option value="3">Paypal</option>
-				                                </select>
-									            <div class="col-xs-12 col-sm-12">
-									                <div class="paymentBox">
-									                  <div class="panel-group paymentMethod" id="accordion">
-									                  	<div class="panel panel-default">
-									                      <div class="panel-heading panel-heading-custom">
-									                        <h4 class="panel-title"> <a class="masterCard" data-toggle="collapse" id="pago_1" data-parent="#accordion" href="#collapseOne"> <span class="numberCircuil">Opcion 1</span> <strong>Deposito en Efectivo</strong> </a> </h4>
-									                      </div>
-									                      <div id="collapseOne" class="panel-collapse collapse in">
-									                        <div class="panel-body">
-									                          <p>Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-									                          <br>
-									                          <div class="panel open">
-									                          	
-									                              
-									                           </div>
-									                         </div>
-									                      </div>
-									                    </div>
-									                    <div class="panel panel-default">
-									                      <div class="panel-heading panel-heading-custom">
-									                        <h4 class="panel-title"> <a class="masterCard" data-toggle="collapse" id="pago_2" data-parent="#accordion" href="#collapseTwo"> <span class="numberCircuil">Opcion 2</span> <strong>Tarjeta de Credito</strong> </a> </h4>
-									                      </div>
-									                      <div id="collapseTwo" class="panel-collapse collapse">
-									                         <div class="panel-body">
-									                          <p>Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-									                          <br>
-									                          <div class="panel open">
-									                          	
-									                            <div class="creditCard">
-									                              <div class="cartBottomInnerRight paymentCard"> 
-									                              </div>
-									                              <div class="col-xs-12 col-sm-6">
-													                  <div class="form-group required">
-														                  <label for="InputCountry">Banco<sup>*</sup> </label>
-													                      <select class="form-control" required aria-required="true" id="banco_taj_c" name="banco_taj_c">
-											                                  <option value="">Banco</option>
-											                                  <option value="1">01 - VISA</option>
-											                                  <option value="2">02 - Master Card</option>
-											                                  <option value="3">03 - American Express</option>
-										                                  </select>
-							                  						  </div>
-							                  						  
-													                  <div class="form-group required">
-													                    <label for="InputLastName">Numero de la Tarjeta<sup>*</sup> </label>
-													                    <input required id="numero_taj_c" class="form-control" type="text" name="numero_taj_c">
-													                  </div>
-							                  						  <div class="form-group required">
-													                    <label for="InputZip">Titular de la Tarjeta <sup>*</sup> </label>
-													                    <input required type="text" class="form-control" name="titular_taj_c" id="titular_taj_c">
-													                  </div>
-							                  
-													                </div>
-													                <div class="col-xs-12 col-sm-6">
-							                  
-							                  
-													                  <div class="form-group required">
-													                  	<div class="col-xs-12 col-sm-6">
-														                    <label for="InputAddress">Mes de Vencimineto<sup>*</sup> </label>
-														                    <select class="form-control" required aria-required="true" name="mes_taj_c" id="mes_taj_c">
-										                                      <option value="">Month</option>
-										                                      <option value="1">01 - Enero</option>
-										                                      <option value="2">02 - Febrero</option>
-										                                      <option value="3">03 - Marzo</option>
-										                                      <option value="4">04 - Abril</option>
-										                                      <option value="5">05 - Mayo</option>
-										                                      <option value="6">06 - Junio</option>
-										                                      <option value="7">07 - Julio</option>
-										                                      <option value="8">08 - Agosto</option>
-										                                      <option value="9">09 - Septiembre</option>
-										                                      <option value="10">10 - Octubre</option>
-										                                      <option value="11">11 - Noviembre</option>
-										                                      <option value="12">12 - Diciembre</option>
-										                                    </select>
-														                </div>
-														                <div class="col-xs-12 col-sm-6">
-														                    <label for="InputAddress">A&ntilde;o de vencimiento<sup>*</sup> </label>
-														                    <select class="form-control" required aria-required="true" name="ano_taj_c" id="ano_taj_c">
-										                                      <option value="">Año</option>
-										                                      <option value="2013">2013</option>
-										                                      <option value="2014">2014</option>
-										                                      <option value="2015">2015</option>
-										                                      <option value="2016">2016</option>
-										                                      <option value="2017">2017</option>
-										                                      <option value="2018">2018</option>
-										                                      <option value="2019">2019</option>
-										                                      <option value="2020">2020</option>
-										                                      <option value="2021">2021</option>
-										                                      <option value="2022">2022</option>
-										                                      <option value="2023">2023</option>
-										                                    </select>
-														                </div>
-													                  </div>
-													                  <div class="form-group required">
-													                    <label for="InputAddress2">Codigo de Verificacion<sup>*</sup> </label>
-													                    <input required type="text" class="form-control" name="code_taj_c" id="code_taj_c">
-													                  </div>
-									                  				 </div>
-									                  				 <div class="form-group">
-													                    <input type="checkbox" name="salvar_taj_c" id="salvar_taj_c">
-															            <label for="saveInfoid">&nbsp;Guardar la información de mi tarjeta de Crédito</label>
-													                  </div>
-													            	</div>
-									                         	</div> 
-									                         </div>
-									                      </div>
-									                    </div>
-									                    <div class="panel panel-default">
-									                      <div class="panel-heading panel-heading-custom">
-									                        <h4 class="panel-title"> <a class="masterCard" data-toggle="collapse" id="pago_3" data-parent="#accordion" href="#collapseThree"> <span class="numberCircuil">Opcion 3</span> <strong>Tarjeta de Debito</strong> </a> </h4>
-									                      </div>
-									                      <div id="collapseThree" class="panel-collapse collapse">
-									                        <div class="panel-body">
-									                          <p>Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-									                          <br>
-									                          <div class="panel open">
-									                          	
-									                            <div class="creditCard">
-									                              <div class="cartBottomInnerRight paymentCard"> 
-									                              </div>
-									                              <div class="col-xs-12 col-sm-6">
-													                  <div class="form-group required">
-														                  <label for="InputCountry">Banco<sup>*</sup> </label>
-													                      <select class="form-control" required aria-required="true" id="banco_taj" name="banco_taj">
-											                                  <option value="">Banco</option>
-											                                  <option value="1">01 - VISA</option>
-											                                  <option value="2">02 - Master Card</option>
-											                                  <option value="3">03 - American Express</option>
-										                                  </select>
-							                  						  </div>
-							                  						  
-													                  <div class="form-group required">
-													                    <label for="InputLastName">Numero de la Tarjeta<sup>*</sup> </label>
-													                    <input required id="numero_taj" class="form-control" type="text" name="numero_taj">
-													                  </div>
-							                  
-							                  						  <div class="form-group required">
-													                    <label for="InputZip">Titular de la Tarjeta <sup>*</sup> </label>
-													                    <input required type="text" class="form-control" name="titular_taj" id="titular_taj">
-													                  </div>
-													                </div>
-													                <div class="col-xs-12 col-sm-6">
-							                  
-													                  <div class="form-group required">
-													                  	<div class="col-xs-12 col-sm-6">
-														                    <label for="InputAddress">Mes de Vencimineto<sup>*</sup> </label>
-														                    <select class="form-control" required aria-required="true" name="mes_taj" id="mes_taj">
-										                                      <option value="">Month</option>
-										                                      <option value="1">01 - Enero</option>
-										                                      <option value="2">02 - Febrero</option>
-										                                      <option value="3">03 - Marzo</option>
-										                                      <option value="4">04 - Abril</option>
-										                                      <option value="5">05 - Mayo</option>
-										                                      <option value="6">06 - Junio</option>
-										                                      <option value="7">07 - Julio</option>
-										                                      <option value="8">08 - Agosto</option>
-										                                      <option value="9">09 - Septiembre</option>
-										                                      <option value="10">10 - Octubre</option>
-										                                      <option value="11">11 - Noviembre</option>
-										                                      <option value="12">12 - Diciembre</option>
-										                                    </select>
-														                </div>
-														                <div class="col-xs-12 col-sm-6">
-														                    <label for="InputAddress">A&ntilde;o de vencimiento<sup>*</sup> </label>
-														                    <select class="form-control" required aria-required="true" name="ano_taj" id="ano_taj">
-										                                      <option value="">Año</option>
-										                                      <option value="2013">2013</option>
-										                                      <option value="2014">2014</option>
-										                                      <option value="2015">2015</option>
-										                                      <option value="2016">2016</option>
-										                                      <option value="2017">2017</option>
-										                                      <option value="2018">2018</option>
-										                                      <option value="2019">2019</option>
-										                                      <option value="2020">2020</option>
-										                                      <option value="2021">2021</option>
-										                                      <option value="2022">2022</option>
-										                                      <option value="2023">2023</option>
-										                                    </select>
-														                </div>
-													                  </div>
-													                  <div class="form-group required">
-													                    <label for="InputAddress2">Codigo de Verificacion<sup>*</sup> </label>
-													                    <input required type="text" class="form-control" name="code_taj" id="code_taj">
-													                  </div>
-									                  				 </div>
-									                  				 <div class="form-group">
-													                    <input type="checkbox" name="salvar_taj" id="salvar_taj">
-															            <label for="saveInfoid">&nbsp;Guardar la información de mi tarjeta de Crédito</label>
-													                  </div>
-													            	</div>
-									                         	</div> 
-									                         </div>
-									                      </div>
-									                    </div>
-														
-									                    <div class="panel panel-default">
-									                      <div class="panel-heading panel-heading-custom">
-									                        <h4 class="panel-title"> <a data-toggle="collapse" id="pago_4" data-parent="#accordion" href="#collapseFour"> <span class="numberCircuil">Opcion 4</span><strong> PayPal</strong> </a> </h4>
-									                      </div>
-									                      <div id="collapseFour" class="panel-collapse collapse">
-									                        <div class="panel-body">
-									                          <p> Todas las transacciones son seguras y encriptadas. Para saber mas, por favor ve nuestra politica de privacidad.</p>
-									                          <br>
-									                          
-									                          <label class="radio-inline" for="radios-3">
-									                            <input name="radios" id="radios-3" value="4" type="radio">
-									                            <img src="images/site/payment/paypal-small.png" height="18" alt="paypal"> Comprar con Paypal </label>
-									                          <div class="form-group">
-									                            <label for="CommentsOrder2">Agrega comentarios acerca de tu orden</label>
-									                            <textarea id="CommentsOrder2" class="form-control" name="CommentsOrder2" cols="26" rows="3"></textarea>
-									                          </div>
-									                          <div class="form-group clearfix">
-									                            <label class="checkbox-inline" for="checkboxes-0">
-									                              <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">
-									                              He leído y acepto los <a href="terms-conditions.html">Terminos y Condiciones</a> </label>
-									                          </div>
-									                          <div class="pull-right"> <a href="" class="btn btn-primary btn-small " > Procesar pago &nbsp; <i class="fa fa-arrow-circle-right"></i> </a> </div>
-									                        </div>
-									                       </div>
-									                    </div>
-									                    
-									                    
-									                    
-									                  </div>
-									                </div>
-									                
-									                <!--/row--> 
-									                
-									            </div>
-											<?}?>
-            							</div>
-									</div>
-									<div class="tab-pane" id="tab4">
-										<br>
-										<h3><strong>4</strong> - Confirmar</h3>
+								
 										<div class="row userInfo">
                 
 							                <div class="col-lg-12">
-							                    <h2 class="block-title-2"> Review Order </h2>
+							                    <h2 class="block-title-2"> Productos </h2>
 							                </div>
-							                
-							            
-							            
-							            	<div class="col-xs-12 col-sm-12">
+							            <div class="col-xs-12 col-sm-12 col-lg-12">
 							                      <div class="cartContent w100 checkoutReview ">
 							                        <table class="cartTable table-responsive"   style="width:100%">
 							                          <tbody>
 							                          	<tr class="CartProduct cartTableHeader">
-							                              <th style="width:15%"> Product </th>
-							                              <th class="checkoutReviewTdDetails"  >Details</th>
-							                              <th style="width:10%" >Unit Price</th>
-							                              <th class="hidden-xs" style="width:5%">QNT</th>
-							                              <th class="hidden-xs" style="width:10%" >Discount</th>
+							                              <th style="width:15%"> Productos </th>
+							                              <th class="checkoutReviewTdDetails"  >Detalles</th>
+							                              <th style="width:10%" >Valor Unitario</th>
+							                              <th class="hidden-xs" style="width:10%">Cantidad</th>
+							                              <th class="hidden-xs" style="width:10%" >Descuento</th>
 							                              <th style="width:15%">Total</th>
+							                              <th></th>
 							                            </tr>
 							                          	<?php
 										                  	if($this->cart->contents())
@@ -753,20 +217,50 @@
 																$cantidad=0;
 																foreach ($this->cart->contents() as $items) 
 																{
-																	$total=$items['qty']*$items['price'];	
+																	$total=$items['qty']*$items['price']; ?>	
 																	
-																	echo '<tr class="CartProduct">
-												                              <td  class="CartProductThumb"><div> <a href=""><img src="'.$compras[$cantidad]['imagen'].'"></a> </div></td>
-												                              <td ><div class="CartDescription">
-												                                  <h4> <a href="">'.$compras[$cantidad]['nombre'].' </a> </h4>
-												                                  <span class="size">12 x 1.5 L</span>
-												                                </div></td>
-												                              <td class="delete"><div class="price ">'.$items['price'].'</div></td>
-												                              <td class="hidden-xs">'.$items['qty'].'</td>
-												                              <td class="hidden-xs">0</td>
-												                              <td class="price">'.$total.'</td>
-												                            </tr>';
-																		$cantidad++;
+																	<tr class="CartProduct">
+												                        <td  class="CartProductThumb"><div> <a href=""><img src="<?php echo $compras[$cantidad]['imagen']; ?>"></a> </div></td>
+												                        <td ><div class="CartDescription">
+												                        	<h4> <a href=""><?php echo $compras[$cantidad]['nombre']; ?> </a> </h4>
+												                         	</div>
+												                         </td>
+												                         <td class="delete"><div class="price "><?php echo $items['price']; ?></div></td>
+												                         <td class="hidden-xs"><?php echo $items['qty']; ?></td>
+												                         <td class="hidden-xs">0</td>
+												                         <td class="price"><?php echo $total; ?></td>
+												                         <td>
+												                         	<form method="post" action="https://stg.gateway.payulatam.com/ppp-web-gateway">
+												                         	 <?php 
+													                         	 $valortotal= $items['price']*$items['qty'];
+													                         	 $time = $items['options']['time'].$items['id'];
+													                         	 $firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~500238~".$time."~".$valortotal."~USD");
+													                         	 $id_usuario = 0;
+													                         	 if(isset($_GET['usr'])){
+													                         	 	$id_usuario = $_GET['usr'];
+													                         	 }
+													                         	 ?>
+																				  <input name="merchantId"    type="hidden"  value="500238" >
+																				  <input name="accountId"     type="hidden"  value="500538" >
+																				  <input name="description"   type="hidden"  value="<?php echo $compras[$cantidad]['nombre']; ?>"  >
+																				  <input name="referenceCode" type="hidden"  value="<?php echo $time; ?>" >
+																				  <input name="amount"        type="hidden"  value="<?php echo $valortotal;	?>"   >
+																				  <input name="tax"           type="hidden"  value="0"  >
+																				  <input name="taxReturnBase" type="hidden"  value="0" >
+																				  <input name="currency"      type="hidden"  value="USD" >
+																				  <input name="signature"     type="hidden"  value="<?php echo $firma; ?>"  >
+																				  <input name="test"     type="hidden"  value="1"  >
+																				  <input name="extra1"      type="hidden"  value="<?php echo $items['id']."-".$items['qty']; ?>" >
+																				  <input name="extra2"      type="hidden"  value="<?php echo $id_usuario; ?>" >
+																				  <input name="buyerEmail"    type="hidden"  value="edixon.hernandez.c@gmail.com" >
+																				  <input name="responseUrl"    type="hidden"  value="http://oficina.pekcellgold.com/ov/compras/carrito_menu" >
+																				  <input name="confirmationUrl"    type="hidden"  value="http://oficina.pekcellgold.com/ov/compras/registrarVenta" >
+																				  <input type="submit" value="¡¡Comprar!!" class="btn btn-lg btn-success" style="float:right;">
+																			</form>
+												                         </td>
+												                      </tr>
+												                      
+																	<?php $cantidad++;
 																} 
 															}
 										                  
@@ -814,29 +308,7 @@
 							           </div>
 									</div>
 	
-									<div class="form-actions">
-										<div class="row">
-											<div class="col-sm-12">
-												<ul class="pager wizard no-margin">
-													<!--<li class="previous first disabled">
-													<a href="javascript:void(0);" class="btn btn-lg btn-default"> First </a>
-													</li>-->
-													<li class="previous disabled">
-														<a href="javascript:void(0);" class="btn btn-lg btn-default"> Previous </a>
-													</li>
-													<!--<li class="next last">
-													<a href="javascript:void(0);" class="btn btn-lg btn-primary"> Last </a>
-													</li>-->
-													<li class="next">
-														<a href="javascript:void(0);" class="btn btn-lg txt-color-darken"> Next </a>
-													</li>
-												</ul>
-											</div>
-										</div>
-									</div>
-	
 								</div>
-						</form>
 					</div>
 	
 				</div>
@@ -858,6 +330,11 @@
     <script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 	<script type="text/javascript">
+
+	function ProcesarCompra($id){
+			
+
+	}
 			function detalles(id,tipo)
 			{
 				var datos={'id':id,'tipo':tipo};
@@ -1170,6 +647,7 @@
 				
 				});
 			}
+			
 			function completar_compra(id)
 			{
 				switch(id)
@@ -1375,18 +853,7 @@
 				});
 				
 			}
-			function muestra_afiliados()
-			{
-				if($('#comprar_otro').prop('checked'))
-				{
-				 	$("#afiliados").show();
-				}
-				else
-				{
-					$("#afiliados").hide();
-
-				}
-			}
+			
 			function show_grupo_prod()
 			{
 				var grupo=$("#grupo_prod").val();
