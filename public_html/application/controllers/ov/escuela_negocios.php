@@ -45,7 +45,7 @@ class escuela_negocios extends CI_Controller
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		
-		$noticias=$this->modelo_escuela_negocios->get_new_activas();
+		$noticias = $this->modelo_escuela_negocios->get_new_activas();
 		$data=array();
 		$data["noticias"]=$noticias;
 		$this->template->set_theme('desktop');

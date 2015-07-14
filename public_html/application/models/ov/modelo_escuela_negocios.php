@@ -93,8 +93,8 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id and A.status="A
 	}
 	function get_new_activas()
 	{
-		$q=$this->db->query('SELECT b.id id_noticia, a.username usuario, b.nombre nombre, b.contenido contenido, b.imagen imagen, b.fecha fecha FROM users a, noticia b
-		WHERE a.id=b.id_usuario and b.status="ACT" order by fecha desc');
+		$q=$this->db->query('SELECT b.id id_noticia, a.username usuario, UP.nombre nombre_usuario, UP.apellido apellido_usuario, b.nombre nombre, b.contenido contenido, b.imagen imagen, b.fecha fecha FROM users a, noticia b, user_profiles UP
+		WHERE a.id=b.id_usuario and b.status="ACT" and a.id = UP.user_id order by fecha desc');
 		return $q->result();
 	}
 	function noticia_espec($id)

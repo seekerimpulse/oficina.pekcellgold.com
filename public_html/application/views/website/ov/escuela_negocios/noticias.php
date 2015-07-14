@@ -70,7 +70,7 @@
 																	.substr($texto, 0, 100).
 																"... <a href='ver_noticia?idnw=".$noticias[$i]->id_noticia."'>ver mas</a></p>
 																<p><strong>"
-																	.$noticias[$i]->usuario.
+																	.$noticias[$i]->nombre_usuario." ".$noticias[$i]->apellido_usuario.
 																"</strong></p>									
 																	
 															</div>
