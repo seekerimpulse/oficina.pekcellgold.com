@@ -79,8 +79,7 @@
 							name="userfile1" type="file" >Buscar
 						</span><input name="file_nme_2"
 							placeholder="Seleccione una imagen para el e-book" type="text"
-							id="file_frm_2" value="<?php echo explode("/", $archivo[0]->ruta)[3]; ?>"
-							required>
+							id="file_frm_2" >
 					</div>
 				</section>
 			</div>

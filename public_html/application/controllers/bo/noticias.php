@@ -240,7 +240,6 @@ class noticias extends CI_Controller
 		$this->template->set("noticia",$noticia);
 	
 		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
 		$this->template->build('website/bo/oficinaVirtual/noticias/modificar');
 	}
 
