@@ -372,21 +372,23 @@ where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R 
 
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus 
-= UP.id_estatus and R.id_usuario = U.id and U.id like ".$id_buscado." and R.id_red = ".$id_red."
+= UP.id_estatus and R.id_usuario = U.id and U.id like ".$id_buscado." 
 
+group by (U.id) 
 order by (U.id);");
 			return  $q->result();
 	}
 	
 	function get_tabla_por_nombre_buscado($nombre_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus, R.id_red
 	
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and UP.nombre like '".$nombre_buscado.'%'."' and R.id_red = ".$id_red."
-	
+= UP.id_estatus and R.id_usuario = U.id and upper(UP.nombre) like upper('%".$nombre_buscado.'%'."') 
+
+group by (U.id) 
 order by (U.id);");
 		return  $q->result();
 	}
@@ -398,8 +400,9 @@ order by (U.id);");
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and UP.apellido like '".$apellido_buscado.'%'."' and R.id_red = ".$id_red."
-	
+= UP.id_estatus and R.id_usuario = U.id and upper(UP.apellido) like upper('".$apellido_buscado.'%'."')  
+
+group by (U.id) 
 order by (U.id);");
 		return  $q->result();
 	}
@@ -411,8 +414,8 @@ order by (U.id);");
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and U.username like '".$username_buscado.'%'."' and R.id_red = ".$id_red."
-	
+= UP.id_estatus and R.id_usuario = U.id and upper(U.username) like upper('".$username_buscado.'%'."') 
+group by (U.id) 
 order by (U.id);");
 		return  $q->result();
 	}
@@ -424,8 +427,9 @@ order by (U.id);");
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and U.email like '".$email_buscado.'%'."' and R.id_red = ".$id_red."
-	
+= UP.id_estatus and R.id_usuario = U.id and upper(U.email) like upper('".$email_buscado.'%'."') 
+
+group by (U.id) 
 order by (U.id);");
 		return  $q->result();
 	}

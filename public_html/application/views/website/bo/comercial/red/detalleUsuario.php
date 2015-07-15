@@ -1,265 +1,283 @@
 <div style="background: rgb(255, 255, 255) none repeat scroll 0% 0%; margin-right: 0px; margin-left: 0px; padding-bottom: 3rem;" class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-		<form action="/bo/comercial/actualizar_afiliado" method="POST" role="form">
+		<form action="/bo/comercial/actualizar_afiliado" method="POST" role="form" class="smart-form">
 			<legend>Modificar Datos del Afiliado</legend>
 
 
 			<div class="form-group">
 
 				<input type="text" class="hide" name="id" id="id" value = '<?= $detalle[0]->id; ?>' >
-
-				<label for="">Nombre</label>
-				<input type="text" class="form-control" name="nombre" id="nombre"  value = '<?= $detalle[0]->nombre; ?>'>
-
-				<label for="">Apellido</label>
-				<input type="text" class="form-control" name="apellido" id="apellido" value = '<?= $detalle[0]->apellido; ?>'>
-
-				<label for="">Usuario</label>
-				<input type="text" class="form-control" name="username" id="username" value = '<?= $detalle[0]->username; ?>'>
+					<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-12">
+					
+						<section style="width: 50%;" class="col col-2">
+							<label style="width: 100%">Nombre <br>
+								<input type="text" class="form-control" name="nombre" id="nombre"  value = '<?= $detalle[0]->nombre; ?>'>
+							</label>
+						</section>
+						
+						<section style="width: 50%;" class="col col-2">
+							<label for="">Apellido</label>
+							<input type="text" class="form-control" name="apellido" id="apellido" value = '<?= $detalle[0]->apellido; ?>'>
+						</section>
+						
+						<section style="width: 50%;" class="col col-2">
+							<label for="">Usuario</label>
+							<input type="text" class="form-control" name="username" id="username" value = '<?= $detalle[0]->username; ?>'>
+						</section>
+						
+						<section style="width: 50%;" class="col col-2">
+							<label for="">e-mail</label>
+							<input type="text" class="form-control" name="email" id="email" value = '<?= $detalle[0]->email; ?>'>
+						</section>
+					
 				
-				<label for="">e-mail</label>
-				<input type="text" class="form-control" name="email" id="email" value = '<?= $detalle[0]->email; ?>'>
-				
-				<section class="col col-2">
-					Sexo
-
-					<label class="select">
-						<select id="sexo" required name="sexo">
-							
-							<?	foreach ($tiposDeSexo as $key)
-								{
-									if ($key->descripcion == $detalle[0]->sexo) {
-
-									?>
+						<section style="width: 50%;" class="col col-2">
+							Sexo
+		
+							<label class="select">
+								<select id="sexo" required name="sexo">
 									
-										<option value="<?=$key->id_sexo?>"  selected="selected">
-											<?= $key->descripcion;?>	
-										</option>
-															
-								<?	}
-
-									else {
-										?>
-
-										<option value="<?=$key->id_sexo?>" >
-											<?= $key->descripcion;?>	
-										</option>
-								<?  }
-								}
-							?>
-
-						</select>
-					</label>
-				</section>
-
-				<section class="col col-3">
-					<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-						<input required id="datepicker" type="text" name="nacimiento" value="<?=$detalle[0]->fecha_nacimiento?>" >
-					</label>
-																</section>
-
-				<section class="col col-2">
-					Estado Civil
-
-					<label class="select">
-						<select id="estadoCivil" required name="estadoCivil">
-
-							<?	foreach ($tiposDeEstadoCivil as $key)
-								{
-									if ($key->descripcion == $detalle[0]->estado_civil) {
-
+									<?	foreach ($tiposDeSexo as $key)
+										{
+											if ($key->descripcion == $detalle[0]->sexo) {
+		
+											?>
+											
+												<option value="<?=$key->id_sexo?>"  selected="selected">
+													<?= $key->descripcion;?>	
+												</option>
+																	
+										<?	}
+		
+											else {
+												?>
+		
+												<option value="<?=$key->id_sexo?>" >
+													<?= $key->descripcion;?>	
+												</option>
+										<?  }
+										}
 									?>
-									
-										<option value="<?=$key->id_edo_civil?>"  selected="selected">
-											<?= $key->descripcion;?>	
-										</option>
-															
-								<?	}
+		
+								</select>
+							</label>
+						</section>
 
-									else {
-										?>
-
-										<option value="<?=$key->id_edo_civil?>" >
-											<?= $key->descripcion;?>	
-										</option>
-								<?  }
-								}
-							?>
-
-						</select>
-					</label>
-				</section>
-
-				<section class="col col-2">
-					Tipo de Usuario
-				
-					<label class="select">
-						<select id="tipoUsuario" required name="tipoUsuario">
-							
-							<?	foreach ($tiposDeUsuario as $key)
-								{
-									if ($key->descripcion == $detalle[0]->tipo_usuario) {
-
+						
+						
+						<section style="width: 50%;" class="col col-2">
+						Fecha de nacimiento
+							<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
+								<input required id="datepicker" type="text" name="nacimiento" value="<?=$detalle[0]->fecha_nacimiento?>" >
+							</label>
+						</section>
+		
+						<section style="width: 50%;" class="col col-2">
+							Estado Civil
+		
+							<label class="select">
+								<select id="estadoCivil" required name="estadoCivil">
+		
+									<?	foreach ($tiposDeEstadoCivil as $key)
+										{
+											if ($key->descripcion == $detalle[0]->estado_civil) {
+		
+											?>
+											
+												<option value="<?=$key->id_edo_civil?>"  selected="selected">
+													<?= $key->descripcion;?>	
+												</option>
+																	
+										<?	}
+		
+											else {
+												?>
+		
+												<option value="<?=$key->id_edo_civil?>" >
+													<?= $key->descripcion;?>	
+												</option>
+										<?  }
+										}
 									?>
+		
+								</select>
+							</label>
+						</section>
+		
+						<section style="width: 50%;" class="col col-2">
+							Tipo de Usuario
+						
+							<label class="select">
+								<select id="tipoUsuario" required name="tipoUsuario">
 									
-										<option value="<?=$key->id_tipo_usuario?>"  selected="selected">
-											<?= $key->descripcion;?>	
-										</option>
-															
-								<?	}
-
-									else {
-										?>
-
-										<option value="<?=$key->id_tipo_usuario?>" >
-											<?= $key->descripcion;?>	
-										</option>
-								<?  }
-								}
-							?>
-
-						</select>
-					</label>
-				</section>
-
-
-				<section class="col col-2">
-					Nivel de Estudios
-				
-					<label class="select">
-						<select id="estudio" required name="estudio">
-							
-							<?	foreach ($tiposDeEstudio as $key)
-								{
-									if ($key->descripcion == $detalle[0]->estudio) {
-
+									<?	foreach ($tiposDeUsuario as $key)
+										{
+											if ($key->descripcion == $detalle[0]->tipo_usuario) {
+		
+											?>
+											
+												<option value="<?=$key->id_tipo_usuario?>"  selected="selected">
+													<?= $key->descripcion;?>	
+												</option>
+																	
+										<?	}
+		
+											else {
+												?>
+		
+												<option value="<?=$key->id_tipo_usuario?>" >
+													<?= $key->descripcion;?>	
+												</option>
+										<?  }
+										}
 									?>
+		
+								</select>
+							</label>
+						</section>
+		
+		
+						<section style="width: 50%;" class="col col-2">
+							Nivel de Estudios
+						
+							<label class="select">
+								<select id="estudio" required name="estudio">
 									
-										<option value="<?=$key->id_estudio?>"  selected="selected">
-											<?= $key->descripcion;?>	
-										</option>
-															
-								<?	}
-
-									else {
-										?>
-
-										<option value="<?=$key->id_estudio?>" >
-											<?= $key->descripcion;?>	
-										</option>
-								<?  }
-								}
-							?>
-
-						</select>
-					</label>
-				</section>
-
-				<section class="col col-2">
-					Ocupación
-				
-					<label class="select">
-						<select id="ocupacion" required name="ocupacion">
-							
-							<?	foreach ($tiposDeOcupacion as $key)
-								{
-									if ($key->descripcion == $detalle[0]->ocupacion) {
-
+									<?	foreach ($tiposDeEstudio as $key)
+										{
+											if ($key->descripcion == $detalle[0]->estudio) {
+		
+											?>
+											
+												<option value="<?=$key->id_estudio?>"  selected="selected">
+													<?= $key->descripcion;?>	
+												</option>
+																	
+										<?	}
+		
+											else {
+												?>
+		
+												<option value="<?=$key->id_estudio?>" >
+													<?= $key->descripcion;?>	
+												</option>
+										<?  }
+										}
 									?>
+		
+								</select>
+							</label>
+						</section>
+		
+						<section style="width: 50%;" class="col col-2">
+							Ocupación
+						
+							<label class="select">
+								<select id="ocupacion" required name="ocupacion">
 									
-										<option value="<?=$key->id_ocupacion?>"  selected="selected">
-											<?= $key->descripcion;?>	
-										</option>
-															
-								<?	}
-
-									else {
-										?>
-
-										<option value="<?=$key->id_ocupacion?>" >
-											<?= $key->descripcion;?>	
-										</option>
-								<?  }
-								}
-							?>
-
-						</select>
-					</label>
-				</section>
-
-				<section class="col col-2">
-					Tiempo de Dedicación
-				
-					<label class="select">
-						<select id="tiempoDedicado" required name="tiempoDedicado">
-							
-							<?	foreach ($tiposDeTiempoDedicacion as $key)
-								{
-									if ($key->descripcion == $detalle[0]->tiempo_dedicado) {
-
+									<?	foreach ($tiposDeOcupacion as $key)
+										{
+											if ($key->descripcion == $detalle[0]->ocupacion) {
+		
+											?>
+											
+												<option value="<?=$key->id_ocupacion?>"  selected="selected">
+													<?= $key->descripcion;?>	
+												</option>
+																	
+										<?	}
+		
+											else {
+												?>
+		
+												<option value="<?=$key->id_ocupacion?>" >
+													<?= $key->descripcion;?>	
+												</option>
+										<?  }
+										}
 									?>
+		
+								</select>
+							</label>
+						</section>
+		
+						<section style="width: 50%;" class="col col-2">
+							Tiempo de Dedicación
+						
+							<label class="select">
+								<select id="tiempoDedicado" required name="tiempoDedicado">
 									
-										<option value="<?=$key->id_tiempo_dedicado?>"  selected="selected">
-											<?= $key->descripcion;?>	
-										</option>
-															
-								<?	}
-
-									else {
-										?>
-
-										<option value="<?=$key->id_tiempo_dedicado?>" >
-											<?= $key->descripcion;?>	
-										</option>
-								<?  }
-								}
-							?>
-
-						</select>
-					</label>
-				</section>
-
-				<section class="col col-2">
-					Estado de Afiliado
-				
-					<label class="select">
-						<select id="estadoAfiliado" required name="estadoAfiliado">
-							
-							<?	foreach ($tiposDeEstadosAfiliado as $key)
-								{
-									if ($key->descripcion == $detalle[0]->estatus_afiliado) {
-
+									<?	foreach ($tiposDeTiempoDedicacion as $key)
+										{
+											if ($key->descripcion == $detalle[0]->tiempo_dedicado) {
+		
+											?>
+											
+												<option value="<?=$key->id_tiempo_dedicado?>"  selected="selected">
+													<?= $key->descripcion;?>	
+												</option>
+																	
+										<?	}
+		
+											else {
+												?>
+		
+												<option value="<?=$key->id_tiempo_dedicado?>" >
+													<?= $key->descripcion;?>	
+												</option>
+										<?  }
+										}
 									?>
+		
+								</select>
+							</label>
+						</section>
+		
+						<section style="width: 50%;" class="col col-2">
+							Estado de Afiliado
+						
+							<label class="select">
+								<select id="estadoAfiliado" required name="estadoAfiliado">
 									
-										<option value="<?=$key->id_estatus?>"  selected="selected">
-											<?= $key->descripcion;?>	
-										</option>
-															
-								<?	}
-
-									else {
-										?>
-
-										<option value="<?=$key->id_estatus?>" >
-											<?= $key->descripcion;?>	
-										</option>
-								<?  }
-								}
-							?>
-
-						</select>
-					</label>
-				</section>
-
-				<label for="">Nombre del Co-aplicante</label>
-				<input type="text" class="form-control" name="nombreCo" id="nombreCo"  value = '<?= $detalle[0]->nombre_co; ?>'>
-
-				<label for="">Apellido del Co-aplicante</label>
-				<input type="text" class="form-control" name="apellidoCo" id="apellidoCo" value = '<?= $detalle[0]->apellido_co; ?>'>
-
+									<?	foreach ($tiposDeEstadosAfiliado as $key)
+										{
+											if ($key->descripcion == $detalle[0]->estatus_afiliado) {
+		
+											?>
+											
+												<option value="<?=$key->id_estatus?>"  selected="selected">
+													<?= $key->descripcion;?>	
+												</option>
+																	
+										<?	}
+		
+											else {
+												?>
+		
+												<option value="<?=$key->id_estatus?>" >
+													<?= $key->descripcion;?>	
+												</option>
+										<?  }
+										}
+									?>
+		
+								</select>
+							</label>
+						</section>
+						
+						<section style="width: 50%;" class="col col-2">
+							<label for="">Nombre del Co-aplicante</label>
+							<input type="text" class="form-control" name="nombreCo" id="nombreCo"  value = '<?= $detalle[0]->nombre_co; ?>'>
+						</section>
+						
+						<section style="width: 50%;" class="col col-2">
+							<label for="">Apellido del Co-aplicante</label>
+							<input type="text" class="form-control" name="apellidoCo" id="apellidoCo" value = '<?= $detalle[0]->apellido_co; ?>'>
+						</section>
+				</div>
 			</div>
-			<button type="submit" class="btn btn-primary">Actualizar</button>
+			<button type="submit" class="btn btn-success pull-right " onClick="mensaje_notificacion()">Actualizar</button>
 		</form>
 		
 	</div>
@@ -284,6 +302,22 @@ $(function()
 		changeYear: true
 	});
 });
+
+function mensaje_notificacion(){
+	bootbox.dialog({
+		  message: "La modificación del afiliado ha sido exitosa.",
+		  title: "Modificación del afiliado",
+		  buttons: {
+		    success: {
+		      label: "Ok",
+		      className: "hide",
+		      callback: function() {
+		    	  location.href="/bo/comercial/red_tabla?id_red";
+		      }
+		    }
+		  }
+		})
+}
 
 </script>
 <!-- 
