@@ -1451,4 +1451,50 @@ where(a.id_pais=b.Code)");
 		and a.id_combinado=c.sku and c.id=".$id);
 		return $q->result();
 	}
+	
+	function get_config_profundidad_tipo_red()
+	{
+		$q=$this->db->query("SELECT profundidad FROM tipo_red group by profundidad");
+		return $q->result();
+	}
+	
+	function get_config_count_profundidad()
+	{
+		$q=$this->db->query("SELECT count(profundidad)as profundidad FROM valor_comisiones");
+		return $q->result();
+	}
+	
+	function get_config_profundidad()
+	{
+		$q=$this->db->query("SELECT * FROM valor_comisiones;");
+		return $q->result();
+	}
+	
+	function get_config_valor_punto()
+	{
+		$q=$this->db->query("SELECT valor_punto  FROM tipo_red group by valor_punto");
+		return $q->result();
+	}
+	
+	function new_profundidad()
+	{
+		
+		$q=$this->db->query('delete from valor_comisiones');
+		
+		$contador=0;	
+		$dato_profundidad=array();
+		foreach( $_POST['profundidad'] as $profundidad ) {
+			
+			$dato_profundidad[$contador]=array(
+					"profundidad" => $contador+1,
+					"valor"   => $profundidad
+			);
+			$this->db->insert("valor_comisiones",$dato_profundidad[$contador]);
+	
+			$id_nuevo=mysql_insert_id();
+			$contador++;
+		}
+		
+		$this->db->query('update tipo_red set valor_punto="'.$_POST['valorPunto'].'"');
+	}
 }
