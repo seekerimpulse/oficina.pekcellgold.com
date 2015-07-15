@@ -2,6 +2,13 @@
 
 class modelo_compras extends CI_Model
 {
+	function __construct()
+	{
+		parent::__construct();
+	
+		$this->load->model('ov/model_perfil_red');
+	}
+	
 	function get_red($id)
 	{
 		$q=$this->db->query("SELECT id_red FROM red WHERE estatus like 'ACT' and id_usuario=".$id);
@@ -412,7 +419,7 @@ class modelo_compras extends CI_Model
 		}
 		$dato_venta=array(
 			"id_user" 			=> $id_user,
-			"id_estatus"		=> 2,
+			"id_estatus"		=> 3,
 			"costo" 			=> $this->cart->total(),
 			"id_metodo_pago" 	=> $_POST["pago"]
 		);
@@ -592,5 +599,172 @@ class modelo_compras extends CI_Model
 		}
 		$this->cart->destroy();
 		
+	}
+	
+	function registrar_venta($id_usuario, $costo, $id_metodo)
+	{
+	
+		$dato_venta=array(
+				"id_user" 			=> $id_usuario,
+				"id_estatus"		=> 2,
+				"costo" 			=> $costo,
+				"id_metodo_pago" 	=> $id_metodo
+		);
+		$this->db->insert("venta",$dato_venta);
+		$venta = mysql_insert_id();
+		return $venta;
+	}
+	
+	function registrar_envio($venta, $id_usuario, $direccion , $telefono, $correo){
+		$usuario =$this->model_perfil_red->datos_perfil($id_usuario);
+		$edad    =$this->model_perfil_red->edad($id_usuario);
+		$dir    =$this->model_perfil_red->dir($id_usuario);
+		
+		$dato_envio=array(
+				"id_venta"	=> $venta,
+				"nombre" 	=> $usuario[0]->nombre,
+				"apellido" 	=> $usuario[0]->apellido,
+				"cp" 		=> $dir[0]->cp,
+				"id_pais" 	=> $dir[0]->pais,
+				"estado" 	=> $dir[0]->estado,
+				"municipio"	=> $dir[0]->municipio,
+				"colonia" 	=> $dir[0]->colonia,
+				"calle" 	=> $dir[0]->calle,
+				"correo" 	=> $correo,
+				"compania" 	=> "null",
+				"celular" 	=> $telefono,
+				"info_ad"	=> ""
+		);
+		
+		$this->db->insert("cross_venta_envio",$dato_envio);
+	}
+	
+	function registrar_factura($venta, $id_usuario, $direccion , $telefono, $correo){
+		
+		$usuario =$this->model_perfil_red->datos_perfil($id_usuario);
+		$edad    =$this->model_perfil_red->edad($id_usuario);
+		$dir    =$this->model_perfil_red->dir($id_usuario);
+	
+		$dato_fact=array(
+				"id_venta"	=> $venta,
+				"nombre" 	=> $usuario[0]->nombre,
+				"apellido" 	=> $usuario[0]->apellido,
+				"rfc"		=> $usuario[0]->user_id.time(),
+				"cp" 		=> $dir[0]->cp,
+				"id_pais" 	=> $dir[0]->pais,
+				"estado" 	=> $dir[0]->estado,
+				"municipio"	=> $dir[0]->municipio,
+				"colonia" 	=> $dir[0]->colonia,
+				"calle" 	=> $dir[0]->calle,
+				"correo" 	=> $correo,
+				"compania" 	=> "",
+				"celular" 	=> $telefono
+		);
+		$this->db->insert("cross_venta_factura",$dato_fact);
+		
+	}
+	
+	function registrar_venta_mercancia($id_mercancia, $venta, $cantidad){
+		$dato_cross_venta=array(
+				"id_mercancia" 	=> $id_mercancia,
+				"id_venta"		=> $venta,
+				"cantidad"		=> $cantidad,
+				"id_promocion"	=> 0
+		);
+		$this->db->insert("cross_venta_mercancia",$dato_cross_venta);
+		$puntos_q =$this->db->query("select mercancia.real from mercancia where id= ".$id_mercancia);
+		$puntos_res = $puntos_q->result();
+		$puntos= ($puntos_res[0]->real*$cantidad);
+		return $puntos;
+	}
+	
+	function registrar_impuestos($id_mercancia){
+		$q = $this->db->query("SELECT costo from mercancia where id=".$id_mercancia);
+		$mercancia=$q->result();
+		$costo = $mercancia[0]->costo;
+		
+		$total = 0;
+		$q = $this->db->query("Select ci.porcentaje from cat_impuesto ci, cross_merc_impuesto cmi where ci.id_impuesto = cmi.id_impuesto and cmi.id_mercancia = ".$id_mercancia);
+		$impuestos = $q->result();
+		$i=0;
+		
+		foreach($impuestos as $desc)
+		{
+			$mas=($desc->porcentaje*$costo)/100;
+			$total=$total+$mas;
+		}
+		return $total;
+	}
+	
+	function registrar_puntos($id_usuario, $id_mercancia, $cantidad, $subtotal, $total, $venta, $puntos)
+	{
+		
+		$q_alm=$this->db->query("SELECT id_almacen from almacen where web=1");
+		$alm_res = $q_alm->result();
+		$origen = $alm_res[0]->id_almacen;
+		$q_user = $this->db->query("SELECT username from users where id=".$id_usuario);
+		$user_res = $q_user->result();
+		$usuario = $user_res[0]->username;
+		$clave="VENTA".$id_usuario.$usuario;
+		$dato_mov=array(
+						"id_tipo"		=> 2,
+						"entrada"		=> 0,
+						"keyword"		=> $clave,
+						"origen"		=> $origen,
+						"destino"		=> $usuario,
+						"id_mercancia"	=> $id_mercancia,
+						"cantidad"		=> $cantidad,
+						"id_impuesto"	=> 1,
+						"subtotal"		=> $subtotal,
+						"importe"		=> $total,
+						"total"			=> $total,
+						"id_estatus"	=> 1
+				);
+				
+				$this->db->insert("movimiento",$dato_mov);
+				$insert_mov = mysql_insert_id();
+				
+				$dato_surtido=array(
+						"id_almacen_origen"	=> $origen,
+						"id_movimiento"		=> $insert_mov,
+						"estatus"			=> 1,
+						"id_venta"			=> $venta
+				);
+				$this->db->insert("surtido",$dato_surtido);
+	}
+	
+	function ObtenerRedMercancia($id_mercancia){
+		$q = $this->db->query("select id_tipo_mercancia, sku from mercancia where id =".$id_mercancia);
+		$mercancia = $q->result();
+		if($mercancia[0]->id_tipo_mercancia == 1){
+			$q = $this->db->query("SELECT id_grupo as id_red FROM OficinaVirtual.producto where id =".$mercancia[0]->sku);
+		}elseif ($mercancia[0]->id_tipo_mercancia == 2){
+			$q = $this->db->query("SELECT id_red FROM servicio where id=".$mercancia[0]->sku);
+		}else{
+			$q = $this->db->query("SELECT id_red FROM combinado where id=".$mercancia[0]->sku);
+		}
+		$red = $q->result();
+		return $red[0]->id_red; 
+	}
+	
+	function Red($id){
+		$q = $this->db->query("SELECT * FROM OficinaVirtual.tipo_red where id=".$id);	
+		return $q->result();
+	}
+	
+	function CalcularComisionVenta($venta,$afiliado,$puntos,$valor_puntos, $id_red_mercancia){
+		$datos = array(
+				'id_venta' => $venta,
+				'id_afiliado' => $afiliado,
+				'puntos' => $puntos,
+				'valor' => $valor_puntos,
+				'id_red' => $id_red_mercancia
+		);
+		$this->db->insert('comision', $datos);
+	}
+	
+	function ValorComision(){
+		$q = $this->db->query("SELECT * FROM valor_comisiones");
+		return $q->result();
 	}
 }

@@ -60,18 +60,18 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
-													<a href="#">
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
+													<a href="/bo/configuracion/comisiones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-level-up fa-3x"></i>
-															<h1>Niveles/Rangos</h1>
+															<i class="fa fa-money fa-3x"></i>
+															<h1>Comisiones</h1>
 														</div>
 													</a>
 												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
 												   <a href="retenciones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-money fa-3x"></i>
+															<i class="fa fa-dollar fa-3x"></i>
 															<h1>Retenciones</h1>
 														</div>
 													</a>
@@ -92,11 +92,11 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
 													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-money fa-3x"></i>
-															<h1>Alta Bono y periodo de calculo</h1>
+															<i class="fa fa-level-up fa-3x"></i>
+															<h1>Niveles / Rangos<br><br></h1>
 														</div>
 													</a>
 												</div>

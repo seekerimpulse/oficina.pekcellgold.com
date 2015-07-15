@@ -11,6 +11,16 @@
 			</h1>
 		</div>
 	</div>
+		<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+?>	
 	<div class="row">
 		<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
 			<div class="row">
