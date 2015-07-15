@@ -253,8 +253,8 @@
 																				  <input name="extra1"      type="hidden"  value="<?php echo $items['id']."-".$items['qty']; ?>" >
 																				  <input name="extra2"      type="hidden"  value="<?php echo $id_usuario; ?>" >
 																				  <input name="buyerEmail"    type="hidden"  value="edixon.hernandez.c@gmail.com" >
-																				  <input name="responseUrl"    type="hidden"  value="http://oficina.pekcellgold.com/ov/compras/carrito_menu" >
-																				  <input name="confirmationUrl"    type="hidden"  value="oficina.pekcellgold/ov/compras/registrarVenta" >
+																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
+																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold/ov/compras/registrarVenta" >
 																				  <input type="submit" value="¡¡Comprar!!" class="btn btn-lg btn-success" style="float:right;">
 																			</form>
 												                         </td>
