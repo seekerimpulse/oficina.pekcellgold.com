@@ -40,7 +40,55 @@ class configuracion extends CI_Controller
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/configuracion/index');
 	}
+	
+	function comisiones()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+		
+		$profundidad  = $this->model_admin->get_config_profundidad_tipo_red();
+		$countProfundidad  = $this->model_admin->get_config_count_profundidad();
+		
+		if($profundidad[0]->profundidad!=$countProfundidad[0]->profundidad){
+			$configuracion_profundidad  = false;
+		}else {
+		
+		$configuracion_profundidad  = $this->model_admin->get_config_profundidad();
+		}
+		
+		$valor_punto  = $this->model_admin->get_config_valor_punto();
 
+		$this->template->set("profundidad",$profundidad);
+		$this->template->set("configuracion_profundidad",$configuracion_profundidad);
+		$this->template->set("valor_punto",$valor_punto);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/comisiones');
+	}
+
+	function actualizar_comisiones(){
+		
+		$this->model_admin->new_profundidad();
+		redirect('bo/configuracion/comisiones');
+	}
+	
 	function tipoRed()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
