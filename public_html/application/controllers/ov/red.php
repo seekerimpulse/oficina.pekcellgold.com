@@ -149,7 +149,6 @@ class red extends CI_Controller
 		$this->template->set("afiliados",$afiliados);
 		$this->template->set("afiliadostree",$afiliadostree);
 		$this->template->set("img_perfil",$user);
-	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');

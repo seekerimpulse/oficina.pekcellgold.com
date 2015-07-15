@@ -35,6 +35,12 @@ class Model_user_profiles extends CI_Model{
 
 		$this->db->update("user_profiles",$datos,"user_id = ".$user_id);
 	}
+	
+	function EstadoUsuario($id){
+		$q = $this->db->query("select id_estatus from user_profiles where user_id=".$id);
+		$id_padre = $q->result();
+		return $id_padre[0]->id_estatus;
+	}
 
 }
 

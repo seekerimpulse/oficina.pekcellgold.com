@@ -14,7 +14,10 @@ class compras extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/general');
 		$this->load->model('ov/modelo_compras');
+		$this->load->model('ov/model_perfil_red');
+		$this->load->model('ov/model_afiliado');
 		$this->load->model('model_tipo_red');
+		$this->load->model('model_user_profiles');
 	}
 
 function index()
@@ -443,34 +446,31 @@ function index()
 			redirect('/auth');
 		}
 		if(isset($_GET['transactionState'])){
-			//if($_GET['transactionState'] == '1'){
-				$extra1 = explode("-", $_GET['extra1']);
-				$id_mercancia = $extra1[0];
-				$cantidad = $extra1[1];
+			if($_GET['transactionState'] == '1'){
 				$error = "La transacion se a realizado con exito.";
 				$this->session->set_flashdata('error', $error);
-				
-				$producto_continua = array();
-				foreach ($this->cart->contents() as $producto){
+			}else{
+				$error = "La transacion ha sido rezhazada.";
+				$this->session->set_flashdata('error', $error);
+			}
+			$extra1 = explode("-", $_GET['extra1']);
+			$id_mercancia = $extra1[0];
+			$producto_continua = array();
+			foreach ($this->cart->contents() as $producto){
 					
-					if($producto['id'] == $id_mercancia){
-						
-						$this->cart->destroy();
-						
-					}else{
-						$add_cart = array(
-								'id'      => $producto['id'],
-								'qty'     => $producto['qty'],
-								'price'   => $producto['price'],
-								'name'    => $producto['name'],
-								'options' => $producto['options']
-						);
-						$producto_continua[] = $add_cart;
-					}
+				if($producto['id'] != $id_mercancia){
+					$add_cart = array(
+							'id'      => $producto['id'],
+							'qty'     => $producto['qty'],
+							'price'   => $producto['price'],
+							'name'    => $producto['name'],
+							'options' => $producto['options']
+					);
+					$producto_continua[] = $add_cart;
 				}
-				$this->cart->insert($producto);
-			//}
-			
+			}
+			$this->cart->destroy();
+			$this->cart->insert($producto_continua);
 		}
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
@@ -2920,8 +2920,7 @@ function index()
 	function EnviarPayuLatam(){
 		
 		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
-		$this->template->set_partial('footer', 'website/ov/footer');
+		
 		$this->template->build('website/ov/compra_reporte/prueba');
 	}
 	function registrarVenta(){
@@ -2971,10 +2970,52 @@ function index()
 					$producto_continua[] = $add_cart;
 				}
 			}
-			$this->cart->insert($producto);
+			$this->cart->insert($producto_continua);
 			
-		//}
+			$id_red_mercancia = $this->modelo_compras->ObtenerRedMercancia($id_mercancia);
+			$red = $this->modelo_compras->Red($id_red_mercancia);
+			
+			$valor_puntos = $puntos * $red[0]->valor_punto;
+			$this->modelo_compras->CalcularComisionVenta($venta,$id_usuario,$puntos,$valor_puntos, $id_red_mercancia);
+			
+			$costo_comision = $this->modelo_compras->ValorComision();
+			$id_afiliado = $id_usuario;
+			
+			for($i = 1; $i <= $red[0]->profundidad; $i++){
+				$id_padre = $this->model_perfil_red->ConsultarIdPadre($id_afiliado);
+				if($this->ValidarAfiliadoPadre($id_afiliado, $red[0]->id, $i)){
+					$valor_comision = ($costo_comision[$i-1]->valor * $valor_puntos)/100;
+					$this->modelo_compras->CalcularComisionVenta($venta,$id_padre,$puntos,$valor_comision, $id_red_mercancia);
+					
+				}
+				$id_afiliado = $id_padre;
+				
+			}
+			return "Regsitro Corecto";
+		//}	
+	}
+	
+	private function ValidarAfiliadoPadre($id_afiliado, $red_mercancia, $frontal){
 		
+		$id_padre = $this->model_perfil_red->ConsultarIdPadre($id_afiliado);
+		if(!isset($id_padre)){
+			return false;
+		}
+		$id_red_padre = $this->model_perfil_red->ConsultarIdRedPadre($id_afiliado);
+		$red2  = $this->model_afiliado->RedAfiliado($id_padre, $id_red_padre);
+		$estado = $this->model_user_profiles->EstadoUsuario($id_padre);
 		
+		if($id_red_padre == $red_mercancia && $estado == 1){
+			
+			if($red2[0]->premium != 2){
+				return true;
+			}elseif ($frontal == 2){
+				return false;
+			}else{
+				return true;
+			}
+		}else{
+			return false;
+		}
 	}
 }

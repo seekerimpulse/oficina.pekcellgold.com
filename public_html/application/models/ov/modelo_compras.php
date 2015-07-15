@@ -672,9 +672,9 @@ class modelo_compras extends CI_Model
 				"id_promocion"	=> 0
 		);
 		$this->db->insert("cross_venta_mercancia",$dato_cross_venta);
-		$puntos_q =$this->db->query("select puntos_comisionables from mercancia where id=".$id_mercancia);
+		$puntos_q =$this->db->query("select mercancia.real from mercancia where id= ".$id_mercancia);
 		$puntos_res = $puntos_q->result();
-		$puntos= ($puntos_res[0]->puntos_comisionables*$cantidad);
+		$puntos= ($puntos_res[0]->real*$cantidad);
 		return $puntos;
 	}
 	
@@ -731,14 +731,40 @@ class modelo_compras extends CI_Model
 						"id_venta"			=> $venta
 				);
 				$this->db->insert("surtido",$dato_surtido);
-				
-				
-				$dato_comision=array(
-						"id_venta"	=> $venta,
-						"puntos"	=> $puntos
-				);
-				$this->db->insert("comision",$dato_comision);
-		
-		
+	}
+	
+	function ObtenerRedMercancia($id_mercancia){
+		$q = $this->db->query("select id_tipo_mercancia, sku from mercancia where id =".$id_mercancia);
+		$mercancia = $q->result();
+		if($mercancia[0]->id_tipo_mercancia == 1){
+			$q = $this->db->query("SELECT id_grupo as id_red FROM OficinaVirtual.producto where id =".$mercancia[0]->sku);
+		}elseif ($mercancia[0]->id_tipo_mercancia == 2){
+			$q = $this->db->query("SELECT id_red FROM servicio where id=".$mercancia[0]->sku);
+		}else{
+			$q = $this->db->query("SELECT id_red FROM combinado where id=".$mercancia[0]->sku);
+		}
+		$red = $q->result();
+		return $red[0]->id_red; 
+	}
+	
+	function Red($id){
+		$q = $this->db->query("SELECT * FROM OficinaVirtual.tipo_red where id=".$id);	
+		return $q->result();
+	}
+	
+	function CalcularComisionVenta($venta,$afiliado,$puntos,$valor_puntos, $id_red_mercancia){
+		$datos = array(
+				'id_venta' => $venta,
+				'id_afiliado' => $afiliado,
+				'puntos' => $puntos,
+				'valor' => $valor_puntos,
+				'id_red' => $id_red_mercancia
+		);
+		$this->db->insert('comision', $datos);
+	}
+	
+	function ValorComision(){
+		$q = $this->db->query("SELECT * FROM valor_comisiones");
+		return $q->result();
 	}
 }

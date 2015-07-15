@@ -230,18 +230,18 @@
 												                         <td class="hidden-xs">0</td>
 												                         <td class="price"><?php echo $total; ?></td>
 												                         <td>
-												                         	<form method="post" action="https://stg.gateway.payulatam.com/ppp-web-gateway">
+												                         	<form method="post" action="https://gateway.payulatam.com/ppp-web-gateway">
 												                         	 <?php 
 													                         	 $valortotal= $items['price']*$items['qty'];
 													                         	 $time = $items['options']['time'].$items['id'];
-													                         	 $firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~500238~".$time."~".$valortotal."~USD");
+													                         	 $firma = md5("QT3lJ62twjPqT6tfqZ44IGiR93~538153~".$time."~".$valortotal."~USD");
 													                         	 $id_usuario = 0;
 													                         	 if(isset($_GET['usr'])){
 													                         	 	$id_usuario = $_GET['usr'];
 													                         	 }
 													                         	 ?>
-																				  <input name="merchantId"    type="hidden"  value="500238" >
-																				  <input name="accountId"     type="hidden"  value="500538" >
+																				  <input name="merchantId"    type="hidden"  value="538153" >
+																				  <input name="accountId"     type="hidden"  value="540213" >
 																				  <input name="description"   type="hidden"  value="<?php echo $compras[$cantidad]['nombre']; ?>"  >
 																				  <input name="referenceCode" type="hidden"  value="<?php echo $time; ?>" >
 																				  <input name="amount"        type="hidden"  value="<?php echo $valortotal;	?>"   >
@@ -254,7 +254,7 @@
 																				  <input name="extra2"      type="hidden"  value="<?php echo $id_usuario; ?>" >
 																				  <input name="buyerEmail"    type="hidden"  value="edixon.hernandez.c@gmail.com" >
 																				  <input name="responseUrl"    type="hidden"  value="http://oficina.pekcellgold.com/ov/compras/carrito_menu" >
-																				  <input name="confirmationUrl"    type="hidden"  value="http://oficina.pekcellgold.com/ov/compras/registrarVenta" >
+																				  <input name="confirmationUrl"    type="hidden"  value="oficina.pekcellgold/ov/compras/registrarVenta" >
 																				  <input type="submit" value="¡¡Comprar!!" class="btn btn-lg btn-success" style="float:right;">
 																			</form>
 												                         </td>

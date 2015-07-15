@@ -595,5 +595,17 @@ order by (U.id);");
 		$q=$this->db->query("select * from coaplicante where id_user=".$id);
 		return $q->result();
 	}
+	
+	function ConsultarIdPadre($id){
+		$q = $this->db->query("select debajo_de from afiliar where id_afiliado=".$id);
+		$id_padre = $q->result();
+		return $id_padre[0]->debajo_de;
+	}
+	
+	function ConsultarIdRedPadre($id){
+		$q = $this->db->query("select id_red from afiliar where id_afiliado=".$id);
+		$id_padre = $q->result();
+		return $id_padre[0]->id_red;
+	}
 
 }
