@@ -105,7 +105,9 @@ class usuarios extends CI_Controller
 		}
 		
 		
-		$id              = 2;
+		$id              = $_GET['id_afiliado'];
+		$id_red			 = $_GET['id_red'];
+		$nombre_red		 = $this->model_tipo_red->traer_nombre_red($id_red);
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
 		$telefonos       = $this->model_perfil_red->telefonos($id);
 		$sexo            = $this->model_perfil_red->sexo();
@@ -138,7 +140,10 @@ class usuarios extends CI_Controller
 			}
 		}
 		
+		
 		$this->template->set("id",$id);
+		$this->template->set("id_red",$id_red);
+		$this->template->set("nombre_red",$nombre_red);
 		$this->template->set("redes",$red);
 		$this->template->set("style",$style);
 		$this->template->set("afiliadostree",$afiliadostree);
@@ -157,7 +162,7 @@ class usuarios extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/bo/comercial/red/geneologico');
+		$this->template->build('website/bo/comercial/red/geneologico_por_red');
 	}
 	
 	function grafico1(){
@@ -174,8 +179,10 @@ class usuarios extends CI_Controller
 			redirect('/auth/logout');
 		}
 		
-	
-		$id              = 2;
+		$id              = $_GET['id_afiliado'];
+		$id_red			 = $_GET['id_red'];
+		$nombre_red		 = $this->model_tipo_red->traer_nombre_red($id_red);
+		
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
 		$telefonos       = $this->model_perfil_red->telefonos($id);
 		$sexo            = $this->model_perfil_red->sexo();
@@ -209,6 +216,8 @@ class usuarios extends CI_Controller
 		}
 	
 		$this->template->set("id",$id);
+		$this->template->set("id_red",$id_red);
+		$this->template->set("nombre_red",$nombre_red);
 		$this->template->set("redes",$red);
 		$this->template->set("style",$style);
 		$this->template->set("afiliados",$afiliados);
@@ -227,7 +236,7 @@ class usuarios extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/bo/comercial/red/grafico1');
+		$this->template->build('website/bo/comercial/red/grafico_1_por_red');
 	}
 	
 	function grafico2(){
@@ -245,7 +254,10 @@ class usuarios extends CI_Controller
 		}
 	
 	
-		$id              = 2;
+		$id              = $_GET['id_afiliado'];
+		$id_red			 = $_GET['id_red'];
+		$nombre_red		 = $this->model_tipo_red->traer_nombre_red($id_red);
+		
 		$usuario         = $this->model_perfil_red->datos_perfil($id);
 		$telefonos       = $this->model_perfil_red->telefonos($id);
 		$sexo            = $this->model_perfil_red->sexo();
@@ -279,6 +291,8 @@ class usuarios extends CI_Controller
 		}
 	
 		$this->template->set("id",$id);
+		$this->template->set("id_red",$id_red);
+		$this->template->set("nombre_red",$nombre_red);
 		$this->template->set("redes",$red);
 		$this->template->set("style",$style);
 		$this->template->set("afiliadostree",$afiliadostree);
@@ -296,7 +310,7 @@ class usuarios extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/bo/comercial/red/genealogico2');
+		$this->template->build('website/bo/comercial/red/genealogico2_por_red');
 	}
 	
 	function subred()

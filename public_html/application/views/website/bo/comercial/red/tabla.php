@@ -40,27 +40,60 @@
 
 					<!-- widget div-->
 					<div>
-			<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
-				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
-					<center>
-					<a title="Editar" href="" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-					<br>Editar
-					</center>
+			<div class="row col-xs-12 col-md-12 col-sm-12 col-lg-12 pull-right">
+				
+				<div class="col-xs-0 col-md-6 col-sm-0 col-lg-5">
+					
 				</div>
-				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 				<center>	
 					<a title="Bloquear" href="" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
 					<br>Bloquear
 					</center>
 				</div>
-				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
 						<a title="Desbloquear" href="" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
 						<br>Desbloquear
 					</center>
-					<br>
-					<br>
 				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+					<a title="Editar" href="" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+					<br>Editar
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+					<a title="Sustituir" href="" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+					<br>Sustituir
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Genealogico" href="" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
+						<br>Genealogico
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Grafico 1" href="" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
+						<br>Grafico 1
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Grafico 2" href="" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
+						<br>Grafico 2
+					</center>
+				</div>
+				
 			</div>
 			<form name="formulario" action="/bo/comercial/actualizar_tabla" method="post">
 			<br>

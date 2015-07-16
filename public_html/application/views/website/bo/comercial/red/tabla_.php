@@ -40,29 +40,64 @@
 
 					<!-- widget div-->
 					<div>
-			<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
-				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
-					<center>
-					<a title="Editar" href="" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-					<br>Editar
-					</center>
+			<div class="row col-xs-12 col-md-12 col-sm-12 col-lg-12 pull-right">
+				
+				<div class="col-xs-0 col-md-6 col-sm-0 col-lg-5">
+					
 				</div>
-				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 				<center>	
 					<a title="Bloquear" href="" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
 					<br>Bloquear
 					</center>
 				</div>
-				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
 						<a title="Desbloquear" href="" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
 						<br>Desbloquear
 					</center>
 				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+					<a title="Editar" href="" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+					<br>Editar
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+					<a title="Sustituir" href="" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+					<br>Sustituir
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Genealogico" href="" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
+						<br>Genealogico
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Grafico 1" href="" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
+						<br>Grafico 1
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Grafico 2" href="" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
+						<br>Grafico 2
+					</center>
+				</div>
+				
 			</div>
 			<form name="formulario" action="/bo/comercial/actualizar_tabla" method="post" class="smart-form">
 			
-			<div class="row col-xs-13 col-md-4 col-sm-4 col-lg-2 smart-form" style="padding-left: 2%;">
+			<div class="row col-xs-11 col-md-4 col-sm-4 col-lg-2 smart-form" style="padding-left: 6.8%;">
 			<br>
 				<br>
 			
@@ -83,10 +118,10 @@
 					<section class="col col-6" style="display: none;">
 					<input class="hide"  name = "id_red" id = "id_red" value='<?= $id_red?>'>
 				</section>
-				
+				<br>
 			</div>
 			
-			<div class="row col-xs-13 col-md-12 col-sm-12 col-lg-12">
+			<div class="row col-xs-12 col-md-12 col-sm-12 col-lg-12">
 				
 				<section  style="width: 100%; padding-left: 1%;" >
 				
@@ -126,11 +161,11 @@
 					<tr>
 						<th>ID</th>
 		                <th data-class="expand">Imagen</th>
-		                <th data-hide="phone,tablet">Usuario</th>
+		                <th data-hide="phone">Usuario</th>
 			            <th data-hide="phone,tablet">Nombre</th>
 			            <th data-hide="phone,tablet">Apellido</th>
 				        <th data-hide="phone,tablet">e-mail</th>
-				        <th data-hide="phone,tablet">Tipo usuario</th>
+				        <th data-hide="phone">Tipo usuario</th>
 				        <th>Accion</th>
 			        </tr>
 			    </thead>
@@ -167,6 +202,10 @@
 							<?}?>
 							
 					        <a title="Editar" style='cursor: pointer;' onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+					        <a title="Sustituir" style='cursor: pointer;' onclick="sustituir_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+					        <a title="Genealogico" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_genealogico?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
+					        <a title="Grafico 1" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_1?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
+					        <a title="Grafico 2" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
 						</td>
 				        
 				    </tr>

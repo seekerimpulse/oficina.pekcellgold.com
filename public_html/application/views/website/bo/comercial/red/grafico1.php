@@ -3,12 +3,21 @@
                <div id="content">
 
                     <div class="row">
-                         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                               <h1 class="page-title txt-color-blueDark">
-                                   <a href="/bo/comercial/red"><i class="fa fa-home"></i> Inicio</a>
-                                   <span>>
-                                   Red
-                                   </span>
+                                    <a href="/bo/dashboard"> Menu</a> 
+									<span>>
+										<a href="/bo/comercial">Comercial</a>
+									</span>
+									<span>>
+										<a href="/bo/comercial/red">Red</a>
+									</span>
+									<span>>
+										<a href="/bo/comercial/red_tabla">Listar Afiliados</a>
+									</span>
+									<span>>
+										<a href="/bo/comercial/tipos_de_red_grafico_1?id_afiliado=<?php echo $id;?>">Selección de Red</a> > Grafico 1 <?php echo $nombre_red[0]->nombre;?>
+									</span>
                               </h1>
                          </div>
                     </div>
@@ -37,7 +46,7 @@
                                         -->
                                         <header>
                                              <span class="widget-icon"> <i class="fa fa-sitemap"></i> </span>
-                                             <h2>Genialogico</h2>
+                                             <h2>Grafico 1</h2>
                     
                                         </header>
                     

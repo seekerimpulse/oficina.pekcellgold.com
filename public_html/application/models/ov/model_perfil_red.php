@@ -333,7 +333,7 @@ class model_perfil_red extends CI_Model
 		$q=$this->db->query("select Code, Name, Code2 from Country where  estatus = 'ACT'");
 		return $q->result();
 	}
-	function get_afiliados_($id, $id_afiliado)
+	/*function get_afiliados_($id, $id_afiliado)
 	{
 		$q=$this->db->query("select *,(select nombre from user_profiles where user_id=id_afiliado) afiliado,
 			(select apellido from user_profiles where user_id=id_afiliado) afiliado_p,
@@ -342,7 +342,7 @@ class model_perfil_red extends CI_Model
 			(select (select url from cat_img b where a.id_img=b.id_img) url from cross_img_user a where id_user = id_afiliado) img
 			from afiliar where id_red=".$id." and debajo_de=".$id_afiliado." order by lado");
 		return $q->result();
-	}
+	}*/
 	function get_afiliados($id, $id_afiliado)
 	{
 		

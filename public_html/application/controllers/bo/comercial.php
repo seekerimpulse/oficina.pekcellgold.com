@@ -267,7 +267,7 @@ class comercial extends CI_Controller
 		$this->template->build('website/bo/comercial/altas/index');
 	}
 	
-	function tipos_de_red()
+	/*function tipos_de_red()
 	{
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -295,6 +295,108 @@ class comercial extends CI_Controller
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/bo/comercial/red/redes_ver');
+	}*/
+	
+	function tipos_de_red_genealogico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+	
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style         = $this->general->get_style($id);
+	
+		$redes = $this->model_tipo_red->listarTodos();
+		
+		$id_afiliado = $_GET['id_afiliado'];
+		
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("id_afiliado",$id_afiliado);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/red/redes_ver_genealogico');
+	}
+	
+	function tipos_de_red_grafico_1()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+	
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style         = $this->general->get_style($id);
+	
+		$redes = $this->model_tipo_red->listarTodos();
+		
+		$id_afiliado = $_GET['id_afiliado'];
+		
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("id_afiliado",$id_afiliado);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/red/redes_ver_grafico_1');
+	}
+	
+	function tipos_de_red_grafico_2()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+	
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style         = $this->general->get_style($id);
+	
+		$redes = $this->model_tipo_red->listarTodos();
+		
+		$id_afiliado = $_GET['id_afiliado'];
+		
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("id_afiliado",$id_afiliado);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/red/redes_ver_grafico_2');
 	}
 	
 	function red()
