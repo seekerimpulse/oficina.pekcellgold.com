@@ -25,6 +25,16 @@
 			</div>'; 
 	}
 ?>		
+<?php if($this->session->flashdata('success')) {
+		echo '<div class="alert alert-success fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Exito! </strong> '.$this->session->flashdata('success').'
+			</div>'; 
+	}
+?>	
 	<section id="widget-grid" class="">
 	  <div id="myTabContent1" class="tab-content padding-10" style="margin-bottom: 6rem;">
 		<div class="row">
@@ -68,7 +78,7 @@
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-					<a title="Sustituir" href="" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+					<a title="Sustituir" href="" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a>
 					<br>Sustituir
 					</center>
 				</div>

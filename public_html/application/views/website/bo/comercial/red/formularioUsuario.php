@@ -7,30 +7,38 @@
 
 			<div class="form-group">
 
-				<input type="text" class="hide" name="id" id="id" value = '<?= $detalle[0]->id; ?>' >
+				<input type="text" class="hide" name="id" id="id" value = '<?= $id_afiliado; ?>' >
 					<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-12">
 					
 						<section style="width: 50%;" class="col col-2">
 							<label style="width: 100%">Nombre <br>
-								<input type="text" class="form-control" name="nombre" id="nombre"  value = '<?= $detalle[0]->nombre; ?>'>
+								<input type="text" class="form-control" name="nombre" id="nombre" required>
 							</label>
 						</section>
 						
 						<section style="width: 50%;" class="col col-2">
 							<label for="">Apellido</label>
-							<input type="text" class="form-control" name="apellido" id="apellido" value = '<?= $detalle[0]->apellido; ?>'>
+							<input type="text" class="form-control" name="apellido" id="apellido" required>
 						</section>
 						
 						<section id="usuario" style="width: 50%;" class="col col-2">
 							<label for="">Usuario</label>
-							<input onkeyup="use_username()" type="text" class="form-control" name="username" id="username" value = '<?= $detalle[0]->username; ?>'>
+							<input type="text" onkeyup="use_username()" class="form-control" name="username" id="username" required>
 						</section>
 						
 						<section id="correo" style="width: 50%;" class="col col-2">
-							<label for="">e-mail</label>
-							<input onkeyup="use_mail()" type="text" class="form-control" name="email" id="email" value = '<?= $detalle[0]->email; ?>'>
+							e-mail
+							<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
+								<input type="text" onkeyup="use_mail()" class="form-control" name="email" id="email" required>
+							</label>
 						</section>
 					
+						<section style="width: 50%;" class="col col-2">
+							
+							<label class="input"> 
+								<input type="text" class="hide" name="" id="" >
+							</label>
+						</section>
 				
 						<section style="width: 50%;" class="col col-2">
 							Sexo
@@ -39,24 +47,11 @@
 								<select id="sexo" required name="sexo">
 									
 									<?	foreach ($tiposDeSexo as $key)
-										{
-											if ($key->descripcion == $detalle[0]->sexo) {
-		
-											?>
-											
-												<option value="<?=$key->id_sexo?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
+										{		?>
 												<option value="<?=$key->id_sexo?>" >
 													<?= $key->descripcion;?>	
 												</option>
-										<?  }
+										<?  
 										}
 									?>
 		
@@ -69,7 +64,7 @@
 						<section style="width: 50%;" class="col col-2">
 						Fecha de nacimiento
 							<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-								<input required id="datepicker" type="text" name="nacimiento" value="<?=$detalle[0]->fecha_nacimiento?>" >
+								<input required id="datepicker" type="text" name="nacimiento" >
 							</label>
 						</section>
 		
@@ -81,23 +76,11 @@
 		
 									<?	foreach ($tiposDeEstadoCivil as $key)
 										{
-											if ($key->descripcion == $detalle[0]->estado_civil) {
-		
 											?>
-											
-												<option value="<?=$key->id_edo_civil?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
 												<option value="<?=$key->id_edo_civil?>" >
 													<?= $key->descripcion;?>	
 												</option>
-										<?  }
+										<?  
 										}
 									?>
 		
@@ -111,25 +94,13 @@
 							<label class="hide">
 								<select id="tipoUsuario" required name="tipoUsuario">
 									
-									<?/*	foreach ($tiposDeUsuario as $key)
+									<?	/*foreach ($tiposDeUsuario as $key)
 										{
-											if ($key->descripcion == $detalle[0]->tipo_usuario) {
-		
 											?>
-											
-												<option value="<?=$key->id_tipo_usuario?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
 												<option value="<?=$key->id_tipo_usuario?>" >
 													<?= $key->descripcion;?>	
 												</option>
-										<?  }
+										<?  
 										}*/
 									?>
 		
@@ -146,23 +117,11 @@
 									
 									<?	foreach ($tiposDeEstudio as $key)
 										{
-											if ($key->descripcion == $detalle[0]->estudio) {
-		
 											?>
-											
-												<option value="<?=$key->id_estudio?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
 												<option value="<?=$key->id_estudio?>" >
 													<?= $key->descripcion;?>	
 												</option>
-										<?  }
+										<?  
 										}
 									?>
 		
@@ -178,23 +137,11 @@
 									
 									<?	foreach ($tiposDeOcupacion as $key)
 										{
-											if ($key->descripcion == $detalle[0]->ocupacion) {
-		
 											?>
-											
-												<option value="<?=$key->id_ocupacion?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
 												<option value="<?=$key->id_ocupacion?>" >
 													<?= $key->descripcion;?>	
 												</option>
-										<?  }
+										<?  
 										}
 									?>
 		
@@ -209,24 +156,11 @@
 								<select id="tiempoDedicado" required name="tiempoDedicado">
 									
 									<?	foreach ($tiposDeTiempoDedicacion as $key)
-										{
-											if ($key->descripcion == $detalle[0]->tiempo_dedicado) {
-		
-											?>
-											
-												<option value="<?=$key->id_tiempo_dedicado?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
+										{?>
 												<option value="<?=$key->id_tiempo_dedicado?>" >
 													<?= $key->descripcion;?>	
 												</option>
-										<?  }
+										<?  
 										}
 									?>
 		
@@ -241,24 +175,12 @@
 								<select id="estadoAfiliado" required name="estadoAfiliado">
 									
 									<?	foreach ($tiposDeEstadosAfiliado as $key)
-										{
-											if ($key->descripcion == $detalle[0]->estatus_afiliado) {
-		
-											?>
+										{									?>
 											
-												<option value="<?=$key->id_estatus?>"  selected="selected">
-													<?= $key->descripcion;?>	
-												</option>
-																	
-										<?	}
-		
-											else {
-												?>
-		
 												<option value="<?=$key->id_estatus?>" >
 													<?= $key->descripcion;?>	
 												</option>
-										<?  }
+										<?  
 										}
 									?>
 		
@@ -268,16 +190,16 @@
 						
 						<section style="width: 50%;" class="col col-2">
 							<label for="">Nombre del Co-aplicante</label>
-							<input type="text" class="form-control" name="nombreCo" id="nombreCo"  value = '<?= $detalle[0]->nombre_co; ?>'>
+							<input type="text" class="form-control" name="nombreCo" id="nombreCo"  >
 						</section>
 						
 						<section style="width: 50%;" class="col col-2">
 							<label for="">Apellido del Co-aplicante</label>
-							<input type="text" class="form-control" name="apellidoCo" id="apellidoCo" value = '<?= $detalle[0]->apellido_co; ?>'>
+							<input type="text" class="form-control" name="apellidoCo" id="apellidoCo" >
 						</section>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-success pull-right " onClick="mensaje_notificacion()">Actualizar</button>
+			<button type="submit" class="btn btn-success pull-right " >Actualizar</button>
 		</form>
 		
 	</div>
@@ -303,7 +225,7 @@ $(function()
 	});
 });
 
-/*function mensaje_notificacion(){
+function mensaje_notificacion(){
 	bootbox.dialog({
 		  message: "La modificación del afiliado ha sido exitosa.",
 		  title: "Modificación del afiliado",
@@ -317,7 +239,7 @@ $(function()
 		    }
 		  }
 		})
-}*/
+}
 
 function use_username()
 {

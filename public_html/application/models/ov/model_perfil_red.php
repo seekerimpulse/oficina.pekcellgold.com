@@ -439,11 +439,25 @@ order by (U.id);");
 		$q=$this->db->query("select * from users where email like '".$_POST['mail']."'");
 		return $q->result();
 	}
+	
+	function use_mail_modificar()
+	{
+		$q=$this->db->query("select * from users where email like '".$_POST['mail']."' and id!= '".$_POST['id']."'");
+		return $q->result();
+	}
+	
 	function use_username()
 	{
 		$q=$this->db->query("select * from users where username like '".$_POST['username']."'");
 		return $q->result();
 	}
+	
+	function use_username_modificar()
+	{
+		$q=$this->db->query("select * from users where username like '".$_POST['username']."' and id!= '".$_POST['id']."'");
+		return $q->result();
+	}
+	
 	function use_keyword()
 	{
 		$q=$this->db->query("select * from user_profiles where keyword like '".$_POST['keyword']."'");

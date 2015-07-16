@@ -68,7 +68,7 @@
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-					<a title="Sustituir" href="" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+					<a title="Sustituir" href="" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a>
 					<br>Sustituir
 					</center>
 				</div>
@@ -202,7 +202,7 @@
 							<?}?>
 							
 					        <a title="Editar" style='cursor: pointer;' onclick="modificar_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-					        <a title="Sustituir" style='cursor: pointer;' onclick="sustituir_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+					        <a title="Sustituir" style='cursor: pointer;' onclick="sustituir_afiliado(<?php echo $afiliado->id;?>)" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a>
 					        <a title="Genealogico" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_genealogico?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
 					        <a title="Grafico 1" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_1?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
 					        <a title="Grafico 2" style='cursor: pointer;' href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $afiliado->id;?>" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
@@ -238,6 +238,23 @@ function modificar_afiliado(id_afiliado)
 $.ajax({
 	type: "POST",
 	url: "/bo/comercial/get_detalle_usuario",
+	data: {id:id_afiliado},
+})
+.done(function( msg )
+{
+	bootbox.dialog({
+	message: msg,
+	title: 'Modificar Afiliado',
+})//fin done ajax
+});//Fin callback bootbox
+}
+
+function sustituir_afiliado(id_afiliado)
+{
+		
+$.ajax({
+	type: "POST",
+	url: "/bo/comercial/get_formulario_usuario",
 	data: {id:id_afiliado},
 })
 .done(function( msg )
