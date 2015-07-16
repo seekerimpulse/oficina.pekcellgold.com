@@ -9,10 +9,7 @@
 										<a href="/bo/comercial">Comercial</a>
 									</span>
 									<span>>
-										<a href="/bo/comercial/red">Red</a>
-									</span>
-									<span>>
-										<a href="/bo/comercial/tipos_de_red">Selección de Red</a> > Listar Afiliados
+										<a href="/bo/comercial/red">Red</a> > Listar Afiliados
 									</span>
 							</h1>
 						</div>
@@ -28,6 +25,16 @@
 			</div>'; 
 	}
 ?>		
+<?php if($this->session->flashdata('success')) {
+		echo '<div class="alert alert-success fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Exito! </strong> '.$this->session->flashdata('success').'
+			</div>'; 
+	}
+?>	
 	<section id="widget-grid" class="">
 	  <div id="myTabContent1" class="tab-content padding-10" style="margin-bottom: 6rem;">
 		<div class="row">
@@ -43,39 +50,73 @@
 
 					<!-- widget div-->
 					<div>
-			<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
-				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
-					<center>
-					<a title="Editar" href="" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
-					<br>Editar
-					</center>
+			<div class="row col-xs-12 col-md-12 col-sm-12 col-lg-12 pull-right">
+				
+				<div class="col-xs-0 col-md-6 col-sm-0 col-lg-5">
+					
 				</div>
-				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 				<center>	
 					<a title="Bloquear" href="" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
 					<br>Bloquear
 					</center>
 				</div>
-				<div class="col-xs-4 col-md-4 col-sm-4 col-lg-4">
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
 						<a title="Desbloquear" href="" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
 						<br>Desbloquear
 					</center>
 				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+					<a title="Editar" href="" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+					<br>Editar
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+					<a title="Sustituir" href="" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a>
+					<br>Sustituir
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Genealogico" href="" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
+						<br>Genealogico
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Grafico 1" href="" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
+						<br>Grafico 1
+					</center>
+				</div>
+				
+				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
+					<center>
+						<a title="Grafico 2" href="" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
+						<br>Grafico 2
+					</center>
+				</div>
+				
 			</div>
 			<form name="formulario" action="/bo/comercial/actualizar_tabla" method="post">
-			
-			<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-12">
 			<br>
+			<div class="row col-xs-13 col-md-4 col-sm-4 col-lg-4 smart-form">
 				<br>
-			
-					<section class="col col-12" style="width: 100%;">
+					<section style="width: 100%;">
+					
 						Campos de Busqueda
-						<label class="input-sm"> 
+						<label class="select"> 
 							<select name="campos_de_busqueda" id="campos_de_busqueda" onChange="Activar_Casilla()">
 								<option value='---'> ---
 								<option value='id_buscado_option'> Id
-								<option value='nombre_buscado_option'> Nombre
+								<option value='nombre_buscado_option'> Nombre o Apellido
 								<option value='apellido_buscado_option'> Apellido
 								<option value='username_buscado_option'> Username
 								<option value='email_buscado_option'> e-mail
@@ -83,42 +124,43 @@
 						</label>
 					</section>
 					
-					<section class="col col-6" style="display: none;">
+					<section style="display: none;">
 					<input class="hide"  name = "id_red" id = "id_red" value='<?= $id_red?>'>
 				</section>
 				
 			</div>
 			
-			<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-12">
+			<div class="row col-xs-13 col-md-12 col-sm-12 col-lg-12">
 				
-				<section class="col col-1" style="width: 100%; padding-left: 0.6%; padding-right: 0px;">
-				<br>
-				<br>
-					
-					
-					<label style="width: 9%; padding-left: 0%;" class="input">Id 
+				<section  style="width: 100%;">
+				
+					<label class="input col col-xs-12 col-sm-6 col-md-6 col-lg-2">Id 
 						<input class="form-control" name="id_buscado" id="id_buscado" type="text" disabled>
 					</label>
-					<label style="width: 25%; padding-left: 0.5%;" class="input">Nombre 
+				
+					<label class="input col col-xs-12 col-sm-6 col-md-6 col-lg-2">Nombre o Apellido
 						<input class="form-control" name="nombre_buscado" id="nombre_buscado" type="text" disabled="disabled">
 					</label>
-					<label style="width: 25%; padding-left: 0.5%;" class="input">Apellido 
+				
+						<label class="input col col-xs-12 col-sm-6 col-md-6 col-lg-2">Apellido 
 						<input class="form-control" name="apellido_buscado" id="apellido_buscado" type="text" disabled="disabled">
 					</label>
-					<label style="width: 20%; padding-left: 0.5%;" class="input">Username 
+				
+						<label class="input col col-xs-12 col-sm-6 col-md-6 col-lg-2">Username 
 						<input class="form-control" name="username_buscado" id="username_buscado" type="text" disabled="disabled">
 					</label>
-					<label style="width: 20%; padding-left: 0.5%;" class="input">e-mail
+				
+						<label  class="input col col-xs-12 col-sm-6 col-md-6 col-lg-2">e-mail
 						<input class="form-control" name="email_buscado" id="email_buscado" type="text" disabled="disabled">
 					</label>
+					
+				<label  class="input col col-xs-12 col-md-12">
+					</label>
+					<button type="submit" class="hide" style="margin-right: 4.5%;" id="buscar" onclick="Actualizar_Tabla()" disabled="disabled">Buscar</button>
+					
 				</section>
-				<br>
-				<br>
-				<section style="padding-left: 94.8%;">
-					<button type="submit" class="btn btn-success" id="buscar" onclick="Actualizar_Tabla()" >Buscar</button>
-				</section>
-				<br>
-				<br>
+				
+				
 			</div>
 			
 			

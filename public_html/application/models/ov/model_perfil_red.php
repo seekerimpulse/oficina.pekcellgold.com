@@ -333,7 +333,7 @@ class model_perfil_red extends CI_Model
 		$q=$this->db->query("select Code, Name, Code2 from Country where  estatus = 'ACT'");
 		return $q->result();
 	}
-	function get_afiliados_($id, $id_afiliado)
+	/*function get_afiliados_($id, $id_afiliado)
 	{
 		$q=$this->db->query("select *,(select nombre from user_profiles where user_id=id_afiliado) afiliado,
 			(select apellido from user_profiles where user_id=id_afiliado) afiliado_p,
@@ -342,7 +342,7 @@ class model_perfil_red extends CI_Model
 			(select (select url from cat_img b where a.id_img=b.id_img) url from cross_img_user a where id_user = id_afiliado) img
 			from afiliar where id_red=".$id." and debajo_de=".$id_afiliado." order by lado");
 		return $q->result();
-	}
+	}*/
 	function get_afiliados($id, $id_afiliado)
 	{
 		
@@ -372,21 +372,23 @@ where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R 
 
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus 
-= UP.id_estatus and R.id_usuario = U.id and U.id like ".$id_buscado." and R.id_red = ".$id_red."
+= UP.id_estatus and R.id_usuario = U.id and U.id like ".$id_buscado." 
 
+group by (U.id) 
 order by (U.id);");
 			return  $q->result();
 	}
 	
 	function get_tabla_por_nombre_buscado($nombre_buscado, $id_red)
 	{
-		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus
+		$q=$this->db->query("select U.id, U.username, U.email,UP.nombre, UP.apellido, CTU.descripcion ,CEA.descripcion estatus, R.id_red
 	
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and UP.nombre like '".$nombre_buscado.'%'."' and R.id_red = ".$id_red."
-	
+= UP.id_estatus and R.id_usuario = U.id and upper(UP.nombre) like upper('%".$nombre_buscado.'%'."') 
+
+group by (U.id) 
 order by (U.id);");
 		return  $q->result();
 	}
@@ -398,8 +400,9 @@ order by (U.id);");
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and UP.apellido like '".$apellido_buscado.'%'."' and R.id_red = ".$id_red."
-	
+= UP.id_estatus and R.id_usuario = U.id and upper(UP.apellido) like upper('".$apellido_buscado.'%'."')  
+
+group by (U.id) 
 order by (U.id);");
 		return  $q->result();
 	}
@@ -411,8 +414,8 @@ order by (U.id);");
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and U.username like '".$username_buscado.'%'."' and R.id_red = ".$id_red."
-	
+= UP.id_estatus and R.id_usuario = U.id and upper(U.username) like upper('".$username_buscado.'%'."') 
+group by (U.id) 
 order by (U.id);");
 		return  $q->result();
 	}
@@ -424,8 +427,9 @@ order by (U.id);");
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
 where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
-= UP.id_estatus and R.id_usuario = U.id and U.email like '".$email_buscado.'%'."' and R.id_red = ".$id_red."
-	
+= UP.id_estatus and R.id_usuario = U.id and upper(U.email) like upper('".$email_buscado.'%'."') 
+
+group by (U.id) 
 order by (U.id);");
 		return  $q->result();
 	}
@@ -435,11 +439,25 @@ order by (U.id);");
 		$q=$this->db->query("select * from users where email like '".$_POST['mail']."'");
 		return $q->result();
 	}
+	
+	function use_mail_modificar()
+	{
+		$q=$this->db->query("select * from users where email like '".$_POST['mail']."' and id!= '".$_POST['id']."'");
+		return $q->result();
+	}
+	
 	function use_username()
 	{
 		$q=$this->db->query("select * from users where username like '".$_POST['username']."'");
 		return $q->result();
 	}
+	
+	function use_username_modificar()
+	{
+		$q=$this->db->query("select * from users where username like '".$_POST['username']."' and id!= '".$_POST['id']."'");
+		return $q->result();
+	}
+	
 	function use_keyword()
 	{
 		$q=$this->db->query("select * from user_profiles where keyword like '".$_POST['keyword']."'");

@@ -645,6 +645,16 @@ class perfil_red extends CI_Controller
 			echo "La cuenta de correo ya no está disponible";
 		}
 	}
+	
+	function use_mail_modificar()
+	{
+		$use_mail_modificar = $this->model_perfil_red->use_mail_modificar();
+		if($use_mail_modificar)
+		{
+			echo "La cuenta de correo ya no está disponible";
+		}
+	}
+	
 	function use_keyword()
 	{
 		$use_keyword=$this->model_perfil_red->use_keyword();
@@ -659,6 +669,14 @@ class perfil_red extends CI_Controller
 		if($use_username)
 		echo "El usuario no está disponible";
 	}
+	
+	function use_username_modificar()
+	{
+		$use_username_modificar = $this->model_perfil_red->use_username_modificar();
+		if($use_username_modificar)
+			echo "El usuario no está disponible";
+	}
+	
 	function afiliar_nuevo()
 	{
 		

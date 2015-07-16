@@ -53,10 +53,10 @@
 													</a>
 												</div>
 												<div class="col-sm-2 link">
-													<a href="/bo/comercial/tipos_de_red">
+													<a href="/bo/comercial/red_tabla">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-info fa-3x"></i>
-															<h1>Información</h1>
+															<i class="fa fa-sitemap fa-3x"></i>
+															<h1>Listar</h1>
 														</div>
 													</a>
 												</div>

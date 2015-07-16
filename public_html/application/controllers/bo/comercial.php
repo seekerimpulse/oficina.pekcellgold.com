@@ -110,7 +110,8 @@ class comercial extends CI_Controller
 		$afiliados     = $this->model_perfil_red->get_tabla();
 		$image=$this->model_perfil_red->get_images_users();
 		
-		$id_red        = $_GET['id_red'];
+		//$id_red        = $_GET['id_red'];
+		$id_red        = 0;
 		
 		//var_dump($id_red);exit();
 		
@@ -143,60 +144,80 @@ class comercial extends CI_Controller
 		}
 		
 		$style         = $this->general->get_style($id);
-		$id_red  	   = $_POST['id_red'];
+		$id_red        = 0;
+			//$id_red        = $_POST['id_red'];
 		
-		$longitud_nombre =	strlen($_POST['nombre_buscado']);
-		$longitud_apellido =	strlen($_POST['apellido_buscado']);
-		$longitud_username =	strlen($_POST['username_buscado']);
-		$longitud_email =	strlen($_POST['email_buscado']);
+		if(isset($_POST['nombre_buscado'])){
+			$longitud_nombre =	strlen($_POST['nombre_buscado']);
+			$id_red        = 0;
+			//$id_red        = $_POST['id_red'];
+			if ( $longitud_nombre > 0 && $longitud_nombre < 4){
+				$error = "La casilla nombre debe contener al menos 4 letras.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
+			}
+			
+			else {
+				$afiliados     = $this->model_perfil_red->get_tabla_por_nombre_buscado($_POST['nombre_buscado'],$id_red);
+				$image		   = $this->model_perfil_red->get_images_users();
+			}
+		}
+		
+		if(isset($_POST['apellido_buscado'])){
+			$longitud_apellido =	strlen($_POST['apellido_buscado']);
+			$id_red        = 0;
+			//$id_red        = $_POST['id_red'];
+			if ($longitud_apellido > 0 && $longitud_apellido < 4){
+				$error = "La casilla apellido debe contener al menos 4 letras.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
+			}
+			
+			else {
+				$afiliados     = $this->model_perfil_red->get_tabla_por_apellido_buscado($_POST['apellido_buscado'],$id_red);
+				$image		   = $this->model_perfil_red->get_images_users();
+			}
+		}
+		
+		if(isset($_POST['username_buscado'])){
+			$longitud_username =	strlen($_POST['username_buscado']);
+			$id_red        = 0;
+			//$id_red        = $_POST['id_red'];
+			if ($longitud_username > 0 && $longitud_username < 4){
+				$error = "La casilla username debe contener al menos 4 letras.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
+			}
+			
+			else {
+				$afiliados     = $this->model_perfil_red->get_tabla_por_username_buscado($_POST['username_buscado'],$id_red);
+				$image		   = $this->model_perfil_red->get_images_users();
+			}
+		}
+		
+		if(isset($_POST['email_buscado'])){
+			$longitud_email =	strlen($_POST['email_buscado']);
+			$id_red        = 0;
+			//$id_red        = $_POST['id_red'];
+			if ($longitud_email > 0 && $longitud_email < 10){
+				$error = "La casilla email debe contener al menos 10 letras.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
+			}
+			
+			else {
+				$afiliados     = $this->model_perfil_red->get_tabla_por_email_buscado($_POST['email_buscado'],$id_red);
+				$image		   = $this->model_perfil_red->get_images_users();
+			}
+		}
+		
+		if(isset($_POST['id_buscado'])){
+			$id_red        = 0;
+			//$id_red        = $_POST['id_red'];
+			$afiliados     = $this->model_perfil_red->get_tabla_por_id_buscado($_POST['id_buscado'],$id_red);
+			$image		   = $this->model_perfil_red->get_images_users();
+		}
 
-		
-		if ( $longitud_nombre > 0 && $longitud_nombre < 4){
-			$error = "La casilla nombre debe contener al menos 4 letras.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
-		}
-		if ($longitud_apellido > 0 && $longitud_apellido < 4){
-			$error = "La casilla apellido debe contener al menos 4 letras.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
-		}
-		if ($longitud_username > 0 && $longitud_username < 4){
-			$error = "La casilla username debe contener al menos 4 letras.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
-		}
-		if ($longitud_email > 0 && $longitud_email < 10){
-			$error = "La casilla email debe contener al menos 10 letras.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
-		}
-		
-		if($_POST['id_buscado']!=""){
-			$afiliados     = $this->model_perfil_red->get_tabla_por_id_buscado($_POST['id_buscado'],$_POST['id_red']);
-			$image		   = $this->model_perfil_red->get_images_users();
-		}
-		
-		if($_POST['nombre_buscado']!=""){
-			$afiliados     = $this->model_perfil_red->get_tabla_por_nombre_buscado($_POST['nombre_buscado'],$_POST['id_red']);
-			$image		   = $this->model_perfil_red->get_images_users();
-		}
-		
-		if($_POST['apellido_buscado']!=""){
-			$afiliados     = $this->model_perfil_red->get_tabla_por_apellido_buscado($_POST['apellido_buscado'],$_POST['id_red']);
-			$image		   = $this->model_perfil_red->get_images_users();
-		}
-		
-		if($_POST['username_buscado']!=""){
-			$afiliados     = $this->model_perfil_red->get_tabla_por_username_buscado($_POST['username_buscado'],$_POST['id_red']);
-			$image		   = $this->model_perfil_red->get_images_users();
-		}
-		
-		if($_POST['email_buscado']!=""){
-			$afiliados     = $this->model_perfil_red->get_tabla_por_email_buscado($_POST['email_buscado'],$_POST['id_red']);
-			$image		   = $this->model_perfil_red->get_images_users();
-		}
-		
 		if ( $afiliados[0]==NULL){
 			$error = "El afiliado que estas buscando no existe.";
 			$this->session->set_flashdata('error', $error);
@@ -246,7 +267,7 @@ class comercial extends CI_Controller
 		$this->template->build('website/bo/comercial/altas/index');
 	}
 	
-	function tipos_de_red()
+	/*function tipos_de_red()
 	{
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -274,6 +295,108 @@ class comercial extends CI_Controller
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/bo/comercial/red/redes_ver');
+	}*/
+	
+	function tipos_de_red_genealogico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+	
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style         = $this->general->get_style($id);
+	
+		$redes = $this->model_tipo_red->listarTodos();
+		
+		$id_afiliado = $_GET['id_afiliado'];
+		
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("id_afiliado",$id_afiliado);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/red/redes_ver_genealogico');
+	}
+	
+	function tipos_de_red_grafico_1()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+	
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style         = $this->general->get_style($id);
+	
+		$redes = $this->model_tipo_red->listarTodos();
+		
+		$id_afiliado = $_GET['id_afiliado'];
+		
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("id_afiliado",$id_afiliado);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/red/redes_ver_grafico_1');
+	}
+	
+	function tipos_de_red_grafico_2()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+	
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style         = $this->general->get_style($id);
+	
+		$redes = $this->model_tipo_red->listarTodos();
+		
+		$id_afiliado = $_GET['id_afiliado'];
+		
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("id_afiliado",$id_afiliado);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/red/redes_ver_grafico_2');
 	}
 	
 	function red()
@@ -563,7 +686,6 @@ class comercial extends CI_Controller
 	
 	function get_detalle_usuario()
 	{
-		
 		$detalle = $this->modelo_comercial->get_detalle_usuario($_POST['id']);
 		$tiposDeUsuario = $this->model_cat_tipo_usuario->listarTodos();
 		$tiposDeSexo = $this->model_cat_sexo->listarTodos();
@@ -584,12 +706,75 @@ class comercial extends CI_Controller
 		$this->template->set("tiposDeEstadosAfiliado",$tiposDeEstadosAfiliado);
 		$this->template->set("tiposDeEstadoFiscal",$tiposDeEstadoFiscal);
 		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
 		$this->template->build('website/bo/comercial/red/detalleUsuario');
+	}
+	
+	function get_formulario_usuario()
+	{
+		$id_afiliado = $_POST['id'];
+		$tiposDeUsuario = $this->model_cat_tipo_usuario->listarTodos();
+		$tiposDeSexo = $this->model_cat_sexo->listarTodos();
+		$tiposDeEstadoCivil = $this->model_cat_edo_civil->listarTodos();
+		$tiposDeEstudio = $this->model_cat_estudios->listarTodos();
+		$tiposDeOcupacion = $this->model_cat_ocupacion->listarTodos();
+		$tiposDeTiempoDedicacion = $this->model_cat_tiempo_dedicado->listarTodos();
+		$tiposDeEstadosAfiliado = $this->model_cat_estatus_afiliado->listarTodos();
+		$tiposDeEstadoFiscal     = $this->model_cat_usuario_fiscal->listarTodos();
+	
+		$this->template->set("id_afiliado",$id_afiliado);
+		$this->template->set("tiposDeUsuario",$tiposDeUsuario);
+		$this->template->set("tiposDeSexo",$tiposDeSexo);
+		$this->template->set("tiposDeEstadoCivil",$tiposDeEstadoCivil);
+		$this->template->set("tiposDeEstudio",$tiposDeEstudio);
+		$this->template->set("tiposDeOcupacion",$tiposDeOcupacion);
+		$this->template->set("tiposDeTiempoDedicacion",$tiposDeTiempoDedicacion);
+		$this->template->set("tiposDeEstadosAfiliado",$tiposDeEstadosAfiliado);
+		$this->template->set("tiposDeEstadoFiscal",$tiposDeEstadoFiscal);
+		$this->template->set_theme('desktop');
+		$this->template->build('website/bo/comercial/red/formularioUsuario');
 	}
 	
 	function actualizar_afiliado()
 	{
+		$emails = $this->model_perfil_red->use_mail_modificar();
+		$usernames = $this->model_perfil_red->use_username_modificar();
+		
+		if(!isset($_POST['username'])){
+			$error = "Olvidaste escribir tu username.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+		if ($usernames){
+			$error = "Lo sentimos, el username que estas ingresando ya existe.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+		if(!isset($_POST['email'])){
+			$error = "Olvidaste escribir tu email.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+		if ($emails){
+			$error = "Lo sentimos, el email que estas ingresando ya existe.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+		if(!isset($_POST['nombre'])){
+			$error = "Olvidaste escribir tu nombre.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+		if(!isset($_POST['apellido'])){
+			$error = "Olvidaste escribir tu apellido.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+		if(!isset($_POST['nacimiento'])){
+			$error = "Olvidaste escribir la fecha de nacimiento.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+		else{
 		$this->model_users->actualizar($_POST['id'], $_POST['username'], $_POST['email']);
 
 		$this->model_user_profiles->actualizar($_POST['id'], $_POST['sexo'], $_POST['estadoCivil'], $_POST['tipoUsuario'], $_POST['estudio'], $_POST['ocupacion'], $_POST['tiempoDedicado'],
@@ -600,16 +785,74 @@ class comercial extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
+		
+		$success = "El afiliado ha sido actualizado satisfactoriamente.";
+		$this->session->set_flashdata('success', $success);
 		redirect('/bo/comercial/red_tabla');
+		}
 	}
+	
+	/*function sustituir_afiliado()
+	{
+		$emails = $this->model_perfil_red->use_mail();
+		$usernames = $this->model_perfil_red->use_username();
+		
+		var_dump($emails);exit();
+		
+		if ($emails){
+			$error = "Lo sentimos, el email que estas ingresando ya existe.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+	
+		if ($usernames){
+			$error = "Lo sentimos, el username que estas ingresando ya existe.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+		if(!isset($_POST['nacimiento'])){
+			$error = "Olvidaste escribir la fecha de nacimiento.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/comercial/red_tabla');
+		}
+		else{
+			$this->model_users->actualizar($_POST['id'], $_POST['username'], $_POST['email']);
+	
+			$this->model_user_profiles->actualizar($_POST['id'], $_POST['sexo'], $_POST['estadoCivil'], $_POST['tipoUsuario'], $_POST['estudio'], $_POST['ocupacion'], $_POST['tiempoDedicado'],
+					$_POST['estadoAfiliado'], $_POST['nombre'], $_POST['apellido'], $_POST['nacimiento']);
+			$this->model_coaplicante->actualizar($_POST['id'], $_POST['nombreCo'], $_POST['apellidoCo']);
+	
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/bo/header');
+			$this->template->set_partial('footer', 'website/bo/footer');
+			redirect('/bo/comercial/red_tabla');
+		}
+	}
+	/*function sustituir_afiliado()
+	{
+		$this->model_users->actualizar($_POST['id'], $_POST['username'], $_POST['email']);
+	
+		$this->model_user_profiles->actualizar($_POST['id'], $_POST['sexo'], $_POST['estadoCivil'], $_POST['tipoUsuario'], $_POST['estudio'], $_POST['ocupacion'], $_POST['tiempoDedicado'],
+				$_POST['estadoAfiliado'], $_POST['nombre'], $_POST['apellido'], $_POST['nacimiento']);
+		$this->model_coaplicante->actualizar($_POST['id'], $_POST['nombreCo'], $_POST['apellidoCo']);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		redirect('/bo/comercial/red_tabla');
+	}*/
 
 	function cambiar_estado_afiliado()
 	{
 		$this->model_user_profiles->cambiar_estado($_POST['id'], $_POST['estatus']);
-		if ($_POST['estatus']==1) echo "Se ha desbloqueado el perfil con exito";
+		/*if ($_POST['estatus']==1) echo "Se ha desbloqueado el perfil con exito";
 		else echo "Se ha bloqueado el perfil con exito";
-		redirect('/bo/comercial/actualizar_tabla');
-		//$this->red_tabla();
+		$error = "El afiliado ha cambiado de estado.";
+		$this->session->set_flashdata('error', $error);
+		//redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
+		//$this->red_tabla();*/
 	}
 
 	function detalle_red()
