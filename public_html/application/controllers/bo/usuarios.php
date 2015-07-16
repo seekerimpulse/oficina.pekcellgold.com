@@ -355,7 +355,7 @@ function subtree()
 		
 		$nombre=$this->model_perfil_red->get_name($_POST['id']);
 		$nombre='"'.$nombre[0]->nombre." ".$nombre[0]->apellido.'"';
-		
+		$aux=0;
 		if($afiliados)
 		{
 				
