@@ -195,7 +195,7 @@
 	
 			/* END BASIC */
 
-				$("#dt_basic_filter").children('label').addClass("hide");
+				$("#dt_basic_filter").children('label').addClass("");
 					});
 
 			//setup_flots();

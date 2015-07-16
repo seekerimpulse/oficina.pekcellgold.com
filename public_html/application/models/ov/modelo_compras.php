@@ -601,14 +601,17 @@ class modelo_compras extends CI_Model
 		
 	}
 	
-	function registrar_venta($id_usuario, $costo, $id_metodo)
+	function registrar_venta($id_usuario, $costo, $id_metodo, $transacion, $firma, $fecha)
 	{
 	
 		$dato_venta=array(
 				"id_user" 			=> $id_usuario,
 				"id_estatus"		=> 2,
 				"costo" 			=> $costo,
-				"id_metodo_pago" 	=> $id_metodo
+				"id_metodo_pago" 	=> $id_metodo,
+				"id_transacion"     => $transacion,
+				"firma"				=> $firma,
+				"fecha" 			=> $fecha
 		);
 		$this->db->insert("venta",$dato_venta);
 		$venta = mysql_insert_id();
@@ -672,9 +675,9 @@ class modelo_compras extends CI_Model
 				"id_promocion"	=> 0
 		);
 		$this->db->insert("cross_venta_mercancia",$dato_cross_venta);
-		$puntos_q =$this->db->query("select mercancia.real from mercancia where id= ".$id_mercancia);
+		$puntos_q =$this->db->query("select mercancia.costo from mercancia where id= ".$id_mercancia);
 		$puntos_res = $puntos_q->result();
-		$puntos= ($puntos_res[0]->real*$cantidad);
+		$puntos= ($puntos_res[0]->costo*$cantidad);
 		return $puntos;
 	}
 	
