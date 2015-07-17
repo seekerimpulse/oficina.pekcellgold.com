@@ -128,28 +128,27 @@ class billetera2 extends CI_Controller
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
 	
-		$ganancias=$this->modelo_billetera->get_monto($id);
-		$ganancias = $ganancias[0]->monto;
-		$cobro=$this->modelo_billetera->get_cobro($id);
-		$metodo_cobro=$this->modelo_billetera->get_metodo();
+		$redes = $this->model_tipo_red->listarTodos();
+		$ganancias=array();
+		foreach ($redes as $red){
+			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
+		}
 		
-		$pais = $this->modelo_dashboard->get_user_country($id);
-		$impuestos = $this->modelo_billetera->ValorImpuestos($id, $pais);
-		$retenciones = $this->modelo_billetera->ValorRetenciones($id);
+		$cobro=$this->modelo_billetera->get_cobros_total($id);
+		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
+		$retenciones = $this->modelo_billetera->ValorRetencionesTotales();
 		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("cobro",$cobro);
-		$this->template->set("metodo_cobro",$metodo_cobro);
-		$this->template->set("impuestos",$impuestos);
+		$this->template->set("cobroPendientes",$cobroPendientes);
 		$this->template->set("retenciones",$retenciones);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/billetera/dashboard');
 		$this->template->build('website/ov/billetera/pago');
 	}
 	
@@ -160,14 +159,46 @@ class billetera2 extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id=$this->tank_auth->get_user_id();
-		$estado = $this->modelo_billetera->cobrar($id);
-
-		if($estado){
-			echo "Tu cobro se esta procesando";
-		}else{
-			echo "No cuentas con suficientes recursos para realizar el cobro";
+		if($_POST['ctitular']==""){
+			echo "ERROR <br>Falta ingresar el nombre del titular de la cuenta";
+			exit();
 		}
+		
+		if(is_numeric($_POST['ctitular'])){
+			echo "ERROR <br>El titular de la cuenta no debe contener valores numericos";
+			exit();
+		}
+		
+		if($_POST['cbanco']==""){
+			echo "ERROR <br>Falta ingresar el banco de la cuenta";
+			exit();
+		}
+		
+		if(intval($_POST['ncuenta'])==0){
+			echo "ERROR <br>El numero de la cuenta debe ser un numero valido";
+			exit();
+		}
+		
+		if(intval($_POST['cclabe'])==0){
+			echo "ERROR <br>El numero de la CLABE debe ser un numero valido";
+			exit();
+		}
+	
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
+		$retenciones = $this->modelo_billetera->ValorRetencionesTotalesAfiliado();
+		$cobrosPagos=$this->modelo_billetera->get_cobros_total_afiliado($id);
+		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
+
+		if(($comisiones-($retenciones+$cobrosPagos+$_POST['cobro']+$cobroPendientes))>0){
+			$estado = $this->modelo_billetera->cobrar($id,$_POST['ncuenta'],$_POST['ctitular'],$_POST['cbanco'],$_POST['cclabe']);
+			echo "Felicitaciones<br> Tu cobro se esta procesando";
+		}else {
+			echo "ERROR <br>No cuentas con suficientes recursos para realizar el cobro";
+		}
+
 	}
 	
 	function estado()
@@ -180,7 +211,7 @@ class billetera2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 	
 	
-		$usuario= $this->general->get_username($id);
+		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
 	
 		$redes = $this->model_tipo_red->listarTodos();
@@ -188,21 +219,24 @@ class billetera2 extends CI_Controller
 		foreach ($redes as $red){
 			array_push($ganancias,$this->modelo_billetera->get_comisiones($id,$red->id));
 		}
-
-		$retenciones = $this->modelo_billetera->ValorRetencionesTotales();
+		
+		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
-		$this->template->set("cobro",$cobro);
-	
+		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
+		$retenciones = $this->modelo_billetera->ValorRetencionesTotales();
+		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
+		$this->template->set("comisiones",$comisiones);
 		$this->template->set("ganancias",$ganancias);
+		$this->template->set("cobro",$cobro);
+		$this->template->set("cobroPendientes",$cobroPendientes);
 		$this->template->set("retenciones",$retenciones);
-	
+		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/billetera/dashboard');
 		$this->template->build('website/ov/billetera/estadoCuenta');
 	}
 	
@@ -227,12 +261,14 @@ class billetera2 extends CI_Controller
 	
 		$retenciones = $this->modelo_billetera->ValorRetenciones_historial($_GET['fecha']);
 		$cobro=$this->modelo_billetera->get_cobros_afiliado_mes($id,$_GET['fecha']);
+		$cobroPendiente=$this->modelo_billetera->get_cobros_afiliado_mes_pendientes($id,$_GET['fecha']);
 
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("retenciones",$retenciones);
 		$this->template->set("cobro",$cobro);
+		$this->template->set("cobroPendiente",$cobroPendiente);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');

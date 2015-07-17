@@ -10,16 +10,9 @@
 							
 						</h1>
 					</div>
-					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h1 class="page-title txt-color-blueDark">
-					 	Mis ganancias: <span class="txt-color-black"></span>
-						</h1>
-					</div>
 				</div>
 				<!-- row -->
 				<div class="row">
-
-					
 				</div>
 				<!-- end row -->
 
@@ -113,7 +106,7 @@
 																	</tr>
 																	<?php $total-=$retencion['valor'];
 																	} ?>
-																	<tr class="info">
+																	<tr class="success">
 																		<td><h4><b>Saldo Mes</b></h4></td>
 																		<td></td>
 																		<td><h4><b>$ <?php echo $total; ?></b></h4></td>
@@ -121,18 +114,27 @@
 																	<?php foreach ($cobro as $cobros){
 																	?>
 																	<tr class="success">
-																		<td><h4><b>Cobros Mes</b></h4></td>
+																		<td><h4><b>Cobros Pagados Mes</b></h4></td>
 																		<td></td>
 																		<td><h4><b>$ 
 																		<?php 
-																		if($cobros->monto==null)
-																		  echo '0';
-																		else 
+																		if($cobros->monto==null){
+																			$cobrosTotales=0;
+																			echo '0';
+																		}
+																		else {
+																		  $cobrosTotales=$cobros->monto;
 																		  echo $cobros->monto;
+																		}
 																		?></b></h4></td>
 																	</tr>
 																	<?php 
 																	}?>
+																	<tr class="info">
+																		<td><h4><b>Saldo Neto</b></h4></td>
+																		<td></td>
+																		<td><h4><b>$ <?php echo ($total-$cobrosTotales); ?></b></h4></td>
+																	</tr>
 																</table>
 														
 													</div>

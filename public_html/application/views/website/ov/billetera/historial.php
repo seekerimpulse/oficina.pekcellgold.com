@@ -90,12 +90,16 @@
 																	</select>
 																</label>
 															</div>
-															<table id="dt_basic" class="table table-striped table-bordered table-hover">
+															<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 																<thead>			                
 																	<tr>
-																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> Fecha</th>
-																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Monto</th>
-																		<th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Método de pago</th>
+																		<th data-hide="expand"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> Fecha</th>
+																		<th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Monto</th>
+																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Método de pago</th>
+																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Titular Cuenta</th>
+																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> # Cuenta</th>
+																		<th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Banco</th>
+																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> CLABE</th>
 																		<th>Estado</th>
 																	</tr>
 																</thead>
@@ -105,6 +109,10 @@
 																		<td><?=$key->fecha?></td>
 																		<td><?echo number_format($key->monto,2)?></td>
 																		<td><?=$key->metodo?></td>
+																		<td><?=$key->cuenta ?></td>
+																		<td><?=$key->titular ?></td>
+																		<td><?=$key->banco ?></td>
+																		<td><?=$key->clabe ?></td>
 																		<td><?=$key->estado ?></td>
 																	</tr>
 																	<?}?>
@@ -141,29 +149,27 @@
 
 		<!-- PAGE RELATED PLUGIN(S) 
 		<!-- Morris Chart Dependencies -->
-		<script src="/template/js/plugin/morris/raphael.min.js"></script>
-		<script src="/template/js/plugin/morris/morris.min.js"></script>
-
-		<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
-		<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
-		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
-		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+	<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
+	<script src="/template/js/plugin/markdown/markdown.min.js"></script>
+	<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
+	<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
+	<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+	<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+	<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+	<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+	<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+	<script src="/template/js/validacion.js"></script>
 
 		<script type="text/javascript">
-			// PAGE RELATED SCRIPTS
+		$(document).ready(function() {
+			
+			$("#mymarkdown").markdown({
+							autofocus:false,
+							savable:false
+						})
 
-			/*
-			 * Run all morris chart on this page
-			 */
-			$(document).ready(function() {
-				
-				// DO NOT REMOVE : GLOBAL FUNCTIONS!
-				pageSetUp();
 
-				
-
-				/* BASIC ;*/
+			/* BASIC ;*/
 				var responsiveHelper_dt_basic = undefined;
 				var responsiveHelper_datatable_fixed_column = undefined;
 				var responsiveHelper_datatable_col_reorder = undefined;
@@ -173,7 +179,7 @@
 					tablet : 1024,
 					phone : 480
 				};
-	
+
 				$('#dt_basic').dataTable({
 					"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
 						"t"+
@@ -192,11 +198,44 @@
 						responsiveHelper_dt_basic.respond();
 					}
 				});
-	
+
 			/* END BASIC */
 
-				$("#dt_basic_filter").children('label').addClass("");
-					});
+			/* BASIC ;*/
+				var responsiveHelper_dt_basic = undefined;
+				var responsiveHelper_datatable_fixed_column = undefined;
+				var responsiveHelper_datatable_col_reorder = undefined;
+				var responsiveHelper_datatable_tabletools = undefined;
+				
+				var breakpointDefinition = {
+					tablet : 1024,
+					phone : 480
+				};
+
+				$('#dt_basic_paquete').dataTable({
+					"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
+						"t"+
+						"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+					"autoWidth" : true,
+					"preDrawCallback" : function() {
+						// Initialize the responsive datatables helper once.
+						if (!responsiveHelper_dt_basic) {
+							responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+						}
+					},
+					"rowCallback" : function(nRow) {
+						responsiveHelper_dt_basic.createExpandIcon(nRow);
+					},
+					"drawCallback" : function(oSettings) {
+						responsiveHelper_dt_basic.respond();
+					}
+				});
+
+			/* END BASIC */
+
+			pageSetUp();
+
+		})
 
 			//setup_flots();
 			/* end flot charts */

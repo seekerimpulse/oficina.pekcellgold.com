@@ -10,11 +10,6 @@
 							
 						</h1>
 					</div>
-					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h1 class="page-title txt-color-blueDark">
-							<i style="color: #5B835B;" class="fa fa-money"></i> <span class="txt-color-black"><b>$ <?=number_format($ganancias,2)?> </b> Mis Ganancias</span>
-						</h1>
-					</div>
 				</div>
 				<!-- row -->
 				<div class="row">
