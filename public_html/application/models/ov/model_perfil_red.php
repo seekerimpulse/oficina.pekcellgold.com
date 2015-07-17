@@ -614,10 +614,13 @@ order by (U.id);");
 		return $q->result();
 	}
 	
-	function ConsultarIdPadre($id){
-		$q = $this->db->query("select debajo_de from afiliar where id_afiliado=".$id);
+	function ConsultarIdPadre($id , $id_red_padre){
+		$q = $this->db->query("select debajo_de from afiliar where id_afiliado=".$id." and id_red = ".$id_red_padre);
 		$id_padre = $q->result();
-		return $id_padre[0]->debajo_de;
+		if(!isset($id_padre[0]->debajo_de)){
+			return false;
+		}else
+			return $id_padre[0]->debajo_de;
 	}
 	
 	function ConsultarIdRedPadre($id){

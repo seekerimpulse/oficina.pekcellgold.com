@@ -20,6 +20,15 @@
 								<strong>Error </strong> '.$this->session->flashdata('error').'
 			</div>'; 
 	}
+	if($this->session->flashdata('exito')) {
+		echo '<div class="alert alert-success fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong> </strong> '.$this->session->flashdata('exito').'
+			</div>';
+	}
 ?>	
 	<div class="row">
 		<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">

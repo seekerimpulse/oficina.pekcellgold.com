@@ -352,6 +352,7 @@ function index()
 		$data["direccion"]=$direccion;
 		$data["compras"]=$info_compras;
 		$data["pais"]=$pais;
+		$data['id'] = $id;
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('footer', 'website/ov/footer');
@@ -446,11 +447,14 @@ function index()
 			redirect('/auth');
 		}
 		if(isset($_GET['transactionState'])){
-			if($_GET['transactionState'] == '1'){
-				$error = "La transacion se a realizado con exito.";
+			if($_GET['transactionState'] == '4'){
+				$exito = "La transacion se a realizado con exito.";
+				$this->session->set_flashdata('exito', $exito);
+			}elseif($_GET['transactionState'] == '5'){
+				$error = "La transacion ha sido rezhazada(Declinada).";
 				$this->session->set_flashdata('error', $error);
 			}else{
-				$error = "La transacion ha sido rezhazada.";
+				$error = "La transacion expiro.";
 				$this->session->set_flashdata('error', $error);
 			}
 			$extra1 = explode("-", $_GET['extra1']);
@@ -2931,7 +2935,6 @@ function index()
 		$extra1 = explode("-", $_POST['extra1']);
 		$id_mercancia = $extra1[0];
 		$cantidad = $extra1[1];
-		$firma = $_POST['sign'];
 		$metodo_pago = $_POST['payment_method_id'];
 		$respuesta = $_POST['response_code_pol'];
 		$fecha = $_POST['transaction_date'];
@@ -2942,13 +2945,13 @@ function index()
 		$identificado_transacion = $_POST['transaction_id'];
 		$medio_pago = $_POST['payment_method_name'];
 		$costo = $_POST['value'];
+		$id_transacion = $_POST['transaction_id'];
+		$firma = $_POST['sign'];
 		
-		if($id_usuario == 0){
-			$id_usuario = $this->tank_auth->get_user_id();
-		}
-		//if($estado == 1){
-			$venta = $this->modelo_compras->registrar_venta($id_usuario, $costo, $metodo_pago);
-			$this->modelo_compras->registrar_envio($venta, $id_usuario, $direcion_envio , $telefono, $email);
+		
+		if($estado == 4){
+			$venta = $this->modelo_compras->registrar_venta($id_usuario, $costo, $metodo_pago, $id_transacion, $firma, $fecha);
+			$this->modelo_compras->registrar_envio("1".$venta, $id_usuario, $direcion_envio , $telefono, $email);
 			$this->modelo_compras->registrar_factura($venta, $id_usuario, $direcion_envio , $telefono, $email);
 			
 			$puntos = $this->modelo_compras->registrar_venta_mercancia($id_mercancia, $venta, $cantidad);
@@ -2976,46 +2979,90 @@ function index()
 			$red = $this->modelo_compras->Red($id_red_mercancia);
 			
 			$valor_puntos = $puntos * $red[0]->valor_punto;
-			$this->modelo_compras->CalcularComisionVenta($venta,$id_usuario,$puntos,$valor_puntos, $id_red_mercancia);
 			
 			$costo_comision = $this->modelo_compras->ValorComision();
-			$id_afiliado = $id_usuario;
 			
-			for($i = 1; $i <= $red[0]->profundidad; $i++){
-				$id_padre = $this->model_perfil_red->ConsultarIdPadre($id_afiliado);
-				if($this->ValidarAfiliadoPadre($id_afiliado, $red[0]->id, $i)){
-					$valor_comision = ($costo_comision[$i-1]->valor * $valor_puntos)/100;
-					$this->modelo_compras->CalcularComisionVenta($venta,$id_padre,$puntos,$valor_comision, $id_red_mercancia);
-					
-				}
-				$id_afiliado = $id_padre;
-				
-			}
+			$this->CalcularComisiones($id_usuario, $id_red_mercancia, $venta, $puntos, $valor_puntos, $costo_comision);
+			
 			return "Regsitro Corecto";
-		//}	
+		}	
 	}
 	
-	private function ValidarAfiliadoPadre($id_afiliado, $red_mercancia, $frontal){
-		
-		$id_padre = $this->model_perfil_red->ConsultarIdPadre($id_afiliado);
-		if(!isset($id_padre)){
-			return false;
-		}
-		$id_red_padre = $this->model_perfil_red->ConsultarIdRedPadre($id_afiliado);
-		$red2  = $this->model_afiliado->RedAfiliado($id_padre, $id_red_padre);
-		$estado = $this->model_user_profiles->EstadoUsuario($id_padre);
-		
-		if($id_red_padre == $red_mercancia && $estado == 1){
+	private function CalcularComisiones($id_afiliado, $id_red_mercancia, $venta, $puntos, $valor_puntos, $costo_comision) {
+		$id_red_padre = $this->model_perfil_red->ConsultarIdRedPadre ( $id_afiliado );
+		$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
+		$red2 = $this->model_afiliado->RedAfiliado ( $id_padre, $id_red_padre );
+		$estado = $this->model_user_profiles->EstadoUsuario ( $id_padre );
+		if ($red2 [0]->premium == 2) {
+			$valor_comision = ($costo_comision [0]->valor * $valor_puntos) / 100;
+			$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, $costo_comision [0]->valor, $valor_comision, $id_red_mercancia );
 			
-			if($red2[0]->premium != 2){
-				return true;
-			}elseif ($frontal == 2){
-				return false;
-			}else{
-				return true;
+			$id_afiliado = $id_padre;
+			$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
+			if(!$id_padre){
+				exit;
 			}
-		}else{
-			return false;
+			$valor_comision = ($valor_puntos) / 100;
+			$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, 1, $valor_comision, $id_red_mercancia );
+		} else {
+			
+			$valor_comision = ($costo_comision [2]->valor * $valor_puntos) / 100;
+			$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, $costo_comision [2]->valor, $valor_comision, $id_red_mercancia );
+			
+			$id_afiliado = $id_padre;
+			
+			$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
+			
+			if(!$id_padre){
+				exit;
+			}
+			$estado = $this->model_user_profiles->EstadoUsuario ( $id_padre );
+			$red2 = $this->model_afiliado->RedAfiliado ( $id_padre, $id_red_padre );
+			if ($red2 [0]->premium == 2) {
+				$valor_comision = ($costo_comision [1]->valor * $valor_puntos) / 100;
+				$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, $costo_comision [1]->valor, $valor_comision, $id_red_mercancia );
+				
+				$id_afiliado = $id_padre;
+				$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
+				
+				$valor_comision = ($valor_puntos) / 100;
+				$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, 1, $valor_comision, $id_red_mercancia );
+			} else {
+				
+				$valor_comision = ($costo_comision [2]->valor * $valor_puntos) / 100;
+				$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, $costo_comision [2]->valor, $valor_comision, $id_red_mercancia );
+				
+				$id_afiliado = $id_padre;
+				$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
+				
+				if(!$id_padre){
+					return 0;
+				}
+				$estado = $this->model_user_profiles->EstadoUsuario ( $id_padre );
+				$red2 = $this->model_afiliado->RedAfiliado ( $id_padre, $id_red_padre );
+				
+				while ( isset ( $id_padre ) || $id_padre == 0 ) {
+					
+					$id_afiliado = $id_padre;
+					$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
+					if(!$id_padre){
+						exit;
+					}
+					$estado = $this->model_user_profiles->EstadoUsuario ( $id_padre );
+					$red2 = $this->model_afiliado->RedAfiliado ( $id_padre, $id_red_padre );
+					if ($red2 [0]->premium == 2) {
+						
+						$valor_comision = ($costo_comision [2]->valor * $valor_puntos) / 100;
+						$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, $costo_comision [2]->valor, $valor_comision, $id_red_mercancia );
+						
+						$id_afiliado = $id_padre;
+						$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
+						$valor_comision = ($valor_puntos) / 100;
+						$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, 1, $valor_comision, $id_red_mercancia );
+						exit ();
+					}
+				}
+			}
 		}
 	}
 }
