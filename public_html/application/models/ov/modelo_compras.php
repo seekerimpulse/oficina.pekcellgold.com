@@ -601,13 +601,35 @@ class modelo_compras extends CI_Model
 		
 	}
 	
-	function registrar_venta($id_usuario, $costo, $id_metodo, $transacion, $firma, $fecha)
-	{
+	function CostoMercancia($id){
+		
+		$mercancia = $this->db->query("select costo from mercancia where id=".$id);
+		$mercancia = $mercancia->result();
+		return $mercancia[0]->costo;
+	}
 	
+	function ImpuestoMercancia($id_mercancia, $costo){
+		$total = 0;
+		
+		$q = $this->db->query("Select ci.porcentaje from cat_impuesto ci, cross_merc_impuesto cmi where ci.id_impuesto = cmi.id_impuesto and cmi.id_mercancia = ".$id_mercancia);
+		$impuestos = $q->result();
+		
+		foreach($impuestos as $desc)
+		{
+			$mas = ($desc->porcentaje*$costo)/100;
+			$total=$total+$mas;
+		}
+		return $total;
+	}
+	
+	function registrar_venta($id_usuario, $costo, $id_metodo, $transacion, $firma, $fecha, $impuesto)
+	{
+		
 		$dato_venta=array(
 				"id_user" 			=> $id_usuario,
 				"id_estatus"		=> 2,
 				"costo" 			=> $costo,
+				"impuesto"			=> $impuesto,
 				"id_metodo_pago" 	=> $id_metodo,
 				"id_transacion"     => $transacion,
 				"firma"				=> $firma,
@@ -699,7 +721,7 @@ class modelo_compras extends CI_Model
 		return $total;
 	}
 	
-	function registrar_puntos($id_usuario, $id_mercancia, $cantidad, $subtotal, $total, $venta, $puntos)
+	function registrar_movimiento($id_usuario, $id_mercancia, $cantidad, $subtotal, $total, $venta, $puntos)
 	{
 		
 		$q_alm=$this->db->query("SELECT id_almacen from almacen where web=1");
@@ -740,7 +762,7 @@ class modelo_compras extends CI_Model
 		$q = $this->db->query("select id_tipo_mercancia, sku from mercancia where id =".$id_mercancia);
 		$mercancia = $q->result();
 		if($mercancia[0]->id_tipo_mercancia == 1){
-			$q = $this->db->query("SELECT id_grupo as id_red FROM OficinaVirtual.producto where id =".$mercancia[0]->sku);
+			$q = $this->db->query("SELECT id_grupo as id_red FROM producto where id =".$mercancia[0]->sku);
 		}elseif ($mercancia[0]->id_tipo_mercancia == 2){
 			$q = $this->db->query("SELECT id_red FROM servicio where id=".$mercancia[0]->sku);
 		}else{
@@ -751,7 +773,7 @@ class modelo_compras extends CI_Model
 	}
 	
 	function Red($id){
-		$q = $this->db->query("SELECT * FROM OficinaVirtual.tipo_red where id=".$id);	
+		$q = $this->db->query("SELECT * FROM tipo_red where id=".$id);	
 		return $q->result();
 	}
 	

@@ -110,6 +110,14 @@
 														</div>
 													</a>
 												</div>
+												<div class="col-sm-3 link">	
+													<a href="/bo/CuentasPagar/index">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+															<i class="fa fa-sort-amount-asc fa-3x"></i>
+															<h1>Cuentas por Pagar <br>&nbsp</h1>
+														</div>
+													</a>
+												</div>
 											</div>
 										 </div>
 									</div>
