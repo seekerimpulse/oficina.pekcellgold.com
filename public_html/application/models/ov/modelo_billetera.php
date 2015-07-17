@@ -59,6 +59,13 @@ class modelo_billetera extends CI_Model
 		return $q->result();
 	}
 	
+	function get_total_comisiones_afiliado($id){
+		
+		$q=$this->db->query('SELECT sum(valor)as valor FROM comision where id_afiliado='.$id.';');
+		$comisiones=$q->result();
+		return $comisiones[0]->valor;
+	}
+	
 	function get_comisiones_mes($id,$id_red,$fecha){
 		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t where(c.id_red=t.id) and(c.id_red='.$id_red.') and MONTH("'.$fecha.'")=MONTH(fecha) and c.id_afiliado='.$id.'');
 		return $q->result();
@@ -72,19 +79,39 @@ class modelo_billetera extends CI_Model
 	
 	function get_cobros_total($id)
 	{
-		$q=$this->db->query('SELECT sum(monto)as monto FROM OficinaVirtual.cobro where  id_estatus=2 and id_user='.$id);
+		$q=$this->db->query('SELECT sum(monto)as monto FROM cobro where  id_estatus=2 and id_user='.$id);
 		return $q->result();
+	}
+	
+	function get_cobros_total_afiliado($id)
+	{
+		$q=$this->db->query('SELECT sum(monto)as monto FROM cobro where  id_estatus=2 and id_user='.$id);
+		$cobros=$q->result();
+		return $cobros[0]->monto;
+	}
+	
+	function get_cobros_pendientes_total_afiliado($id)
+	{
+		$q=$this->db->query('SELECT sum(monto)as monto FROM cobro where  id_estatus!=2 and id_user='.$id);
+		$cobros=$q->result();
+		return $cobros[0]->monto;
 	}
 	
 	function get_cobros_afiliado_mes($id,$fecha)
 	{
-		$q=$this->db->query('SELECT sum(monto)as monto FROM OficinaVirtual.cobro where  id_estatus=2 and month("'.$fecha.'")=month(fecha_pago) and id_user='.$id);
+		$q=$this->db->query('SELECT sum(monto)as monto FROM cobro where  id_estatus=2 and month("'.$fecha.'")=month(fecha_pago) and id_user='.$id);
+		return $q->result();
+	}
+	
+	function get_cobros_afiliado_mes_pendientes($id,$fecha)
+	{
+		$q=$this->db->query('SELECT sum(monto)as monto FROM cobro where  id_estatus!=2 and month("'.$fecha.'")=month(fecha_pago) and id_user='.$id);
 		return $q->result();
 	}
 	
 	function get_cobros_afiliado_mes_actual($id)
 	{
-		$q=$this->db->query('SELECT sum(monto)as monto FROM OficinaVirtual.cobro where  id_estatus=2 and month(now())=month(fecha_pago) and id_user='.$id);
+		$q=$this->db->query('SELECT sum(monto)as monto FROM cobro where  id_estatus=2 and month(now())=month(fecha_pago) and id_user='.$id);
 		return $q->result();
 	}
 	
@@ -101,43 +128,20 @@ class modelo_billetera extends CI_Model
 		$q=$this->db->query('select * from cat_metodo_cobro');
 		return $q->result();
 	}
-	function cobrar($id)
+	function cobrar($id,$cuenta,$titular,$banco,$clabe)
 	{
-		$q=$this->db->query('select * from cobro where id_user='.$id.' and id_estatus=4 ');
-		$q=$q->result();
-		
-		
-		if($_POST['cobro'] < $q[0]->monto){
-			
-			$id_cobro=$q[0]->id_cobro;
-			$monto = $q[0]->monto;
-			$monto_activo = $monto-$_POST['cobro'];
-			
-			
-			$this->db->query('update cobro set id_estatus= 5 where id_cobro='.$id_cobro);
-			
-			
-			$dato_cobro=array(
-		                "id_user"		=>	$id,
-		                "id_metodo"		=> 	$_POST['metodo'],
-		                "id_estatus"		=> 	"3",
-		                "monto"			=> 	$_POST['cobro']
-		            );
-			$this->db->insert("cobro",$dato_cobro);
-			
-			
 			$dato_cobro=array(
 					"id_user"		=>	$id,
-					"id_metodo"		=> 	$_POST['metodo'],
-					"id_estatus"		=> 	"4",
-					"monto"			=> 	$monto_activo
+					"id_metodo"		=> 	"1",
+					"id_estatus"		=> 	"3",
+					"monto"			=> 	$_POST['cobro'],
+					"cuenta"=> $cuenta,
+					"titular"=> $titular,
+					"banco"=> $banco,
+					"clabe"=> $clabe,
 			);
 			
 			$this->db->insert("cobro",$dato_cobro);
-			return true;
-		}else{
-			return false;
-		}
 		
 	}
 	
@@ -201,6 +205,15 @@ class modelo_billetera extends CI_Model
 			$retenciones[] = $retencion_cobrar;
 		}
 		return $retenciones;
+	}
+	
+	function ValorRetencionesTotalesAfiliado(){
+		$q = $this->db->query("SELECT created FROM users where id=2;");
+		$fecha_creacion = $q->result();
+		$q = $this->db->query("SELECT sum(valor) as valor FROM cat_retenciones_historial  where month('".$fecha_creacion[0]->created."')
+										<=mes and year('".$fecha_creacion[0]->created."')<=ano");
+		$retenciones = $q->result();
+		return $retenciones[0]->valor;
 	}
 	
 	
