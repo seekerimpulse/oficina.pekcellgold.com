@@ -65,7 +65,7 @@
 												<!-- widget content -->
 												<div class="widget-body">
 													<div id="myTabContent1" class="tab-content padding-10">
-													<h1 class="text-center">Estado de Cuenta del mes</h1>
+													<h1 class="text-center">Estado de Cuenta</h1>
 													
 													<div class="table-responsive">
 													<table class="table">
@@ -114,22 +114,31 @@
 																	<?php $total-=$retencion['valor'];
 																	} ?>
 																	<tr class="info">
-																		<td><h4><b>Saldo Mes</b></h4></td>
+																		<td><h4><b>Saldo Total</b></h4></td>
 																		<td></td>
 																		<td><h4><b>$ <?php echo $total; ?></b></h4></td>
 																	</tr>
 																	<?php foreach ($cobro as $cobros){
 																	?>
 																	<tr class="success">
-																		<td><h4><b>Cobros Mes</b></h4></td>
+																		<td><h4><b>Cobros Total</b></h4></td>
 																		<td></td>
 																		<td><h4><b>$ 
 																		<?php 
-																		if($cobros->monto==null)
+																		if($cobros->monto==null){
 																		  echo '0';
-																		else 
+																		  $cobro=0;
+																		}
+																		else {
 																		  echo $cobros->monto;
+																		  $cobro=$cobros->monto;
+																		}
 																		?></b></h4></td>
+																	</tr>
+																	</td>																	<tr class="info">
+																		<td><h4><b>Saldo Neto</b></h4>
+																		<td></td>
+																		<td><h4><b>$ <?php echo $total-$cobro; ?></b></h4></td>
 																	</tr>
 																	<?php 
 																	}?>

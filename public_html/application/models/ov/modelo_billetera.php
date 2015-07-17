@@ -36,6 +36,13 @@ class modelo_billetera extends CI_Model
 	{
 		$q=$this->db->query('update billetera set activo="No" where id_user='.$id);
 	}
+	
+	function get_historial_cuenta($id)
+	{
+		$q=$this->db->query('SELECT  DATE_FORMAT(fecha,"%Y-%m-01") as fecha,sum(puntos) as puntos,sum(valor) as valor FROM comision where id_afiliado="'.$id.'" group by MONTH(fecha)');
+		return $q->result();
+	}
+	
 	function get_historial($id)
 	{
 		$q=$this->db->query('select * from cobro where id_user='.$id.'  and (id_estatus=4 or id_estatus=5)  order by fecha');
@@ -46,11 +53,41 @@ class modelo_billetera extends CI_Model
 		$q=$this->db->query('select sum(monto) as monto from cobro where id_user='.$id.' and id_estatus=4');
 		return $q->result();
 	}
+	
+	function get_comisiones($id,$id_red){
+		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t where(c.id_red=t.id) and(c.id_red='.$id_red.') and c.id_afiliado='.$id.'');
+		return $q->result();
+	}
+	
+	function get_comisiones_mes($id,$id_red,$fecha){
+		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t where(c.id_red=t.id) and(c.id_red='.$id_red.') and MONTH("'.$fecha.'")=MONTH(fecha) and c.id_afiliado='.$id.'');
+		return $q->result();
+	}
+	
 	function get_cobro($id)
 	{
 		$q=$this->db->query('select * from cobro where  id_estatus != 4 and id_user='.$id);
 		return $q->result();
 	}
+	
+	function get_cobros_total($id)
+	{
+		$q=$this->db->query('SELECT sum(monto)as monto FROM OficinaVirtual.cobro where  id_estatus=2 and id_user='.$id);
+		return $q->result();
+	}
+	
+	function get_cobros_afiliado_mes($id,$fecha)
+	{
+		$q=$this->db->query('SELECT sum(monto)as monto FROM OficinaVirtual.cobro where  id_estatus=2 and month("'.$fecha.'")=month(fecha_pago) and id_user='.$id);
+		return $q->result();
+	}
+	
+	function get_cobros_afiliado_mes_actual($id)
+	{
+		$q=$this->db->query('SELECT sum(monto)as monto FROM OficinaVirtual.cobro where  id_estatus=2 and month(now())=month(fecha_pago) and id_user='.$id);
+		return $q->result();
+	}
+	
 	function datable($id)
 	{
 		$q=$this->db->query('select * ,
@@ -118,23 +155,64 @@ class modelo_billetera extends CI_Model
 	}
 	
 	function ValorRetenciones(){
-		$q = $this->db->query("SELECT * FROM OficinaVirtual.cat_retencion order by duracion");
+		$q = $this->db->query("SELECT * FROM cat_retenciones_historial where year(now())=ano and month(now())=mes");
 		$retenciones_regis = $q->result();
 		$retenciones = array();
 		foreach ($retenciones_regis as $retencion){
-			$valor;
+		/*	$valor=0;
 			if($retencion->duracion == 'ANO'){
-				$valor = $retencion->porcentanje / 12;
+				$valor = $retencion->porcentaje / 12;
 			}elseif ($retencion->duracion == 'SEM'){
-				$valor = $retencion->porcentaje / 6; 
+				$valor = $retencion->porcentaje / 4; 
 			}elseif ($retencion->duracion == 'MES'){
 				$valor = $retencion->porcentaje ; 
 			}elseif ($retencion->duracion == 'DIA'){
 				$valor = $retencion->porcentaje * 30;
-			}
-			$retencion_cobrar = array('id' => $retencion->id_retencion,
+			}*/
+			$retencion_cobrar = array('id' => $retencion->id,
 									'descripcion' => $retencion->descripcion,
-									'valor'   => $valor);
+									'valor'   => $retencion->valor);
+			$retenciones[] = $retencion_cobrar;
+		}
+		return $retenciones;
+	}
+	
+	function ValorRetencionesTotales(){
+		$q = $this->db->query("SELECT created FROM users where id=2;");
+		$fecha_creacion = $q->result();
+		$q = $this->db->query("SELECT descripcion,sum(valor)as valor FROM cat_retenciones_historial  where month('".$fecha_creacion[0]->created."')
+										<=mes and year('".$fecha_creacion[0]->created."')<=ano group by descripcion");
+		$retenciones_regis = $q->result();
+		$retenciones = array();
+		foreach ($retenciones_regis as $retencion){
+			/*	$valor=0;
+				if($retencion->duracion == 'ANO'){
+				$valor = $retencion->porcentaje / 12;
+				}elseif ($retencion->duracion == 'SEM'){
+				$valor = $retencion->porcentaje / 4;
+				}elseif ($retencion->duracion == 'MES'){
+				$valor = $retencion->porcentaje ;
+				}elseif ($retencion->duracion == 'DIA'){
+				$valor = $retencion->porcentaje * 30;
+				}*/
+			$retencion_cobrar = array(
+					'descripcion' => $retencion->descripcion,
+					'valor'   => $retencion->valor);
+			$retenciones[] = $retencion_cobrar;
+		}
+		return $retenciones;
+	}
+	
+	
+	function ValorRetenciones_historial($fecha){
+		$q = $this->db->query("SELECT * FROM cat_retenciones_historial where year('".$fecha."')=ano and month('".$fecha."')=mes");
+		$retenciones_regis = $q->result();
+		$retenciones = array();
+		foreach ($retenciones_regis as $retencion){
+
+			$retencion_cobrar = array('id' => $retencion->id,
+					'descripcion' => $retencion->descripcion,
+					'valor'   => $retencion->valor);
 			$retenciones[] = $retencion_cobrar;
 		}
 		return $retenciones;
