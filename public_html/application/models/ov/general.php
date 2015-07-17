@@ -13,4 +13,9 @@ class general extends CI_Model
 	 	return $q->result();
 	}
 
+	function get_email($id)
+	{
+		$q=$this->db->query('select email from users where id = '.$id);
+		return $q->result();
+	}
 }

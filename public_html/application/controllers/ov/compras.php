@@ -989,14 +989,8 @@ function index()
 				{
 					case 1:
 						$detalles=$this->modelo_compras->detalles_productos($id);
-						$impuestos=$this->modelo_compras->get_impuestos_merca($id);
 						$costo_ini=$detalles[0]->costo*(1-$data['desc']);
 						$costo_total=$costo_ini;
-						foreach($impuestos as $imp)
-						{
-							$mas=($imp*$costo_ini)/100;
-							$costo_total=$costo_total+$mas;
-						}
 						
 						$add_cart = array(
 				           'id'      => $id,
@@ -1009,14 +1003,9 @@ function index()
 						
 					case 2:
 						$detalles=$this->modelo_compras->detalles_servicios($id);
-						$impuestos=$this->modelo_compras->get_impuestos_merca($id);
 						$costo_ini=$detalles[0]->costo*(1-$data['desc']);
 						$costo_total=$costo_ini;
-						foreach($impuestos as $imp)
-						{
-							$mas=($imp*$costo_ini)/100;
-							$costo_total=$costo_total+$mas;
-						}
+						
 						$add_cart = array(
 				           'id'      => $id,
 				           'qty'     => $data['qty'],
@@ -1028,16 +1017,10 @@ function index()
 						
 					case 3:
 						$detalles=$this->modelo_compras->detalles_combinados($id);
-						$impuestos=$this->modelo_compras->get_impuestos_merca($id);
 						$comb=$this->modelo_compras->comb_espec($id);
 						$costo_q=$this->modelo_compras->costo_merc($id);
 						$costo_ini=$costo_q[0]->costo*(1-$data['desc']);
 						$costo_total=$costo_ini;
-						foreach($impuestos as $imp)
-						{
-							$mas=($imp*$costo_ini)/100;
-							$costo_total=$costo_total+$mas;
-						}
 						
 						$add_cart = array(
 				           'id'      => $id,
@@ -1049,14 +1032,8 @@ function index()
 						break;
 					case 4:
 						$detalles=$this->modelo_compras->detalles_prom_prod($id);
-						$impuestos=$this->modelo_compras->get_impuestos_merca($id);
 						$costo_ini=$detalles[0]->costo*(1-($detalles[0]->prom_costo/100));
 						$costo_total=$costo_ini;
-						foreach($impuestos as $imp)
-						{
-							$mas=($imp*$costo_ini)/100;
-							$costo_total=$costo_total+$mas;
-						}
 						
 						$add_cart = array(
 				           'id'      => $detalles[0]->id,
@@ -1068,14 +1045,9 @@ function index()
 						break;
 					case 5:
 						$detalles=$this->modelo_compras->detalles_prom_serv($id);
-						$impuestos=$this->modelo_compras->get_impuestos_merca($id);
 						$costo_ini=$detalles[0]->costo*(1-($detalles[0]->prom_costo/100));
 						$costo_total=$costo_ini;
-						foreach($impuestos as $imp)
-						{
-							$mas=($imp*$costo_ini)/100;
-							$costo_total=$costo_total+$mas;
-						}
+						
 						$add_cart = array(
 				           'id'      => $detalles[0]->id,
 				           'qty'     => $data['qty'],
@@ -1086,14 +1058,9 @@ function index()
 						break;
 					case 6:
 						$detalles=$this->modelo_compras->detalles_prom_comb($id);
-						$impuestos=$this->modelo_compras->get_impuestos_merca($id);
 						$costo_ini=$detalles[0]->costo*(1-($detalles[0]->prom_costo/100));
 						$costo_total=$costo_ini;
-						foreach($impuestos as $imp)
-						{
-							$mas=($imp*$costo_ini)/100;
-							$costo_total=$costo_total+$mas;
-						}
+						
 						$add_cart = array(
 				           'id'      => $detalles[0]->id,
 				           'qty'     => $data['qty'],
@@ -1513,6 +1480,7 @@ function index()
 		//$prom=$this->modelo_compras->get_promocion();
 		for($servicios=0;$servicios<sizeof($serv);$servicios++)
 		{
+			$impuesto = $this->modelo_compras->ImpuestoMercancia($serv[$servicios]->id, $serv[$servicios]->costo);
 			echo '	<div class="item col-lg-3 col-md-3 col-sm-4 col-xs-6">
 				    	<div class="product">
 					    	<a class="add-fav tooltipHere" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
@@ -1527,7 +1495,7 @@ function index()
 				              		<p>'.$serv[$servicios]->descripcion.'.</p>
 				              		
 				              	</div>
-				            	<div class="price"> <span>$ '.$serv[$servicios]->costo.'</span> </div>
+				            	<div class="price"> <span>$ '.$serv[$servicios]->costo+$impuesto.'</span> </div>
 				            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 				       </div>
 			       </div>
@@ -1768,7 +1736,7 @@ function index()
 		//$prom=$this->modelo_compras->get_promocion();
 		for($productos=0;$productos<sizeof($prod);$productos++)
 		{
-
+			
 									echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
 									    	<div class="producto">
 										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
@@ -1790,6 +1758,7 @@ function index()
 		}
 		for($servicios=0;$servicios<sizeof($serv);$servicios++)
 		{
+				
 								echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
 									    	<div class="producto">
 										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
@@ -1802,7 +1771,7 @@ function index()
 									            	<div class="description">
 									              		<h4><a href="">'.$serv[$servicios]->nombre.'</a></h4>
 									              	</div>
-									            	<div class="price"> <span>$ '.$serv[$servicios]->costo.'</span> </div>
+									            	<div class="price"> <span>$ '.($serv[$servicios]->costo).'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
 									       </div>
 								       </div>
@@ -1810,6 +1779,7 @@ function index()
 		}
 		for($combinados=0;$combinados<sizeof($comb);$combinados++)
 		{
+			
 								echo '	<div class="item col-lg-3 col-md-3 col-sm-3 col-xs-3">
 									    	<div class="producto">
 										    	<a class="" data-toggle="tooltip" data-original-title="Add to Wishlist"  data-placement="left">
@@ -2944,19 +2914,24 @@ function index()
 		$telefono = $_POST['phone'];
 		$identificado_transacion = $_POST['transaction_id'];
 		$medio_pago = $_POST['payment_method_name'];
-		$costo = $_POST['value'];
+		
 		$id_transacion = $_POST['transaction_id'];
 		$firma = $_POST['sign'];
 		
+		$costo = $cantidad*$this->modelo_compras->CostoMercancia($id_mercancia);
+		
+		$impuestos = $this->modelo_compras->ImpuestoMercancia($id_mercancia, $costo);
 		
 		if($estado == 4){
-			$venta = $this->modelo_compras->registrar_venta($id_usuario, $costo, $metodo_pago, $id_transacion, $firma, $fecha);
+			
+			$venta = $this->modelo_compras->registrar_venta($id_usuario, $costo, $metodo_pago, $id_transacion, $firma, $fecha, $impuestos);
+			
 			$this->modelo_compras->registrar_envio("1".$venta, $id_usuario, $direcion_envio , $telefono, $email);
 			$this->modelo_compras->registrar_factura($venta, $id_usuario, $direcion_envio , $telefono, $email);
 			
 			$puntos = $this->modelo_compras->registrar_venta_mercancia($id_mercancia, $venta, $cantidad);
 			$total = $this->modelo_compras->registrar_impuestos($id_mercancia);
-			$this->modelo_compras->registrar_puntos($id_usuario, $id_mercancia, $cantidad, $costo, $total, $venta, $puntos);
+			$this->modelo_compras->registrar_movimiento($id_usuario, $id_mercancia, $cantidad, $costo+$impuestos, $total, $venta, $puntos);
 			$producto_continua = array();
 			foreach ($productos as $producto){
 				if($producto['id'] == $id_mercancia){
@@ -2999,9 +2974,7 @@ function index()
 			
 			$id_afiliado = $id_padre;
 			$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
-			if(!$id_padre){
-				exit;
-			}
+			
 			$valor_comision = ($valor_puntos) / 100;
 			$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, 1, $valor_comision, $id_red_mercancia );
 		} else {
@@ -3041,7 +3014,7 @@ function index()
 				$estado = $this->model_user_profiles->EstadoUsuario ( $id_padre );
 				$red2 = $this->model_afiliado->RedAfiliado ( $id_padre, $id_red_padre );
 				
-				while ( isset ( $id_padre ) || $id_padre == 0 ) {
+				while ( isset ( $id_padre ) || $id_padre != 0 ) {
 					
 					$id_afiliado = $id_padre;
 					$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );

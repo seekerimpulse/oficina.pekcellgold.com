@@ -6,13 +6,8 @@
 						<h1 class="page-title txt-color-blueDark">
 							<a href="/ov"><i class="fa fa-home"></i> Menu</a>
 							<a href="/ov/billetera2/index"> > Billetera</a>
-							<span> > Historial</span>
+							<span> > Historial Cuenta</span>
 							
-						</h1>
-					</div>
-					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h1 class="page-title txt-color-blueDark">
-							<i style="color: #5B835B;" class="fa fa-money"></i> <span class="txt-color-black"><b>$ <?=number_format($ganancias,2)?> </b> Mis Ganancias</span>
 						</h1>
 					</div>
 				</div>
@@ -38,21 +33,6 @@
 
 										<!-- Widget ID (each widget will need unique ID)-->
 										<div class="jarviswidget jarviswidget-color-purity" id="wid-id-1" data-widget-editbutton="false" data-widget-colorbutton="true">
-											<!-- widget options:
-											usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-							
-											data-widget-colorbutton="false"
-											data-widget-editbutton="false"
-											data-widget-togglebutton="false"
-											data-widget-deletebutton="false"
-											data-widget-fullscreenbutton="false"
-											data-widget-custombutton="false"
-											data-widget-collapsed="true"
-											data-widget-sortable="false"
-							
-											-->
-											
-							
 											<!-- widget div-->
 											<div>
 							
@@ -90,32 +70,26 @@
 																	</select>
 																</label>
 															</div>
-															<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+															<table id="dt_basic" class="table table-striped table-bordered table-hover">
 																<thead>			                
 																	<tr>
-																		<th data-hide="expand"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> Fecha</th>
-																		<th><i class="fa fa-fw fa-map-marker txt-color-blue hidden-md hidden-sm hidden-xs"></i> Monto</th>
-																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Método de pago</th>
-																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Titular Cuenta</th>
-																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> # Cuenta</th>
-																		<th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Banco</th>
-																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> CLABE</th>
-																		<th>Estado</th>
+																		<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> Fecha</th>
+																		<th data-class="expand"><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i> Valor Total</th>
+																		<th></th>
 																	</tr>
 																</thead>
 																<tbody>
-																	<? foreach ($datatable as $key) {?>
+																	<? foreach ($historial as $key) {?>
 																	<tr>
 																		<td><?=$key->fecha?></td>
-																		<td><?echo number_format($key->monto,2)?></td>
-																		<td><?=$key->metodo?></td>
-																		<td><?=$key->cuenta ?></td>
-																		<td><?=$key->titular ?></td>
-																		<td><?=$key->banco ?></td>
-																		<td><?=$key->clabe ?></td>
-																		<td><?=$key->estado ?></td>
+																		<td><?echo number_format($key->valor,2)?></td>
+																		<td>
+																			<a href="/ov/billetera2/estado_historial?fecha=<?php echo  date("Y-m", strtotime($key->fecha))."-01" ?>" title="Modificar">
+																				<i class="fa fa-eye  fa-3x "></i>
+																			</a>
+																		</td>
 																	</tr>
-																	<?}?>
+																	<?}?> 
 																</tbody>
 															</table>
 														
@@ -149,27 +123,29 @@
 
 		<!-- PAGE RELATED PLUGIN(S) 
 		<!-- Morris Chart Dependencies -->
-	<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
-	<script src="/template/js/plugin/markdown/markdown.min.js"></script>
-	<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
-	<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
-	<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
-	<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
-	<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
-	<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-	<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-	<script src="/template/js/validacion.js"></script>
+		<script src="/template/js/plugin/morris/raphael.min.js"></script>
+		<script src="/template/js/plugin/morris/morris.min.js"></script>
+
+		<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+		<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
 
 		<script type="text/javascript">
-		$(document).ready(function() {
-			
-			$("#mymarkdown").markdown({
-							autofocus:false,
-							savable:false
-						})
+			// PAGE RELATED SCRIPTS
 
+			/*
+			 * Run all morris chart on this page
+			 */
+			$(document).ready(function() {
+				
+				// DO NOT REMOVE : GLOBAL FUNCTIONS!
+				pageSetUp();
 
-			/* BASIC ;*/
+				
+
+				/* BASIC ;*/
 				var responsiveHelper_dt_basic = undefined;
 				var responsiveHelper_datatable_fixed_column = undefined;
 				var responsiveHelper_datatable_col_reorder = undefined;
@@ -179,7 +155,7 @@
 					tablet : 1024,
 					phone : 480
 				};
-
+	
 				$('#dt_basic').dataTable({
 					"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
 						"t"+
@@ -198,44 +174,11 @@
 						responsiveHelper_dt_basic.respond();
 					}
 				});
-
+	
 			/* END BASIC */
 
-			/* BASIC ;*/
-				var responsiveHelper_dt_basic = undefined;
-				var responsiveHelper_datatable_fixed_column = undefined;
-				var responsiveHelper_datatable_col_reorder = undefined;
-				var responsiveHelper_datatable_tabletools = undefined;
-				
-				var breakpointDefinition = {
-					tablet : 1024,
-					phone : 480
-				};
-
-				$('#dt_basic_paquete').dataTable({
-					"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
-						"t"+
-						"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-					"autoWidth" : true,
-					"preDrawCallback" : function() {
-						// Initialize the responsive datatables helper once.
-						if (!responsiveHelper_dt_basic) {
-							responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-						}
-					},
-					"rowCallback" : function(nRow) {
-						responsiveHelper_dt_basic.createExpandIcon(nRow);
-					},
-					"drawCallback" : function(oSettings) {
-						responsiveHelper_dt_basic.respond();
-					}
-				});
-
-			/* END BASIC */
-
-			pageSetUp();
-
-		})
+				$("#dt_basic_filter").children('label').addClass("");
+					});
 
 			//setup_flots();
 			/* end flot charts */

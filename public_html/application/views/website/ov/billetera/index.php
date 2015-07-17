@@ -14,7 +14,7 @@
 	<div class="well">
 			<fieldset>
 				
-					<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+					<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
 						<a href="estado">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
 								<i class="fa fa-signal fa-3x"></i>
@@ -22,20 +22,27 @@
 							</div>	
 						</a>
 					</div>
-					<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-						<a href="/ov/billetera2/historial">
+					<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
+						<a href="/ov/billetera2/historial_cuenta">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
 								<i class="fa fa-calendar fa-3x"></i>
-								<h5>Historial</h5>
+								<h5>Historial Cuenta</h5>
 							</div>	
 						</a>
 					</div>
-					
-					<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+					<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
 						<a href="pedir_pago">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
 								<i class="fa fa-money fa-3x"></i>
 								<h5>Pedir Plata</h5> 
+							</div>	
+						</a>
+					</div>
+					<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
+						<a href="/ov/billetera2/historial">
+							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
+								<i class="fa fa-calendar fa-3x"></i>
+								<h5>Historial Pedir Plata</h5>
 							</div>	
 						</a>
 					</div>

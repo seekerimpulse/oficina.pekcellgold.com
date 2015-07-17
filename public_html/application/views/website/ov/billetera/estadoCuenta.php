@@ -6,13 +6,20 @@
 						<h1 class="page-title txt-color-blueDark">
 							<a href="/ov"><i class="fa fa-home"></i> Menu</a>
 							<a href="/ov/billetera2/index"> > Billetera</a>
-							<span> > Estado</span>
+							<span> > Estado de Cuenta</span>
 							
+						</h1>
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+						<h1 class="page-title txt-color-blueDark">
+							<i style="color: #5B835B;" class="fa fa-money"></i> Mis Ganancias  <span class="txt-color-black"><b>$ <?=number_format($comisiones,2)?> </b></span>
 						</h1>
 					</div>
 				</div>
 				<!-- row -->
 				<div class="row">
+
+					
 				</div>
 				<!-- end row -->
 
@@ -44,21 +51,10 @@
 											data-widget-sortable="false"
 							
 											-->
-											
-							
-											<!-- widget div-->
-											<div>
-							
-												<!-- widget edit box -->
-												<div class="jarviswidget-editbox">
-													<!-- This area used as dropdown edit box -->
-												</div>
-												<!-- end widget edit box -->
-							
-												<!-- widget content -->
+																							<!-- widget content -->
 												<div class="widget-body">
 													<div id="myTabContent1" class="tab-content padding-10">
-													<h1 class="text-center">Estado de Cuenta del mes</h1>
+													<h1 class="text-center"></h1>
 													
 													<div class="table-responsive">
 													<table class="table">
@@ -98,50 +94,61 @@
 													
 															<table id="dt_basic" class="table table-striped table-bordered table-hover">
 																
-																	<?php foreach ($retenciones as $retencion) {?>
+																	<?php 
+																	$retenciones_total=0;
+																	foreach ($retenciones as $retencion) {?>
 																	<tr class="danger">
 																		<td><b>Retencion por <?php echo $retencion['descripcion']; ?></b></b></td>
 																		<td></td>
-																		<td>$ <?php echo $retencion['valor']; ?></td>
+																		<td>$ <?php 
+																		$retenciones_total+=$retencion['valor'];
+																		echo $retencion['valor']; ?></td>
 																	</tr>
-																	<?php $total-=$retencion['valor'];
+																	<?php $total;
 																	} ?>
-																	<tr class="success">
-																		<td><h4><b>Saldo Mes</b></h4></td>
+																
+																	<tr class="danger">
+																		<td><b>Cobros Pendientes</b></td>
 																		<td></td>
-																		<td><h4><b>$ <?php echo $total; ?></b></h4></td>
+																		<td>$ <?php 
+																		if($cobroPendientes==null)
+																			echo "0";
+																		else
+																			echo $cobroPendientes;
+																		?></td> 
 																	</tr>
+																
 																	<?php foreach ($cobro as $cobros){
 																	?>
-																	<tr class="success">
-																		<td><h4><b>Cobros Pagados Mes</b></h4></td>
+																	<tr class="danger">
+																		<td><b>Cobros Pagos</b></td>
 																		<td></td>
-																		<td><h4><b>$ 
+																		<td>$ 
 																		<?php 
 																		if($cobros->monto==null){
-																			$cobrosTotales=0;
-																			echo '0';
+																		  echo '0';
+																		  $cobro=0;
 																		}
 																		else {
-																		  $cobrosTotales=$cobros->monto;
 																		  echo $cobros->monto;
+																		  $cobro=$cobros->monto;
 																		}
-																		?></b></h4></td>
+																		?></td>
 																	</tr>
 																	<?php 
 																	}?>
 																	<tr class="info">
-																		<td><h4><b>Saldo Neto</b></h4></td>
+																		<td><h4><b>Saldo Neto</b></h4>
 																		<td></td>
-																		<td><h4><b>$ <?php echo ($total-$cobrosTotales); ?></b></h4></td>
+																		<td><h4><b>$ <?php echo $total-($cobro+$retenciones_total+$cobroPendientes); ?></b></h4></td>
 																	</tr>
 																</table>
 														
 													</div>
+												
 												</div>
-												<!-- end widget content -->
 							
-											</div>
+
 											<!-- end widget div -->
 										</div>
 										<!-- end widget -->
@@ -175,60 +182,4 @@
 		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
 		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-
-		<script type="text/javascript">
-			// PAGE RELATED SCRIPTS
-
-			/*
-			 * Run all morris chart on this page
-			 */
-			$(document).ready(function() {
-				
-				// DO NOT REMOVE : GLOBAL FUNCTIONS!
-				pageSetUp();
-
-				$("#cobro").keypress(CalcularSaldo);
-				$('#enviar').attr("disabled", true);
-					});
-
-			//setup_flots();
-			/* end flot charts */
-			
-function CalcularSaldo(evt){
-				
-				var saldo = $("#saldo").val();
-				var pago = $("#cobro").val() + String.fromCharCode(evt.charCode);
-				var neto = saldo-pago;
-				$("#neto").val(neto);
-				if(neto > 0){
-					$('#enviar').attr("disabled", false);
-					}else{
-						$('#enviar').attr("disabled", true);
-					}
-			}
-function cobrar()
-	{
-		$.ajax({
-		type: "POST",
-		url: "/ov/billetera/cobrar",
-		data: $('#contact-form1').serialize()
-		})
-		.done(function( msg ) {
-
-			bootbox.dialog({
-			message: "Tu cobro se esta procesando",
-			title: "Cobro",
-			buttons: {
-				success: {
-				label: "Ok!",
-				className: "btn-success",
-				callback: function() {
-					location.href='';
-					}
-				}
-			}
-		});
-
-		});
-	}
-	</script>
+	

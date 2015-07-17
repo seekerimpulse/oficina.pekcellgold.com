@@ -200,15 +200,17 @@
 							                </div>
 							            <div class="col-xs-12 col-sm-12 col-lg-12">
 							                      <div class="cartContent w100 checkoutReview ">
-							                        <table class="cartTable table-responsive"   style="width:100%">
+							                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 							                          <tbody>
 							                          	<tr class="CartProduct cartTableHeader">
-							                              <th style="width:15%"> Productos </th>
-							                              <th class="checkoutReviewTdDetails"  >Detalles</th>
-							                              <th style="width:10%" >Valor Unitario</th>
-							                              <th class="hidden-xs" style="width:10%">Cantidad</th>
-							                              <th class="hidden-xs" style="width:10%" >Descuento</th>
-							                              <th style="width:15%">Total</th>
+							                              <th data-class="expand" > Productos </th>
+							                              <th data-hide="phone,tablet" class="checkoutReviewTdDetails" >Detalles</th>
+							                              <th data-hide="phone,tablet" >Valor Unitario</th>
+							                              <th data-hide="phone,tablet" >Cantidad</th>
+							                              <th data-hide="phone,tablet" >Descuento</th>
+							                              <th data-hide="phone,tablet">Subtotal<th>
+							                              <th data-hide="phone,tablet">Impuestos</th>
+							                              <th>Total</th>
 							                              <th></th>
 							                            </tr>
 							                          	<?php
@@ -217,29 +219,33 @@
 																$cantidad=0;
 																foreach ($this->cart->contents() as $items) 
 																{
+																	$impuesto = $this->modelo_compras->ImpuestoMercancia($items['id'], $items['price'])*$items['qty'];	
 																	$total=$items['qty']*$items['price']; ?>	
 																	
 																	<tr class="CartProduct">
 												                        <td  class="CartProductThumb"><div> <a href=""><img src="<?php echo $compras[$cantidad]['imagen']; ?>"></a> </div></td>
-												                        <td ><div class="CartDescription">
+												                        <td><div class="CartDescription">
 												                        	<h4> <a href=""><?php echo $compras[$cantidad]['nombre']; ?> </a> </h4>
 												                         	</div>
 												                         </td>
-												                         <td class="delete"><div class="price "><?php echo $items['price']; ?></div></td>
-												                         <td class="hidden-xs"><?php echo $items['qty']; ?></td>
-												                         <td class="hidden-xs">0</td>
-												                         <td class="price"><?php echo $total; ?></td>
+												                         <td class="price">$ <?echo number_format($items['price'],2)?></td>
+												                         <td class="price"><?php echo $items['qty']; ?></td>
+												                         <td class="price">$ 0</td>
+												                         <td class="price">$ <?echo number_format($total,2)?></td>
+												                         <td></td>
+												                         <td class="price">$ <?echo number_format($impuesto,2)?></td>
+												                         <td class="price">$ <?echo number_format($total+$impuesto,2)?></td>
 												                         <td>
 												                         	<form method="post" action="https://stg.gateway.payulatam.com/ppp-web-gateway">
 												                         	 <?php 
-													                         	 $valortotal= $items['price']*$items['qty'];
+													                         	 $valortotal= $total+$impuesto;
 													                         	 $time = $items['options']['time'].$items['id'];
 													                         	 $firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~500238~".$time."~".$valortotal."~USD");
 													                         	 $id_usuario = $id;
 													                         	 if(isset($_GET['usr'])){
 													                         	 	$id_usuario = $_GET['usr'];
 													                         	 }
-													                         	 
+													                         	 $email=$this->general->get_email($id_usuario);
 													                         	 ?>
 																				  <input name="merchantId"    type="hidden"  value="500238" >
 																				  <input name="accountId"     type="hidden"  value="500538" >
@@ -253,7 +259,7 @@
 																				  <input name="test"     type="hidden"  value="1"  >
 																				  <input name="extra1"      type="hidden"  value="<?php echo $items['id']."-".$items['qty']; ?>" >
 																				  <input name="extra2"      type="hidden"  value="<?php echo $id_usuario; ?>" >
-																				  <input name="buyerEmail"    type="hidden"  value="edixon.hernandez.c@gmail.com" >
+																				  <input name="buyerEmail"    type="hidden"  value="<?php echo $email[0]->email; ?>" >
 																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
 																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVenta" >
 																				  <input type="submit" value="¡¡Comprar!!" class="btn btn-lg btn-success" style="float:right;">
@@ -271,31 +277,7 @@
 							                        </table>
 							                      </div>
 							                      <!--cartContent-->
-							                      
-							                      <div class="w100 costDetails">
-							                        <div class="table-block" id="order-detail-content">
-							                          <table class="std table" id="cart-summary">
-							                            <tr >
-							                              <td>Costo de productos</td>
-							                              <td  class="price">$<?=$this->cart->total() ?></td>
-							                            </tr>
-							                            <tr style="" >
-							                              <td>Costo de Envio</td>
-							                              <td  class="price"><span class="success">Envio Gratis!</span></td>
-							                            </tr>
-							                            
-							                            <tr >
-							                              <td > Total </td>
-							                              <td id="total-price" class="price">$<?=$this->cart->total() ?> </td>
-							                            </tr>
-							                            <tbody>
-							                            </tbody>
-							                          </table>
-							                        </div>
-							                      </div>
-							                      
-							                      <input type="submit" value="¡¡Comprar!!" class="btn btn-lg btn-success" style="float:right;">
-							                      <!--/costDetails-->
+							                  
 							                      
 							
 							          
@@ -330,8 +312,89 @@
     <script type="text/javascript" src="/cart/HTML/assets/js/smoothproducts.min.js"></script> 
     <script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+    
+<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
+	<script src="/template/js/plugin/markdown/markdown.min.js"></script>
+	<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
+	<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
+	<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
+	<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
+	<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
+	<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+	<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
+	<script src="/template/js/validacion.js"></script>
 	<script type="text/javascript">
+	$(document).ready(function() {
 
+
+		/* BASIC ;*/
+			var responsiveHelper_dt_basic = undefined;
+			var responsiveHelper_datatable_fixed_column = undefined;
+			var responsiveHelper_datatable_col_reorder = undefined;
+			var responsiveHelper_datatable_tabletools = undefined;
+			
+			var breakpointDefinition = {
+				tablet : 1024,
+				phone : 480
+			};
+
+			$('#dt_basic').dataTable({
+				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
+					"t"+
+					"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+				"autoWidth" : true,
+				"preDrawCallback" : function() {
+					// Initialize the responsive datatables helper once.
+					if (!responsiveHelper_dt_basic) {
+						responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+					}
+				},
+				"rowCallback" : function(nRow) {
+					responsiveHelper_dt_basic.createExpandIcon(nRow);
+				},
+				"drawCallback" : function(oSettings) {
+					responsiveHelper_dt_basic.respond();
+				}
+			});
+
+		/* END BASIC */
+
+		/* BASIC ;*/
+			var responsiveHelper_dt_basic = undefined;
+			var responsiveHelper_datatable_fixed_column = undefined;
+			var responsiveHelper_datatable_col_reorder = undefined;
+			var responsiveHelper_datatable_tabletools = undefined;
+			
+			var breakpointDefinition = {
+				tablet : 1024,
+				phone : 480
+			};
+
+			$('#dt_basic_paquete').dataTable({
+				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
+					"t"+
+					"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+				"autoWidth" : true,
+				"preDrawCallback" : function() {
+					// Initialize the responsive datatables helper once.
+					if (!responsiveHelper_dt_basic) {
+						responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
+					}
+				},
+				"rowCallback" : function(nRow) {
+					responsiveHelper_dt_basic.createExpandIcon(nRow);
+				},
+				"drawCallback" : function(oSettings) {
+					responsiveHelper_dt_basic.respond();
+				}
+			});
+
+		/* END BASIC */
+
+		pageSetUp();
+
+	})
+	
 	function ProcesarCompra($id){
 			
 

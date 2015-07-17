@@ -10,11 +10,6 @@
 							
 						</h1>
 					</div>
-					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h1 class="page-title txt-color-blueDark">
-							Mis ganancias: <span class="txt-color-black"><?=number_format($ganancias,2)?></span>
-						</h1>
-					</div>
 				</div>
 				<!-- row -->
 				<div class="row">
@@ -51,78 +46,146 @@
 											data-widget-sortable="false"
 							
 											-->
-											
-							
-											<!-- widget div-->
-											<div>
-							
-												<!-- widget edit box -->
-												<div class="jarviswidget-editbox">
-													<!-- This area used as dropdown edit box -->
-												</div>
-												<!-- end widget edit box -->
-							
-												<!-- widget content -->
+																							<!-- widget content -->
 												<div class="widget-body">
 													<div id="myTabContent1" class="tab-content padding-10">
-													<?php $total = $ganancias; ?>
-															<form action="send_mail" method="post" id="contact-form1"  class="smart-form">
-																<header>Comiciones: $<?=number_format($ganancias,2)?></header>
-																<fieldset>
-																	<header>Impuestos</header>
-																	<?php foreach ($impuestos as $impuesto) {?>
-																	<section class="col col-10">
-																		<label class="label">Impuesto <?php echo $impuesto->descripcion; ?></label>
-																		<label class="input">
-																			<input name="impuestos" type="text" readonly class="from-control" value="<?php echo $impuesto->impuesto; ?>"/>
-																		</label>
-																	</section>
+													<h1 class="text-center"></h1>
+													
+													<div class="table-responsive">
+													<table class="table">
+													<thead>
+														<tr>
+															<th> <i class="fa fa-sitemap"></i> Red</th>
+															<th> <i class="fa fa-money"></i> Comision</th>
+														</tr>
+													</thead>
+													<tbody>
+												<?php 
+													$total = 0; 
+													foreach ($ganancias as $gred){
+														if($gred[0]->puntos){
+														echo '<tr class="success">
+																<td>'.$gred[0]->nombre.'</td>
+																<td>$ '.$gred[0]->valor.'</td>
+															</tr>';
+														$total += $gred[0]->valor;
+														}else {
+															echo '<tr class="warning">
+																<td>'.$gred[0]->nombre.'</td>
+																<td>$ 0</td>
+															</tr>';
+														}
+													}
+													?>  
+													<tr class="success">
+														<td><h4><b>TOTAL</b></h4></td>
+														<td><h4><b>$ <?php echo $total;?></b></h4></td>
+													</tr>
+													</tbody>
+													</table>
+														
+													</div>
+
+													
+															<table id="dt_basic" class="table table-striped table-bordered table-hover">
 																
 																	<?php 
-																		$total-=$impuesto->impuesto;
-																		} ?>
-																</fieldset>
-																<fieldset>
-																	<header>Retenciones</header>
-																	<?php foreach ($retenciones as $retencion) {?>
-																	<section class="col col-10">
-																		<label class="label"><?php echo $retencion['descripcion']; ?></label>
-																		<label class="input">
-																			<input type="text" class="from-control" name="retenciones" value="<?php echo $retencion['valor']; ?>" readonly />
-																		</label>
-																	</section>
+																	$retenciones_total=0;
+																	foreach ($retenciones as $retencion) {?>
+																	<tr class="danger">
+																		<td><b>Retencion por <?php echo $retencion['descripcion']; ?></b></b></td>
+																		<td></td>
+																		<td>$ <?php 
+																		$retenciones_total+=$retencion['valor'];
+																		echo $retencion['valor']; ?></td>
+																	</tr>
+																	<?php $total;
+																	} ?>
+																
+																	<tr class="danger">
+																		<td><b>Cobros Pendientes</b></td>
+																		<td></td>
+																		<td>$ <?php 
+																		if($cobroPendientes==null)
+																			echo "0";
+																		else
+																			echo $cobroPendientes;
+																		?></td> 
+																	</tr>
+																
+																	<?php foreach ($cobro as $cobros){
+																	?>
+																	<tr class="danger">
+																		<td><b>Cobros Pagos</b></td>
+																		<td></td>
+																		<td>$ 
+																		<?php 
+																		if($cobros->monto==null){
+																		  echo '0';
+																		  $cobro=0;
+																		}
+																		else {
+																		  echo $cobros->monto;
+																		  $cobro=$cobros->monto;
+																		}
+																		?></td>
+																	</tr>
 																	<?php 
-																		$total-=$retencion['valor'];
-																		} ?>
-																</fieldset>
+																	}?>
+																	<tr class="info">
+																		<td><h4><b>Saldo Neto</b></h4>
+																		<td></td>
+																		<td><h4><b>$ <?php echo $total-($cobro+$retenciones_total+$cobroPendientes); ?></b></h4></td>
+																	</tr>
+																</table>
+														
+													</div>
+													
+													
+														<form action="send_mail" method="post" id="contact-form1"  class="smart-form col-xs-12 col-sm-8 col-md-6 col-lg-4">
 																<fieldset>
 																	<section class="col col-10">
-																		<label class="label">Saldo</label>
-																		<label class="input">
-																			<input type="number" name="saldo" class="from-control" id="saldo" value="<?php echo $total; ?>" readonly />
+																		<label class="label "><b>Saldo Disponible</b></label>
+																		<label class="input input state-success">
+																			<input type="number" name="saldo" class="from-control" id="saldo" value="<?php echo $total-($cobro+$retenciones_total+$cobroPendientes); ?>" readonly />
 																		</label>
 																	</section>
 																	<section class="col col-10">
-																		<label class="label">Pedir Dinero </label>
+																		<label class="label"><b>Pedir Dinero</b></label>
 																		<label class="input">
 																			<input name="cobro" type="number" class="from-control" id="cobro"/>
 																		</label>
 																	</section>
 																	<section class="col col-10">
-																		<label class="label">Método de pago</label>
-																		<label class="select">
-																			<select required name="metodo">
-																			<?foreach ($metodo_cobro as $key)
-																			{
-																				echo '<option value="'.$key->id_metodo.'">'.$key->descripcion.'</option>';
-																			}?>
-																			</select>
+																		<label class="label"><b>Saldo Final</b></label>
+																		<label class="input input state-error">
+																			<input value="" type="number" name="neto" id="neto" class="from-control" readonly />
+																		</label>
+																	</section>
+																</fieldset>	
+																<fieldset>
+																	<section class="col col-10">
+																		<label class="label"><b>Titular Cuenta</b></label>
+																		<label class="input">
+																			<input name="ctitular" type="text" class="from-control" id="ctitular"/>
 																		</label>
 																	</section>
 																	<section class="col col-10">
-																		<label class="label">Saldo Final</label>
+																		<label class="label "><b>Numero de la cuenta</b></label>
+																		<label class="input input">
+																			<input type="number" name="ncuenta" class="from-control" id="ncuenta" value="" required/>
+																		</label>
+																	</section>
+																	<section class="col col-10">
+																		<label class="label"><b>Banco</b></label>
 																		<label class="input">
-																			<input value="" type="number" name="neto" id="neto" class="from-control" readonly />
+																			<input name="cbanco" type="text" class="from-control" id="cbanco"/>
+																		</label>
+																	</section>
+																	<section class="col col-10">
+																		<label class="label"><b>CLABE</b></label>
+																		<label class="input input">
+																			<input value="" type="number" name="cclabe" id="cclabe" class="from-control" />
 																		</label>
 																	</section>
 																</fieldset>	
@@ -133,12 +196,10 @@
 																	</button>
 																</footer>
 															</form>
-														
-													</div>
+													
 												</div>
-												<!-- end widget content -->
 							
-											</div>
+
 											<!-- end widget div -->
 										</div>
 										<!-- end widget -->
@@ -203,29 +264,76 @@ function CalcularSaldo(evt){
 						$('#enviar').attr("disabled", true);
 					}
 			}
-function cobrar()
-	{
-		$.ajax({
-		type: "POST",
-		url: "/ov/billetera2/cobrar",
-		data: $('#contact-form1').serialize()
-		})
-		.done(function( msg ) {
-			
-			bootbox.dialog({
-			message: msg,
-			title: "Transacion",
-			buttons: {
-				success: {
-				label: "Ok!",
-				className: "btn-success",
-				callback: function() {
-					location.href='historial';
-					}
-				}
-			}
-		});
 
-		});
+function cobrar() {
+
+	if(validarCampos()){
+	$.ajax({
+		type: "POST",
+		url: "/auth/show_dialog",
+		data: {message: '¿ Esta seguro que desea Pedir el pago con los datos que se acabaron de ingresar ?'},
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+		message: msg,
+		title: 'Transacion',
+		buttons: {
+			success: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function() {
+
+					$.ajax({
+						type: "POST",
+						url: "/ov/billetera2/cobrar",
+						data: $('#contact-form1').serialize()
+					})
+					.done(function( msg )
+					{
+						bootbox.dialog({
+						message: msg,
+						title: '',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								location.href='historial';
+								}
+							}
+						}
+					})//fin done ajax
+					});//Fin callback bootbox
+
+				}
+			},
+				danger: {
+				label: "Cancelar!",
+				className: "btn-danger",
+				callback: function() {
+
+					}
+			}
+		}
+	})
+	});
+	}else {
+		alert("Los datos de la cuenta estan incompletos o erroneos");
 	}
+}
+function validarCampos(){
+	if($('#ctitular').val()=="")
+		return false;
+			
+	if($('#ncuenta').val()=="")
+		return false;
+	
+	if($('#cbanco').val()=="")
+		return false;
+
+	if($('#cclabe').val()=="")
+		return false;
+	return true;
+}
 	</script>
