@@ -99,15 +99,12 @@ class CuentasPagar extends CI_Controller
 			redirect('/auth/logout');
 		}
 	
-		$cobros = $this->modelo_cobros->listarTodos();
+		
 		$style=$this->modelo_dashboard->get_style($id);
 		$años = $this->modelo_cobros->añosCobros();
 	
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
-		$this->template->set("cobros",$cobros);
-		$this->template->set("años",$años);
-	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
@@ -118,9 +115,59 @@ class CuentasPagar extends CI_Controller
 	function reporte_cobros(){
 		$fecha_inicio = $_POST['fecha_inicio'];
 		$fecha_fin = $_POST['fecha_fin'];
+		
 		$cobros = $this->modelo_cobros->ConsultarCobrosFecha($fecha_inicio, $fecha_fin);
+		
 		$this->template->set("cobros",$cobros);
 		$this->template->set_theme('desktop');
 		$this->template->build('website/bo/comercial/Cuentas/CobrosSinPagar');
+	}
+	
+	function reporte_cobros_excel()
+	{
+		//load our new PHPExcel library
+		
+		$fecha_inicio = $_GET['inicio'];
+		$fecha_fin = $_GET['fin'];
+		
+		$cobros = $this->modelo_cobros->ConsultarCobrosFecha($fecha_inicio, $fecha_fin);
+		
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte-cobros.xls");
+		
+		$total = 0;
+		$ultima_fila = 0;
+		for($i = 0;$i < sizeof($cobros);$i++)
+		{
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id_cobro);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->fecha);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->banco);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->cuenta);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->titular);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $cobros[$i]->clabe);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $cobros[$i]->metodo_pago);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->monto);
+			$total = $total + $cobros[$i]->monto;
+			$ultima_fila = $i+8;
+		}
+		
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($ultima_fila+1), "Total");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($ultima_fila+1), $total);
+		
+		$filename='CuentasPorPagar de '.$fecha_inicio.' al '.$fecha_fin.'.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		 
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save(getcwd()."/media/reportes/".$filename);
+		
+		$this->modelo_cobros->CambiarEstadoCobros($fecha_inicio, $fecha_fin);
+		
+		$objWriter->save('php://output');
 	}
 }

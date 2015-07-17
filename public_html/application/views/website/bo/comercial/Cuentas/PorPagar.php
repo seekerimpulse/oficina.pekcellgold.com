@@ -37,7 +37,7 @@
 				<div class="well">
 					<div class="row">
 						<form class="smart-form" id="reporte-form" method="post">
-							<div class="row">		
+							<div class="row hidden-print">		
 								<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
 									<label class="input"> <i class="icon-append fa fa-calendar"></i>
 										<input type="text" name="startdate" id="startdate" placeholder="Del">
@@ -53,67 +53,14 @@
 										<a id="genera-reporte" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12">Consultar</a>
 									</label>
 								</section>
-							</div>
-							<div class="row" id="row-print" style="display: none;">
-								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-									
-								</section>
 								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-									
-									<label class="input">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-									</label>
-								</section>
-								
+										
+										<label class="input">
+											<a id="imprimir-2" onclick="reporte_excel_comprar_usr()" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel / Pagar</a>
+										</label>
+									</section>
 							</div>
-							<div class="row" id="row-print-af" style="display: none;">
-								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-									
-								</section>
-								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-									
-									<label class="input">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-									</label>
-								</section>
-								
-							</div>
-							<div class="row" id="row-print-usr" style="display: none;">
-								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-									
-								</section>
-								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-									
-									<label class="input">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-									</label>
-								</section>
-								
-							</div>
-							<div class="row" id="row-print-red" style="display: none;">
-								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-									
-								</section>
-								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-									
-									<label class="input">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-									</label>
-								</section>
-								
-							</div>
-							<div class="row" id="row-print-web" style="display: none;">
-								<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-									
-								</section>
-								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-									
-									<label class="input">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-									</label>
-								</section>
-								
-							</div>
+							
 						</form>
 					</div>
 					
@@ -168,21 +115,13 @@
 							<form class="smart-form" id="reporte-form" method="post">
 								
 								<div class="row" >
-									<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
-										
-									</section>
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 										
 										<label class="input">
 											<a id="imprimir-2" href="reporte_afiliados_excel" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
 										</label>
 									</section>
-									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-										
-										<label class="input">
-											<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-										</label>
-									</section>
+									
 									
 								</div>
 							</form>
@@ -193,76 +132,23 @@
 							<form class="smart-form" id="reporte-form" method="post">
 								
 								<div class="row" >
-									<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
+									<section class="col col-lg-9 col-md-9 hidden-sm hidden-xs">
 										
 									</section>
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 										
 										<label class="input">
-											<a id="imprimir-2" onclick="reporte_excel_comprar_usr()" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+											<a id="imprimir-2" onclick="reporte_excel_comprar_usr()" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel / Pagar</a>
 										</label>
 									</section>
-									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-										
-										<label class="input">
-											<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-										</label>
-									</section>
+									
 									
 								</div>
 							</form>
 						</div>
 					</div>
-					<div class="well" id="well-print-red" style="display: none;">
-						<div class="row">
-							<form class="smart-form" id="reporte-form" method="post">
-								
-								<div class="row" >
-									<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
-										
-									</section>
-									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-										
-										<label class="input">
-											<a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
-										</label>
-									</section>
-									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-										
-										<label class="input">
-											<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-										</label>
-									</section>
-									
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="well" id="well-print-web" style="display: none;">
-						<div class="row">
-							<form class="smart-form" id="reporte-form" method="post">
-								
-								<div class="row" >
-									<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
-										
-									</section>
-									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-										
-										<label class="input">
-											<a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
-										</label>
-									</section>
-									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-										
-										<label class="input">
-											<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-										</label>
-									</section>
-									
-								</div>
-							</form>
-						</div>
-					</div>
+					
+				
 		
 				</article>
 				
@@ -304,12 +190,6 @@
 				}
 			});
 		</script>
-		<script type="text/javascript" id="script_fila">
-			function nueva_fila()
-			{
-				alert("hola");
-			}
-		</script>
 		<script type="text/javascript">
 			$("#genera-reporte").click(function()
 			{
@@ -338,7 +218,6 @@
 										},
 									success: function( msg )
 									{
-										alert(msg);
 										$("#reporte_div").html(msg);
 										var responsiveHelper_dt_basic = undefined;
 										var responsiveHelper_datatable_fixed_column = undefined;
@@ -402,8 +281,7 @@
 						}
 			
 			});
-		</script>
-		<script>
+		
 			function reporte_excel_comprar_usr()
 			{
 				var inicio=$("#startdate").val();
@@ -420,11 +298,19 @@
 							}
 							else
 							{
+								window.location="reporte_cobros_excel?inicio="+inicio+"&&fin="+fin;
 								$("#nuevos_afiliados").show();
+								
 								var datos={'inicio':inicio,'fin':fin};
 								$.ajax({
-							         type: "get",
-							         url: "reporte_compras_excel/"+inicio+fin,
+							         type: "post",
+							         data: {
+								         inicio : inicio,
+								         fin: fin
+								         },
+							         url: "reporte_cobros_excel?inicio="+inicio+"&&fin="+fin
+							         
+										
 								});
 							}
 						}	

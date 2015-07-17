@@ -21,10 +21,15 @@ where c.id_user = up.user_id and c.id_metodo = cm.id_metodo and c.id_estatus = c
 	}
 	
 	function ConsultarCobrosFecha($fecha_inicio, $fecha_final){
-		$cobros = $this->db->query('select c.id_cobro, CONCAT( c.id_user,". ",up.nombre," ", up.apellido) usuario, cm.descripcion metodo_pago, cs.descripcion estado, c.monto, c.fecha, c.fecha_pago
+		$cobros = $this->db->query('select c.id_cobro, CONCAT( c.id_user,". ",up.nombre," ", up.apellido) usuario, cm.descripcion metodo_pago, cs.descripcion estado, c.monto, c.fecha, c.cuenta, c.banco, c.titular, c. clabe
 from cobro c, user_profiles up, cat_metodo_cobro cm, cat_estatus cs
-where c.id_user = up.user_id and c.id_metodo = cm.id_metodo and c.id_estatus = cs.id_estatus and c.fecha BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_final.'";');
+where c.id_user = up.user_id and c.id_metodo = cm.id_metodo and c.id_estatus = cs.id_estatus and c.id_estatus = 3 and c.fecha BETWEEN "'.$fecha_inicio.'" AND "'.$fecha_final.'"');
 		return $cobros->result();
+	}
+	
+	function CambiarEstadoCobros($fecha_inicio, $fecha_final){
+		$this->db->query("update cobro set id_estatus = '2', fecha_pago = '2015-07-17' 
+where id_estatus = 3 and fecha BETWEEN '".$fecha_inicio."' AND '".$fecha_final."' ");
 	}
 	
 }
