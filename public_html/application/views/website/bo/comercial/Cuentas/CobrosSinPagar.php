@@ -2,9 +2,12 @@
 								<thead>
 									<tr>
 										<th data-hide="phone">ID</th>
-										<th data-class="expand">Fecha Solicitud</th>
-										<th data-hide="phone">Fecha Pago</th>	
+										<th data-class="expand">Fecha Solicitud</th>	
 										<th data-hide="phone">Usuario</th>
+										<th data-hide="phone">Banco</th>
+										<th data-hide="phone">Cuenta</th>
+										<th data-hide="phone">Titular</th>
+										<th data-hide="phone">Clave</th>
 										<th data-hide="phone,tablet">Metodo</th>
 										<th data-hide="phone,tablet">Valor</th>
 										<th data-hide="phone,tablet">Estado</th>
@@ -15,8 +18,11 @@
 										<tr>
 											<td><?php echo $cobro->id_cobro; ?></td>
 											<td><?php echo $cobro->fecha; ?></td>
-											<td><?php echo $cobro->fecha_pago; ?></td>
 											<td><?php echo $cobro->usuario; ?></td>
+											<td><?php echo $cobro->banco; ?></td>
+											<td><?php echo $cobro->cuenta; ?></td>
+											<td><?php echo $cobro->titular; ?></td>
+											<td><?php echo $cobro->clabe; ?></td>
 											<td><?php echo $cobro->metodo_pago; ?></td>
 											<td><?php echo $cobro->monto; ?></td>
 											<td><?php echo $cobro->estado; ?></td>

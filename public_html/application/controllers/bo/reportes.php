@@ -12,6 +12,8 @@ class reportes extends CI_Controller
 		$this->load->library('tank_auth');
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
+		$this->load->model('model_tipo_red');
+		$this->load->model('model_servicio');
 		$this->load->model('bo/modelo_reportes');
 		$this->load->model('general');
 	}
@@ -30,18 +32,117 @@ class reportes extends CI_Controller
 		{
 			redirect('/auth/logout');
 		}
-
+		
 		$style=$this->modelo_dashboard->get_style($id);
 
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
-
+		
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/reportes/main_dashboard');
 	}
+	
+	function index_actualizado_ventas_ov()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		$total_costo = 0;
+		$total_impuesto = 0;
+		$total_comision = 0;
+		$total_neto = 0;
+		$redes = $this->model_tipo_red->listarTodos();
+	
+		$style=$this->modelo_dashboard->get_style($id);
+		
+		
+		
+		$servicios = $this->model_servicio->listar_todos_por_venta_y_fecha($_GET['startdate'], $_GET['finishdate'] );
+	
+		foreach ($servicios as $servicio){
+			$total_costo = $total_costo + $servicio->costo;
+			$total_impuesto = $total_impuesto + $servicio->impuesto;
+			$total_comision = $total_comision + $servicio->comision;
+			$total_neto = $total_neto + (($servicio->costo)-($servicio->impuesto+$servicio->comision));
+		}
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("servicios",$servicios);
+		$this->template->set("total_costo",$total_costo);
+		$this->template->set("total_impuesto",$total_impuesto);
+		$this->template->set("total_comision",$total_comision);
+		$this->template->set("total_neto",$total_neto);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/reportes/main_dashboard_actualizada_ventas_ov');
+	}
+	
+	function index_actualizado_()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$total_costo = 0;
+		$total_impuesto = 0;
+		$total_comision = 0;
+		$total_neto = 0;
+		$redes = $this->model_tipo_red->listarTodos();
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$servicios = $this->model_servicio->listar_todos_por_venta_y_fecha($_POST['startdate'], $_POST['finishdate'] );
+	
+		foreach ($servicios as $servicio){
+			$total_costo = $total_costo + $servicio->costo;
+			$total_impuesto = $total_impuesto + $servicio->impuesto;
+			$total_comision = $total_comision + $servicio->comision;
+			$total_neto = $total_neto + (($servicio->costo)-($servicio->impuesto+$servicio->comision));
+		}
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("servicios",$servicios);
+		$this->template->set("total_costo",$total_costo);
+		$this->template->set("total_impuesto",$total_impuesto);
+		$this->template->set("total_comision",$total_comision);
+		$this->template->set("total_neto",$total_neto);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/reportes/main_dashboard');
+	}
+	
 	function reporte_afiliados()
 	{
 		$id=$this->tank_auth->get_user_id();

@@ -16,142 +16,7 @@
 	<div class="row">
 			<!-- NEW COL START -->
 		<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="well">
-				<div class="row">
-					<form class="smart-form" id="reporte-form" method="post">
-						<div class="row">			
-							<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
-									
-								<label class="select">
-									<select id="tipo-reporte" >
-										<option value="1000" selected> </option>
-										<option value="0" >Ventas empresa</option>
-										<option value="1" >Ventas por Oficinas Virtuales</option>
-										<option value="2" >Ventas por telemarketing</option>
-										<option value="3" >Ventas por CEDIs</option>
-										<option value="4" >Ventas web personales</option>
-										<option value="5" >Pedidos / Ctas x cobrar</option>
-										<option value="6" >Facturacion / Pedidos cobrados</option>
-										<option value="7" >Afiliados</option>
-										<option value="8" >Afiliados nuevos en el mes</option>
-										<!--  	<option value="0" selected="" disabled="">Tipo de reporte</option>
-											<option value="1">Usuarios SIO</option>
-											<option value="2">Usuarios Telemarketing</option>
-											<option value="3">Usuario CEDI</option>
-											<option value="4">Proveedores</option>
-											<option value="5">Productos y Servicios</option>
-											<option value="6">Almacenes</option>
-											<option value="7">CEDI's</option>
-											<option value="8">Embarques</option>
-											<option value="9">Afiliados / Distribuidores</option>
-											<option value="10">Bancos</option>
-											<option value="11">Orden de compra - Proveedores</option>
-											<option value="12">Requisici&oacute;n de compra</option>
-											<option value="13">Pedidos</option>
-											<option value="14">Facturas Emitidas</option>
-											<option value="15">Pagos</option>
-											<option value="16">Comisiones</option>
-											<option value="17">Usuarios</option>
-											<option value="18">Ventas por Empresa</option>
-											<option value="19">Ventas por Oficina Virtual</option>
-											<option value="20">Ventas por Telemarkwting</option>
-											<option value="21">Ventas por CEDI's</option>
-											<option value="22">Ventas webs personales</option>
-											<option value="23">Pedidos / Cuentas por cobrar</option>
-											<option value="24">Facturacion / Pedidos Cobrados</option>
-											<option value="25">Afiliados</option>
-											<option value="26">Afiliados nuevos del Mes</option> -->
-									</select> 
-									<i></i> 
-								</label>
-							</section>
-								
-							<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
-								<label class="input"> <i class="icon-append fa fa-calendar"></i>
-									<input type="text" name="startdate" id="startdate" placeholder="">
-								</label>
-							</section>
-								
-							<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
-								<label class="input"> <i class="icon-append fa fa-calendar"></i>
-									<input type="text" name="finishdate" id="finishdate" placeholder="" >
-								</label>
-							</section>
-								
-							<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
-								<label class="input">
-									<a id="genera-reporte" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12" onClick = "tipo_reporte()">Generar Reporte</a>
-								</label>
-							</section>
-								
-						</div>
-							
-						<div class="row" id="row-print" style="display: none;">
-							<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-									
-							</section>
-							
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								<label class="input">
-									<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-								</label>
-							</section>
-						</div>
-						
-						<div class="row" id="row-print-af" style="display: none;">
-							<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-								
-							</section>
-							
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-								</label>
-							</section>
-						</div>
-						
-						<div class="row" id="row-print-usr" style="display: none;">
-							<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-								
-							</section>
-							
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-								</label>
-							</section>
-						</div>
-						
-						<div class="row" id="row-print-red" style="display: none;">
-							<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-								
-							</section>
-							
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-								</label>
-							</section>
-						</div>
-						
-						<div class="row" id="row-print-web" style="display: none;">
-							<section class="col col-lg-9 col-md-9 col-sm-6 hidden-xs">
-								
-							</section>
-							
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-								</label>
-							</section>
-						</div>
-					</form>
-				</div>
-			</div>
+			
 							<!-- Widget ID (each widget will need unique ID)-->
 							
 							
@@ -191,8 +56,59 @@
 							<!-- widget content -->
 					<div class="widget-body no-padding" id="reporte_div">
 						
-						
-						
+						<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
+							<thead>
+								<tr>
+								 	<th data-class="expand">Red</th>
+					                <th data-hide="phone,tablet">Servicio</th>
+					                <th data-hide="phone,tablet">Cantidad</th>
+						            <th data-hide="phone,tablet">Subtotal</th>
+						            <th data-hide="phone,tablet">Total impuestos</th>
+							        <th data-hide="phone,tablet">Total comisiones</th>
+							        <th data-hide="phone,tablet">Total neto</th>
+						        </tr>
+						    </thead>
+							
+						    <tbody> 
+						     
+							    <?php 
+							    
+							    foreach ($servicios as $servicio) {
+									    echo 
+									    	"<tr>".
+										        "<td>".$servicio->nombre_red."</td>".
+										        "<td>".$servicio->nombre."</td>".   
+								                "<td>".$servicio->cantidad."</td>".
+								                "<td>$ ".$servicio->costo."</td>".
+									            "<td>$ ".$servicio->impuesto."</td>".
+									            "<td>$ ".$servicio->comision."</td>".
+										        "<td>$ ".(($servicio->costo)-($servicio->impuesto+$servicio->comision))."</td>".
+										    "</tr>";
+							    }
+								 ?>
+							    
+							    <tr>
+							        <td> </td> 
+							        <td> </td>   
+					                <td> </td>
+					                <td> </td>
+						            <td> </td>
+						            <td> </td>
+							        <td> </td>
+							    </tr>
+							    
+							    <tr>
+							        <td><b>Totales</b></td>   
+					                <td></td>
+					                <td></td>
+					                <td><b>$ <?php echo $total_costo;?></b></td>
+						            <td><b>$ <?php echo $total_impuesto;?></b></td>
+						            <td><b>$ <?php echo $total_comision;?></b></td>
+							        <td><b>$ <?php echo $total_neto;?></b></td>
+						    	</tr>
+							</tbody>
+						</table>
+				
 						
 					</div>
 						<!-- end widget content -->
@@ -1070,39 +986,5 @@
 		
 		})
 		
-		function tipo_reporte(){
-
-			switch($("#tipo-reporte").val()){
-			case "0" : location.href="/bo/comercial/red_tabla";
-			break;
-			case "1" : 
-
-				var startdate = $('#startdate').val();
-				var finishdate = $('#finishdate').val();
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/index_actualizado_ventas_ov",
-					data: {startdate:startdate,finishdate:finishdate}
-				});
-				location.href="/bo/reportes/index_actualizado_ventas_ov?startdate="+$('#startdate').val()+"&finishdate="+$('#startdate').val();
-			break;
-			case "2" : //alert("Ventas por telemarketing");
-			break;
-			case "3" : //alert("Ventas por CEDIs");
-			break;
-			case "4" : //alert("Ventas web personales");
-			break;
-			case "5" : //alert("Pedidos / Ctas x cobrar");
-			break;
-			case "6" : //alert("Facturacion / Pedidos cobrados");
-			break;
-			case "7" : //alert("Afiliados");
-			break;
-			case "8" : //alert("Afiliados nuevos en el mes");
-			break;
-		}
-
-		}
 
 		</script>
