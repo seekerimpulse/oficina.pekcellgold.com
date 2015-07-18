@@ -174,6 +174,46 @@ class reportes extends CI_Controller
 		
 		
 	}
+	
+	function reporte_afiliados_excel()
+	{
+		$id=$this->tank_auth->get_user_id();
+		$inicio = "2000-01-01";
+		if($_GET['inicio'] != null){
+			$inicio = $_GET['inicio'];
+		}
+		
+		$fin = "2200-12-31";
+		if($_GET['fin'] != null){
+			$fin = $_GET['fin'];
+		}
+		
+		$afiliados=$this->modelo_reportes->reporte_afiliados($inicio,$fin);
+		
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_afiliados.xls");
+		for($i = 0;$i < count($afiliados);$i++)
+		{
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $afiliados[$i]->id);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $afiliados[$i]->usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $afiliados[$i]->nombre);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $afiliados[$i]->apellido);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $afiliados[$i]->email);
+		}
+		
+		$filename='Afiliados.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		//$objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save('php://output');
+	}
+	
 	function reporte_afiliados_mes()
 	{
 		$id=$this->tank_auth->get_user_id();
@@ -205,6 +245,38 @@ class reportes extends CI_Controller
 		
 		
 	}
+	
+	function reporte_afiliados_mes_excel()
+	{
+		$id=$this->tank_auth->get_user_id();
+		
+	
+		$afiliados= $this->modelo_reportes->reporte_afiliados_mes();
+	
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_afiliados.xls");
+		for($i = 0;$i < count($afiliados);$i++)
+		{
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $afiliados[$i]->id);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $afiliados[$i]->usuario);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $afiliados[$i]->nombre);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $afiliados[$i]->apellido);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $afiliados[$i]->email);
+		}
+	
+		$filename='AfiliadosMes.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+	
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		//$objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save('php://output');
+	}
+	
 	function reporte_proveedores()
 	{
 		$proveedor_p=$this->modelo_reportes->proveedores_prod();

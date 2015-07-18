@@ -1,5 +1,6 @@
 
 <!-- MAIN CONTENT -->
+<div id="spinner2"></div>
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
@@ -12,6 +13,7 @@
 			</h1>
 		</div>
 	</div>
+	
 		<!-- START ROW -->
 	<div class="row">
 			<!-- NEW COL START -->
@@ -66,24 +68,28 @@
 								</label>
 							</section>
 								
-							<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+							<section class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
 								<label class="input"> <i class="icon-append fa fa-calendar"></i>
 									<input type="text" name="startdate" id="startdate" placeholder="">
 								</label>
 							</section>
 								
-							<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+							<section class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
 								<label class="input"> <i class="icon-append fa fa-calendar"></i>
 									<input type="text" name="finishdate" id="finishdate" placeholder="" >
 								</label>
 							</section>
 								
-							<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+							<section class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
 								<label class="input">
 									<a id="genera-reporte" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12" onClick = "tipo_reporte()">Generar Reporte</a>
 								</label>
 							</section>
-								
+							<section class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
+									<label class="input">
+											<a id="imprimir-2" onclick="reporte_excel()" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+									</label>
+							</section>
 						</div>
 							
 						<div class="row" id="row-print" style="display: none;">
@@ -215,7 +221,7 @@
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 										
 										<label class="input">
-											<a id="imprimir-2" href="reporte_afiliados_excel" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
+											<a id="imprimir-2" onclick="reporte_excel()" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
 										</label>
 									</section>
 									<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
@@ -226,84 +232,6 @@
 									</section>
 									
 								</div>
-					</form>
-				</div>
-			</div>
-			
-			<div class="well" id="well-print-usr" style="display: none;">
-				<div class="row">
-					<form class="smart-form" id="reporte-form" method="post">
-						
-						<div class="row" >
-							<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
-								
-							</section>
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-2" onclick="reporte_excel_comprar_usr()" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
-								</label>
-							</section>
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-								</label>
-							</section>
-							
-						</div>
-					</form>
-				</div>
-			</div>
-			
-			<div class="well" id="well-print-red" style="display: none;">
-				<div class="row">
-					<form class="smart-form" id="reporte-form" method="post">
-						
-						<div class="row" >
-							<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
-								
-							</section>
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
-								</label>
-							</section>
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-								</label>
-							</section>
-							
-						</div>
-					</form>
-				</div>
-			</div>
-			
-			<div class="well" id="well-print-web" style="display: none;">
-				<div class="row">
-					<form class="smart-form" id="reporte-form" method="post">
-						
-						<div class="row" >
-							<section class="col col-lg-6 col-md-6 hidden-sm hidden-xs">
-								
-							</section>
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-2" onclick="" class="btn btn-primary col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>
-								</label>
-							</section>
-							<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
-								
-								<label class="input">
-									<a id="imprimir-2" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
-								</label>
-							</section>
-							
-						</div>
 					</form>
 				</div>
 			</div>
@@ -329,7 +257,7 @@
 		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
 		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-		
+		<script src="/template/js/spin.js"></script>
 		<script type="text/javascript">
 			$("#tipo-reporte").change(function()
 			{
@@ -1070,8 +998,105 @@
 		
 		})
 		
-		function tipo_reporte(){
+		function iniciarSpinner(){
+			
+			var opts = {
+					  lines: 12 // The number of lines to draw
+					, length: 28 // The length of each line
+					, width: 14 // The line thickness
+					, radius: 42 // The radius of the inner circle
+					, scale: 1 // Scales overall size of the spinner
+					, corners: 1 // Corner roundness (0..1)
+					, color: '#3276B1' // #rgb or #rrggbb or array of colors
+					, opacity: 0.25 // Opacity of the lines
+					, rotate: 0 // The rotation offset
+					, direction: 1 // 1: clockwise, -1: counterclockwise
+					, speed: 1 // Rounds per second
+					, trail: 60 // Afterglow percentage
+					, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+					, zIndex: 2e9 // The z-index (defaults to 2000000000)
+					, className: 'spinner' // The CSS class to assign to the spinner
+					, top: '50%' // Top position relative to parent
+					, left: '50%' // Left position relative to parent
+					, shadow: false // Whether to render a shadow
+					, hwaccel: true // Whether to use hardware acceleration
+					, position: 'absolute' // Element positioning
+					}
+					
+					var spinner = new Spinner(opts).spin(document.getElementById('spinner2'));
+			}
 
+		function FinalizarSpinner(){
+			
+			$("#spinner2").html('');
+		}
+		
+		function tipo_reporte(){
+			
+			switch($("#tipo-reporte").val()){
+			case "0" : location.href="/bo/comercial/red_tabla";
+			break;
+			case "1" : 
+
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/index_actualizado_ventas_ov",
+					data: {startdate:startdate,finishdate:finishdate}
+				});
+				location.href="/bo/reportes/index_actualizado_ventas_ov?startdate="+$('#startdate').val()+"&finishdate="+$('#startdate').val();
+			break;
+			case "2" : //alert("Ventas por telemarketing");
+			break;
+			case "3" : //alert("Ventas por CEDIs");
+			break;
+			case "4" : //alert("Ventas web personales");
+			break;
+			case "5" : //alert("Pedidos / Ctas x cobrar");
+			break;
+			case "6" : //alert("Facturacion / Pedidos cobrados");
+			break;
+			case "7" :{
+				iniciarSpinner();
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/reporte_afiliados",
+					data: {startdate:startdate,finishdate:finishdate}
+					
+				})
+				.done(function( msg ) {
+					FinalizarSpinner();
+					$("#reporte_div").html(msg);
+					
+				});
+			}
+			break;
+			case "8" :{
+				iniciarSpinner();
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/reporte_afiliados_mes"
+					
+				})
+				.done(function( msg ) {
+					FinalizarSpinner();
+					$("#reporte_div").html(msg);
+					
+					
+				});
+			}
+			break;
+		}
+
+		}
+
+		function reporte_excel(){
+			
 			switch($("#tipo-reporte").val()){
 			case "0" : location.href="/bo/comercial/red_tabla";
 			break;
@@ -1100,32 +1125,17 @@
 			case "7" :{
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/reporte_afiliados",
-					data: {startdate:startdate,finishdate:finishdate}
-					
-				})
-				.done(function( msg ) {
-					$("#reporte_div").html(msg);
-				});
+				window.location="/bo/reportes/reporte_afiliados_excel?inicio="+startdate+"&&fin="+finishdate;
 			}
 			break;
 			case "8" :{
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/reporte_afiliados_mes"
-					
-				})
-				.done(function( msg ) {
-					$("#reporte_div").html(msg);
-				});
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes/reporte_afiliados_mes_excel?inicio="+startdate+"&&fin="+finishdate;
 			}
 			break;
 		}
 
 		}
-
+			
 		</script>
