@@ -16,4 +16,5 @@ class changelog extends CI_Controller
 		$this->template->set("style",$style);
 		$this->template->build('website/changelog');
 	}
+
 }

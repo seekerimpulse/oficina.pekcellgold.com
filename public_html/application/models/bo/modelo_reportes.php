@@ -2,18 +2,17 @@
 
 class modelo_reportes extends CI_Model
 {
-	function reporte_afiliados()
+	function reporte_afiliados($inicio,$fin)
 	{
-		$q=$this->db->query('SELECT a.id, a.username usuario, a.created creacion, b.nombre nombre, b.apellido apellido, b.fecha_nacimiento nacimiento, 
-		c.descripcion sexo, d.descripcion edo_civil FROM users a, user_profiles b, cat_sexo c, cat_edo_civil d , afiliar e WHERE a.id=b.user_id and 
-		b.id_sexo=c.id_sexo and b.id_edo_civil=d.id_edo_civil and b.id_tipo_usuario=2 and e.id_afiliado=a.id and e.id_red=1');
+		$q=$this->db->query('SELECT a.id, a.username usuario, b.nombre nombre, b.apellido apellido,a.email 
+							 FROM users a, user_profiles b where(a.id=b.user_id) and b.id_tipo_usuario=2  
+							 and DATE(a.created) BETWEEN "'.$inicio.'" AND "'.$fin.'"');
 		return $q->result();
 	}
 	function reporte_afiliados_mes()
 	{
-		$q=$this->db->query('SELECT a.id, a.username usuario, a.created creacion, b.nombre nombre, b.apellido apellido, b.fecha_nacimiento nacimiento, 
-		c.descripcion sexo, d.descripcion edo_civil FROM users a, user_profiles b, cat_sexo c, cat_edo_civil d , afiliar e WHERE a.created>=NOW() - INTERVAL 1 MONTH 
-		and a.id=b.user_id and b.id_sexo=c.id_sexo and b.id_edo_civil=d.id_edo_civil and b.id_tipo_usuario=2 and e.id_afiliado=a.id and e.id_red=1');
+		$q=$this->db->query('SELECT a.id, a.username usuario, b.nombre nombre, b.apellido apellido,a.email 
+FROM users a, user_profiles b WHERE a.created>=NOW() - INTERVAL 1 MONTH and a.id=b.user_id and b.id_tipo_usuario=2');
 		return $q->result();
 	}
 	function proveedores_prod()

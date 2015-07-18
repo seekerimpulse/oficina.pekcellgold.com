@@ -66,7 +66,7 @@
 														if($gred[0]->puntos){
 														echo '<tr class="success">
 																<td>'.$gred[0]->nombre.'</td>
-																<td>$ '.$gred[0]->valor.'</td>
+																<td>$ '.number_format($gred[0]->valor,2).'</td>
 															</tr>';
 														$total += $gred[0]->valor;
 														}else {
@@ -79,7 +79,7 @@
 													?>  
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
-														<td><h4><b>$ <?php echo $total;?></b></h4></td>
+														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
 													</tr>
 													</tbody>
 													</table>
@@ -97,7 +97,7 @@
 																		<td></td>
 																		<td>$ <?php 
 																		$retenciones_total+=$retencion['valor'];
-																		echo $retencion['valor']; ?></td>
+																		echo number_format($retencion['valor'],2); ?></td>
 																	</tr>
 																	<?php $total;
 																	} ?>
@@ -109,7 +109,7 @@
 																		if($cobroPendientes==null)
 																			echo "0";
 																		else
-																			echo $cobroPendientes;
+																			echo number_format($cobroPendientes,2);
 																		?></td> 
 																	</tr>
 																
@@ -125,7 +125,7 @@
 																		  $cobro=0;
 																		}
 																		else {
-																		  echo $cobros->monto;
+																		  echo number_format($cobros->monto,2);
 																		  $cobro=$cobros->monto;
 																		}
 																		?></td>
@@ -135,7 +135,7 @@
 																	<tr class="info">
 																		<td><h4><b>Saldo Neto</b></h4>
 																		<td></td>
-																		<td><h4><b>$ <?php echo $total-($cobro+$retenciones_total+$cobroPendientes); ?></b></h4></td>
+																		<td><h4><b>$ <?php echo number_format(($total-($cobro+$retenciones_total+$cobroPendientes)),2); ?></b></h4></td>
 																	</tr>
 																</table>
 														
@@ -147,7 +147,7 @@
 																	<section class="col col-10">
 																		<label class="label "><b>Saldo Disponible</b></label>
 																		<label class="input input state-success">
-																			<input type="number" name="saldo" class="from-control" id="saldo" value="<?php echo $total-($cobro+$retenciones_total+$cobroPendientes); ?>" readonly />
+																			<input type="text" name="saldo" class="from-control" id="saldo" value="<?php echo ($total-($cobro+$retenciones_total+$cobroPendientes)); ?>" readonly />
 																		</label>
 																	</section>
 																	<section class="col col-10">
