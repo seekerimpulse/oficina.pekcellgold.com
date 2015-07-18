@@ -146,31 +146,25 @@ class reportes extends CI_Controller
 	function reporte_afiliados()
 	{
 		$id=$this->tank_auth->get_user_id();
-		$afiliados=$this->modelo_reportes->reporte_afiliados();
+		$afiliados=$this->modelo_reportes->reporte_afiliados($_POST['startdate'],$_POST['finishdate']);
 		echo 
 			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
 					<th>ID</th>
-					<th>Fecha de Registro</th>
 					<th>Usuario</th>
 					<th>Nombre</th>
 					<th>Apellido</th>
-					<th>Fecha de Nacimiento</th>
-					<th>Sexo</th>
-					<th>Estado Civil</th>
+					<th>Email</th>
 				</thead>
 				<tbody>";
 			for($i=0;$i<sizeof($afiliados);$i++)
 			{
 					echo "<tr>
-					<td class='sorting_1'>".($i+1)."</td>
-					<td>".$afiliados[$i]->creacion."</td>
+					<td class='sorting_1'>".$afiliados[$i]->id."</td>
 					<td>".$afiliados[$i]->usuario."</td>
 					<td>".$afiliados[$i]->nombre."</td>
 					<td>".$afiliados[$i]->apellido."</td>
-					<td>".$afiliados[$i]->nacimiento."</td>
-					<td>".$afiliados[$i]->sexo."</td>
-					<td>".$afiliados[$i]->edo_civil."</td>
+					<td>".$afiliados[$i]->email."</td>
 				</tr>";
 			}
 				
@@ -188,26 +182,20 @@ class reportes extends CI_Controller
 			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
 					<th>ID</th>
-					<th>Fecha de Registro</th>
 					<th>Usuario</th>
 					<th>Nombre</th>
 					<th>Apellido</th>
-					<th>Fecha de Nacimiento</th>
-					<th>Sexo</th>
-					<th>Estado Civil</th>
+					<th>Email</th>
 				</thead>
 				<tbody>";
 			for($i=0;$i<sizeof($afiliados);$i++)
 			{
 					echo "<tr>
-					<td class='sorting_1'>".($i+1)."</td>
-					<td>".$afiliados[$i]->creacion."</td>
+					<td class='sorting_1'>".$afiliados[$i]->id."</td>
 					<td>".$afiliados[$i]->usuario."</td>
 					<td>".$afiliados[$i]->nombre."</td>
 					<td>".$afiliados[$i]->apellido."</td>
-					<td>".$afiliados[$i]->nacimiento."</td>
-					<td>".$afiliados[$i]->sexo."</td>
-					<td>".$afiliados[$i]->edo_civil."</td>
+					<td>".$afiliados[$i]->email."</td>
 				</tr>";
 			}
 				

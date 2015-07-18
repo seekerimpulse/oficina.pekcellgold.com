@@ -33,7 +33,7 @@
 										<option value="5" >Pedidos / Ctas x cobrar</option>
 										<option value="6" >Facturacion / Pedidos cobrados</option>
 										<option value="7" >Afiliados</option>
-										<option value="8" >Afiliados nuevos en el mes</option>
+										<option value="8" onclick="tipo_reporte()">Afiliados nuevos en el mes</option>
 										<!--  	<option value="0" selected="" disabled="">Tipo de reporte</option>
 											<option value="1">Usuarios SIO</option>
 											<option value="2">Usuarios Telemarketing</option>
@@ -1097,9 +1097,32 @@
 			break;
 			case "6" : //alert("Facturacion / Pedidos cobrados");
 			break;
-			case "7" : //alert("Afiliados");
+			case "7" :{
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/reporte_afiliados",
+					data: {startdate:startdate,finishdate:finishdate}
+					
+				})
+				.done(function( msg ) {
+					$("#reporte_div").html(msg);
+				});
+			}
 			break;
-			case "8" : //alert("Afiliados nuevos en el mes");
+			case "8" :{
+				
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/reporte_afiliados_mes"
+					
+				})
+				.done(function( msg ) {
+					$("#reporte_div").html(msg);
+				});
+			}
 			break;
 		}
 
