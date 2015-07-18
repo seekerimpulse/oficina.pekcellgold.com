@@ -70,7 +70,7 @@ class CuentasPagar extends CI_Controller
 			redirect('/auth/logout');
 		}
 		
-		$cobros = $this->modelo_cobros->listarTodos();
+		$cobros = $this->modelo_cobros->listarTodos($_GET['inicio'],$_GET['final']);
 		$style=$this->modelo_dashboard->get_style($id);
 		$años = $this->modelo_cobros->añosCobros();
 	
@@ -150,6 +150,8 @@ class CuentasPagar extends CI_Controller
 			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $cobros[$i]->monto);
 			$total = $total + $cobros[$i]->monto;
 			$ultima_fila = $i+8;
+			$usuario = $this->modelo_cobros->CambiarEstadoCobro($cobros[$i]->id_cobro);
+			$this->enviar_email($usuario[0]->email, $usuario);
 		}
 		
 		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($ultima_fila+1), "Total");
@@ -165,9 +167,48 @@ class CuentasPagar extends CI_Controller
 		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 		//force user to download the Excel file without writing it to server's HD
 		$objWriter->save(getcwd()."/media/reportes/".$filename);
-		
-		$this->modelo_cobros->CambiarEstadoCobros($fecha_inicio, $fecha_fin);
-		
 		$objWriter->save('php://output');
+	}
+	
+	function Email(){
+		
+		$usuario = $this->modelo_cobros->CambiarEstadoCobro(15);
+		
+		$cobro['username'] = $usuario[0]->username;
+		$cobro['nombre'] = $usuario[0]->nombre;
+		$cobro['apellido'] = $usuario[0]->apellido;
+		$cobro['id_cobro'] = $usuario[0]->id_cobro;
+		$cobro['banco'] = $usuario[0]->banco;
+		$cobro['cuenta'] = $usuario[0]->cuenta;
+		$cobro['titular'] = $usuario[0]->titular;
+		$cobro['clave'] = $usuario[0]->clabe;
+		$cobro['monto'] = $usuario[0]->monto;
+		$cobro['email'] = $usuario[0]->email;
+		$cobro['fecha'] = $usuario[0]->fecha;
+		$this->load->view('email/Cobros-html', $cobro);
+	}
+	
+	function enviar_email($email, $usuario)
+	{
+		$cobro['username'] = $usuario[0]->username;
+		$cobro['nombre'] = $usuario[0]->nombre;
+		$cobro['apellido'] = $usuario[0]->apellido;
+		$cobro['id_cobro'] = $usuario[0]->id_cobro;
+		$cobro['banco'] = $usuario[0]->banco;
+		$cobro['cuenta'] = $usuario[0]->cuenta;
+		$cobro['titular'] = $usuario[0]->titular;
+		$cobro['clave'] = $usuario[0]->clabe;
+		$cobro['monto'] = $usuario[0]->monto;
+		$cobro['email'] = $usuario[0]->email;
+		$cobro['fecha'] = $usuario[0]->fecha;
+		
+		$this->load->library('email');
+		$this->email->from($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
+		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
+		$this->email->to($email);
+		$this->email->subject('Pago de Comision');
+		$this->email->message($this->load->view('email/Cobros-html', $cobro, TRUE));
+		//$this->email->set_alt_message($this->load->view('email/activate-txt', $data, TRUE));
+		$this->email->send();
 	}
 }

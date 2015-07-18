@@ -7,7 +7,8 @@
 
 				<!-- PAGE HEADER -->
 				<i class="fa-fw fa fa-home"></i> <a href="/bo/dashboard"> Menu</a> <span>>
-					<a href="/bo/comercial/"> Comercial</a> > Por Pagar
+					<a href="/bo/comercial/"> Comercial</a> > <a
+					href="/bo/CuentasPagar/index"> Cobros</a> > Por Pagar
 				</span>
 			</h1>
 		</div>
@@ -173,7 +174,6 @@
 		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
 		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-		<script src="/template/js/spin.js"></script>
 		
 		<script type="text/javascript">
 			$("#tipo-reporte").change(function()
@@ -208,30 +208,7 @@
 						else
 						{
 								$("#nuevos_afiliados").show();
-								var opts = {
-										  lines: 12 // The number of lines to draw
-										, length: 28 // The length of each line
-										, width: 14 // The line thickness
-										, radius: 42 // The radius of the inner circle
-										, scale: 1 // Scales overall size of the spinner
-										, corners: 1 // Corner roundness (0..1)
-										, color: '#000' // #rgb or #rrggbb or array of colors
-										, opacity: 0.25 // Opacity of the lines
-										, rotate: 0 // The rotation offset
-										, direction: 1 // 1: clockwise, -1: counterclockwise
-										, speed: 1 // Rounds per second
-										, trail: 60 // Afterglow percentage
-										, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-										, zIndex: 2e9 // The z-index (defaults to 2000000000)
-										, className: 'spinner' // The CSS class to assign to the spinner
-										, top: '50%' // Top position relative to parent
-										, left: '50%' // Left position relative to parent
-										, shadow: false // Whether to render a shadow
-										, hwaccel: false // Whether to use hardware acceleration
-										, position: 'absolute' // Element positioning
-										}
-										var target = document.getElementById('nuevos_afiliados')
-										var spinner = new Spinner(opts).spin(target);
+
 								$.ajax({
 									type: "POST",
 									url: "reporte_cobros",
@@ -241,9 +218,6 @@
 										},
 									success: function( msg )
 									{
-
-										$(".spinner").addClass('hide');
-										$(".spinner").html('');
 										$("#reporte_div").html(msg);
 										var responsiveHelper_dt_basic = undefined;
 										var responsiveHelper_datatable_fixed_column = undefined;
@@ -325,7 +299,19 @@
 							else
 							{
 								window.location="reporte_cobros_excel?inicio="+inicio+"&&fin="+fin;
+								$("#nuevos_afiliados").show();
 								
+								var datos={'inicio':inicio,'fin':fin};
+								$.ajax({
+							         type: "post",
+							         data: {
+								         inicio : inicio,
+								         fin: fin
+								         },
+							         url: "reporte_cobros_excel?inicio="+inicio+"&&fin="+fin
+							         
+										
+								});
 							}
 						}	
 			}
