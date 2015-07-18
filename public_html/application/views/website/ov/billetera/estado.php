@@ -75,7 +75,7 @@
 														if($gred[0]->puntos){
 														echo '<tr class="success">
 																<td>'.$gred[0]->nombre.'</td>
-																<td>$ '.$gred[0]->valor.'</td>
+																<td>$ '.number_format($gred[0]->valor,2).'</td>
 															</tr>';
 														$total += $gred[0]->valor;
 														}else {
@@ -88,7 +88,7 @@
 													?>  
 													<tr class="success">
 														<td><h4><b>TOTAL</b></h4></td>
-														<td><h4><b>$ <?php echo $total;?></b></h4></td>
+														<td><h4><b>$ <?php echo number_format($total,2);?></b></h4></td>
 													</tr>
 													</tbody>
 													</table>
@@ -102,14 +102,14 @@
 																	<tr class="danger">
 																		<td><b>Retencion por <?php echo $retencion['descripcion']; ?></b></b></td>
 																		<td></td>
-																		<td>$ <?php echo $retencion['valor']; ?></td>
+																		<td>$ <?php echo number_format($retencion['valor'],2); ?></td>
 																	</tr>
 																	<?php $total-=$retencion['valor'];
 																	} ?>
 																	<tr class="success">
 																		<td><h4><b>Saldo Mes</b></h4></td>
 																		<td></td>
-																		<td><h4><b>$ <?php echo $total; ?></b></h4></td>
+																		<td><h4><b>$ <?php echo number_format($total,2); ?></b></h4></td>
 																	</tr>
 																	<?php foreach ($cobro as $cobros){
 																	?>
@@ -124,7 +124,7 @@
 																		}
 																		else {
 																		  $cobrosTotales=$cobros->monto;
-																		  echo $cobros->monto;
+																		  echo number_format($cobros->monto,2);
 																		}
 																		?></b></h4></td>
 																	</tr>
@@ -133,7 +133,7 @@
 																	<tr class="info">
 																		<td><h4><b>Saldo Neto</b></h4></td>
 																		<td></td>
-																		<td><h4><b>$ <?php echo ($total-$cobrosTotales); ?></b></h4></td>
+																		<td><h4><b>$ <?php echo number_format(($total-$cobrosTotales),2); ?></b></h4></td>
 																	</tr>
 																</table>
 														
