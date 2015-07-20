@@ -34,9 +34,9 @@
 						<div class="widget-body no-padding smart-form">
                   <div class="contenidoBotones">
                   <fieldset>
-										<div class="row">
-											<div class="col-sm-12 col-md-12 col-lg-12">
-												<div class="col-sm-2 link">
+										<div class="col-sm-12 link">
+											<div class="">
+												<div class="col-sm-4 link">
 													<a href="/bo/usuarios/alta">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-edit fa-3x"></i>
@@ -44,15 +44,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-2 link">
-													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-times fa-3x"></i>
-															<h1>Baja</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-2 link">
+												<div class="col-sm-4 link">
 													<a href="/bo/comercial/red_tabla">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-sitemap fa-3x"></i>

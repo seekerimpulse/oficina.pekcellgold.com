@@ -31,18 +31,18 @@
 							<div class="row">
 								<blockquote>
 								
-										<h1><p class="text-left font-lg"><strong><?=$noticia[0]->nombre?></strong></p></h1>
+										<h1><p class="text-center font-lg"><strong><?=$noticia[0]->nombre?></strong></p></h1>
 										
 									
 									</br></br>
 									<p class="text-center" style="text-align: justify;">
 										
-											<img src="<?=$noticia[0]->imagen?>" class="noticia-imagen">
+											<img style="width: 40rem;" src="<?=$noticia[0]->imagen?>" class="noticia-imagen">
 										
 									</p>
 									</br>
 									
-											<p>
+											<p style="margin-top: 1rem; margin-left: 15%; margin-right: 15%;text-align: justify;">
 												<?=html_entity_decode($noticia[0]->contenido); ?>
 											</p>
 										

@@ -87,7 +87,7 @@ class videos extends CI_Controller
 	
 		$style=$this->modelo_dashboard->get_style($id);
 		$videos=$this->modelo_comercial->get_video();
-		$grupos=$this->modelo_comercial->get_groups();
+		$grupos=$this->modelo_comercial->get_groups("VID");
 		$data=array();
 		$data['videos']=$videos;
 		$data['grupos']=$grupos;
@@ -117,7 +117,7 @@ class videos extends CI_Controller
 	
 		$style=$this->modelo_dashboard->get_style($id);
 		$videos=$this->modelo_comercial->get_video();
-		$grupos=$this->modelo_comercial->get_groups();
+		$grupos=$this->modelo_comercial->get_groups("VID");
 		$data=array();
 		$data['videos']=$videos;
 		$this->template->set("style",$style);
@@ -333,7 +333,7 @@ function sube_video_youtube()
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$videos=$this->modelo_comercial->get_video();
-		$grupos=$this->modelo_comercial->get_groups();
+		$grupos=$this->modelo_comercial->get_groups("VID");
 		$comentarios=$this->modelo_comercial->get_comments();
 		$style=$this->modelo_dashboard->get_style($id);
 		$data['videos']=$videos;
@@ -365,5 +365,9 @@ function sube_video_youtube()
 	
 	function kill_video(){
 		$this->db->query("delete from archivo where id_archivo=".$_POST["id"]);
+	}
+	
+	function kill_comentario(){
+		$this->db->query("delete from comentario where id=".$_POST["id"]);
 	}
 }

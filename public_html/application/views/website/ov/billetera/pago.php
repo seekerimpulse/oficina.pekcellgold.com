@@ -319,10 +319,14 @@ function cobrar() {
 	})
 	});
 	}else {
-		alert("Los datos de la cuenta estan incompletos o erroneos");
+		alert("Los datos de la cuenta o el cobro estan incompletos o erroneos");
 	}
 }
 function validarCampos(){
+
+	if(parseInt($('#cobro').val())<=0)
+		return false;
+	
 	if($('#ctitular').val()=="")
 		return false;
 			

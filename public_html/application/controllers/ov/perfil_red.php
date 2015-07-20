@@ -603,6 +603,16 @@ class perfil_red extends CI_Controller
 		}
 	}
 	
+	function use_mail_editar_perfil()
+	{
+		$id = $this->tank_auth->get_user_id();
+		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($id);
+		if($use_mail)
+		{
+			echo "La cuenta de correo ya no está disponible";
+		}
+	}
+	
 	function use_mail_modificar()
 	{
 		$use_mail_modificar = $this->model_perfil_red->use_mail_modificar();
@@ -711,8 +721,17 @@ class perfil_red extends CI_Controller
 	
 	function actualizar()
 	{
+		$id = $this->tank_auth->get_user_id();
+		$_POST['mail']=$_POST['email'];
+		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($id);
+
+		if($use_mail){
+			echo "El Email ya existe , ingrese otro no existente";
+			exit();
+		}
 		$id=$this->tank_auth->get_user_id();
 		$this->model_perfil_red->actualizar($id);
+		echo "Felicitaciones <br> Se han actualizado los datos";
 	}
 	
 	function cp()

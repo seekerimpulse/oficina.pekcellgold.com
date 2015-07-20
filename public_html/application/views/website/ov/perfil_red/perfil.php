@@ -72,8 +72,8 @@
 											</label>
 										</section>
 										<section class="col col-3">
-											<label class="input"><i class="icon-prepend fa fa-envelope-o"></i>
-												<input required value="<?=$usuario[0]->email?>" type="email" name="email" placeholder="Correo electrónico">
+											<label id="correo" class="input"><i class="icon-prepend fa fa-envelope-o"></i>
+												<input required value="<?=$usuario[0]->email?>" id="email" type="email" name="email" placeholder="Correo electrónico" onkeyup="use_mail()">
 												<b class="tooltip tooltip-top-left"> Ingrese un correo</b>
 											</label>
 										</section>
@@ -383,7 +383,7 @@ function actualizar()
 		})
 		.done(function( msg ) {
 		bootbox.dialog({
-					message: "Se han actualizado tus datos",
+					message: msg,
 					title: "Atención",
 					buttons: {
 						success: {
@@ -463,4 +463,20 @@ function agregar(tipo)
 	changeYear: true
 	});
 });
+ 
+ function use_mail()
+ {
+ 	$("#msg_correo").remove();
+ 	var mail=$("#email").val();
+
+ 	$.ajax({
+ 		type: "POST",
+ 		url: "/ov/perfil_red/use_mail_editar_perfil",
+ 		data: {mail: mail},
+ 	})
+ 	.done(function( msg )
+ 	{
+ 		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
+ 	});
+ }
 </script>

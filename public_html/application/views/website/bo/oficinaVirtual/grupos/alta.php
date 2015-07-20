@@ -38,6 +38,16 @@
 							<div class="">
 									<section>
 										<div>
+												<label class="select">
+													<label class="label">Seleccione una categoria</label>
+													<select name="tipo" id="tipo" required="">
+														<option value="PRE">Presentaciones</option>
+														<option value="DES">Descargas</option>
+														<option value="EBO">E-books</option>
+														<option value="NOT">Noticias</option>
+														<option value="VID">Videos</option>
+													</select>
+											</label><br>
 											<label class="input">
 												<input type="text" placeholder="Nombre grupo" id="grupo" class="form-control">
 											</label>
@@ -75,10 +85,11 @@
 function new_grupo()
 {
 	var grupo=$("#grupo").val();
+	var tipo=$("#tipo").val();
 	if(grupo!="")
 	{
 		$.ajax({
-			data: 'grupo='+grupo,
+			data: {grupo: grupo, tipo: tipo},
 			type: "post",
 			url: "add_grupo",
 			success: function(){

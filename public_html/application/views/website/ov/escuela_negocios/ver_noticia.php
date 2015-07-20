@@ -6,8 +6,16 @@
 				
 					<!-- col -->
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<h1 class="page-title txt-color-blueDark"><!-- PAGE HEADER --><a href="/ov/dashboard"><i class="fa fa-home"></i> Inicio </a><span>>
-							<a href="noticias">Noticias</a> > <?=$noticia[0]->nombre?></span></h1>
+												<h1 class="page-title txt-color-blueDark">
+							
+							<!-- PAGE HEADER -->
+							<i class="fa-fw fa fa-home"></i> 
+								<a href="/ov/dashboard"> Menu</a> 
+							<span>>
+								<a href="/ov/dashboard"> Oficina Virtual</a> > <a href="/ov/escuela_negocios/noticias"> Noticias</a> > Listar
+							</span>
+						</h1>
+					
 					</div>
 					<!-- end col -->
 				
@@ -22,26 +30,22 @@
 						<div class="well well-noticia">
 							<div class="row">
 								<blockquote>
-									<? if(isset($_GET["idnw"]))
-									{?>
-										<h1><p class="text-left font-lg"><strong><?=$noticia[0]->nombre?></strong></p></h1>
-										<?}?>
+								
+										<h1><p class="text-center font-lg"><strong><?=$noticia[0]->nombre?></strong></p></h1>
+										
 									
 									</br></br>
 									<p class="text-center" style="text-align: justify;">
-										<? if(isset($_GET["idnw"]))
-										{?>
-											<img src="<?=$noticia[0]->imagen?>" class="noticia-imagen">
-										<?}?>
+										
+											<img style="width: 40rem;" src="<?=$noticia[0]->imagen?>" class="noticia-imagen">
+										
 									</p>
 									</br>
 									
-										<blockquote class="parrafo-noticia-2">
-											<p>
-												<?=$parrafos?>
+											<p style="margin-top: 1rem; margin-left: 15%; margin-right: 15%;text-align: justify;">
+												<?=html_entity_decode($noticia[0]->contenido); ?>
 											</p>
-										</blockquote>
-									
+										
 									
 								</blockquote>
 								
@@ -64,8 +68,6 @@
 
 		<!-- PAGE RELATED PLUGIN(S) -->
 			<script type="text/javascript">
-		
-		// DO NOT REMOVE : GLOBAL FUNCTIONS!
 		
 		$(document).ready(function() {
 			

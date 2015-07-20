@@ -136,7 +136,7 @@ class billetera2 extends CI_Controller
 		
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
-		$retenciones = $this->modelo_billetera->ValorRetencionesTotales();
+		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
 		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
@@ -157,6 +157,11 @@ class billetera2 extends CI_Controller
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
+		}
+		
+		if(intval($_POST['cobro'])<=0){
+			echo "ERROR <br>Valor del cobro invalido";
+			exit();
 		}
 	
 		if($_POST['ctitular']==""){
@@ -223,7 +228,7 @@ class billetera2 extends CI_Controller
 		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
-		$retenciones = $this->modelo_billetera->ValorRetencionesTotales();
+		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
 		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
@@ -259,7 +264,7 @@ class billetera2 extends CI_Controller
 			array_push($ganancias,$this->modelo_billetera->get_comisiones_mes($id,$red->id,$_GET['fecha']));
 		}
 	
-		$retenciones = $this->modelo_billetera->ValorRetenciones_historial($_GET['fecha']);
+		$retenciones = $this->modelo_billetera->ValorRetenciones_historial($_GET['fecha'],$id);
 		$cobro=$this->modelo_billetera->get_cobros_afiliado_mes($id,$_GET['fecha']);
 		$cobroPendiente=$this->modelo_billetera->get_cobros_afiliado_mes_pendientes($id,$_GET['fecha']);
 

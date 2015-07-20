@@ -61,7 +61,7 @@ class ebooks extends CI_Controller
 		$style=$this->modelo_dashboard->get_style($id);
 		$this->template->set("style",$style);
 		
-		$grupos=$this->modelo_comercial->get_groups();
+		$grupos=$this->modelo_comercial->get_groups("EBO");
 		$this->template->set("grupos",$grupos);
 		
 		$this->template->set_theme('desktop');
@@ -252,7 +252,7 @@ class ebooks extends CI_Controller
 		
 		$this->template->set("ebook",$ebook);
 		
-		$grupos=$this->modelo_comercial->get_groups();
+		$grupos=$this->modelo_comercial->get_groups("EBO");
 		$this->template->set("grupos",$grupos);
 		
 		$this->template->build('website/bo/oficinaVirtual/ebooks/modificar');

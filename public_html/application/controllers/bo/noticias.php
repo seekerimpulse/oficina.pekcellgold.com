@@ -58,6 +58,9 @@ class noticias extends CI_Controller
 		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
+		
+		$grupos=$this->modelo_comercial->get_groups("NOT");
+		$this->template->set("grupos",$grupos);
 	
 		$this->template->set("style",$style);
 	
@@ -193,8 +196,8 @@ class noticias extends CI_Controller
 			//echo 'se supone que se debo de subir';
 			
 				//echo 'insert into noticia (id_usuario,nombre,contenido,imagen) values ('.$id.',"'.$_POST['nombre_frm'].'","'.$_POST['desc_frm'].'","'.$ruta.$_POST['file_nme'].'")';
-				$this->db->query('insert into noticia (id_usuario,nombre,contenido,imagen,status)
-				values ('.$id.',"'.$_POST['nombre_frm'].'","'.$descripcion.'","'.$ruta.$nombre.".".$ext.'","'.ACT.'")');
+				$this->db->query('insert into noticia (id_usuario,nombre,contenido,imagen,status,id_grupo)
+				values ('.$id.',"'.$_POST['nombre_frm'].'","'.$descripcion.'","'.$ruta.$nombre.".".$ext.'","'.ACT.'","'.$_POST['grupo_frm'].'")');
 			
 			//echo 'ptm';
 				
@@ -232,6 +235,9 @@ class noticias extends CI_Controller
 		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
+		
+		$grupos=$this->modelo_comercial->get_groups("NOT");
+		$this->template->set("grupos",$grupos);
 	
 		$this->template->set("style",$style);
 	
@@ -271,7 +277,7 @@ class noticias extends CI_Controller
 			$descripcion = $_POST['desc_frm'];
 			$descripcion = htmlentities($descripcion);
 			$this->db->query('update noticia set nombre = "'.$_POST['nombre_frm'].'",
-							contenido = "'.$descripcion.'"
+							contenido = "'.$descripcion.'",id_grupo = "'.$_POST['grupo_frm'].'"
 							where id = "'.$_POST["id_noticia"].'"');
 			redirect('/bo/noticias/listar');
 		}
@@ -316,7 +322,7 @@ class noticias extends CI_Controller
 				//var_dump($this->upload->data(), "									bien");
 				//exit();
 				$this->db->query('update noticia set nombre = "'.$_POST['nombre_frm'].'",
-							contenido = "'.$descripcion.'",
+							contenido = "'.$descripcion.'",id_grupo = "'.$_POST['grupo_frm'].'",
 							imagen = "'.$ruta.$nombre.".".$ext.'"
 							where id = "'.$_POST["id_noticia"].'"');
 				redirect('/bo/noticias/listar');				

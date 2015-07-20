@@ -48,6 +48,7 @@
 														<div class="form-group">
 															<b>URL del mapa</b>
 															<input class="form-control"  id="url_ev" name="title" type="text" placeholder="http://maps.google.com..." value="<?php echo htmlentities($evento[0]->url); ?>">
+															<a href="/media/Maps.pdf" target="_blank"><h2 class="row-seperator-header"><i class="fa fa-question-circle"></i> ¿ No sabes cual es la url del mapa ?</h2></a>
 														</div><br>
 														<div class="form-group">
 															<b>Observaciones</b>

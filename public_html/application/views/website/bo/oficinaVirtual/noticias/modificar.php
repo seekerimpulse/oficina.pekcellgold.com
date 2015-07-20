@@ -34,6 +34,27 @@
 											<div class="row">
 												<form class="smart-form" id="reporte-form" method="post" action="editar_noticia" enctype="multipart/form-data">
 													<input name="id_noticia" class="hide" type="text" id="id_noticia" value='<?php echo $noticia[0]->id;?>'>
+													<section class="" id="busquedatodos">
+														<label class="label">
+														Grupo
+														</label>
+														
+														<label class="select">
+																<select name="grupo_frm" id="grupo_frm">
+																	<?php for($o=0;$o<sizeof($grupos);$o++){
+																		
+																		if($grupos[$o]->id == $noticia[0]->id_grupo){
+																			echo '<option selected value="'.$grupos[$o]->id.'">'.$grupos[$o]->descripcion.'</option>';
+																		}
+																		else {
+																			echo '<option value="'.$grupos[$o]->id.'">'.$grupos[$o]->descripcion.'</option>';
+																		}
+																	}
+																	?>
+																</select>
+															<i></i>
+														</label>
+													</section>
 													<input name="ruta" class="hide" type="text" id="ruta" value='<?php echo $noticia[0]->imagen;?>'>
 			
 													<div class="row">

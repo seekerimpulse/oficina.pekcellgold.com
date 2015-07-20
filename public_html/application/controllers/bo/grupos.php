@@ -69,7 +69,7 @@ class grupos extends CI_Controller
 	
 	function add_grupo()
 	{
-		$this->db->query("insert into cat_grupo (descripcion) values ('".$_POST['grupo']."')");
+		$this->db->query("insert into cat_grupo (descripcion,tipo) values ('".$_POST['grupo']."','".$_POST['tipo']."')");
 	}
 	
 	function editar_grupo(){

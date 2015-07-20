@@ -8,6 +8,10 @@
 								<input type="number" name="porcentaje" required placeholder="valor" style="width: 50%;" class="form-control" value="<?php echo $retencion[0]->porcentaje; ?>" required>
 								<br><div class="inline-group">
 										<label class="radio">
+											<input <?php if($retencion[0]->duracion == 'UNI') echo 'checked=""';?> 
+											value="UNI" name="duracion" placeholder="duracion" type="radio">
+										<i></i>Unica</label>
+										<label class="radio">
 											<input <?php if($retencion[0]->duracion == 'ANO') echo 'checked=""';?> 
 											value="ANO" name="duracion" placeholder="duracion" type="radio">
 										<i></i>Anual</label>

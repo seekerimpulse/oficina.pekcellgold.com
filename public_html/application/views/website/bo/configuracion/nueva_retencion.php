@@ -46,11 +46,14 @@
 				<input id='porc' class="form-control" name="porc" size="20" placeholder="Valor" type="number" required>
 	        </label>
 	        <div class="">
+	        		<label class="radio">
+						<input value="UNI" name="duracion" placeholder="duracion" type="radio">
+					<i></i>Unica</label>
 					<label class="radio">
-						<input checked="" value="ANO" name="duracion" placeholder="duracion" type="radio">
+						<input value="ANO" name="duracion" placeholder="duracion" type="radio">
 					<i></i>Anual</label>
 					<label class="radio">
-						<input value="MES" name="duracion" placeholder="duracion" type="radio">
+						<input checked="" value="MES" name="duracion" placeholder="duracion" type="radio">
 					<i></i>Mensual</label>
 					<label class="radio">
 						<input value="SEM" name="duracion" placeholder="duracion" type="radio">

@@ -55,26 +55,26 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/reportes">
+													<a href="/bo/reportes">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-table fa-3x"></i>
+															<i class="fa fa-book fa-3x"></i>
 															<h1>Reportes</h1>
 														</div>
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/oficina_virtual">
+													<a href="/bo/comercial/carrito">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-															<i class="fa fa-desktop fa-3x"></i>
-															<h1>Oficina Virtual <br><br></h1>
+															<i class="fa fa-shopping-cart fa-3x"></i>
+															<h1>Carrito de compras</h1>
 														</div>
 													</a>
 												</div>
 												<div class="col-sm-3 link">	
-													<a href="#">
+													<a href="/bo/CuentasPagar/PorPagar">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-gift fa-3x"></i>
-															<h1>Promocion y Publicidad</h1>
+															<i class="fa fa-money fa-3x"></i>
+															<h1>Cuentas por Pagar</h1>
 														</div>
 													</a>
 												</div>
@@ -107,14 +107,6 @@
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-folder fa-3x"></i>
 															<h1>Archivero <br>&nbsp</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">	
-													<a href="/bo/CuentasPagar/PorPagar">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-sort-amount-asc fa-3x"></i>
-															<h1>Cuentas por Pagar <br>&nbsp</h1>
 														</div>
 													</a>
 												</div>

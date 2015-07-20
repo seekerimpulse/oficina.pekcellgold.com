@@ -62,7 +62,7 @@ class presentaciones extends CI_Controller
 	
 		$this->template->set("style",$style);
 		
-		$grupos=$this->modelo_comercial->get_groups();
+		$grupos=$this->modelo_comercial->get_groups("PRE");
 		$this->template->set("grupos",$grupos);
 		
 		$this->template->set_theme('desktop');
@@ -232,7 +232,7 @@ class presentaciones extends CI_Controller
 		$presentacion = $this->modelo_comercial->get_presentacion($id_presentacion);
 		$this->template->set("presentacion",$presentacion);
 		
-		$grupos=$this->modelo_comercial->get_groups();
+		$grupos=$this->modelo_comercial->get_groups("PRE");
 		$this->template->set("grupos",$grupos);
 		
 		$this->template->set_theme('desktop');

@@ -40,8 +40,10 @@ class Auth extends CI_Controller
 			$tipo = $this->general->get_tipo($id);
 			$tipo = $tipo[0]->id_tipo_usuario;
 			
-			if($tipo==1)
+			if($tipo==1){
+				$this->cobrarRetenciones();
 				redirect('/bo/dashboard');
+			}
 			elseif ($tipo==2)
 				redirect('/ov/dashboard');
 
@@ -95,8 +97,10 @@ class Auth extends CI_Controller
 					$estatus = $estatus[0]->id_estatus;
 					
 					if($estatus == '1'){
-						if($tipo==1)
+						if($tipo==1){
+							$this->cobrarRetenciones();
 							redirect('/bo/dashboard');
+						}
 						elseif ($tipo==2)
 							redirect('/ov/dashboard');
 					}else{
@@ -638,6 +642,28 @@ class Auth extends CI_Controller
 			return FALSE;
 		}
 		return TRUE;
+	}
+	
+
+	function cobrarRetenciones(){
+		
+		if($this->general->getRetencionesMes())
+			return false;
+		
+		$retenciones=$this->general->getRetenciones();
+		$now = new \DateTime('now');
+		
+		foreach ($retenciones as $retencion){
+
+			$datos = array(
+					'descripcion' => $retencion->descripcion,
+					'valor' => $retencion->porcentaje,
+					'mes' => $now->format('m'),
+					'ano' => $now->format('Y'),
+					'id_afiliado' => 0
+			);
+			$this->db->insert("cat_retenciones_historial",$datos);
+		}
 	}
 
 }
