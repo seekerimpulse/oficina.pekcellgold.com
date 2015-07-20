@@ -123,8 +123,6 @@
 									</div>
 								</fieldset>
 								<footer>
-									V: <i>2.0.3</i>
-									<a href="/changelog">Changelog</a>
 									<button id="enviar" type="submit" class="btn btn-primary">
 										Iniciar
 									</button>

@@ -162,7 +162,12 @@ $ci->load->model("model_permissions");?>
 											</div>
 									</fieldset>
 									<!--Termina la secciion de perfil y red-->
-						</div></div>
+									<footer>
+										Version: <i>3.0.0</i>
+										<a href="/changelog">Changelog</a>
+									</footer>
+						</div>
+						</div>
 				</div>
           	</div>
         </div>
