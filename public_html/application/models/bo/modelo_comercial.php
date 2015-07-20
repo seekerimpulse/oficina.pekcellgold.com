@@ -139,9 +139,9 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 		$q=$this->db->query('select * from preregistro');
 		return $q->result();
 	}
-	function get_groups()
+	function get_groups($tipo)
 	{
-		$q=$this->db->query('select * from cat_grupo where estatus="ACT"');
+		$q=$this->db->query('select * from cat_grupo where estatus="ACT" and tipo="'.$tipo.'"');
 		return $q->result();
 	}
 	
@@ -158,7 +158,7 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 	}
 	
 	function actualizar_grupo(){
-		$this->db->query('UPDATE cat_grupo SET descripcion="'.$_POST['descripcion'].'" WHERE id="'.$_POST['id'].'"');
+		$this->db->query('UPDATE cat_grupo SET descripcion="'.$_POST['descripcion'].'",tipo="'.$_POST['tipo'].'" WHERE id="'.$_POST['id'].'"');
 		return true;
 	}
 	

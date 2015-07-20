@@ -94,7 +94,7 @@
 															echo "Mensual";
 														else if($retencion->duracion=='ANO')
 															echo "Anual";
-														else if ($retencion->duracion=='UNA')
+														else if ($retencion->duracion=='UNI')
 															echo "Unica Vez";
 														 ?>
 														</td>

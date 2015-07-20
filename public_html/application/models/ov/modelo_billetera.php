@@ -181,11 +181,11 @@ class modelo_billetera extends CI_Model
 		return $retenciones;
 	}
 	
-	function ValorRetencionesTotales(){
-		$q = $this->db->query("SELECT created FROM users where id=2;");
+	function ValorRetencionesTotales($id){
+		$q = $this->db->query("SELECT created FROM users where id=".$id.";");
 		$fecha_creacion = $q->result();
-		$q = $this->db->query("SELECT descripcion,sum(valor)as valor FROM cat_retenciones_historial  where month('".$fecha_creacion[0]->created."')
-										<=mes and year('".$fecha_creacion[0]->created."')<=ano group by descripcion");
+		$q = $this->db->query("SELECT descripcion,sum(valor) as valor FROM cat_retenciones_historial  where month('".$fecha_creacion[0]->created."')
+										<=mes and year('".$fecha_creacion[0]->created."')<=ano and id_afiliado IN(0,".$id.") group by descripcion");
 		$retenciones_regis = $q->result();
 		$retenciones = array();
 		foreach ($retenciones_regis as $retencion){
@@ -217,8 +217,8 @@ class modelo_billetera extends CI_Model
 	}
 	
 	
-	function ValorRetenciones_historial($fecha){
-		$q = $this->db->query("SELECT * FROM cat_retenciones_historial where year('".$fecha."')=ano and month('".$fecha."')=mes");
+	function ValorRetenciones_historial($fecha,$id){
+		$q = $this->db->query("SELECT * FROM cat_retenciones_historial where year('".$fecha."')=ano and month('".$fecha."')=mes and id_afiliado IN(0,".$id.")");
 		$retenciones_regis = $q->result();
 		$retenciones = array();
 		foreach ($retenciones_regis as $retencion){

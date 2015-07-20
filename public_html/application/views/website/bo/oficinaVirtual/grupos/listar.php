@@ -68,6 +68,7 @@
 												<tr>
 													<th>ID</th>
 													<th>Nombre</th>
+													<th>Tipo</th>
 													<th></th>
 												</tr>
 											</thead>
@@ -77,6 +78,22 @@
 													<tr>
 														<td><?php echo $grupo->id; ?></td>
 														<td><?php echo $grupo->descripcion; ?></td>
+														<td>
+														<?php 
+														
+														if($grupo->tipo=="PRE")
+														echo "Presentaciones";
+														else if($grupo->tipo=="DES")
+															echo "Descargas";
+														else if($grupo->tipo=="EBO")
+															echo "E-books";
+														else if($grupo->tipo=="NOT")
+															echo "Noticias";
+														else if($grupo->tipo=="VID")
+															echo "Videos";
+														?>
+														
+														</td>
 														<td>
 															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $grupo->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
 															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $grupo->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>

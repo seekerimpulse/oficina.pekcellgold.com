@@ -22,7 +22,7 @@
 						<select name="grupo" id="grupo" required>
 							<option value="0">Selecciona el grupo</option>
 								<?php foreach ( $grupos as $grupo ) {
-									if ($grupo->id == $archivo [0]->id_grupo) { ?>
+									if ($grupo->id == $archivo[0]->id_grupo) { ?>
 										<option value="<?php echo $grupo->id; ?>" selected><?php echo $grupo->descripcion; ?></option>
 									<?php }else{ ?>
 										<option value="<?php echo $grupo->id; ?>"><?php echo $grupo->descripcion; ?></option>

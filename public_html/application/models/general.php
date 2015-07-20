@@ -67,4 +67,13 @@ class general extends CI_Model
 		$this->db->query('update user_profiles set ultima_sesion="'.$q[0]->last_login.'" where user_id='.$id);
 	}
 
+	function getRetenciones(){
+		$q=$this->db->query('SELECT * FROM cat_retencion where estatus="ACT" and duracion !="UNI"');
+		return $q=$q->result();
+	}
+	
+	function getRetencionesMes(){
+		$q=$this->db->query('SELECT * FROM cat_retenciones_historial where month(now())=mes and year(now())=ano and id_afiliado=0');
+		return $q=$q->result();
+	}
 }

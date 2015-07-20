@@ -47,7 +47,16 @@
 										<div class="row col-xs-12 col-md-6 col-sm-12 col-lg-5">
 											<div class="row">
 												<form class="smart-form" id="reporte-form" method="post" action="sube_noticia" enctype="multipart/form-data">
-													
+												<label class="select" style="">
+															<select name="grupo_frm">
+																	<?php for($o=0;$o<sizeof($grupos);$o++)
+																	{
+																		echo '<option value="'.$grupos[$o]->id.'">'.$grupos[$o]->descripcion.'</option>';
+																	}
+																?>
+															</select>
+														<i></i>
+													</label><br>
 													<div class="row">
 														<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
 															<label class="label">Nombre</label>

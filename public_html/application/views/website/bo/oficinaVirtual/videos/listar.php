@@ -131,6 +131,7 @@
 																									<i class="fa fa-comment-o"></i>'
 																									.$comentarios[$k]->comentario.
 																									'<br><strong>'.$comentarios[$k]->username.'</strong>
+																									<a class="txt-color-red" style="height: 1rem ! important;" href="javascript:void(0);" onclick="eliminarComentario('.$comentarios[$k]->id.')"><i class="fa fa-trash-o fa-2x"></i></a>
 																								</p>';
 																					}
 																				}
@@ -406,6 +407,59 @@
 				});
 		}
 
+		function eliminarComentario(id) {
+
+				$.ajax({
+					type: "POST",
+					url: "/auth/show_dialog",
+					data: {message: '¿ Esta seguro que desea Eliminar el Comentario ?'},
+				})
+				.done(function( msg )
+				{
+					bootbox.dialog({
+					message: msg,
+					title: 'Eliminar Comentario',
+					buttons: {
+						success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
+
+								$.ajax({
+									type: "POST",
+									url: "/bo/videos/kill_comentario",
+									data: {id: id}
+								})
+								.done(function( msg )
+								{
+									bootbox.dialog({
+									message: "Se ha eliminado el Comentario.",
+									title: 'Felicitaciones',
+									buttons: {
+										success: {
+										label: "Aceptar",
+										className: "btn-success",
+										callback: function() {
+											location.href="/bo/videos/listar";
+											}
+										}
+									}
+								})//fin done ajax
+								});//Fin callback bootbox
+
+							}
+						},
+							danger: {
+							label: "Cancelar!",
+							className: "btn-danger",
+							callback: function() {
+
+								}
+						}
+					}
+				})
+				});
+		}
 		function estado(estatus, id)
 		{
 				

@@ -48,7 +48,7 @@ class descargas extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		$grupos=$this->modelo_comercial->get_groups();
+		$grupos=$this->modelo_comercial->get_groups("DES");
 		$this->template->set("grupos",$grupos);
 		
 		$style=$this->modelo_dashboard->get_style($id);
@@ -186,7 +186,7 @@ class descargas extends CI_Controller
 	
 		$this->template->set("archivo",$archivos);
 		
-		$grupos=$this->modelo_comercial->get_groups();
+		$grupos=$this->modelo_comercial->get_groups("DES");
 		$this->template->set("grupos",$grupos);
 	
 		$this->template->build('website/bo/oficinaVirtual/descargas/modificar');
