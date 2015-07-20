@@ -66,7 +66,7 @@
 													<a href="/bo/comercial/carrito">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-desktop fa-3x"></i>
-															<h1>Carrito de compras</h1>
+															<h1>Promocion / Publicidad</h1>
 														</div>
 													</a>
 												</div>
@@ -82,7 +82,7 @@
 													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 															<i class="fa fa-users fa-3x"></i>
-															<h1>Pedido / venta</h1>
+															<h1>Pedido / venta<br>&nbsp</h1>
 														</div>
 													</a>
 												</div>	
