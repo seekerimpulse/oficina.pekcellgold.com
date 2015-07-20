@@ -508,7 +508,8 @@ function codpos_red()
 								<div class="tab-pane fade in active" id="s1">
 									<div id="uno" class="row fuelux">
 									
-									<? if( $contar <= $red_frontales[0]->frontal || $premium == '2' )  {   ?>
+									<? 
+									if( $contar < $red_frontales[0]->frontal || $premium == '2' )  {   ?>
 	                                    
 	                                	<div id="myWizard" class="wizard">
 		                                	

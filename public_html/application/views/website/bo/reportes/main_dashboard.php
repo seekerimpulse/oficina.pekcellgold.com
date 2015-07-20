@@ -36,6 +36,9 @@
 										<option value="6" >Facturacion / Pedidos cobrados</option>
 										<option value="7" >Afiliados</option>
 										<option value="8" onclick="tipo_reporte()">Afiliados nuevos en el mes</option>
+										<option value="9" onclick="tipo_reporte()">Cobros por Pagar</option>
+										<option value="10" >Cobros Pagados</option>
+										<option value="11" >Cobros Pagados y Por Pagar</option>
 										<!--  	<option value="0" selected="" disabled="">Tipo de reporte</option>
 											<option value="1">Usuarios SIO</option>
 											<option value="2">Usuarios Telemarketing</option>
@@ -1081,12 +1084,58 @@
 				$.ajax({
 					type: "POST",
 					url: "/bo/reportes/reporte_afiliados_mes"
+				})
+				.done(function( msg ) {
+					FinalizarSpinner();
+					$("#reporte_div").html(msg);
+				});
+			}
+			break;
+			case "9" :{
+				iniciarSpinner();
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/reporte_cobros_pendientes"
+				})
+				.done(function( msg ) {
+					FinalizarSpinner();
+					$("#reporte_div").html(msg);
+				});
+			}
+			break;
+			case "10" :{
+				iniciarSpinner();
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/reporte_cobros_historial",
+					data: {inicio:startdate,fin:finishdate}
 					
 				})
 				.done(function( msg ) {
 					FinalizarSpinner();
 					$("#reporte_div").html(msg);
 					
+				});
+			}
+			break;
+
+			case "11" :{
+				iniciarSpinner();
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/reporte_cobros_todos",
+					data: {inicio:startdate,fin:finishdate}
+					
+				})
+				.done(function( msg ) {
+					FinalizarSpinner();
+					$("#reporte_div").html(msg);
 					
 				});
 			}
@@ -1132,6 +1181,26 @@
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				window.location="/bo/reportes/reporte_afiliados_mes_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
+			break;
+
+			case "9" :{
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes/reporte_cobros_pendientes_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
+			break;
+
+			case "10" :{
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes/reporte_cobros_pagos_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
+			break;
+			case "11" :{
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				window.location="/bo/reportes/reporte_cobros_todos_excel?inicio="+startdate+"&&fin="+finishdate;
 			}
 			break;
 		}

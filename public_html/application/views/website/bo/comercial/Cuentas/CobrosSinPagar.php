@@ -24,7 +24,7 @@
 											<td><?php echo $cobro->titular; ?></td>
 											<td><?php echo $cobro->clabe; ?></td>
 											<td><?php echo $cobro->metodo_pago; ?></td>
-											<td><?php echo $cobro->monto; ?></td>
+											<td>$ <?php echo number_format($cobro->monto,2); ?></td>
 											<td><?php echo $cobro->estado; ?></td>
 										</tr>
 									<?php } ?>

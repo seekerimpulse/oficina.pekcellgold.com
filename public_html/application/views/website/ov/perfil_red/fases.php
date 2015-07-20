@@ -25,7 +25,7 @@
 				</div>
 				<div class="panel-body no-padding text-align-center">
 					<div class="price-features">
-						<h2>Cargo unico de $ 10 dolares</h2>
+						<h2>Cargo unico de $ <?php echo number_format($valor_retencion,2); ?> dolares</h2>
 					</div>
 				</div>
 				<div class="panel-footer text-align-center">
