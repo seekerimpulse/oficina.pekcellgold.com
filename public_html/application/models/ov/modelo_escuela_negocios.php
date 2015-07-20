@@ -39,25 +39,23 @@ class modelo_escuela_negocios extends CI_Model
 	}
 	function get_presentaciones_activas()
 	{
-		$q=$this->db->query('SELECT A.id_archivo id, CG.descripcion grupo, UP.nombre nombreUsuario, UP.apellido apellidoUsuario,
- A.fecha fecha,A.nombre_publico n_publico, A.descripcion descripcion, A.ruta ruta
-	
-FROM cat_grupo CG, users U, archivo A, user_profiles UP
-	
+		$q=$this->db->query('SELECT A.id_archivo id, A.id_grupo grupo, UP.nombre nombreUsuario, UP.apellido apellidoUsuario,
+ A.fecha fecha,A.nombre_publico n_publico, A.descripcion descripcion, A.ruta ruta	
+FROM cat_grupo CG, users U, archivo A, user_profiles UP	
 WHERE A.id_tipo in (3,4,8,9,10,11,12,13,14,15,16,17,18,19,20,22) and
 CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id and A.status="ACT";');
 		return $q->result();
 	}
 	function get_ebooks()
 	{
-		$q=$this->db->query('SELECT a.descripcion grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion descripcion,c.ruta ruta, d.url img, 
+		$q=$this->db->query('SELECT c.id_grupo grupo,b.username usuario,c.fecha fecha,c.nombre_publico n_publico,c.descripcion descripcion,c.ruta ruta, d.url img, 
 		c.id_archivo id FROM cat_grupo a, users b, archivo c, cat_img d, cross_img_archivo e WHERE c.id_tipo=1 and a.id=c.id_grupo and b.id=c.id_usuario 
 		and c.status="ACT" and d.id_img=e.id_img and c.id_archivo=e.id_archivo');
 		return $q->result();
 	}
 	function get_files()
 	{
-		$q = $this->db->query("SELECT a.descripcion grupo, concat(b.nombre,' ',b.apellido) usuario,c.fecha fecha,c.nombre_publico n_publico, cta.descripcion tipo, c.descripcion descripcion,c.ruta ruta, c.id_archivo id 
+		$q = $this->db->query("SELECT c.id_grupo grupo, concat(b.nombre,' ',b.apellido) usuario,c.fecha fecha,c.nombre_publico n_publico, cta.descripcion tipo, c.descripcion descripcion,c.ruta ruta, c.id_archivo id 
 							FROM cat_grupo a, user_profiles b, archivo c, cat_tipo_archivo cta
 							WHERE a.id = c.id_grupo and b.user_id= c.id_usuario and cta.id_tipo = c.id_tipo and c.status='ACT' and c.id_tipo != 21");
 		return $q->result();
@@ -93,7 +91,7 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id and A.status="A
 	}
 	function get_new_activas()
 	{
-		$q=$this->db->query('SELECT b.id id_noticia, a.username usuario, UP.nombre nombre_usuario, UP.apellido apellido_usuario, b.nombre nombre, b.contenido contenido, b.imagen imagen, b.fecha fecha FROM users a, noticia b, user_profiles UP
+		$q=$this->db->query('SELECT b.id id_noticia, a.username usuario, UP.nombre nombre_usuario, UP.apellido apellido_usuario, b.nombre nombre, b.contenido contenido, b.imagen imagen, b.fecha fecha, b.id_grupo FROM users a, noticia b, user_profiles UP
 		WHERE a.id=b.id_usuario and b.status="ACT" and a.id = UP.user_id order by fecha desc');
 		return $q->result();
 	}
@@ -136,5 +134,11 @@ CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id and A.status="A
 		$q=$this->db->query("SELECT * from evento where id=".$id);
 		return $q->result();
 		
+	}
+	
+	function Grupos($tipo){
+		$q = $this->db->query("select * from cat_grupo where tipo = '".$tipo."' and estatus = 'ACT'");
+		$grupos = $q->result();
+		return $grupos;
 	}
 }

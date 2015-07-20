@@ -635,4 +635,9 @@ order by (U.id);");
 		return $id_padre[0]->id_red;
 	}
 
+	function ObtenerRetencioFase(){
+		$q = $this->db->query("select porcentaje from cat_retencion where duracion= 'UNI'");
+		$retencion = $q->result();
+		return $retencion[0]->porcentaje;
+	}
 }

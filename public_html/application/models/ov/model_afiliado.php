@@ -261,7 +261,30 @@ class model_afiliado extends CI_Model{
 		return $lado_disponible;
 	}
 	
+	function ObtenerRetencioFase(){
+		$q = $this->db->query("select porcentaje from cat_retencion where duracion= 'UNI'");
+		$retencion = $q->result();
+		return $retencion[0]->porcentaje;
+	}
+	
 	function CambiarFase($id, $red, $fase){
+		if($id == 0 || $id == null){
+			return false;
+		}
+		if($fase == '2'){
+			$mes = date('m');
+			$año = date('Y');
+			$valor = $this->ObtenerRetencioFase();
+			$datos = array(
+					'descripcion' => 'Cambio Fase a B',
+					'valor'       => $valor,
+					'mes'		  =>$mes,
+					'ano'		  => $año,
+					'id_afiliado' => $id
+			);
+			$this->db->insert('cat_retenciones_historial', $datos);
+			
+		}
 		
 		$query = $this->db->query('select * from red where id_usuario = '.$id.' and id_red = '.$red.' ');
 		
@@ -271,6 +294,8 @@ class model_afiliado extends CI_Model{
 			$this->db->query("update red set premium = '".$fase."' where id_red =".$red[0]->id_red." and id_usuario=".$id);
 			return true;
 		}
+		
+			
 	}
 	
 	function crearUsuarioAdmin($id_debajo){

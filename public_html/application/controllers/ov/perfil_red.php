@@ -463,52 +463,11 @@ class perfil_red extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id_red          = $_GET['id'];
 		$id              = $this->tank_auth->get_user_id();
-		$usuario         = $this->model_perfil_red->datos_perfil($id);
-		$telefonos       = $this->model_perfil_red->telefonos($id);
-		$sexo            = $this->model_perfil_red->sexo();
-		$pais            = $this->model_perfil_red->get_pais();
 		$style           = $this->general->get_style($id);
-		$dir             = $this->model_perfil_red->dir($id);
-		$civil           = $this->model_perfil_red->edo_civil();
-		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
-		$estudios        = $this->model_perfil_red->get_estudios();
-		$ocupacion       = $this->model_perfil_red->get_ocupacion();
-		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
-		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
-		$premium         = $red[0]->premium;
-		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
-		$planes 		 = $this->model_planes->Planes();
 
-		$image 			 = $this->model_perfil_red->get_images($id);
-		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
-		
-	
-		
-		$img_perfil="/template/img/empresario.jpg";
-		foreach ($image as $img)
-		{
-			$cadena=explode(".", $img->img);
-			if($cadena[0]=="user")
-			{
-				$img_perfil=$img->url;
-			}
-		}
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
-		$this->template->set("afiliados",$afiliados);
-		$this->template->set("sexo",$sexo);
-		$this->template->set("civil",$civil);
-		$this->template->set("pais",$pais);
-		$this->template->set("tipo_fiscal",$tipo_fiscal);
-		$this->template->set("estudios",$estudios);
-		$this->template->set("ocupacion",$ocupacion);
-		$this->template->set("tiempo_dedicado",$tiempo_dedicado);
-		$this->template->set("img_perfil",$img_perfil);
-		$this->template->set("red_frontales",$red_forntales);
-		$this->template->set("premium",$premium);
-		$this->template->set("planes",$planes);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -539,12 +498,9 @@ class perfil_red extends CI_Controller
 		$red 			 = $this->model_afiliado->RedAfiliado($id, $id_red);
 		$premium         = $red[0]->premium;
 		$afiliados       = $this->model_perfil_red->get_afiliados($id_red, $id);
-		$planes 		 = $this->model_planes->Planes();
-		
+		//$planes 		 = $this->model_planes->Planes();
 		$image 			 = $this->model_perfil_red->get_images($id);
 		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
-		
-		
 		
 		$img_perfil="/template/img/empresario.jpg";
 		foreach ($image as $img)
@@ -555,9 +511,10 @@ class perfil_red extends CI_Controller
 				$img_perfil=$img->url;
 			}
 		}
+		
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
-		$this->template->set("contar",$contar=count($afiliados));
+		$this->template->set("contar",count($afiliados));
 		$this->template->set("sexo",$sexo);
 		$this->template->set("civil",$civil);
 		$this->template->set("pais",$pais);
@@ -568,7 +525,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("red_frontales",$red_forntales);
 		$this->template->set("premium",$premium);
-		$this->template->set("planes",$planes);
+		//$this->template->set("valor_retencion",$valor_retencion);
 		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -1270,10 +1227,10 @@ class perfil_red extends CI_Controller
 	function MensajeFase(){
 		$id = $_POST['id'];
 		$red = $_POST['red'];
-		
+		$valor_retencion  = $this->model_perfil_red->ObtenerRetencioFase();
 		$this->template->set("id",$id);
 		$this->template->set("red",$red);
-		
+		$this->template->set("valor_retencion",$valor_retencion);
 		$this->template->build('website/ov/perfil_red/fases');
 	}
 }

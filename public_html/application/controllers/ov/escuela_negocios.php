@@ -44,10 +44,12 @@ class escuela_negocios extends CI_Controller
 		$style=$this->general->get_style($id);
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
+		$grupos = $this->modelo_escuela_negocios->Grupos('NOT');
 		
 		$noticias = $this->modelo_escuela_negocios->get_new_activas();
 		$data=array();
 		$data["noticias"]=$noticias;
+		$data["grupos"]=$grupos;
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
@@ -105,8 +107,11 @@ class escuela_negocios extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		
 		$presentaciones=$this->modelo_escuela_negocios->get_presentaciones_activas();
+		$grupos = $this->modelo_escuela_negocios->Grupos('PRE');
+		
 		$data=array();
 		$data["presentaciones"]=$presentaciones;
+		$data["grupos"]=$grupos;
 		
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
@@ -129,8 +134,11 @@ class escuela_negocios extends CI_Controller
 		$this->template->set("usuario",$usuario);
 		
 		$ebooks=$this->modelo_escuela_negocios->get_ebooks();
+		
+		$grupos = $this->modelo_escuela_negocios->Grupos('EBO');
 		$data=array();
 		$data['ebooks']=$ebooks;
+		$data["grupos"]=$grupos;
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
@@ -154,7 +162,7 @@ class escuela_negocios extends CI_Controller
 		$videos=$this->modelo_escuela_negocios->get_video_activos();
 		$data=array();
 		$data['videos']=$videos;
-		$grupos=$this->modelo_escuela_negocios->get_groups();
+		$grupos = $this->modelo_escuela_negocios->Grupos('VID');
 		$data['grupos']=$grupos;
 		$comentarios=$this->modelo_escuela_negocios->get_comments();
 		$data['comentarios']=$comentarios;
@@ -178,8 +186,10 @@ class escuela_negocios extends CI_Controller
 		$this->template->set("usuario",$usuario);
 
 		$archivos = $this->modelo_escuela_negocios->get_files();
+		$grupos = $this->modelo_escuela_negocios->Grupos('DES');
 		
 		$this->template->set("archivos",$archivos);
+		$this->template->set("grupos",$grupos);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
