@@ -97,7 +97,7 @@ function index()
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
-		$this->template->set("style",$style);
+		//$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$productos=$this->modelo_compras->get_productos();
 		$redes = $this->model_tipo_red->listarTodos();
@@ -288,7 +288,7 @@ function index()
 		$this->template->set("redes", $redes);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
+        //$this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/carrito',$data);
 	}
@@ -793,7 +793,7 @@ function index()
 		for($m=0;$m<sizeof($imagenes);$m++)
 			{
 				echo"
-					<p><img class='col-lg-12 col-md-12 col-xs-12 col-sm-12' src='".$imagenes[$m]->url."'></p><br></br>";
+					<p><img class='col-lg-12 col-md-12 col-xs-12 col-sm-12' src='".$imagenes[$m]->url."' style='width: 15rem ! important; height: 10rem ! important;'></p><br></br>";
 			}
 		echo '</div>';
 		switch($data['tipo'])
@@ -813,11 +813,11 @@ function index()
 								echo"
 									<p class='font-sm'>Precio Afiliado: ".$detalles[0]->costo."</p>";
 							}
-							if($detalles[0]->puntos_comisionables)
+							/*if($detalles[0]->puntos_comisionables)
 							{
 								echo"
 									<p class='font-sm'>Puntos: ".$detalles[0]->puntos_comisionables."</p>";
-							}
+							}*/
 							if($detalles[0]->descripcion)
 							{
 								echo"
@@ -841,11 +841,11 @@ function index()
 								echo"
 									<p class='font-sm'>Precio Afiliado: ".$detalles[0]->costo."</p>";
 							}
-							if($detalles[0]->puntos_comisionables)
+							/*if($detalles[0]->puntos_comisionables)
 							{
 								echo"
 									<p class='font-sm'>Puntos: ".$detalles[0]->puntos_comisionables."</p>";
-							}
+							}*/
 							if($detalles[0]->descripcion)
 							{
 								echo"
@@ -1384,7 +1384,7 @@ function index()
 				              		<div class="promotion">   </div>
 				            	</div>
 				            	<div class="description">
-				              		<h4><a href="product-details.html">'.$prod[$productos]->nombre.'</a></h4>
+				              		<h4><a onclick="detalles('.$prod[$productos]->id.',1)">'.$prod[$productos]->nombre.'</a></h4>
 				              		<p>'.$prod[$productos]->grupo.' </br></br>
 				              		'.$prod[$productos]->descripcion.'. </p>
 				              		
@@ -1747,7 +1747,7 @@ function index()
 									              		<div class="promotion">   </div>
 									            	</div>
 									            	<div class="description">
-									              		<h4><a href="">'.$prod[$productos]->nombre.'</a></h4>
+									              		<h4><a  onclick="detalles('.$prod[$productos]->id.',1)">'.$prod[$productos]->nombre.'</a></h4>
      						              			</div>
 									            	<div class="price"> <span>$ '.$prod[$productos]->costo.'</span></div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$prod[$productos]->id.',1,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
@@ -1769,7 +1769,7 @@ function index()
 									              		<div class="promotion">  </div>
 									            	</div>
 									            	<div class="description">
-									              		<h4><a href="">'.$serv[$servicios]->nombre.'</a></h4>
+									              		<h4><a onclick="detalles('.$serv[$servicios]->id.',2)">'.$serv[$servicios]->nombre.'</a></h4>
 									              	</div>
 									            	<div class="price"> <span>$ '.($serv[$servicios]->costo).'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$serv[$servicios]->id.',2,0)"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
@@ -1787,10 +1787,10 @@ function index()
 										        </a>
 									          
 									          		<div class="image"> <a onclick="detalles('.$comb[$combinados]->id.',3)"><img src="'.$comb[$combinados]->img.'" alt="img" class="img-responsive"></a>
-									              		<div class="promotion">  <span class="discount">'.$comb[$combinados]->descuento.'% DESCUENTO</span></div>
+									              		<div class="promotion"> <a onclick="detalles('.$comb[$combinados]->id.',3)"> <span class="discount">'.$comb[$combinados]->descuento.'% DESCUENTO</span> </a></div>
 									            	</div>
 									            	<div class="description">
-									              		<h4><a href="">'.$comb[$combinados]->nombre.'</a></h4>
+									              		<h4><a onclick="detalles('.$comb[$combinados]->id.',3)">'.$comb[$combinados]->nombre.'</a></h4>
 									              	</div>
 									            	<div class="price"> <span>$ '.$comb[$combinados]->costo.'</span> </div>
 									            	<div class="action-control"> <a class="btn btn-primary" onclick="compra_prev('.$comb[$combinados]->id.',3,'.$comb[$combinados]->descuento.')"> <span class="add2cart"><i class="glyphicon glyphicon-shopping-cart"> </i> Añadir al carrito </span> </a> </div>
