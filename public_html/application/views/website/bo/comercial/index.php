@@ -37,7 +37,7 @@
 											<div class="col-sm-8 link">
 												<div class="col-sm-3 link">
 													<a href="/bo/comercial/altas">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-edit fa-3x"></i>
 															<h1>Altas</h1>
 														</div>
@@ -61,7 +61,7 @@
 												</div>
 												<div class="col-sm-3 link">
 													<a href="/bo/comercial/carrito">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-shopping-cart fa-3x"></i>
 															<h1>Carrito de compras</h1>
 														</div>
@@ -69,7 +69,7 @@
 												</div>
 												<div class="col-sm-3 link">	
 													<a href="/bo/CuentasPagar/PorPagar">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-money fa-3x"></i>
 															<h1>Cuentas por Pagar</h1>
 														</div>
@@ -77,7 +77,7 @@
 												</div>
 												<div class="col-sm-3 link">	
 													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-users fa-3x"></i>
 															<h1>Atencion al afiliado</h1>
 														</div>
@@ -85,7 +85,7 @@
 												</div>
 																								<div class="col-sm-3 link">
 													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-bar-chart-o fa-3x"></i>
 															<h1>Estudios de Mercados</h1>
 														</div>
@@ -93,7 +93,7 @@
 												</div>
 												<div class="col-sm-3 link">	
 													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-rss-square fa-3x"></i>
 															<h1>Telemarketing <br>&nbsp</h1>
 														</div>
@@ -101,7 +101,7 @@
 												</div>
 												<div class="col-sm-3 link">	
 													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-folder fa-3x"></i>
 															<h1>Archivero <br>&nbsp</h1>
 														</div>

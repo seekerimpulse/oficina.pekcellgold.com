@@ -7,7 +7,10 @@
 
 					<!-- col -->
 					<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-						<h1 class="page-title txt-color-blueDark"><!-- PAGE HEADER --><a href="/ov/dashboard"><i class="fa fa-home"></i> Inicio</a> > Billetera</h1>
+						<h1 class="page-title txt-color-blueDark">
+						<!-- PAGE HEADER -->
+						<a href="/ov/dashboard">
+						<i class="fa fa-home"></i> Inicio</a> > Billetera</h1>
 					</div>
 					<!-- end col -->
 				</div>

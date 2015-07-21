@@ -4,7 +4,7 @@
 			<h1 class="page-title txt-color-blueDark">
 				
 				<!-- PAGE HEADER -->
-				<a href="/ov/dashboard"><i class="fa fa-home"></i> Inicio</a>
+				<a class="backHome" href="/ov"><i class="fa fa-home"></i> Menu</a> 
 				<span>> 
 					Menu chat
 				</span>
