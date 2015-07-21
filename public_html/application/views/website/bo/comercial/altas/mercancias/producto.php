@@ -12,6 +12,16 @@
 			</h1>
 		</div>
 	</div>
+	<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+	?>	 
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
@@ -63,7 +73,7 @@
 												</section>
 												<section class="col col-3">RED
 															<label class="select">
-																<select name="red">
+																<select name="red" required>
 																<?foreach ($redes as $key){?>
 																	<option value="<?=$key->id?>">
 																	<?= $key->nombre?>
@@ -134,27 +144,27 @@
 														</label>
 													</section>
 													<section class="col col-2">
-														<label class="input">
+														<label class="input" >
 															Costo real
-															<input type="text" name="real" id="real">
+															<input type="text" name="real" id="real" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo distribuidores
-															<input type="text" name="costo" id="costo">
+															<input type="text" name="costo" id="costo" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Costo publico
-															<input type="text" name="costo_publico" id="costo_publico">
+															<input type="text" name="costo_publico" id="costo_publico" required>
 														</label>
 													</section>
 													<section class="col col-2">
 														<label class="input">
 															Tiempo mínimo de entrega
-															<input placeholder="En días" type="text" name="entrega" id="entrega">
+															<input placeholder="En días" type="text" name="entrega" id="entrega" >
 														</label>
 													</section>
 													

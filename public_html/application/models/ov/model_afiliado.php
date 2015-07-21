@@ -11,9 +11,9 @@ class model_afiliado extends CI_Model{
 	function EstiloUsuaio($id){
 		$dato_style=array(
 			"id_usuario"		=> $id,
-			"bg_color"			=> "#EEEEEE",
-			"btn_1_color"		=> "#93C83F",
-			"btn_2_color"		=> "#3DB2E5"
+			"bg_color"			=> "#2086bf",
+			"btn_1_color"		=> "#2086bf",
+			"btn_2_color"		=> "#60a917"
 			);
 		$this->db->insert("estilo_usuario",$dato_style);
 	}
@@ -197,33 +197,7 @@ class model_afiliado extends CI_Model{
 		$this->db->insert("billetera",$dato_billetera);
 		/*################### FIN DATO BILLETERA #########################*/
 		
-		/*################### FIN DATO COBRO #########################*/
 
-		$plan = 1;
-		if(!isset($_POST['tipo_plan'])){
-			$plan = $_POST['tipo_plan'];
-		}
-		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$plan);
-		$plan = $query->result();
-
-		$dato_cobro=array(
-			"id_user"		=> $id,
-			"id_metodo"		=> 1,
-			"id_estatus"	=> 3,
-			"monto"			=> 0
-			);
-		$this->db->insert("cobro",$dato_cobro);
-		
-		$dato_cobro=array(
-			"id_user"		=> $id,
-			"id_metodo"		=> 1,
-			"id_estatus"	=> 4,
-			"monto"			=> 0
-			);
-		$this->db->insert("cobro",$dato_cobro);
-		
-		/*################### FIN DATO COBRO #########################*/
-		
 		/*################### DATO RANGO #########################*/
 		$dato_rango=array(
 			"id_user"	=> $id,
@@ -417,23 +391,7 @@ class model_afiliado extends CI_Model{
 		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$plan);
 		$plan = $query->result();
 		
-		$dato_cobro=array(
-			"id_user"		=> $id,
-			"id_metodo"		=> 1,
-			"id_estatus"	=> 3,
-			"monto"			=> 0
-			);
-		$this->db->insert("cobro",$dato_cobro);
-	
-		$dato_cobro=array(
-				"id_user"		=> $id,
-				"id_metodo"		=> 1,
-				"id_estatus"	=> 1,
-				"monto"			=> 0
-		);
-		$this->db->insert("cobro",$dato_cobro);
-	
-		/*################### FIN DATO COBRO #########################*/
+		
 	
 		/*################### DATO RANGO #########################*/
 		$dato_rango=array(
@@ -555,27 +513,6 @@ class model_afiliado extends CI_Model{
 		$this->db->insert("billetera",$dato_billetera);
 		/*################### FIN DATO BILLETERA #########################*/
 	
-		/*################### FIN DATO COBRO #########################*/
-		$query = $this->db->query("select * from paquete_inscripcion where id_paquete=".$_POST['tipo_plan']);
-		$plan = $query->result();
-
-		$dato_cobro=array(
-				"id_user"		=> $id,
-				"id_metodo"		=> 1,
-				"id_estatus"	=> 3,
-				"monto"			=> 0
-		);
-		$this->db->insert("cobro",$dato_cobro);
-	
- 		$dato_cobro=array(
- 				"id_user"		=> $id,
- 				"id_metodo"		=> 1,
- 				"id_estatus"	=> 4,
- 				"monto"			=> 0
- 		);
- 		$this->db->insert("cobro",$dato_cobro);
- 	
- 		/*################### FIN DATO COBRO #########################*/
  	
  		/*################### DATO RANGO #########################*/
  		$dato_rango=array(
@@ -608,7 +545,7 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function ComisionUsuario($id){
-		$q = $this->db->query("SELECT sum(monto) as comision FROM cobro where id_user = ".$id.";");
+		$q = $this->db->query("SELECT sum(monto) as comision FROM cobro where id_afiliado = ".$id.";");
 		$comision = $q->result();
 		return $comision[0]->comision;
 	}

@@ -23,9 +23,6 @@
 				Compras: <b>$ <?php echo number_format($compras,2); ?></b>
 			</div>
 			<div class="row">
-				Puntos: <b><?php echo $puntos; ?></b>
-			</div>
-			<div class="row">
 				Comision: <b>$ <?php echo number_format($comision,2); ?></b>
 			</div>
 		</div>

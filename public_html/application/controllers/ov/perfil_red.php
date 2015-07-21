@@ -404,14 +404,14 @@ class perfil_red extends CI_Controller
 	
 		$usuario = $this->model_perfil_red->datos_perfil($_POST['id']);
 		$compras = $this->model_afiliado->ComprasUsuario($_POST['id']);
-		$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
+		//$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
 		$comision  = $this->model_afiliado->ComisionUsuario($_POST['id']);
 		
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("id",$_POST['id']);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("compras",$compras);
-		$this->template->set("puntos",$puntos);
+		//$this->template->set("puntos",$puntos);
 		$this->template->set("comision",$comision);
 		$this->template->set("pais",$pais);
 		$this->template->build('website/ov/perfil_red/detallesAfiliado2');

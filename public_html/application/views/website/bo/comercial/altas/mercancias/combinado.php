@@ -12,6 +12,16 @@
 			</h1>
 		</div>
 	</div>
+	<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+	?>	 
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
@@ -46,7 +56,7 @@
 								
 											<section class="col col-2">
 											<label class="input"><span id="labelextra">Descuento del paquete</span>
-											<input id="precio_promo" type="text" name="descuento">
+												<input id="precio_promo" type="number" name="descuento">
 											</label>
 											</section>
 											<section class="col col-3">RED
@@ -57,8 +67,8 @@
 																	<?= $key->nombre?>
 																<?}?>
 																</select>
-															</label>
-														</section>
+														</label>
+											</section>
 											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="prods">
 											<section class="col col-8">Productos
 											<label class="select">

@@ -288,7 +288,7 @@ ul.sidebar li a h1,ul.sidebar li a h2,ul.sidebar li a h3,ul.sidebar li a h4,ul.s
 						<p><?php if (isset($banco)) { ?>Banco: <?php echo $banco; ?><br /><?php } ?></p>
 						<p><?php if (isset($cuenta)) { ?>Numero de Cuenta: <?php echo $cuenta; ?><br /><?php } ?></p>
 						<p><?php if (isset($titular)) { ?>Titular de cuenta: <?php echo $titular; ?><br /><?php } ?></p>
-						<p><?php if (isset($clave)) { ?>Clave: <?php echo $clave; ?><br /><?php } ?></p><br/>
+						<p><?php if (isset($clave)) { ?>CLABE: <?php echo $clave; ?><br /><?php } ?></p><br/>
 						<p><?php if (isset($monto)) { ?>Valor de Cobro: $ <?php echo $monto; ?><br /><?php } ?></p> 
 						<br/>							
 												 

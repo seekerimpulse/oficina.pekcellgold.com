@@ -127,6 +127,27 @@ class mercancia extends CI_Controller
 		
 	}
 	
+	private function validarMercancia($datos){
+		if($datos['pais'] == null){
+			return false;
+		}
+		if($datos['real'] == null){
+			return false;
+		}
+		if($datos['costo'] == null){
+			return false;
+		}
+		if( $datos['costo_publico'] == null){
+			return false;
+		}
+		if($datos['nombre'] == null){
+			return false;
+		}
+		if( $datos['red'] == null){
+			return false;
+		}
+		return true;
+	}
 	function CrearServicio(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -146,7 +167,11 @@ class mercancia extends CI_Controller
 		
 		$id = $this->tank_auth->get_user_id();
 		
-		$sku = $this->model_mercancia->nuevo_servicio();
+		if(!$this->validarMercancia($_POST)){
+			$error = "Datos incompletos para crear la mercancia";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=2');
+		}
 		
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
@@ -161,17 +186,16 @@ class mercancia extends CI_Controller
 		
 		if (!$this->upload->do_multi_upload('img'))
 		{
-			$error = array('error' => $this->upload->display_errors());
-			print_r($error);
-			
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=2');
 		}
 		else
 		{
-			
+			$sku = $this->model_mercancia->nuevo_servicio();
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-			
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
-			redirect('/bo/comercial/altas');
+			redirect('/bo/comercial/carrito');
 			
 		}
 		
@@ -193,10 +217,13 @@ class mercancia extends CI_Controller
 	
 		if(!isset($_POST['proveedor']))
 			$_POST['proveedor']='Ninguno';
-	
+		
+		if(!$this->validarMercancia($_POST)){
+			$error = "Datos incompletos para crear la mercancia";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=1');
+		}
 		$id = $this->tank_auth->get_user_id();
-	
-		$sku = $this->model_mercancia->nuevo_producto();
 	
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
@@ -211,17 +238,16 @@ class mercancia extends CI_Controller
 	
 		if (!$this->upload->do_multi_upload('img'))
 		{
-			$error = array('error' => $this->upload->display_errors());
-			print_r($error);
-			
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el producto.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=1');
 		}
 		else
 		{
+			$sku = $this->model_mercancia->nuevo_producto();
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
-				
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
-	
-			redirect('/bo/comercial/altas');
+			redirect('/bo/comercial/carrito');
 		}
 		
 	}
@@ -244,9 +270,13 @@ class mercancia extends CI_Controller
 			$_POST['proveedor']='Ninguno';
 	
 		$id = $this->tank_auth->get_user_id();
-	
-		$sku = $this->model_mercancia->nuevo_combinado();
-	
+		
+		if(!$this->validarMercancia($_POST)){
+			$error = "Datos incompletos para crear la mercancia";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=3');
+		}
+		
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
@@ -260,17 +290,17 @@ class mercancia extends CI_Controller
 		
 		if (!$this->upload->do_multi_upload('img'))
 		{
-			$error = array('error' => $this->upload->display_errors());
-			print_r($error);
-			
+			$error = "El tipo de archivo que esta cargando no esta permitido como imagen para el servicio.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/mercancia/nueva_mercancia?id=3');
 		}
 		else
 		{
-	
+			$sku = $this->model_mercancia->nuevo_combinado();
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_mercancia->img_merc($sku , $data["upload_data"]);
 		}
-		redirect('/bo/comercial/altas');
+		redirect('/bo/comercial/carrito');
 	}
 	
 	function ImpuestaPais(){

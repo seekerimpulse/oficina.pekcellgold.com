@@ -6,6 +6,8 @@ class model_mercancia extends CI_Model {
 	function __construct() {
 		parent::__construct ();
 	}
+	
+	
 	function TiposMercancia() {
 		$categorias = $this->db->query ( "select * from cat_tipo_mercancia where estatus = 'ACT' " );
 		return $categorias->result ();
