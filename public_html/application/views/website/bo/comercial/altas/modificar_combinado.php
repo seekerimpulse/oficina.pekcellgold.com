@@ -334,10 +334,8 @@
 											</span><input id="imagen_mr"
 												placeholder="Agregar alguna imágen" type="text">
 										</div>
-										<small>Para cargar múltiples archivos, presione la tecla ctrl
-											y sin soltar selecione sus archivos. <br /> <cite
-											title="Source Title">Para ver los archivos que va a cargar,
-												deje el puntero sobre el boton de "Buscar" </cite>
+										<small><cite
+											title="Source Title">Para ver el archivo que va a cargar, pulse con el puntero en el boton de "Buscar"</cite>
 										</small>
 									</section>
 
@@ -345,9 +343,10 @@
 								</div>
 							</fieldset>
 
-							<footer>
+							<section class="col col-12 pull-right" >
 								<button type="submit" class="btn btn-success">Agregar</button>
-							</footer>
+							</section>
+							
 						</form>
 					</div>
 

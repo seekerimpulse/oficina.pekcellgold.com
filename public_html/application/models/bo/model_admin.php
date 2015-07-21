@@ -88,10 +88,52 @@ class model_admin extends CI_Model
 		$q=$this->db->query("select * from cat_tipo_proveedor where estatus ='ACT'");
 		return $q->result();
 	}
-	function del_merc()
+	
+	function ver_si_merc_ha_sido_vendida($id)
 	{
-		$q=$this->db->query('delete from mercancia where id='.$_POST['id']);
+		$datos = $this->db->query('select * from cross_venta_mercancia where id_mercancia = '.$id);
+	
+		return $datos->result();
 	}
+	function traer_foto($id){
+		$datos = $this->db->query('select CI.url url, M.id_tipo_mercancia id_tipo_mercancia, CI.id_img id_img, M.sku sku
+								from cat_img CI, cross_merc_img CMI, mercancia M
+								where CI.id_img = CMI.id_cat_imagen and CMI.id_mercancia = M.id and M.id = '.$id);
+		return $datos->result();
+	}
+	function del_merc($id)
+	{
+		$datos = $this->db->query('select CI.url url, M.id_tipo_mercancia id_tipo_mercancia, CI.id_img id_img, M.sku sku
+								from cat_img CI, cross_merc_img CMI, mercancia M
+								where CI.id_img = CMI.id_cat_imagen and CMI.id_mercancia = M.id and M.id = '.$id);
+		
+		$q=$this->db->query('delete from mercancia where id = '.$id);
+		
+		return $datos->result();
+	}
+	
+	function del_tipo_merc($id_tipo_mercancia, $sku){
+		
+		  switch ($id_tipo_mercancia){
+			 case 1:	//producto
+			 $q=$this->db->query("delete from producto where id = '".$sku."'");
+			 break;
+			 case 2:	//servicio
+			 $q=$this->db->query("delete from servicio where id = '".$sku."'");
+			 break;
+			 case 3:	//combinado
+			 $q=$this->db->query("delete from combinado where id = '".$sku."'");
+			 break;
+		  }
+	}
+	
+	function del_imagen($id_img){
+		$q=$this->db->query("delete from cat_img where id_img = ".$id_img);
+	}
+	
+	function del_cross_imagen_merc($id_img){
+		$q=$this->db->query("delete from cross_merc_img where id_cat_imagen = ".$id_img);
+	}									
 
 	function get_proveedor()
 	{
@@ -566,7 +608,7 @@ where(a.id_pais=b.Code)");
 				$this->db->insert("cross_merc_impuesto",$dato_impuesto);
 			}
 		}
-		return $sku;
+		
 	}
 	function new_mercancia()
 	{

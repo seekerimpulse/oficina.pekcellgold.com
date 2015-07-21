@@ -249,10 +249,34 @@ class admin extends CI_Controller
 	{
 		$this->model_admin->estado_mercancia();
 	}
+	
 	function del_merc()
 	{
-		$this->model_admin->del_merc();
+		$id = $_POST['id'];
+		
+		
+		$esta = $this->model_admin->ver_si_merc_ha_sido_vendida($id);
+		
+		if ($esta == NULL){
+			
+			$datos = $this->model_admin->del_merc($id);
+			
+			if(unlink($_SERVER['DOCUMENT_ROOT'].$datos[0]->url)){
+				//echo "File Deleted.";
+			}
+			
+			$this->model_admin->del_tipo_merc($datos[0]->id_tipo_mercancia, $datos[0]->sku);
+			$this->model_admin->del_imagen($datos[0]->id_img);
+			$this->model_admin->del_cross_imagen_merc($datos[0]->id_img);
+			
+			echo "Se ha eliminado la mercancia.";
+		}
+		else {
+			echo "Ha ocurrido un error eliminando la mercancia, debido a que la mercancia tiene un historial de ventas.
+					<br> Lo mas recomendable es que desactive la mercancia del carrito de compras.";
+		}
 	}
+	
 	function new_grupo()
 	{
 		$this->model_admin->new_grupo();
@@ -1341,12 +1365,15 @@ class admin extends CI_Controller
 	function update_mercancia()
 	{
 		$this->model_admin->update_mercancia();
+		
 		$sku = $_POST['id_merc'];
+		
+		$datos = $this->model_admin->traer_foto($sku);
 		
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'gif|jpg|png';
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg';
 		$config['max_width']  		= '4096';
 		$config['max_height']   	= '3112';
 
@@ -1355,11 +1382,14 @@ class admin extends CI_Controller
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 		if (!$this->upload->do_multi_upload('img'))
 		{
-			$error = array('error' => $this->upload->display_errors());
-			print_r($error);
+			/*$error = array('error' => $this->upload->display_errors());
+			print_r($error);*/
 		}
 		else
 		{
+			if(unlink($_SERVER['DOCUMENT_ROOT'].$datos[0]->url)){
+				//echo "File Deleted.";
+			}
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_admin->img_merc($sku,$data["upload_data"]);
 		}
