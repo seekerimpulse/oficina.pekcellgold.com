@@ -28,7 +28,7 @@ class Model_servicio extends CI_Model{
 							from servicio S, tipo_red TP, venta V, cross_venta_mercancia CVM, mercancia M, comision C
 							
 							where S.id_red = TP.id and S.id = M.sku and M.id = CVM.id_mercancia and CVM.id_venta = V.id_venta
-							 and C.id_venta = V.id_venta and V.fecha >= '.$inicio.' and V.fecha <= '.$fin.'
+							 and C.id_venta = V.id_venta and DATE(V.fecha) BETWEEN "'.$inicio.'" AND "'.$fin.'"
 							
 							group by (V.id_venta)
 							

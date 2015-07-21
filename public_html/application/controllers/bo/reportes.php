@@ -147,6 +147,20 @@ class reportes extends CI_Controller
 	function reporte_afiliados()
 	{
 		$id=$this->tank_auth->get_user_id();
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
 		$afiliados=$this->modelo_reportes->reporte_afiliados($_POST['startdate'],$_POST['finishdate']);
 		echo 
 			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
@@ -178,6 +192,19 @@ class reportes extends CI_Controller
 	
 	function reporte_afiliados_excel()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
 		$id=$this->tank_auth->get_user_id();
 		$inicio = "2000-01-01";
 		if($_GET['inicio'] != null){
@@ -250,6 +277,18 @@ class reportes extends CI_Controller
 	function reporte_afiliados_mes_excel()
 	{
 		$id=$this->tank_auth->get_user_id();
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
 		
 	
 		$afiliados= $this->modelo_reportes->reporte_afiliados_mes();
@@ -276,6 +315,166 @@ class reportes extends CI_Controller
 		//force user to download the Excel file without writing it to server's HD
 		//$objWriter->save(getcwd()."/media/reportes/".$filename);
 		$objWriter->save('php://output');
+	}
+	
+	function reporte_ventas_oficinas_virtuales()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		$total_costo = 0;
+		$total_impuesto = 0;
+		$total_comision = 0;
+		$total_neto = 0;
+		$redes = $this->model_tipo_red->listarTodos();
+		
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$servicios = $this->model_servicio->listar_todos_por_venta_y_fecha($_POST['startdate'],$_POST['finishdate']);
+		
+		//var_dump($_POST['startdate']);
+		
+		$id=$this->tank_auth->get_user_id();
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>Red</th>
+					<th data-hide='phone,tablet'>Servicio</th>
+					<th data-hide='phone,tablet'>Cantidad</th>
+					<th data-hide='phone,tablet'>Subtotal</th>
+					<th data-hide='phone,tablet'>Total impuestos</th>
+					<th data-hide='phone,tablet'>Total comisiones</th>
+					<th data-hide='phone,tablet'>Total neto</th>
+				</thead>
+				<tbody>";
+		
+		if ($_POST['startdate']!=""){
+			
+			foreach ($servicios as $servicio){
+				$total_costo = $total_costo + $servicio->costo;
+				$total_impuesto = $total_impuesto + $servicio->impuesto;
+				$total_comision = $total_comision + $servicio->comision;
+				$total_neto = $total_neto + (($servicio->costo)-($servicio->impuesto+$servicio->comision));
+			}
+			
+			foreach($servicios as $servicio)
+			{
+			echo "<tr>
+			<td class='sorting_1'>".$servicio->nombre_red."</td>
+			<td>".$servicio->nombre."</td>
+			<td>".$servicio->cantidad."</td>
+			<td> $	".$servicio->costo."</td>
+			<td> $	".$servicio->impuesto."</td>
+			<td> $	".$servicio->comision."</td>
+			<td> $	".(($servicio->costo)-($servicio->impuesto+$servicio->comision))."</td>
+			</tr>";
+				}
+	
+				echo "<tr>
+			<td class='sorting_1'></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>";
+				
+				echo "<tr>
+			<td class='sorting_1'><b>TOTALES</b></td>
+			<td></td>
+			<td></td>
+			<td><b> $	".$total_costo."</b></td>
+			<td><b> $	".$total_impuesto."</b></td>
+			<td><b> $	".$total_comision."</b></td>
+			<td><b> $	".$total_neto."</b></td>
+			</tr>";
+		}
+			echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	
+	}
+	
+	function reporte_ventas_oficinas_virtuales_excel()
+		{
+			if (!$this->tank_auth->is_logged_in())
+			{																		// logged in
+			redirect('/auth');
+			}
+			
+			$id=$this->tank_auth->get_user_id();
+			$usuario=$this->general->get_username($id);
+			
+			if($usuario[0]->id_tipo_usuario!=1)
+			{
+				redirect('/auth/logout');
+			}
+	
+		if ($_GET['inicio']!=""){
+			$total_costo = 0;
+			$total_impuesto = 0;
+			$total_comision = 0;
+			$total_neto = 0;
+			$redes = $this->model_tipo_red->listarTodos();
+			
+			$style=$this->modelo_dashboard->get_style($id);
+		
+			$servicios = $this->model_servicio->listar_todos_por_venta_y_fecha($_GET['inicio'],$_GET['fin']);
+		
+						$this->load->library('excel');
+						$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_ventas_oficinas_virtuales.xls");
+		
+		foreach ($servicios as $servicio){
+			$total_costo = $total_costo + $servicio->costo;
+			$total_impuesto = $total_impuesto + $servicio->impuesto;
+			$total_comision = $total_comision + $servicio->comision;
+			$total_neto = $total_neto + (($servicio->costo)-($servicio->impuesto+$servicio->comision));
+		}				
+						
+		for($i = 0;$i < count($servicios);$i++)
+		{
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $servicios[$i]->nombre_red);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $servicios[$i]->nombre);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $servicios[$i]->cantidad);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $servicios[$i]->costo);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $servicios[$i]->impuesto);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $servicios[$i]->comision);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), (($servicios[$i]->costo)-($servicios[$i]->impuesto+$servicios[$i]->comision)));
+		}
+		
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), "TOTALES");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), "");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), "");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $total_costo);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $total_impuesto);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $total_comision);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $total_neto);
+		
+		
+		$filename='Ventas_Oficina_virtual_de '.$_GET['inicio'].' al '.$_GET['fin'].'.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+	
+			//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+			//if you want to save it as .XLSX Excel 2007 format
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+			//force user to download the Excel file without writing it to server's HD
+			//$objWriter->save(getcwd()."/media/reportes/".$filename);
+			$objWriter->save('php://output');
+		}
+		
+			
 	}
 	
 	function reporte_proveedores()

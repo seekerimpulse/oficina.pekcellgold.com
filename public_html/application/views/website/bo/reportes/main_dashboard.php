@@ -1041,7 +1041,7 @@
 			break;
 			case "1" : 
 
-				var startdate = $('#startdate').val();
+				/*var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
 				
 				$.ajax({
@@ -1049,7 +1049,22 @@
 					url: "/bo/reportes/index_actualizado_ventas_ov",
 					data: {startdate:startdate,finishdate:finishdate}
 				});
-				location.href="/bo/reportes/index_actualizado_ventas_ov?startdate="+$('#startdate').val()+"&finishdate="+$('#startdate').val();
+				location.href="/bo/reportes/index_actualizado_ventas_ov?startdate="+$('#startdate').val()+"&finishdate="+$('#startdate').val();*/
+				iniciarSpinner();
+				var startdate = $('#startdate').val();
+				var finishdate = $('#finishdate').val();
+				
+				$.ajax({
+					type: "POST",
+					url: "/bo/reportes/reporte_ventas_oficinas_virtuales",
+					data: {startdate:startdate,finishdate:finishdate}
+					
+				})
+				.done(function( msg ) {
+					FinalizarSpinner();
+					$("#reporte_div").html(msg);
+					
+				});
 			break;
 			case "2" : //alert("Ventas por telemarketing");
 			break;
@@ -1149,17 +1164,11 @@
 			switch($("#tipo-reporte").val()){
 			case "0" : location.href="/bo/comercial/red_tabla";
 			break;
-			case "1" : 
-
+			case "1" : {
 				var startdate = $('#startdate').val();
 				var finishdate = $('#finishdate').val();
-				
-				$.ajax({
-					type: "POST",
-					url: "/bo/reportes/index_actualizado_ventas_ov",
-					data: {startdate:startdate,finishdate:finishdate}
-				});
-				location.href="/bo/reportes/index_actualizado_ventas_ov?startdate="+$('#startdate').val()+"&finishdate="+$('#startdate').val();
+				window.location="/bo/reportes/reporte_ventas_oficinas_virtuales_excel?inicio="+startdate+"&&fin="+finishdate;
+			}
 			break;
 			case "2" : //alert("Ventas por telemarketing");
 			break;
