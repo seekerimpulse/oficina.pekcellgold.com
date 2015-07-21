@@ -4,12 +4,10 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-
-				<!-- PAGE HEADER -->
-				<i class="fa-fw fa fa-home"></i> <a href="/bo/dashboard"> Menu</a> <span>>
-					<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a
-					href="/bo/oficinaVirtual/descargas"> Descargas</a> > Alta
-				</span>
+				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<span>>
+				<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a href="/bo/oficinaVirtual/descargas">Descargas</a>
+				> Alta </span> 
 			</h1>
 		</div>
 	</div>

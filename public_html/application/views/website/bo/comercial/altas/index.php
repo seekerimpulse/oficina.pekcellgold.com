@@ -3,10 +3,7 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-							
-							<!-- PAGE HEADER -->
-							<i class="fa-fw fa fa-home"></i> 
-								<a href="/bo/dashboard"> Menu</a> 
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
 								<a href="/bo/comercial">Comercial</a> > Altas
 							</span>
@@ -63,9 +60,9 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/carrito">
+													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-															<i class="fa fa-desktop fa-3x"></i>
+															<i class="fa fa-gift fa-3x"></i>
 															<h1>Promocion / Publicidad</h1>
 														</div>
 													</a>
@@ -73,7 +70,7 @@
 												<div class="col-sm-3 link">	
 													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-gift fa-3x"></i>
+															<i class="fa fa-inbox fa-3x"></i>
 															<h1>Requisicion de compra</h1>
 														</div>
 													</a>
@@ -81,7 +78,7 @@
 												<div class="col-sm-3 link">	
 													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-users fa-3x"></i>
+															<i class="fa fa-shopping-cart  fa-3x"></i>
 															<h1>Pedido / venta<br>&nbsp</h1>
 														</div>
 													</a>

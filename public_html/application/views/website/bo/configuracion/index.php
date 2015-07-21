@@ -3,10 +3,7 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-							
-							<!-- PAGE HEADER -->
-							<i class="fa-fw fa fa-home"></i> 
-								<a href="/bo/dashboard"> Menu</a> 
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
 								Configuracion
 							</span>
@@ -71,7 +68,7 @@
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
 												   <a href="retenciones">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-dollar fa-3x"></i>
+															<i class="fa fa-credit-card fa-3x"></i>
 															<h1>Retenciones</h1>
 														</div>
 													</a>
@@ -79,7 +76,7 @@
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
 													<a href="impuestos">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-dollar fa-3x"></i>
+															<i class="fa fa-bank fa-3x"></i>
 															<h1>Impuestos <br><br><br></h1>
 														</div>
 													</a>
@@ -95,7 +92,7 @@
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
 													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-level-up fa-3x"></i>
+															<i class="fa fa-signal fa-3x"></i>
 															<h1>Niveles / Rangos<br><br></h1>
 														</div>
 													</a>
@@ -112,7 +109,7 @@
 													<a href="/bo/capacidadRed/capacidad_de_la_red">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-sort-numeric-asc fa-3x"></i>
-															<h1>Frontalidad / Profundidad <br><br></h1>
+															<h1>Frontalidad /Profundidad <br><br></h1>
 														</div>
 													</a>
 												</div>

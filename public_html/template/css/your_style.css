@@ -230,3 +230,19 @@ border-color: #2086BF;
 .contenidoBotones{
   margin-bottom: 4rem;
 }
+
+.backHome{
+	background: #2086BF none repeat scroll 0% 0%;
+	color: #FFF;
+	border-color: #2086BF;
+	border-color: #1F496D;
+	font-size: 2.2rem;
+	height: 4rem !important;
+	padding: 1rem !important;
+	font-weight:bold;
+
+}
+.backHome:hover{
+	color: #FFF !important;
+	text-decoration: none;
+}

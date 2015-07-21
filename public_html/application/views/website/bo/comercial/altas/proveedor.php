@@ -4,9 +4,12 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-				<a href="/bo"><i class="fa fa-home"></i> Inicio</a> <span>>
-					Proveedor </span>
-			</h1>
+						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							<span>&gt;
+								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/altas">Altas</a>
+								> Proveedor
+							</span>
+						</h1>
 		</div>
 	</div>
 	<section id="widget-grid" class="">
