@@ -69,7 +69,7 @@
 																</li>
 																<li>
 																	<p class="text-muted">
-																		<i class="fa fa-skype"></i>&nbsp;&nbsp;<span class="txt-color-darken"><?=$username?></span>
+																		<i class="fa fa-user"></i>&nbsp;&nbsp;<span class="txt-color-darken"><?=$username?></span>
 																	</p>
 																</li>
 																<li>
@@ -131,7 +131,7 @@
 									<!--Inica la secciion de la perfil y red-->
 									<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
 										<fieldset>
-											<legend>Perfil y red</legend>
+											<legend><b>Perfil y red</b></legend>
 											<div class="row">
 												<?php $permiso=$ci->model_permissions->check($id,'perfil');
 												if($permiso){
@@ -201,7 +201,7 @@
 									<!--Inica la secciion de compras y reportes-->
 									<div class="well">
 										<fieldset>
-											<legend>Compras y comisiones</legend>
+											<legend><b>Compras y comisiones</b></legend>
 											<div class="row">
 												<?php $permiso=$ci->model_permissions->check($id,'carrito');
 												if($permiso){
@@ -246,7 +246,7 @@
 												?>
 												<div class="col-sm-6">
 													<a href="compras/reportes">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa   fa-ticket  fa-3x"></i>
 															<h5>Tickets/Boletos</h5>
 														</div>
@@ -262,7 +262,7 @@
 									<!--Inica la secciion de compras y reportes-->
 									<div class="well">
 															<fieldset>
-											<legend>General</legend>
+											<legend><b>General</b></legend>
 											<div class="row">
 												<?php $permiso=$ci->model_permissions->check($id,'encuestas');
 												if($permiso){
@@ -294,7 +294,7 @@
 												?>
 												<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 													<a href="cabecera/tablero">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-cogs fa-3x"></i>
 															<h5>Tablero</h5>
 														</div>
@@ -305,7 +305,7 @@
 												?>
 												<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
 													<a href="cabecera/compartir">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa  fa-folder-open-o  fa-3x"></i>
 															<h5>Compartir</h5>
 														</div>
@@ -324,7 +324,7 @@
 									<div class="well">
 										<div class="row">
 											<fieldset>
-												<legend>Información y capacitación</legend>
+												<legend><b>Información y capacitación</b></legend>
 												<div class="col-sm-1">
 												</div>
 												<?php $permiso=$ci->model_permissions->check($id,'informacion');
@@ -365,7 +365,7 @@
 												?>
 												<div class="col-sm-2">
 													<a href="escuela_negocios/descargas">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-download fa-3x"></i>
 															<h5>Descargas</h5>
 														</div>
@@ -376,7 +376,7 @@
 												?>
 												<div class="col-sm-2">
 													<a href="escuela_negocios/promociones">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-gift  fa-3x"></i>
 															<h5>Promociones</h5>
 														</div>
@@ -426,7 +426,7 @@
 											?>
 											<div class="col-sm-2">
 												<a href="escuela_negocios/reconocimientos">
-													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+													<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 														<i class="fa fa-star fa-3x"></i>
 														<h5>Reconocimientos</h5>
 													</div>
@@ -438,7 +438,7 @@
 												?>
 												<div class="col-sm-2">
 													<a href="compras/estadistica">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-bar-chart-o fa-3x"></i>
 															<h5>Estadisticas</h5>
 														</div>
@@ -457,14 +457,14 @@
 									<!--Inicia la secciion general-->
 									<div class="well">
 										<fieldset>
-											<legend>Comunicación</legend>
+											<legend><b>Comunicación</b></legend>
 											<div class="row">
 											<?php $permiso=$ci->model_permissions->check($id,'soporte_tecnico');
 												if($permiso){
 												?>
 												<div class="col-sm-12">
 													<a href="cgeneral/soporte_tecnico">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-support fa-3x"></i>
 															<h5>Soporte Técnico</h5>
 														</div>

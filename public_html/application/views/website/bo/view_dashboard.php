@@ -73,14 +73,14 @@ $ci->load->model("model_permissions");?>
 									<!--Inica la secciion de la perfil y red-->
 									<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
 										<fieldset>
-											<legend>Sistema Integral de Operaciones</legend>
+											<legend><b>Sistema Integral de Operaciones</b></legend>
 											<div class="row">
 												<?php $permiso=$ci->model_permissions->check($id,'perfil');
 												//if($permiso){
 												?>
 												<div class="col-sm-4">
 													<a href="configuracion/">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-wrench fa-3x"></i>
 															<h5>Configuracion</h5>
 														</div>
@@ -123,7 +123,7 @@ $ci->load->model("model_permissions");?>
 												?>
 												<div class="col-sm-4">
 													<a href="oficinaVirtual/">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-desktop fa-3x"></i>
 															<h5>Oficina Virtual</h5>
 														</div>

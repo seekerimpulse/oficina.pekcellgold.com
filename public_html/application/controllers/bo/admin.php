@@ -1147,6 +1147,9 @@ class admin extends CI_Controller
 			redirect('/auth');
 		}
 		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
 		if($usuario[0]->id_tipo_usuario!=1)
 		{
 			redirect('/auth/logout');

@@ -3,7 +3,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-					<a href="/bo"><i class="fa fa-home"></i> Menu</a>
+					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span>> <a href="/bo/configuracion/"> Configuracion </a>
 				>	Pais Moneda
 				</span>
@@ -11,8 +11,28 @@
 		</div>
 	</div>
 <section id="widget-grid" class="">
-<div class="row" style="background: rgb(255, 255, 255) none repeat scroll 0% 0%;margin-bottom:2rem;">
-	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<!-- START ROW -->
+		<div class="row">
+			<!-- NEW COL START -->
+			<article class="col-sm-12 col-md-12 col-lg-12">
+				<!-- Widget ID (each widget will need unique ID)-->
+				<div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+					<!-- widget options:
+						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+						data-widget-colorbutton="false"
+						data-widget-editbutton="false"
+						data-widget-togglebutton="false"
+						data-widget-deletebutton="false"
+						data-widget-fullscreenbutton="false"
+						data-widget-custombutton="false"
+						data-widget-collapsed="true"
+						data-widget-sortable="false"
+
+					-->
+
+					<!-- widget div-->
+	<div>
 <div class="tab-pane fade in active" id="s1" style="margin-bottom: 6rem">
 	<div class="row">
 		<h5 class="col-xs-12 col-sm-12 col-md-8 col-lg-8">De click en la bandera del país para editar</h5>
@@ -34,8 +54,10 @@
 		</form>
 	</div>
 </div>
-</div>
-</div>
+	</div>
+  </div>
+  </article></div>
+
 </section>
 </div>
 <script type="text/javascript">

@@ -109,11 +109,8 @@ class comercial extends CI_Controller
 		
 		$afiliados     = $this->model_perfil_red->get_tabla();
 		$image=$this->model_perfil_red->get_images_users();
-		
-		//$id_red        = $_GET['id_red'];
+
 		$id_red        = 0;
-		
-		//var_dump($id_red);exit();
 		
 		$this->template->set("style",$style);
 		

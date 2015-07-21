@@ -5,7 +5,9 @@
 
 		<!-- col -->
 		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-			<h1 class="page-title txt-color-blueDark"><!-- PAGE HEADER --><i class="fa-fw fa fa-file-o"></i> <a href="/ov/dashboard">Inicio</a> <span>>
+			<h1 class="page-title txt-color-blueDark"><!-- PAGE HEADER -->
+			<a class="backHome" href="/ov"><i class="fa fa-home"></i> Menu</a> 
+			<span>>
 				Encuestas </span></h1>
 		</div>
 		<!-- end col -->

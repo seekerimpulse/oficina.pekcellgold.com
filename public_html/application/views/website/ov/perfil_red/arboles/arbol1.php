@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-					<a href="/ov/dashboard"><i class="fa fa-home"></i> Inicio</a>
+					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span> 
 				> <a href="/ov/red/index">Redes</a>
 				> <a href="/ov/red/mi_red?id=<?php echo $_GET['id']; ?>">Arbol</a>
