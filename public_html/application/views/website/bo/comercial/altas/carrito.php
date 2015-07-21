@@ -88,7 +88,7 @@
 												<tr>
 													<td><?=$key->id?></td>
 													<td><?=$key->nombre?></td>
-													<td><img style="width: 10rem;" src="<?=$key->url?>"></img></td>
+													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
 													<td><?=$key->descripcion?></td>
 													<td><?=$key->fecha_alta?></td>
@@ -111,7 +111,7 @@
 												<tr>
 													<td><?=$key->id?></td>
 													<td><?=$key->nombre?></td>
-													<td><img style="width: 10rem;" src="<?=$key->url?>"></img></td>
+													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
 													<td><?=$key->descripcion?></td>
 													<td><?=$key->fecha_alta?></td>
@@ -133,7 +133,7 @@
 												<tr>
 													<td><?=$key->id?></td>
 													<td><?=$key->nombre?></td>
-													<td><img style="width: 10rem;" src="<?=$key->url?>"></img></td>
+													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
 													<td><?=$key->descripcion?></td>
 													<td><?=$key->fecha_alta?></td>
@@ -283,7 +283,7 @@ function editar(id_merc)
 function eliminar(id)
 {
 	bootbox.dialog({
-		message: "Confirme eliminacion(esta acción no se puede deshacer)",
+		message: " ¿ Esta seguro que desea eliminar la mercancia?. <br>Recuerde que esta acción no se puede deshacer.",
 		title: "Eliminar",
 		buttons: {
 			success: {
@@ -291,15 +291,16 @@ function eliminar(id)
 			className: "btn-success",
 			callback: function() {
 
-					$.ajax({
+				var request = $.ajax({
 						type: "POST",
 						url: "/bo/admin/del_merc",
 						data: {id: id},
-					})
-					.done(function( msg )
+					});
+				
+					request.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado la mercancia",
+						message: msg,
 						title: 'Alerta',
 						buttons: {
 							success: {
