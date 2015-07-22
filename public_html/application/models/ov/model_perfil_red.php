@@ -273,21 +273,7 @@ class model_perfil_red extends CI_Model
 		    /*################### FIN DATO BILLETERA #########################*/
 
 		    /*################### FIN DATO COBRO #########################*/
-		    $dato_cobro=array(
-		                "id_user"		=> $id_nuevo,
-		                "id_metodo"		=> 1,
-		                "id_estatus"	=> 1,
-		                "monto"			=> 0
-		            );
-		    $this->db->insert("cobro",$dato_cobro);
-
-		    $dato_cobro=array(
-		                "id_user"		=> $id_nuevo,
-		                "id_metodo"		=> 1,
-		                "id_estatus"	=> 4,
-		                "monto"			=> 0
-		            );
-		    $this->db->insert("cobro",$dato_cobro);
+		    
 
 		     /*################### FIN DATO COBRO #########################*/
 

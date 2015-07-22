@@ -139,7 +139,7 @@
 																				<td><?php echo $ebook->fecha; ?></td>
 																				<td><?php echo html_entity_decode($ebook->descripcion); ?></td>
 																				<td style='text-align:center;'>
-																						<a class='btn btn-success' target='_blank' href='<?php echo $ebook->ruta; ?>'  download='<?php  echo $ebook->n_publico ?>'><i class='fa fa-download fa-lg fa-3x'></i></a>
+																						<a class='btn btn-success' target='_blank' href='<?php echo $ebook->ruta; ?>'><i class='fa fa-download fa-lg fa-3x'></i></a>
 																					
 																				</td>
 																			</tr>

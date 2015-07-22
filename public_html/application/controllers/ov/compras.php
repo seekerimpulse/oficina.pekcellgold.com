@@ -3015,14 +3015,6 @@ function index()
 				$red2 = $this->model_afiliado->RedAfiliado ( $id_padre, $id_red_padre );
 				
 				while ( isset ( $id_padre ) || $id_padre != 0 ) {
-					
-					$id_afiliado = $id_padre;
-					$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
-					if(!$id_padre){
-						exit;
-					}
-					$estado = $this->model_user_profiles->EstadoUsuario ( $id_padre );
-					$red2 = $this->model_afiliado->RedAfiliado ( $id_padre, $id_red_padre );
 					if ($red2 [0]->premium == 2) {
 						
 						$valor_comision = ($costo_comision [2]->valor * $valor_puntos) / 100;
@@ -3034,6 +3026,13 @@ function index()
 						$this->modelo_compras->CalcularComisionVenta ( $venta, $id_padre, 1, $valor_comision, $id_red_mercancia );
 						exit ();
 					}
+					$id_afiliado = $id_padre;
+					$id_padre = $this->model_perfil_red->ConsultarIdPadre ( $id_afiliado, $id_red_padre );
+					if(!$id_padre){
+						exit;
+					}
+					$estado = $this->model_user_profiles->EstadoUsuario ( $id_padre );
+					$red2 = $this->model_afiliado->RedAfiliado ( $id_padre, $id_red_padre );
 				}
 			}
 		}

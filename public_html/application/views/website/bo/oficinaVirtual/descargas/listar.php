@@ -103,7 +103,7 @@
 										<td><?php echo $archivo->descripcion; ?></td>
 										<td><?php echo $archivo->fecha; ?></td>
 										<td class='text-center'>
-											<a class='txt-color-blue' href='<?php echo $archivo->ruta ?>' title='Descargar' target="_blank" download="<?php echo $archivo->n_publico; ?>"><i class='fa fa-download fa-3x'></i></a>
+											<a class='txt-color-blue' href='<?php echo $archivo->ruta ?>' title='Descargar' target="_blank"><i class='fa fa-download fa-3x'></i></a>
 											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_archivo("<?php echo $archivo->id; ?> ","<?php echo $archivo->ruta; ?>")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
 											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_archivo(<?php echo $archivo->id; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
 											<?php if ($archivo->estado == 'ACT') {?>
