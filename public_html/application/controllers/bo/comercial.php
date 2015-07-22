@@ -733,8 +733,9 @@ class comercial extends CI_Controller
 	
 	function actualizar_afiliado()
 	{
-		$emails = $this->model_perfil_red->use_mail_modificar();
+		//$emails = $this->model_perfil_red->use_mail_modificar();
 		$usernames = $this->model_perfil_red->use_username_modificar();
+		$emails = $this->model_perfil_red->use_mail_modificar();
 		
 		if(!isset($_POST['username'])){
 			$error = "Olvidaste escribir tu username.";
@@ -746,7 +747,7 @@ class comercial extends CI_Controller
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/comercial/red_tabla');
 		}
-		if(!isset($_POST['email'])){
+		if(!isset($_POST['mail'])){
 			$error = "Olvidaste escribir tu email.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/comercial/red_tabla');
@@ -772,7 +773,7 @@ class comercial extends CI_Controller
 			redirect('/bo/comercial/red_tabla');
 		}
 		else{
-		$this->model_users->actualizar($_POST['id'], $_POST['username'], $_POST['email']);
+		$this->model_users->actualizar($_POST['id'], $_POST['username'], $_POST['mail']);
 
 		$this->model_user_profiles->actualizar($_POST['id'], $_POST['sexo'], $_POST['estadoCivil'], $_POST['tipoUsuario'], $_POST['estudio'], $_POST['ocupacion'], $_POST['tiempoDedicado'],
 											   $_POST['estadoAfiliado'], $_POST['nombre'], $_POST['apellido'], $_POST['nacimiento']);

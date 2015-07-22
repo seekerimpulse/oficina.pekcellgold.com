@@ -14,7 +14,7 @@ class Model_user_profiles extends CI_Model{
 		$datos = array(
 				'id_sexo' => $id_sexo,
 				'id_edo_civil' => $id_edo_civil,
-				'id_tipo_usuario' => $id_tipo_usuario,
+				//'id_tipo_usuario' => $id_tipo_usuario,
 				'id_estudio' => $id_estudio,
 				'id_ocupacion' => $id_ocupacion,
 				'id_tiempo_dedicado' => $id_tiempo_dedicado,

@@ -448,7 +448,8 @@ order by (U.id);");
 	
 	function use_mail_modificar()
 	{
-		$q=$this->db->query("select * from users where email like '".$_POST['mail']."' and id!= '".$_POST['id']."'");
+		$q=$this->db->query("select * from users where email like '".$_POST['mail']."' and id != '".$_POST['id']."'");
+		
 		return $q->result();
 	}
 	
