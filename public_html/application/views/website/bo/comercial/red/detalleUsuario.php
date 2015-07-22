@@ -28,7 +28,7 @@
 						
 						<section id="correo" style="width: 50%;" class="col col-2">
 							<label for="">e-mail</label>
-							<input onkeyup="use_mail()" type="text" class="form-control" name="email" id="email" value = '<?= $detalle[0]->email; ?>'>
+							<input onkeyup="use_mail()" type="text" class="form-control" name="mail" id="mail" value = '<?= $detalle[0]->email; ?>'>
 						</section>
 					
 				
@@ -77,7 +77,7 @@
 							Estado Civil
 		
 							<label class="select">
-								<select id="estadoCivil" required name="estadoCivil">
+								<select id="estadoCivil"  name="estadoCivil">
 		
 									<?	foreach ($tiposDeEstadoCivil as $key)
 										{
@@ -109,7 +109,7 @@
 							Tipo de Usuario
 						
 							<label class="hide">
-								<select id="tipoUsuario" required name="tipoUsuario">
+								<select id="tipoUsuario"  name="tipoUsuario">
 									
 									<?/*	foreach ($tiposDeUsuario as $key)
 										{
@@ -142,7 +142,7 @@
 							Nivel de Estudios
 						
 							<label class="select">
-								<select id="estudio" required name="estudio">
+								<select id="estudio"  name="estudio">
 									
 									<?	foreach ($tiposDeEstudio as $key)
 										{
@@ -174,7 +174,7 @@
 							Ocupación
 						
 							<label class="select">
-								<select id="ocupacion" required name="ocupacion">
+								<select id="ocupacion"  name="ocupacion">
 									
 									<?	foreach ($tiposDeOcupacion as $key)
 										{
@@ -206,7 +206,7 @@
 							Tiempo de Dedicación
 						
 							<label class="select">
-								<select id="tiempoDedicado" required name="tiempoDedicado">
+								<select id="tiempoDedicado"  name="tiempoDedicado">
 									
 									<?	foreach ($tiposDeTiempoDedicacion as $key)
 										{
@@ -238,7 +238,7 @@
 							Estado de Afiliado
 						
 							<label class="select">
-								<select id="estadoAfiliado" required name="estadoAfiliado">
+								<select id="estadoAfiliado" name="estadoAfiliado">
 									
 									<?	foreach ($tiposDeEstadosAfiliado as $key)
 										{
@@ -277,7 +277,7 @@
 						</section>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-success pull-right " onClick="mensaje_notificacion()">Actualizar</button>
+			<button type="submit" class="btn btn-success pull-right ">Actualizar</button>
 		</form>
 		
 	</div>
@@ -337,7 +337,7 @@ function use_username()
 function use_mail()
 {
 	$("#msg_correo").remove();
-	var mail=$("#email").val();
+	var mail=$("#mail").val();
 	var id=$("#id").val();
 	$.ajax({
 		type: "POST",

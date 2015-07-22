@@ -187,7 +187,7 @@
 				       	   }
 						}?>
 				        
-		                <td><img style="width: 10rem;" src="<?php echo $afiliados_imagen?>"></img></td>
+		                <td><img style="width: 10rem; height: 10rem;" src="<?php echo $afiliados_imagen?>"></img></td>
 		                <td><?php echo $afiliado->username?></td>
 			            <td><?php echo $afiliado->nombre?></td>
 			            <td><?php echo $afiliado->apellido?></td>
