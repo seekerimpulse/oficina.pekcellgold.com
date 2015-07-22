@@ -181,7 +181,7 @@ select U.id, U.username, U.email, TU.descripcion as tipo_usuario, UP.nombre, UP.
 
 FROM cat_grupo CG, users U, archivo A, user_profiles UP 
 
-WHERE A.id_tipo in (3,4,8,9,10,11,12,13,14,15,16,17,18,19,20,22) and 
+WHERE A.id_tipo in (3,4,8,9,10,11,12,13,14,15,16,17,18,19,20,22,48) and 
 CG.id = A.id_grupo and U.id = A.id_usuario and U.id = UP.user_id;');
 		return $q->result();
 	}

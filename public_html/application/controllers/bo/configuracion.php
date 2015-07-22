@@ -349,15 +349,15 @@ class configuracion extends CI_Controller
 	function actualizar_impuesto(){
 		$correcto = $this->model_admin->actualizar_impuesto();
 		if($correcto){
-			echo "Retencion Actualizada";
+			echo "Impuesto Actualizado";
 		}
 		else{
-			echo "No se logro actualizar la Retencion";
+			echo "No se logro actualizar el impuesto";
 		}
 	
 	}
 	
 	function eliminar_impuesto(){
-		echo "Retencion Eliminada";
+		echo "Impuesto Eliminado";
 	}
 }

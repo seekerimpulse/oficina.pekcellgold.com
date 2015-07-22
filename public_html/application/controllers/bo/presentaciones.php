@@ -125,7 +125,7 @@ class presentaciones extends CI_Controller
 			$ruta="/media/".$id."/";
 			//definimos la ruta para subir la imagen
 			$config['upload_path'] 		= getcwd().$ruta;
-			$config['allowed_types'] 	= 'ppt|pptx|odp';
+			$config['allowed_types'] 	= 'ppt|pptx|odp|otp';
 	
 			//Cargamos la libreria con las configuraciones de arriba
 			$this->load->library('upload', $config);
@@ -191,6 +191,11 @@ class presentaciones extends CI_Controller
 				{
 					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico)
 					values ('.$id.','.$_POST['grupo_frm'].',8,"'.$descripcion.'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
+				}
+				elseif ($ext=="otp")
+				{
+					$this->db->query('insert into archivo (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico)
+					values ('.$id.','.$_POST['grupo_frm'].',48,"'.$descripcion.'","'.$ruta.$data['upload_data']['file_name'].'","ACT","'.$_POST["nombre_publico"].'")');
 				}
 				//echo 'ptm';
 				redirect('/bo/presentaciones/listar');
@@ -290,7 +295,7 @@ class presentaciones extends CI_Controller
 			$ruta="/media/".$id."/";
 			//definimos la ruta para subir la imagen
 			$config['upload_path'] 		= getcwd().$ruta;
-			$config['allowed_types'] 	= 'ppt|pptx|odp';
+			$config['allowed_types'] 	= 'ppt|pptx|odp|otp';
 			
 			//Cargamos la libreria con las configuraciones de arriba
 			$this->load->library('upload', $config);
@@ -339,6 +344,16 @@ class presentaciones extends CI_Controller
 				{
 					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
 							id_tipo = 8,
+							descripcion = "'.$descripcion.'",
+							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
+							nombre_publico = "'.$_POST["nombre_publico"].'"
+							where id_archivo = "'.$_POST["id_presentacion"].'"');
+				}
+				
+				elseif ($ext=="otp")
+				{
+					$this->db->query('update archivo set id_grupo = '.$_POST['grupo_frm'].',
+							id_tipo = 48,
 							descripcion = "'.$descripcion.'",
 							ruta = "'.$ruta.$data['upload_data']['file_name'].'",
 							nombre_publico = "'.$_POST["nombre_publico"].'"
