@@ -119,8 +119,8 @@
 																		<tr>
 																			<th data-hide="phone">ID</th>
 																			<th data-class="expand">Nombre</th>
-																			<th data-class="expand">Tipo</th>
-																			<th>Usuario</th>
+																			<th data-hide="phone">Tipo</th>
+																			<th data-hide="phone">Usuario</th>
 																			<th data-hide="phone,tablet">Descripci&oacute;n</th>
 																			<th data-hide="phone,tablet">Fecha</th>
 																			

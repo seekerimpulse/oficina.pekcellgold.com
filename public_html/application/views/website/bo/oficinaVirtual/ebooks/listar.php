@@ -13,7 +13,7 @@
 	</div>
 	<?php if($this->session->flashdata('error')) {
 		echo '<div class="alert alert-danger fade in">
-								<button class="" data-dismiss="alert">
+								<button class="close" data-dismiss="alert">
 									×
 								</button>
 								<i class="fa-fw fa fa-check"></i>
@@ -98,7 +98,7 @@
 										<td><?php echo $ebook->id; ?></td>
 										<td style='text-align:center; vertical-align: middle;'>
 											<a href='<?php echo $ebook->ruta; ?>'>
-												<img src='<?php echo $ebook->img; ?>' style='max-height: 90px;'>
+												<img src='<?php echo $ebook->img; ?>' style=' height: 15rem; width: 10rem;'>
 											</a>
 										</td>
 										<td><?php echo $ebook->n_publico; ?></td>

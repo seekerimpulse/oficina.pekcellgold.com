@@ -23,12 +23,16 @@
 							<div class="row">
 								<blockquote>
 									
-										<h1><p class="text-left font-lg"><strong><?=$informacion[0]->nombre?></strong></p></h1>
+										<h1>
+											<p class="text-left font-lg">
+												<strong><?=$informacion[0]->nombre?></strong>
+											</p>
+										</h1>
 									
 									</br></br>
 									<p class="text-center" style="text-align: justify;">
 										
-											<img src="<?=$informacion[0]->img?>" class="noticia-imagen">
+											<img src="<?=$informacion[0]->img?>" class="noticia-imagen" style="width: 40rem;">
 										</p>
 									</br>
 									

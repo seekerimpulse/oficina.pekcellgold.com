@@ -112,7 +112,7 @@
 																		"<tr>
 																			<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->id."</td>
 																			<td style='text-align:center; vertical-align: middle;' class='no-padding'>
-																				<img src='".$infos[$i]->ruta."' style='max-height:90px '>
+																				<img src='".$infos[$i]->ruta."' style='width: 10rem; height: 10rem;'>
 																			</td>
 																			<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->nombre."</td>
 																			<td style='text-align:center; vertical-align: middle;'>".$infos[$i]->usuario."</td>

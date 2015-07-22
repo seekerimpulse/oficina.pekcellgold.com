@@ -28,7 +28,7 @@
 									</br></br>
 									<p class="text-center" style="text-align: justify;">
 										
-											<img src="<?=$informacion[0]->img?>" class="noticia-imagen">
+											<img src="<?=$informacion[0]->img?>" class="noticia-imagen" style="width: 40rem;">
 										</p>
 									</br>
 									

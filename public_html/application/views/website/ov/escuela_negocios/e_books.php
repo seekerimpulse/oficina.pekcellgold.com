@@ -117,7 +117,7 @@
 																	<thead>
 																		<tr>
 																			<th data-hide="phone">ID</th>
-																			<th data-class="phone"></th>
+																			<th data-hide="phone"></th>
 																			<th data-class="expand">Nombre</th>
 																			<th data-hide="phone,tablet">Fecha</th>
 																			<th data-hide="phone,tablet">Descripci&oacute;n</th>
@@ -133,7 +133,7 @@
 																			<tr>
 																				<td><?php echo $ebook->id; ?></td>
 																				<td style='text-align:center; vertical-align: middle;'>
-																					<a href='<?php echo $ebook->ruta; ?>'><img src='<?php echo $ebook->img; ?>' style='max-height:90px;'></a>
+																					<a href='<?php echo $ebook->ruta; ?>'><img src='<?php echo $ebook->img; ?>' style='height: 15rem; width: 10rem;'></a>
 																				</td>
 																				<td><?php echo $ebook->n_publico; ?></td>
 																				<td><?php echo $ebook->fecha; ?></td>
