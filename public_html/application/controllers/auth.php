@@ -652,12 +652,21 @@ class Auth extends CI_Controller
 		
 		$retenciones=$this->general->getRetenciones();
 		$now = new \DateTime('now');
+		$valorRetencion=0;
 		
 		foreach ($retenciones as $retencion){
 
+			if($retencion->duracion=='ANO'){
+				$valorRetencion=$retencion->porcentaje/12;
+			}
+			else if($retencion->duracion=='SEM'){
+				$valorRetencion=$retencion->porcentaje*4;
+			}else if($retencion->duracion=='MES'){
+				$valorRetencion=$retencion->porcentaje;
+			}
 			$datos = array(
 					'descripcion' => $retencion->descripcion,
-					'valor' => $retencion->porcentaje,
+					'valor' => $valorRetencion,
 					'mes' => $now->format('m'),
 					'ano' => $now->format('Y'),
 					'id_afiliado' => 0
