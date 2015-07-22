@@ -208,24 +208,29 @@ class ebooks extends CI_Controller
 	}
 	
 	private function ComprovarArchivos(){
-		$pdf = explode(".", $_FILES['userfile1']['tmp_name']);
-		$imagen = explode(".", $_FILES['userfile2']['tmp_name']);
+		$pdf = explode(".", $_FILES['userfile1']['name']);
+		$imagen = explode(".", $_FILES['userfile2']['name']);
 		
-		if($pdf[-1] != 'pdf'){
+		if(end($pdf) != 'pdf'){
 			$error = "El tipo de archivo que esta cargando no esta permitido para el ebook debe ser un pdf.";
 			$this->session->set_flashdata('error', $error);
 						
 			redirect('/bo/ebooks/alta');	
 		}
 		
-		if($imagen[-1] != 'png' || $imagen[-1] != 'jpg' || $imagen[-1] != 'jpeg' || $imagen[-1] != 'gif'){
-			$error = "El tipo de archivo que esta cargando no esta permitido debe ser una imagen.";
-			$this->session->set_flashdata('error', $error);
-			
-			redirect('/bo/ebooks/alta');
+		if(end($imagen) != 'png')
+			if(end($imagen) != 'jpg')
+				if( end($imagen) != 'jpeg')
+					if( end($imagen) != 'gif'){
+							
+							$error = "El tipo de archivo que esta cargando no esta permitido debe ser una imagen.";
+							$this->session->set_flashdata('error', $error);
+							
+							redirect('/bo/ebooks/alta');
 		}
 		return true;
 	}
+	
 	function cambiar_estado_ebook(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in

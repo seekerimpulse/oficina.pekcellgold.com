@@ -65,11 +65,11 @@ class model_ebook extends CI_Model
 		$this->db->query("delete from cross_img_archivo where id_archivo =".$id);
 		
 		//cat_img
-		$q = $this->db->query("select * from cat_img where id_img = ".$id);
+		$q = $this->db->query("select * from cat_img where id_img = ".$img);
 		$cross = $q->result();
 		
 		$url_imagen = $cross[0]->url;
-		$this->db->query("delete from cross_img_archivo where id_archivo =".$id);
+		$this->db->query("delete from cat_img where id_img =".$img);
 		
 		$url_ebook = $this->consultar_ebook($id);
 		$this->eliminararchivo($id);
