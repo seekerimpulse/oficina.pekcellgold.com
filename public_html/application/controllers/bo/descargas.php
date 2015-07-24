@@ -201,7 +201,7 @@ class descargas extends CI_Controller
 	}
 	
 	function ActualizarArchivo(){
-		var_dump($_POST); exit;
+		
 		$grupo = $_POST['grupo'];
 		$nomre_archivo = $_POST['nombre'];
 		$descripcion = $_POST['descripcion'];

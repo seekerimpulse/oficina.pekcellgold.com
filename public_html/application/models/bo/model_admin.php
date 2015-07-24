@@ -918,13 +918,13 @@ where(a.id_pais=b.Code)");
 	
 	function get_dato_pais()
 	{
-		$q=$this->db->query("select CL.Language, CL.estatus estatus, CM.estatus estatus_m, CM.codigo_moneda codigo_moneda, CM.moneda moneda, C.estatus estado_pais
-		from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM on Code2=codigo_pais where CountryCode='".$_POST['pais']."' ");
+		$q=$this->db->query("select CL.Language, CL.estatus estatus, CM.estatus estatus_m, CM.codigo_moneda codigo_moneda, CM.moneda moneda, C.estatus estado_pais, C.Name
+from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM on Code2=codigo_pais where CountryCode='".$_POST['pais']."' ");
 		return $q->result();
 	}
 	function get_dato_pais_($code)
 	{//Para multiple
-		$q=$this->db->query("select CL.Language, CL.estatus estatus, CM.estatus estatus_m, CM.codigo_moneda codigo_moneda, CM.moneda moneda, C.estatus estado_pais
+		$q=$this->db->query("select CL.Language, CL.estatus estatus, CM.estatus estatus_m, CM.codigo_moneda codigo_moneda, CM.moneda moneda, C.estatus estado_pais, C.Name
 		from CountryLanguage CL join Country C on CountryCode=C.Code  join cat_moneda CM on Code2=codigo_pais where CountryCode='".$code."' ");
 		return $q->result();
 	}

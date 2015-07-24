@@ -164,7 +164,7 @@ class admin extends CI_Controller
 			foreach ($_POST['pais_check'] as $key){
 
 				$dato_pais=$this->model_admin->get_dato_pais_($key);
-				
+				echo "<h1>".$dato_pais[0]->Name."</h1>";
 				echo '<form id="'.$key.'"  class="smart-form"><div class="row">
 				<input name="pais" type="hidden" value="'.$key.'">
 				<section class="col col-6">

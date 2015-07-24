@@ -12,7 +12,7 @@
 		}
 		?>	
 	<div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<form class="smart-form" method="post" enctype="multipart/form-data" action="ActualizarArchivo">
+		<form class="smart-form" id="reporte-form" class="smart-form" method="post" action="/bo/descargas/ActualizarArchivo" enctype="multipart/form-data" >
 			<input type="text" name="id" value="<?php echo $archivo[0]->id_archivo; ?>" class="hide">
 			<div class="row">
 				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
@@ -35,7 +35,7 @@
 				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
 					id="busquedatodos">
 					<label class="label">Nombre del archivo</label> <label class="input">
-						<input name="nombre" id="nombre" placeholder="Nombre" type="text"
+						<input name="nombre" placeholder="Nombre" type="text"
 						id="nombre_publico"
 						value="<?php echo $archivo[0]->nombre_publico; ?>" required>
 					</label>
@@ -71,15 +71,14 @@
 
 				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
 					<label class="label">Archivo</label>
-						<div class="input input-file">
-							<span class="button"> <input id="file"
-								onchange="this.parentNode.nextSibling.value = this.value"
-								name="userfile1" type="file" >Buscar
-							</span><input name="file_nme"
-									placeholder="Seleccione el archivo"
-									type="text" id="file_frm" required readonly="readonly">
-						</div>
-				</section>
+					<div class="input input-file">
+						<span class="button">
+						<input id="file" onchange="this.parentNode.nextSibling.value = this.value" name="userfile1" type="file" >Buscar
+															</span><input name="file_nme"
+																	placeholder="Seleccione el archivo"
+																	type="text" id="file_frm" required readonly="readonly">
+															</div>
+														</section>
 			</div>
 			<div class="row">
 				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
@@ -109,9 +108,4 @@
 	text-decoration: none !important;
 }
 </style>
-
-<script type="text/javascript">	
-							
-
-</script>
 
