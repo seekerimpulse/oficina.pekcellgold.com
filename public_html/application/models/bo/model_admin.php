@@ -116,24 +116,31 @@ class model_admin extends CI_Model
 		
 		  switch ($id_tipo_mercancia){
 			 case 1:	//producto
-			 $q=$this->db->query("delete from producto where id = '".$sku."'");
+			 $this->db->query("delete from producto where id = '".$sku."'");
 			 break;
 			 case 2:	//servicio
-			 $q=$this->db->query("delete from servicio where id = '".$sku."'");
+			 $this->db->query("delete from servicio where id = '".$sku."'");
 			 break;
 			 case 3:	//combinado
-			 $q=$this->db->query("delete from combinado where id = '".$sku."'");
+			 $this->db->query("delete from combinado where id = '".$sku."'");
+			 $this->db->query("delete from cross_combinado where id_combinado = '".$sku."'");
 			 break;
 		  }
 	}
 	
 	function del_imagen($id_img){
-		$q=$this->db->query("delete from cat_img where id_img = ".$id_img);
+		$this->db->query("delete from cat_img where id_img = ".$id_img);
 	}
 	
 	function del_cross_imagen_merc($id_img){
-		$q=$this->db->query("delete from cross_merc_img where id_cat_imagen = ".$id_img);
-	}									
+		$this->db->query("delete from cross_merc_img where id_cat_imagen = ".$id_img);
+		$this->db->query("delete from cat_img where id_img = ".$id_img);
+	}	
+
+	function traer_id_imagen_merc($id_merc){
+		$q=$this->db->query("select * from cross_merc_img where id_mercancia = ".$id_merc);
+		return $q->result();
+	}
 
 	function get_proveedor()
 	{
@@ -1483,14 +1490,16 @@ where(a.id_pais=b.Code)");
 
 	function get_prod_combinado($id)
 	{
-		$q=$this->db->query("SELECT a.*, b.nombre, c.id FROM cross_combinado a, producto b, mercancia c WHERE a.id_producto<>0 and a.id_producto=b.id 
-		and a.id_combinado=c.sku and c.id=".$id);
+		$q=$this->db->query("SELECT a.*, b.nombre, c.id 
+FROM cross_combinado a, producto b, mercancia c 
+WHERE a.id_producto<>0 and a.id_producto=b.id and c.id=".$id);
 		return $q->result();
 	}
 	function get_serv_combinado($id)
 	{
-		$q=$this->db->query("SELECT a.*, b.nombre, c.id FROM cross_combinado a, servicio b, mercancia c WHERE a.id_producto<>0 and a.id_servicio=b.id 
-		and a.id_combinado=c.sku and c.id=".$id);
+		$q=$this->db->query("SELECT a.*, b.nombre, c.id 
+FROM cross_combinado a, servicio b, mercancia c 
+WHERE a.id_servicio<>0 and a.id_servicio=b.id and c.id=".$id);
 		return $q->result();
 	}
 	

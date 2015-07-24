@@ -11,12 +11,13 @@
 ?>	
 	<div class="row">
 	<form class="smart-form col-xs-12 col-sm-6 col-md-7 col-lg-12" id="reporte-form" method="post" enctype="multipart/form-data" action = "editar_archivo">
-		<?php $nombre = substr ( $presentacion[0]->ruta,9);?>
+		<?php $nombre_completo = $presentacion[0]->ruta; 
+			  $nombre = substr ( $presentacion[0]->ruta,9);?>
 		<div class="row">
 			<input name="id_presentacion" class="hide" type="text" id="id_presentacion" value='<?php echo $presentacion[0]->id_archivo;?>'>
 			<input name="ruta" class="hide" type="text" id="ruta" value='<?php echo $presentacion[0]->ruta;?>'>
 			<input name="nombre_archivo" class="hide" type="text" id="nombre_archivo" value='<?php echo $nombre;?>'>
-			
+			<input name="nombre_completo" class="hide" type="text" id="nombre_completo" value='<?php echo $nombre_completo;?>'>
 		
 			<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos" style="padding-right: 70px ! important;">
 				<label class="label" style="padding-left: 50px;">

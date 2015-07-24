@@ -32,7 +32,7 @@
 									</br></br>
 									<p class="text-center" style="text-align: justify;">
 										
-											<img src="<?=$informacion[0]->img?>" class="noticia-imagen" style="width: 40rem;">
+											<img src="<?=$informacion[0]->img?>" class="noticia-imagen" style="width: 30rem; height: 30rem;">
 										</p>
 									</br>
 									
