@@ -94,6 +94,7 @@ function index()
 		{																		// logged in
 			redirect('/auth');
 		}
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
@@ -292,6 +293,7 @@ function index()
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/carrito',$data);
 	}
+	
 	function comprar()
 	{
 		if (!$this->tank_auth->is_logged_in()) 

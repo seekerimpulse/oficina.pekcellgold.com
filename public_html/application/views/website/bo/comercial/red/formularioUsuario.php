@@ -59,12 +59,10 @@
 							</label>
 						</section>
 
-						
-						
 						<section style="width: 50%;" class="col col-2">
 						Fecha de nacimiento
 							<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-								<input required id="datepicker" type="text" name="nacimiento" >
+								<input required readonly id="datepicker" type="text" name="nacimiento" >
 							</label>
 						</section>
 		
