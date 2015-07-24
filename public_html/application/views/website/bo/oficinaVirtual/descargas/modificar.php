@@ -12,8 +12,7 @@
 		}
 		?>	
 	<div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		<form class="smart-form" id="reporte-form" method="post"
-			action="ActualizarArchivo" enctype="multipart/form-data">
+		<form class="smart-form" method="post" enctype="multipart/form-data" action="ActualizarArchivo">
 			<input type="text" name="id" value="<?php echo $archivo[0]->id_archivo; ?>" class="hide">
 			<div class="row">
 				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
@@ -70,17 +69,16 @@
 			</div>
 			<div class="row">
 
-				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
-					id="busquedatodos">
+				<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="busquedatodos">
 					<label class="label">Archivo</label>
-					<div class="input input-file col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<span class="button"> <input id="file"
-							onchange="this.parentNode.nextSibling.value = this.value"
-							name="userfile1" type="file" >Buscar
-						</span><input name="file_nme_2"
-							placeholder="Seleccione una imagen para el e-book" type="text"
-							id="file_frm_2" >
-					</div>
+						<div class="input input-file">
+							<span class="button"> <input id="file"
+								onchange="this.parentNode.nextSibling.value = this.value"
+								name="userfile1" type="file" >Buscar
+							</span><input name="file_nme"
+									placeholder="Seleccione el archivo"
+									type="text" id="file_frm" required readonly="readonly">
+						</div>
 				</section>
 			</div>
 			<div class="row">
@@ -90,7 +88,7 @@
 					<div class="col col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						<input type="submit"
 							class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12"
-							id="boton_subir" value="Actualizar Archivo">
+							 value="Actualizar Archivo">
 					</div>
 				</section>
 			</div>

@@ -37,7 +37,7 @@ class model_descargas extends CI_Model
 	{
 		$q=$this->db->query('SELECT a.descripcion grupo, concat(b.nombre," ",b.apellido) usuario,c.fecha fecha,c.nombre_publico n_publico, cta.descripcion tipo, c.descripcion descripcion,c.ruta ruta, c.id_archivo id, c.status estado 
 							FROM cat_grupo a, user_profiles b, archivo c, cat_tipo_archivo cta
-							WHERE a.id = c.id_grupo and b.user_id= c.id_usuario and cta.id_tipo = c.id_tipo and c.id_tipo != 21');
+							WHERE a.id = c.id_grupo and b.user_id= c.id_usuario and cta.id_tipo = c.id_tipo and a.tipo = "DES"');
 		return $q->result();
 	}
 	
