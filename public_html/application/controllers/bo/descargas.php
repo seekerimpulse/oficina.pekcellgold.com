@@ -122,6 +122,14 @@ class descargas extends CI_Controller
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/descargas/alta');
 		}
+		
+		$extension =  explode('.', $_FILES['userfile1']['name']);
+		$id_archivo = $this->model_descargas-> BuscarTipo(end($extension));
+		if($id_archivo == null){
+			$error = "El tipo de archivo que esta cargando no esta permitido.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/descargas/listar');
+		}
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 		if (!$this->upload->do_upload('userfile1'))
 		{	
@@ -193,6 +201,7 @@ class descargas extends CI_Controller
 	}
 	
 	function ActualizarArchivo(){
+		var_dump($_POST); exit;
 		$grupo = $_POST['grupo'];
 		$nomre_archivo = $_POST['nombre'];
 		$descripcion = $_POST['descripcion'];
@@ -204,13 +213,21 @@ class descargas extends CI_Controller
 		}
 	
 		$id = $this->tank_auth->get_user_id();
-	
+		
+		$extension =  explode('.', $_FILES['userfile1']['name']);
+		
+		$id_archivo = $this->model_descargas-> BuscarTipo(end($extension));
+		if($id_archivo == null){
+			$error = "El tipo de archivo que esta cargando no esta permitido.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/descargas/listar');
+		}
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/archivos/"))
 		{
-			mkdir(getcwd()."/media/archivos/", 777);
+			mkdir(getcwd()."/media/archivos/", 0777);
 		}
-	
+		
 		$ruta="/media/archivos/";
 		//definimos la ruta para subir el archivo
 		$config['upload_path'] 		= getcwd().$ruta;
@@ -228,6 +245,7 @@ class descargas extends CI_Controller
 		}
 	
 		if(!isset($nombre) && !isset($descripcion)){
+			
 			$error = "Debe darle un nombre y descripcion al archivo.";
 			$this->session->set_flashdata('error', $error);
 			redirect('/bo/descargas/listar');
@@ -236,6 +254,8 @@ class descargas extends CI_Controller
 		//Preguntamos si se pudo subir el archivo "foto" es el nombre del input del dropzone
 		if (!$this->upload->do_upload('userfile1')){
 			$extension =  explode('.', $_FILES['userfile1']['name']);
+			$error = array('error' => $this->upload->display_errors());
+			var_dump($error); exit;
 			if(isset($extension[1])){
 				$error = "El tipo de archivo que esta cargando no esta permitido.";
 				$this->session->set_flashdata('error', $error);

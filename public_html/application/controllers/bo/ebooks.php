@@ -108,7 +108,7 @@ class ebooks extends CI_Controller
 			redirect('/auth');
 		}
 		
-				$id=$this->tank_auth->get_user_id();
+		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
 		if($usuario[0]->id_tipo_usuario!=1)
@@ -194,7 +194,6 @@ class ebooks extends CI_Controller
 			if($ext != 'pdf'){
 				$nombre_archivo = explode(".", $nombre);
 				$this->model_ebook->CargarImagenEbook($ebook, $ruta.$nombre, $nombre, $nombre_archivo[0], $extencion);
-					
 				redirect("/bo/ebooks/listar");
 			}else{
 				$this->model_ebook->eliminararchivo($ebook);

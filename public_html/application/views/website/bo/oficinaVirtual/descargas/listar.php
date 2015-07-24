@@ -107,9 +107,9 @@
 											<a class='txt-color-red' style='cursor: pointer;' onclick='eliminar_archivo("<?php echo $archivo->id; ?> ","<?php echo $archivo->ruta; ?>")' title='Eliminar'><i class='fa fa-trash-o fa-3x'></i></a>
 											<a class='txt-color-blue' style='cursor: pointer;' onclick='editar_archivo(<?php echo $archivo->id; ?>)' title='Editar'><i class='fa fa-pencil fa-3x'></i></a>
 											<?php if ($archivo->estado == 'ACT') {?>
-												<a title="Desactivar" onclick="estado_archivo('DES','<?php echo $archivo->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+												<a title="Desactivar" style='cursor: pointer;' onclick="estado_archivo('DES','<?php echo $archivo->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 											<?php }else {?>
-												<a title="Activar" onclick="estado_archivo('ACT','<?php echo $archivo->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+												<a title="Activar" style='cursor: pointer;' onclick="estado_archivo('ACT','<?php echo $archivo->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 											<?php } ?>
 										</td>
 									</tr>
