@@ -14,6 +14,7 @@ class configuracion extends CI_Controller
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/general');
+		$this->load->model('bo/model_mercancia');
 	}
 	function index()
 	{
@@ -60,21 +61,9 @@ class configuracion extends CI_Controller
 	
 		$this->template->set("style",$style);
 		
-		$profundidad  = $this->model_admin->get_config_profundidad_tipo_red();
-		$countProfundidad  = $this->model_admin->get_config_count_profundidad();
-		
-		if($profundidad[0]->profundidad!=$countProfundidad[0]->profundidad){
-			$configuracion_profundidad  = false;
-		}else {
-		
-		$configuracion_profundidad  = $this->model_admin->get_config_profundidad();
-		}
-		
-		$valor_punto  = $this->model_admin->get_config_valor_punto();
+		$categorias  = $this->model_mercancia->CategoriasMercancia();
 
-		$this->template->set("profundidad",$profundidad);
-		$this->template->set("configuracion_profundidad",$configuracion_profundidad);
-		$this->template->set("valor_punto",$valor_punto);
+		$this->template->set("categorias",$categorias);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');

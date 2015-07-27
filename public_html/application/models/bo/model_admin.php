@@ -1509,6 +1509,13 @@ WHERE a.id_servicio<>0 and a.id_servicio=b.id and c.id=".$id);
 		return $q->result();
 	}
 	
+	function get_Profundidad_tipo_red($id_categoria)
+	{
+		$q=$this->db->query("SELECT profundidad FROM tipo_red, cat_grupo_producto where id_red = id and id_grupo = ".$id_categoria);
+		$profundidad = $q->result();
+		return $profundidad[0]->profundidad;
+	}
+	
 	function get_config_count_profundidad()
 	{
 		$q=$this->db->query("SELECT count(profundidad)as profundidad FROM valor_comisiones");
@@ -1518,6 +1525,11 @@ WHERE a.id_servicio<>0 and a.id_servicio=b.id and c.id=".$id);
 	function get_config_profundidad()
 	{
 		$q=$this->db->query("SELECT * FROM valor_comisiones;");
+		return $q->result();
+	}
+	
+	function get_config_red_comision($id_categoria){
+		$q=$this->db->query("SELECT * FROM valor_comisiones where id_grupo = ".$id_categoria." order by profundidad");
 		return $q->result();
 	}
 	
@@ -1548,4 +1560,22 @@ WHERE a.id_servicio<>0 and a.id_servicio=b.id and c.id=".$id);
 		
 		$this->db->query('update tipo_red set valor_punto="'.$_POST['valorPunto'].'"');
 	}
+	
+	function new_Config_Comision($id_grupo)
+	{
+		$q=$this->db->query('delete from valor_comisiones where id_grupo = '.$id_grupo);
+		$i = 1;
+		
+			foreach( $_POST['configuracion'] as $profundidad ) {
+				$datos = array(
+						'profundidad' => $i,
+						'id_grupo' => $id_grupo,
+						'valor'	=> $profundidad
+				);
+				$this->db->insert("valor_comisiones",$datos);
+				$i++;
+			}
+		
+	}
+	
 }

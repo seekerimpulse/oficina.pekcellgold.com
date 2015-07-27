@@ -10,86 +10,42 @@
 						</h1>
 					</div>
 				</div>
-	<section id="widget-grid" class="">
-		<!-- START ROW -->
+		<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}elseif ($this->session->flashdata('correcto')) {
+		echo '<div class="alert alert-success fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Correcto </strong> '.$this->session->flashdata('correcto').'
+			</div>';
+	}
+	?>		
+	<div class="well">
+ <fieldset>
+	<legend>Categoria</legend>
 		<div class="row">
-			<!-- NEW COL START -->
-			<article class="col-md-12 col-md-12 col-lg-12">
-				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1" data-widget-colorbutton="false"
-          data-widget-editbutton="false" data-widget-togglebutton="false" data-widget-deletebutton="false" data-widget-sortable="false"
-          data-widget-fullscreenbutton="false" data-widget-custombutton="false" data-widget-collapsed="false">
-					<div>
-
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body no-padding smart-form">
-							<form class="smart-form" style="width: 30rem;" action="/bo/configuracion/actualizar_comisiones" method="POST" role="form">
-							<header>
-								Configuracion Comisiones Profundidad y Puntos
-							</header>
-							<fieldset>
-								<section>
-								<?php 
-								$contador=1;
-								if($configuracion_profundidad){
-
-									foreach($configuracion_profundidad as $pro){ 
-										if($profundidad[0]->profundidad>=$contador){ ?>
-								  		<label class="label">Profundidad <?php echo $pro->profundidad?></label>
-										<label class="input"> <i class="icon-append"></i>
-										<input placeholder="% de Comision" type="number" name="profundidad[]" required value="<?php echo $pro->valor?>">
-										<b class="tooltip tooltip-top-right">
-										<i class="fa fa-warning txt-color-teal"></i>
-										Comision en profundidad <?php echo $pro->profundidad?></b>
-										</label> 
-																			
-										<?php $contador++;
-										} 
-									}
-									
-								}else {
-
-									while($profundidad[0]->profundidad>=$contador){ ?>
-										<label class="label">Profundidad <?php echo $contador?></label>
-										<label class="input"> <i class="icon-append"></i>
-										<input placeholder="% de Comision" type="number" name="profundidad[]" required>
-										<b class="tooltip tooltip-top-right">
-										<i class="fa fa-warning txt-color-teal"></i>
-										Comision en profundidad <?php echo $contador?></b>
-										</label>
-										
-								<?php $contador++;
-									}
-								}
-								?>
-								<label class="label">Valor punto comisionable</label>
-								<label class="input"> <i class="icon-append"></i>
-								<input placeholder="$ de 1 punto" type="text" name="valorPunto" value="<?php echo $valor_punto[0]->valor_punto;?>">
-								<b class="tooltip tooltip-top-right">
-								<i class="fa fa-warning txt-color-teal"></i>
-								Valor de 1 punto comisionable</b>
-								</label>
-								<br>
-								<button style="margin: 1rem;margin-bottom: 4rem;" type="submit" class="btn btn-success">Guardar</button>
-								</section>
-							</fieldset>	
-							</form>						
-						</div>
-						<!-- end widget content -->
-
-					</div>
-					<!-- end widget div -->
+			<? foreach ($categorias as $categoria ) { ?>
+				<div class="col-lg-6 col-sm-6 col-md-6 col-xs-12">
+					<a href="/bo/comisiones/editar?id=<?= $categoria->id_grupo ?>">
+						<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
+							<i class="fa fa-tags  fa-3x"></i>
+							<h5><?= $categoria->descripcion." ( ".$categoria->red." )";?></h5>
+						</div>	
+					</a>
 				</div>
-				<!-- end widget -->
-			</article>
-			<!-- END COL -->
+			<?php } ?>
 		</div>
+</fieldset>
+
+	
 				<div class="row">         
 			        <!-- a blank row to get started -->
 			        <div class="col-md-4">
