@@ -109,12 +109,12 @@ class presentaciones extends CI_Controller
 			}
 	
 					$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-		
-		if($usuario[0]->id_tipo_usuario!=1)
-		{
-			redirect('/auth/logout');
-		}
+					$usuario=$this->general->get_username($id);
+					
+					if($usuario[0]->id_tipo_usuario!=1)
+					{
+						redirect('/auth/logout');
+					}
 	
 			//Checamos si el directorio del usuario existe, si no, se crea
 			if(!is_dir(getcwd()."/media/".$id))
@@ -208,8 +208,10 @@ class presentaciones extends CI_Controller
 	{
 		$data=$_GET["info"];
 		$data=json_decode($data,true);
+		
 		$this->db->query('delete from archivo where id_archivo='.$data['id']);
-		if(unlink($data['file'])){
+		
+		if(unlink($_SERVER['DOCUMENT_ROOT'].$data['file'])){
 			echo "File Deleted.";
 		}
 	}
@@ -273,6 +275,8 @@ class presentaciones extends CI_Controller
 		}
 		else {
 			
+			
+			
 			if (!$this->tank_auth->is_logged_in())
 			{																		// logged in
 				redirect('/auth');
@@ -311,6 +315,10 @@ class presentaciones extends CI_Controller
 			}
 			else
 			{
+				if(unlink($_SERVER['DOCUMENT_ROOT'].$_POST["nombre_completo"])){
+					echo "File Deleted.";
+				}
+				
 				$data = array('upload_data' => $this->upload->data());
 				$nombre=$data['upload_data']['file_name'];
 				$filename=strrev($nombre);

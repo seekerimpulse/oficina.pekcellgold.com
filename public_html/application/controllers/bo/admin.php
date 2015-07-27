@@ -164,7 +164,7 @@ class admin extends CI_Controller
 			foreach ($_POST['pais_check'] as $key){
 
 				$dato_pais=$this->model_admin->get_dato_pais_($key);
-				
+				echo "<h1>".$dato_pais[0]->Name."</h1>";
 				echo '<form id="'.$key.'"  class="smart-form"><div class="row">
 				<input name="pais" type="hidden" value="'.$key.'">
 				<section class="col col-6">
@@ -1366,12 +1366,8 @@ class admin extends CI_Controller
 	}
 	
 	function update_mercancia()
-	{
+	{		
 		$this->model_admin->update_mercancia();
-		
-		$sku = $_POST['id_merc'];
-		
-		$datos = $this->model_admin->traer_foto($sku);
 		
 		$ruta="/media/carrito/";
 		//definimos la ruta para subir la imagen
@@ -1389,10 +1385,21 @@ class admin extends CI_Controller
 			print_r($error);*/
 		}
 		else
-		{
+		{	
+			$sku = $_POST['id_merc'];
+			
+			$id_img = $this->model_admin->traer_id_imagen_merc($sku);
+			
+			$datos = $this->model_admin->traer_foto($sku);
+				
 			if(unlink($_SERVER['DOCUMENT_ROOT'].$datos[0]->url)){
 				//echo "File Deleted.";
 			}
+			
+			$this->model_admin->del_imagen($id_img[0]->id_cat_imagen);
+			
+			
+			
 			$data = array('upload_data' => $this->upload->get_multi_upload_data());
 			$this->model_admin->img_merc($sku,$data["upload_data"]);
 		}

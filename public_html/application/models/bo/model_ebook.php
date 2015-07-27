@@ -37,7 +37,6 @@ class model_ebook extends CI_Model
 				'id_archivo' => $ebook,
 				'id_img'   => $img
 		);
-		
 		$this->db->insert('cross_img_archivo',$datos2);
 	}
 	

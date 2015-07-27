@@ -140,7 +140,7 @@
 																				<td><?php echo $archivo->descripcion; ?></td>
 																				<td><?php echo $archivo->fecha; ?></td>
 																				<td style='text-align:center;'>
-																					<a class='btn btn-success' target='_blank' href='<?php echo $archivo->ruta; ?>' download='$archivo->n_publico'><i class='fa fa-download fa-3x'></i></a>
+																					<a class='btn btn-success' target='_blank' href='<?php echo $archivo->ruta; ?>' ><i class='fa fa-download fa-3x'></i></a>
 																				</td>
 																			</tr>
 																		<?php }
