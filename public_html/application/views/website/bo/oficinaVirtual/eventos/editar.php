@@ -188,7 +188,7 @@
 															<div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 																<section class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
 																	<label class="input"> <i class="icon-append fa fa-calendar"></i>
-																		<input type="text" name="finishdate" id="finishdate" placeholder="Fecha de Finalizacion" value="<?php $date = date_create(''.$evento[0]->inicio.''); echo date_format($date, 'd-m-Y'); ?>">
+																		<input type="text" name="finishdate" id="finishdate" placeholder="Fecha de Finalizacion" value="<?php $date = date_create(''.$evento[0]->fin.''); echo date_format($date, 'd-m-Y'); ?>">
 																	</label>
 																</section>
 																<section class="col col-lg-3 col-md-3 col-sm-3 col-xs-6">

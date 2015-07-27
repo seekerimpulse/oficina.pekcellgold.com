@@ -214,7 +214,7 @@ class eventos extends CI_Controller
 					</tr>
 					<tr>
 						<th class='text-center'><h5 class='text-primary'><strong>COSTO</strong></h5></th>
-						<td class='text-center'><h6>".$evento[0]->costo."</h6></td>
+						<td class='text-center'><h6>$ ".$evento[0]->costo."</h6></td>
 						<th class='text-center'><h5 class='text-primary'><strong>OBSERVACIONES</strong></h5></th>
 						<td class='text-center'><h6>".$evento[0]->observaciones."</h6></td>
 					</tr>
