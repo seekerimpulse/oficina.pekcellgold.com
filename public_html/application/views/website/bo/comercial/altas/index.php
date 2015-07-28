@@ -36,7 +36,7 @@
 											</div>
 											<div class="col-sm-8 link">
 												<div class="col-sm-3 link">
-													<a href="#">
+													<a href="/bo/usuarios">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-user fa-3x"></i>
 															<h1>Usuarios</h1>
