@@ -38,14 +38,15 @@ class CuentasPagar extends CI_Controller
 		redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -63,15 +64,16 @@ class CuentasPagar extends CI_Controller
 			redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		$cobros = $this->modelo_cobros->listarTodos($_GET['inicio'],$_GET['final']);
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		$años = $this->modelo_cobros->añosCobros();
 	
 		$this->template->set("usuario",$usuario);
@@ -92,15 +94,15 @@ class CuentasPagar extends CI_Controller
 			redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
-	
+
+		$usuario=$this->general->get_username($id);
 		
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		$años = $this->modelo_cobros->añosCobros();
 	
 		$this->template->set("usuario",$usuario);

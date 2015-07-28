@@ -41,12 +41,12 @@ class comercial extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -98,14 +98,15 @@ class comercial extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
-		$style         = $this->general->get_style($id);
+		$style         = $this->general->get_style(1);
 		
 		$afiliados     = $this->model_perfil_red->get_tabla();
 		$image=$this->model_perfil_red->get_images_users();
@@ -133,14 +134,15 @@ class comercial extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
-		$style         = $this->general->get_style($id);
+		$style         = $this->general->get_style(1);
 		$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
 		
@@ -245,14 +247,15 @@ class comercial extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
-	
-		$style=$this->modelo_dashboard->get_style($id);
+		
+		$usuario=$this->general->get_username($id);
+
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -301,16 +304,16 @@ class comercial extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id = $this->tank_auth->get_user_id();
-	
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 	
-		$style         = $this->general->get_style($id);
+		$style         = $this->general->get_style(1);
 	
 		$redes = $this->model_tipo_red->listarTodos();
 		
@@ -335,16 +338,16 @@ class comercial extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id = $this->tank_auth->get_user_id();
-	
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 	
-		$style         = $this->general->get_style($id);
+		$style         = $this->general->get_style(1);
 	
 		$redes = $this->model_tipo_red->listarTodos();
 		
@@ -369,16 +372,16 @@ class comercial extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id = $this->tank_auth->get_user_id();
-	
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 	
-		$style         = $this->general->get_style($id);
+		$style         = $this->general->get_style(1);
 	
 		$redes = $this->model_tipo_red->listarTodos();
 		
@@ -404,14 +407,15 @@ class comercial extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -1934,14 +1938,15 @@ class comercial extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$usuario=$this->general->get_username($id);
+
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -1949,7 +1954,6 @@ class comercial extends CI_Controller
 		$usuario=$this->general->get_username($id);
 		$bancos = $this->model_mercancia->Bancos();
 		
-		$style           = $this->modelo_dashboard->get_style($id);
 		$sexo            = $this->model_admin->sexo();
 		$civil           = $this->model_admin->edo_civil();
 		$tipo            = $this->model_admin->get_user_type();
@@ -2015,14 +2019,15 @@ class comercial extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$usuario=$this->general->get_username($id);
+
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -2081,21 +2086,21 @@ class comercial extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$usuario=$this->general->get_username($id);
+
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		$style           = $this->modelo_dashboard->get_style($id);
 		
 		$proveedores	 = $this->model_admin->get_proveedor();
 		$grupo			 = $this->model_admin->get_grupo();

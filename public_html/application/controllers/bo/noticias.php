@@ -23,15 +23,14 @@ class noticias extends CI_Controller
 			redirect('/auth');
 		}
 
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("style",$style);
 
@@ -49,15 +48,14 @@ class noticias extends CI_Controller
 			redirect('/auth');
 		}
 	
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		
 		$grupos=$this->modelo_comercial->get_groups("NOT");
 		$this->template->set("grupos",$grupos);
@@ -78,15 +76,14 @@ class noticias extends CI_Controller
 			redirect('/auth');
 		}
 	
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("style",$style);
 		
@@ -107,15 +104,14 @@ class noticias extends CI_Controller
 			redirect('/auth');
 		}
 		
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -139,10 +135,9 @@ class noticias extends CI_Controller
 			redirect('/auth');
 		}
 		//echo 'heey';
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+		$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
@@ -226,15 +221,14 @@ class noticias extends CI_Controller
 			redirect('/auth');
 		}
 	
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		
 		$grupos=$this->modelo_comercial->get_groups("NOT");
 		$this->template->set("grupos",$grupos);
@@ -256,13 +250,13 @@ class noticias extends CI_Controller
 				redirect('/auth');
 			}
 				
-		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
+		
 		if ($_POST['nombre_frm']==""){
 			$error = "Debe escribir un nombre para la presentacion.";
 			$this->session->set_flashdata('error', $error);

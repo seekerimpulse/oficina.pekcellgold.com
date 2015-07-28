@@ -29,10 +29,13 @@ class dashboard extends CI_Controller
 		$nombre=$usuario[0]->nombre;
 		$sesion=$usuario[0]->ultima_sesion;
 
-		if($usuario[0]->id_tipo_usuario!=6)
+	
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 
 		$style=$this->modelo_dashboard->get_style(1);
 

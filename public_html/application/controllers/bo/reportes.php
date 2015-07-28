@@ -26,15 +26,16 @@ class reportes extends CI_Controller
 			redirect('/auth');
 		}
 
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+		$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -54,12 +55,13 @@ class reportes extends CI_Controller
 		}
 	
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		$total_costo = 0;
 		$total_impuesto = 0;
@@ -104,12 +106,13 @@ class reportes extends CI_Controller
 		}
 	
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 	
 		$total_costo = 0;
 		$total_impuesto = 0;
@@ -154,12 +157,13 @@ class reportes extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		$afiliados=$this->modelo_reportes->reporte_afiliados($_POST['startdate'],$_POST['finishdate']);
 		echo 
@@ -198,12 +202,13 @@ class reportes extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		$id=$this->tank_auth->get_user_id();
 		$inicio = "2000-01-01";
@@ -283,12 +288,13 @@ class reportes extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 	
 		$afiliados= $this->modelo_reportes->reporte_afiliados_mes();
@@ -325,12 +331,13 @@ class reportes extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		$total_costo = 0;
 		$total_impuesto = 0;
