@@ -45,98 +45,91 @@ $ci->load->model("model_permissions");?>
 								  	<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
 										<fieldset>
 											<legend><b>Sistema Integral de Operaciones Oficina Virtual</b></legend>
-											<!--<div class="row">
-												<?php $permiso=$ci->model_permissions->check($id,'perfil');
-												//if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="configuracion/">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-wrench fa-3x"></i>
-															<h5>Configuracion</h5>
+																					<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 link">
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-9 link">	
+													<a href="/bo/oficinaVirtual/grupos">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-group fa-3x"></i>
+															<h5>Grupos</h5>
 														</div>
 													</a>
 												</div>
-
-												<?php //}
-												$permiso=$ci->model_permissions->check($id,'foto');
-											//	if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="comercial/">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-money fa-3x"></i>
-															<h5>Comercial</h5>
-														</div>
-													</a>
-												</div>
-												<?php //}
-												?>
-
-												<?php //}
-												$permiso=$ci->model_permissions->check($id,'foto');
-											//	if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="#">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-folder-open fa-3x"></i>
-															<h5>Administrativo</h5>
-														</div>
-													</a>
-												</div>
-												<?php //}
-												?>
-											</div>
-											<div class="row">
-												<?php $permiso=$ci->model_permissions->check($id,'perfil');
-												//if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="oficinaVirtual/">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 link">
+													<a href="/bo/oficinaVirtual/presentaciones">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-desktop fa-3x"></i>
-															<h5>Oficina Virtual</h5>
+															<h5>Presentaciones</h5>
 														</div>
 													</a>
 												</div>
-
-												<?php //}
-												$permiso=$ci->model_permissions->check($id,'foto');
-											//	if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="/bo/reportes">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 link">
+													<a href="/bo/oficinaVirtual/descargas">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-download fa-3x"></i>
+															<h5>Descargas</h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 link">
+													<a href="/bo/oficinaVirtual/ebooks">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-book fa-3x"></i>
-															<h5>Reportes</h5>
+															<h5>E-books</h5>
 														</div>
 													</a>
 												</div>
-												<?php //}
-												?>
-
-												<?php //}
-												$permiso=$ci->model_permissions->check($id,'foto');
-											//	if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="#">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-cubes fa-3x"></i>
-															<h5>Logistico</h5>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 link">
+													<a href="/bo/oficinaVirtual/informacion">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-info fa-3x"></i>
+															<h5>Informacion</h5>
 														</div>
 													</a>
 												</div>
-												<?php //}
-												?>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 link">	
+												   <a href="/bo/oficinaVirtual/noticias">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-bullhorn fa-3x"></i>
+															<h5>Noticias</h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 link">	
+													<a href="/bo/oficinaVirtual/videos">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-file-video-o fa-3x"></i>
+															<h5>Videos</h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 link">	
+													<a href="/bo/oficinaVirtual/eventos">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-calendar fa-3x"></i>
+															<h5>Eventos </h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 link">	
+													<a href="/bo/oficinaVirtual/cupones">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-ticket fa-3x"></i>
+															<h5>Cupones/Boletos</h5>
+														</div>
+													</a>
+												</div>
+												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-3 link">	
+													<a href="/bo/oficinaVirtual/encuestas">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-file-text-o fa-3x"></i>
+															<h5>Encuestas</h5>
+														</div>
+													</a>
+												</div>
 											</div>
+										 </div>
 									</fieldset>
-									<!--Termina la secciion de perfil y red-->
-									<footer>
-										Version: <i>3.0.0</i>
-										<a href="/changelog">Changelog</a>
-									</footer>
 						</div> 
 						</div>
 				</div>

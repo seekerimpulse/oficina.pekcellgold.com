@@ -153,7 +153,11 @@ class Auth extends CI_Controller
 	 */
 	function logout()
 	{
+		
 		$id   = $this->tank_auth->get_user_id();
+		if($id==null){
+			redirect('/auth/login');
+		}
 		$this->general->update_login($id);
 
 		$this->tank_auth->logout(); // Destroys session

@@ -98,7 +98,7 @@
 													</a>
 												</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
-													<a href="configuracion/soporte_tecnico">
+													<a href="/bo/configuracion/soporte_tecnico">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-support fa-3x"></i>
 															<h1>Soporte Técnico<br><br></h1>

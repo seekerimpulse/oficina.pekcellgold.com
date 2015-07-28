@@ -50,6 +50,18 @@
 														<option value="VID">Videos</option>
 													</select>
 											</label><br>
+											
+											<label class="select">
+													<label class="label">Seleccione la red de la categoria</label>
+														<select name="red" id="red" required="">
+															<?php 
+																foreach ($redes as $red){
+																	echo '<option value='.$red->id.'>'.$red->nombre.'</option>';
+																}
+															?>
+														</select>
+											</label><br>
+											
 											<label class="input">
 												<input type="text" placeholder="Nombre grupo" id="grupo" class="form-control">
 											</label>
@@ -88,10 +100,12 @@ function new_grupo()
 {
 	var grupo=$("#grupo").val();
 	var tipo=$("#tipo").val();
+	var red=$("#red").val();
+	
 	if(grupo!="")
 	{
 		$.ajax({
-			data: {grupo: grupo, tipo: tipo},
+			data: {grupo: grupo, tipo: tipo, red: red},
 			type: "post",
 			url: "/bo/configuracion/add_grupo_soporte_tecnico",
 			success: function(){

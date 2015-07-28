@@ -23,15 +23,14 @@ class videos extends CI_Controller
 			redirect('/auth');
 		}
 
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("style",$style);
 
@@ -49,15 +48,14 @@ class videos extends CI_Controller
 			redirect('/auth');
 		}
 	
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		$videos=$this->modelo_comercial->get_video();
 		$data=array();
 		$data['videos']=$videos;
@@ -77,15 +75,14 @@ class videos extends CI_Controller
 			redirect('/auth');
 		}
 	
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		$videos=$this->modelo_comercial->get_video();
 		$grupos=$this->modelo_comercial->get_groups("VID");
 		$data=array();
@@ -107,15 +104,14 @@ class videos extends CI_Controller
 			redirect('/auth');
 		}
 	
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		$videos=$this->modelo_comercial->get_video();
 		$grupos=$this->modelo_comercial->get_groups("VID");
 		$data=array();
@@ -136,10 +132,9 @@ function sube_video()	{
 			redirect('/auth');
 		}
 
-			$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
@@ -261,10 +256,9 @@ function sube_video_youtube()
 			redirect('/auth');
 		}
 		//echo 'heey';
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
@@ -322,10 +316,9 @@ function sube_video_youtube()
 			redirect('/auth');
 		}
 		
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
@@ -335,7 +328,7 @@ function sube_video_youtube()
 		$videos=$this->modelo_comercial->get_video();
 		$grupos=$this->modelo_comercial->get_groups("VID");
 		$comentarios=$this->modelo_comercial->get_comments();
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		$data['videos']=$videos;
 		$data['grupos']=$grupos;
 		$data['comentarios']=$comentarios;

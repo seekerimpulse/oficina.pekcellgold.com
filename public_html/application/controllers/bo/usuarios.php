@@ -24,15 +24,17 @@ class usuarios extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
-		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -49,17 +51,18 @@ class usuarios extends CI_Controller
 		redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		$id              =  2;
 		$sexo            = $this->model_perfil_red->sexo();
 		$pais            = $this->model_perfil_red->get_pais();
-		$style           = $this->general->get_style($id);
+		$style           = $this->general->get_style(1);
 		$civil           = $this->model_perfil_red->edo_civil();
 		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
 		$estudios        = $this->model_perfil_red->get_estudios();
@@ -108,15 +111,15 @@ class usuarios extends CI_Controller
 		redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		
 		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
 		
@@ -197,14 +200,15 @@ class usuarios extends CI_Controller
 			redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		$users=$this->model_tipo_usuario->get_all_users();
 
 		$this->template->set("usuario",$usuario);
@@ -220,7 +224,7 @@ class usuarios extends CI_Controller
 	
 	function editarTipoDeUsuario(){
 		$id              = $this->tank_auth->get_user_id();
-		$style           = $this->general->get_style($id);
+		$style           = $this->general->get_style(1);
 		$user	 	 = $this->model_tipo_usuario->getTipoUsuariosId($_POST['id']);
 		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
 	
@@ -287,12 +291,13 @@ class usuarios extends CI_Controller
 		redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		
 		$id              = $_GET['id_afiliado'];
@@ -364,12 +369,13 @@ class usuarios extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		$id              = $_GET['id_afiliado'];
 		$id_red			 = $_GET['id_red'];
@@ -438,12 +444,13 @@ class usuarios extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 	
 	
 		$id              = $_GET['id_afiliado'];

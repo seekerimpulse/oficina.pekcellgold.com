@@ -74,7 +74,8 @@
 													<th>ID</th>
 													<th>Nombre</th>
 													<th>Tipo</th>
-													<th></th>
+													<th>Red</th>
+													<th>Acciones</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -93,13 +94,18 @@
 														?>
 														
 														</td>
+														<td><?php foreach ($redes as $red){
+															if ($grupo->id_red == $red->id){
+																echo $red->nombre;
+															}	
+														} ?></td>
 														<td>
-															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $grupo->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $grupo->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															<a title="Editar" class="txt-color-blue" style="cursor: pointer" onclick="editar('<?php echo $grupo->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
+															<a title="Eliminar"  class="txt-color-red" style="cursor: pointer" onclick="eliminar('<?php echo $grupo->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 															<?php if($grupo->estatus == 'ACT'){ ?>
-																<a title="Desactivar" onclick="estado('DES','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+																<a title="Desactivar" style="cursor: pointer" onclick="estado('DES','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
-																<a title="Activar" onclick="estado('ACT','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+																<a title="Activar" style="cursor: pointer" onclick="estado('ACT','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
 														</td>
 													</tr>
@@ -223,7 +229,7 @@ $(document).ready(function() {
 function editar(id){
 	$.ajax({
 		type: "POST",
-		url: "/bo/grupos/editar_grupo",
+		url: "/bo/configuracion/editar_grupo",
 		data: {
 			id: id
 			}
@@ -257,7 +263,7 @@ function eliminar(id) {
 
 					$.ajax({
 						type: "POST",
-						url: "/bo/grupos/kill_grupo",
+						url: "/bo/configuracion/kill_grupo",
 						data: {id: id}
 					})
 					.done(function( msg )
@@ -270,7 +276,7 @@ function eliminar(id) {
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
-								location.href="/bo/grupos/listar";
+								location.href="/bo/configuracion/listar_grupos_soporte_tecnico";
 								}
 							}
 						}
@@ -296,14 +302,14 @@ function estado(estatus, id)
 		
 	$.ajax({
 		type: "POST",
-		url: "/bo/grupos/cambiar_estado_grupo",
+		url: "/bo/configuracion/cambiar_estado_grupo",
 		data: {
 			id:id, 
 			estado: estatus
 		},
 		}).done(function( msg )
 				{
-					location.href = "/bo/grupos/listar";
+					location.href = "/bo/configuracion/listar_grupos_soporte_tecnico";
 				
 			})
 	}
