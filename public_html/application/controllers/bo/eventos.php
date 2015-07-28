@@ -23,15 +23,14 @@ class eventos extends CI_Controller
 			redirect('/auth');
 		}
 		
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+		$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("style",$style);
 
@@ -49,10 +48,9 @@ class eventos extends CI_Controller
 			redirect('/auth');
 		}
 	
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+		$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
@@ -60,7 +58,7 @@ class eventos extends CI_Controller
 		$eventos=$this->modelo_comercial->get_evento();
 		$data["eventos"]=$eventos;
 		
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("style",$style);
 	
@@ -77,15 +75,14 @@ class eventos extends CI_Controller
 			redirect('/auth');
 		}
 	
-				$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		$eventos=$this->modelo_comercial->get_evento();
 		$this->template->set("eventos",$eventos);
 		$this->template->set("style",$style);
@@ -104,10 +101,9 @@ class eventos extends CI_Controller
 			redirect('/auth');
 		}
 		
-		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
@@ -176,17 +172,15 @@ class eventos extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 		
 		
-		$style=$this->general->get_style($id);
+		$style=$this->general->get_style(1);
 		$this->template->set("style",$style);
-		$this->template->set("usuario",$usuario);
 		
 		$eventos=$this->modelo_comercial->get_eventos_activos();
 		$data=array();
@@ -214,7 +208,7 @@ class eventos extends CI_Controller
 					</tr>
 					<tr>
 						<th class='text-center'><h5 class='text-primary'><strong>COSTO</strong></h5></th>
-						<td class='text-center'><h6>".$evento[0]->costo."</h6></td>
+						<td class='text-center'><h6>$ ".$evento[0]->costo."</h6></td>
 						<th class='text-center'><h5 class='text-primary'><strong>OBSERVACIONES</strong></h5></th>
 						<td class='text-center'><h6>".$evento[0]->observaciones."</h6></td>
 					</tr>

@@ -95,9 +95,9 @@
 															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $grupo->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
 															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $grupo->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 															<?php if($grupo->estatus == 'ACT'){ ?>
-																<a title="Desactivar" onclick="estado('DES','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+																<a style="cursor: pointer;" title="Desactivar" onclick="estado('DES','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
-																<a title="Activar" onclick="estado('ACT','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+																<a style="cursor: pointer;" title="Activar" onclick="estado('ACT','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
 														</td>
 													</tr>

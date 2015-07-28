@@ -25,9 +25,13 @@ class descargas extends CI_Controller
 		}
 
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"oficina"))
+		{
+			redirect('/auth/logout');
+		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("style",$style);
 
@@ -44,6 +48,13 @@ class descargas extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"oficina"))
+		{
+			redirect('/auth/logout');
+		}
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
@@ -51,7 +62,7 @@ class descargas extends CI_Controller
 		$grupos=$this->modelo_comercial->get_groups("DES");
 		$this->template->set("grupos",$grupos);
 		
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		
 		$this->template->set("style",$style);
 	
@@ -67,11 +78,20 @@ class descargas extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"oficina"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		
 		$archivos = $this->model_descargas->Archivos();
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 		
 		$this->template->set("style",$style);
 		$this->template->set("archivos",$archivos);
@@ -91,6 +111,13 @@ class descargas extends CI_Controller
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"oficina"))
+		{
+			redirect('/auth/logout');
 		}
 		
 		$id = $this->tank_auth->get_user_id();

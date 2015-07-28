@@ -129,19 +129,6 @@ $ci->load->model("model_permissions");?>
 														</div>
 													</a>
 												</div>
-
-												<?php //}
-												$permiso=$ci->model_permissions->check($id,'foto');
-											//	if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="/bo/reportes">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-book fa-3x"></i>
-															<h5>Reportes</h5>
-														</div>
-													</a>
-												</div>
 												<?php //}
 												?>
 
@@ -159,6 +146,19 @@ $ci->load->model("model_permissions");?>
 												</div>
 												<?php //}
 												?>
+												
+												<?php //}
+												$permiso=$ci->model_permissions->check($id,'foto');
+											//	if($permiso){
+												?>
+												<div class="col-sm-4">
+													<a href="/bo/reportes">
+														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-book fa-3x"></i>
+															<h5>Reportes</h5>
+														</div>
+													</a>
+												</div>
 											</div>
 									</fieldset>
 									<!--Termina la secciion de perfil y red-->

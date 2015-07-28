@@ -15,6 +15,7 @@ class configuracion extends CI_Controller
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/general');
 
+
 		$this->load->model('bo/model_mercancia');
 
 		$this->load->model('model_datos_generales_soporte_tecnico');
@@ -22,7 +23,13 @@ class configuracion extends CI_Controller
 		$this->load->model('model_tipo_red');
 		$this->load->model('model_archivo_soporte_tecnico');
 
+
+		$this->load->model('bo/model_mercancia');
+		$this->load->model('model_datos_generales_soporte_tecnico');
+		$this->load->model('model_cat_grupo_soporte_tecnico');
+
 	}
+	 
 	function index()
 	{
 		if (!$this->tank_auth->is_logged_in()) 

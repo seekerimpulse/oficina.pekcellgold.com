@@ -16,6 +16,34 @@ class usuarios extends CI_Controller
 		$this->load->model('ov/model_afiliado');
 		$this->load->model('model_tipo_red');
 		$this->load->model('bo/model_tipo_usuario');
+		$this->load->model('bo/modelo_dashboard');
+	}
+	
+	function index(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+
+		$usuario=$this->general->get_username($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/altas/usuarios/index');
 	}
 	
 	function alta(){
@@ -23,17 +51,18 @@ class usuarios extends CI_Controller
 		redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		$id              =  2;
 		$sexo            = $this->model_perfil_red->sexo();
 		$pais            = $this->model_perfil_red->get_pais();
-		$style           = $this->general->get_style($id);
+		$style           = $this->general->get_style(1);
 		$civil           = $this->model_perfil_red->edo_civil();
 		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
 		$estudios        = $this->model_perfil_red->get_estudios();
@@ -75,6 +104,171 @@ class usuarios extends CI_Controller
 		$this->template->build('website/bo/comercial/red/NuevoUsuario');
 	}
 	
+	
+	function altaTipoDeUsuario(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+
+		$usuario=$this->general->get_username($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
+		
+		
+		$this->template->set("tiposUsuario",$tiposUsuario);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+		if ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
+			redirect('/auth/send_again/');
+		
+		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
+			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
+		
+		} else {
+			$use_username = $this->config->item('use_username', 'tank_auth');
+			if ($use_username) {
+				$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
+			}
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
+			$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
+			$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
+			$email_activation = $this->config->item('email_activation', 'tank_auth');
+		
+			if ($this->form_validation->run()) {								// validation ok
+				if (!is_null($data = $this->tank_auth->create_user(
+						$use_username ? $this->form_validation->set_value('username') : '',
+						$this->form_validation->set_value('email'),
+						$this->form_validation->set_value('password'),
+						$email_activation))) {
+							
+				$this->model_tipo_usuario->newUser($_POST['nombre'],$_POST['apellido'],$_POST['tipo']);
+				redirect('/bo/usuarios/listarTipoDeUsuario');
+				/*
+					$data['site_name'] = $this->config->item('website_name', 'tank_auth');
+					$last_id=$this->general->get_last_id();
+					$data['lst_id']=$last_id;
+					if ($email_activation) {									// send "activate" email
+						$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
+						$id_nuevo_usr=$this->db->query("select id from users order by id desc limit 1");
+						$data['id']=$id_nuevo_usr[0]->id;
+						//$this->send_email_activate( $data['email'], $data);
+		
+						unset($data['password']); // Clear password (just for any case)
+		
+						//$this->_show_message($this->lang->line('auth_message_registration_completed_1'));
+		
+					} else {
+		
+						if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
+		
+							//$this->_send_email('welcome', $data['email'], $data);
+						}
+						unset($data['password']); // Clear password (just for any case)
+		
+						//$this->_show_message($this->lang->line('auth_message_registration_completed_2').' '.anchor('/auth/login/', 'Login'));
+					}*/
+				} else {
+					$errors = $this->tank_auth->get_error_message();
+					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+				}
+			}
+			$data['use_username'] = $use_username;
+			$this->template->set("data",$data);
+			$this->template->set_theme('desktop');
+			$this->template->set_layout('website/main');
+			$this->template->set_partial('header', 'website/bo/header');
+			$this->template->set_partial('footer', 'website/bo/footer');
+			$this->template->build('website/bo/comercial/altas/usuarios/alta',$data);
+				
+		}
+
+	}
+	
+	function listarTipoDeUsuario(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+
+		$usuario=$this->general->get_username($id);
+	
+		$style=$this->modelo_dashboard->get_style(1);
+		$users=$this->model_tipo_usuario->get_all_users();
+
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("users",$users);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/altas/usuarios/listar');
+	}
+	
+	function editarTipoDeUsuario(){
+		$id              = $this->tank_auth->get_user_id();
+		$style           = $this->general->get_style(1);
+		$user	 	 = $this->model_tipo_usuario->getTipoUsuariosId($_POST['id']);
+		$tiposUsuario=$this->model_tipo_usuario->getTipoUsuarios();
+	
+		$this->template->set("tiposUsuario",$tiposUsuario);
+		$this->template->set("user",$user);
+		$this->template->build('website/bo/comercial/altas/usuarios/editar');
+	}
+	
+	function actualizar_users(){
+		$_POST['mail']=$_POST['email'];
+		$use_mail=$this->model_perfil_red->use_mail_modificar_perfil($_POST['id']);
+		
+		if($_POST['email']==""||$_POST['username']==""||$_POST['nombre']==""||$_POST['apellido']==""){
+			echo "Faltaron datos por ingrensar";
+			exit();
+		}
+		
+		if($use_mail){
+			echo "El Email ya existe , ingrese otro no existente";
+			exit();
+		}
+		$use_username=$this->model_perfil_red->use_username_modificar($_POST['id']);
+		
+		if($use_username){
+			echo "El nombre de usuario ya existe , ingrese otro no existente";
+			exit();
+		}
+
+		$correcto = $this->model_tipo_usuario->actualizar_user();
+		if($correcto){
+			echo "Usuario Actualizado";
+		}
+		else{
+			echo "No se puede actualizar el usuario";
+		}
+	
+	}
+	
+	function kill_user()
+	{
+		$this->db->query("delete from users where id=".$_POST["id"]);
+		$this->db->query("delete from user_profiles where user_id=".$_POST["id"]);
+	}
+	
 	function afiliar_nuevo()
 	{
 	
@@ -97,12 +291,13 @@ class usuarios extends CI_Controller
 		redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		
 		$id              = $_GET['id_afiliado'];
@@ -174,12 +369,13 @@ class usuarios extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 		
 		$id              = $_GET['id_afiliado'];
 		$id_red			 = $_GET['id_red'];
@@ -248,12 +444,13 @@ class usuarios extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"comercial"))
 		{
 			redirect('/auth/logout');
 		}
+
+		$usuario=$this->general->get_username($id);
 	
 	
 		$id              = $_GET['id_afiliado'];

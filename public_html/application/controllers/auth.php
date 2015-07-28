@@ -46,6 +46,16 @@ class Auth extends CI_Controller
 			}
 			elseif ($tipo==2)
 				redirect('/ov/dashboard');
+			elseif ($tipo==3)
+				redirect('/bos/dashboard');
+			elseif ($tipo==4)
+				redirect('/boc/dashboard');
+			elseif ($tipo==5)
+				redirect('/bol/dashboard');
+			elseif ($tipo==6)
+				redirect('/boo/dashboard');
+			elseif ($tipo==7)
+				redirect('/boa/dashboard');
 
 		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
 			redirect('/auth/send_again/');
@@ -103,6 +113,16 @@ class Auth extends CI_Controller
 						}
 						elseif ($tipo==2)
 							redirect('/ov/dashboard');
+						elseif ($tipo==3)
+							redirect('/bos/dashboard');
+						elseif ($tipo==4)
+							redirect('/boc/dashboard');
+						elseif ($tipo==5)
+							redirect('/bol/dashboard');
+						elseif ($tipo==6)
+							redirect('/boo/dashboard');
+						elseif ($tipo==7)
+							redirect('/boa/dashboard');
 					}else{
 						$this->logout2();
 
@@ -133,7 +153,11 @@ class Auth extends CI_Controller
 	 */
 	function logout()
 	{
+		
 		$id   = $this->tank_auth->get_user_id();
+		if($id==null){
+			redirect('/auth/login');
+		}
 		$this->general->update_login($id);
 
 		$this->tank_auth->logout(); // Destroys session

@@ -24,14 +24,13 @@ class informacion extends CI_Controller
 		}
 
 	$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("style",$style);
 
@@ -50,14 +49,13 @@ class informacion extends CI_Controller
 		}
 	
 	$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("style",$style);
 	
@@ -75,13 +73,12 @@ class informacion extends CI_Controller
 		}
 	
 	$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("style",$style);
 		
@@ -112,10 +109,9 @@ class informacion extends CI_Controller
 			redirect('/auth');
 		}
 		//echo 'heey';
-		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
+	$id=$this->tank_auth->get_user_id();
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
@@ -188,12 +184,14 @@ class informacion extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("style",$style);
 	
@@ -213,9 +211,8 @@ class informacion extends CI_Controller
 		}
 		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
@@ -297,15 +294,15 @@ class informacion extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+		
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"oficina"))
 		{
 			redirect('/auth/logout');
 		}
 	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("style",$style);
 	

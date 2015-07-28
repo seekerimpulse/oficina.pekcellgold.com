@@ -968,7 +968,7 @@ class perfil_red extends CI_Controller
 		$ruta="/media/".$id."/";
 		//definimos la ruta para subir la imagen
 		$config['upload_path'] 		= getcwd().$ruta;
-		$config['allowed_types'] 	= 'gif|jpg|png';
+		$config['allowed_types'] 	= 'gif|jpg|png|jpeg';
 		$config['file_name'] 		= $nombre;
 		$config['max_width']  		= '4096';
 		$config['max_height']   	= '3112';

@@ -85,9 +85,9 @@
 												<a class="txt-color-red" style="cursor: pointer;" onclick="eliminar('.$eventos[$i]->id.')" title="Eliminar""><i class="fa fa-trash-o fa-3x"></i></a>
 											';
 											if($eventos[$i]->estatus == 'ACT'){ ?>
-												<a title="Desactivar" onclick="estado_evento('DES','<?php echo $eventos[$i]->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+												<a style="cursor: pointer;"title="Desactivar" onclick="estado_evento('DES','<?php echo $eventos[$i]->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 												<?php } else {?>
-												<a title="Activar" onclick="estado_evento('ACT','<?php echo $eventos[$i]->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+												<a style="cursor: pointer;" title="Activar" onclick="estado_evento('ACT','<?php echo $eventos[$i]->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 											<?php } ?>
 			
 											</td>
