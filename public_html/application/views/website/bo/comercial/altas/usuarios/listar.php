@@ -5,7 +5,8 @@
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a href="/bo/oficinaVirtual/grupos"> Grupos</a> > Listar
+								<a href="/bo/comercial/">Comercial</a> > <a href="/bo/comercial/altas">Altas </a> > 
+								<a href="/bo/usuarios" > Usuarios </a> > Listar
 							</span>
 						</h1>
 					</div>
@@ -46,59 +47,33 @@
 											<br>Eliminar
 											</center>
 										</div>
-										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
-										<center>	
-											<a title="Desactivar" href="#" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
-											<br>Desactivado
-											</center>
-										</div>
-										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
-											<center>
-												<a title="Activar" href="#" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
-												<br>Activado
-											</center>
-										</div>
 									</div>
 
 									<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 											<thead>			                
 												<tr>
 													<th>ID</th>
-													<th>Nombre</th>
+													<th data-class="expand">Nombre de Usuario</th>
+													<th data-hide="phone">Nombre</th>
+													<th data-hide="phone">Apellido</th>
+													<th data-hide="phone">Email</th>
 													<th>Tipo</th>
 													<th></th>
 												</tr>
 											</thead>
 											<tbody>
 												
-												<?foreach ($grupos as $grupo) {?>
+												<?foreach ($users as $user) {?>
 													<tr>
-														<td><?php echo $grupo->id; ?></td>
-														<td><?php echo $grupo->descripcion; ?></td>
+														<td><?php echo $user->id; ?></td>
+														<td><?php echo $user->username; ?></td>
+														<td><?php echo $user->nombre; ?></td>
+														<td><?php echo $user->apellido; ?></td>
+														<td><?php echo $user->email; ?></td>
+														<td><?php echo $user->tipo; ?></td>
 														<td>
-														<?php 
-														
-														if($grupo->tipo=="PRE")
-														echo "Presentaciones";
-														else if($grupo->tipo=="DES")
-															echo "Descargas";
-														else if($grupo->tipo=="EBO")
-															echo "E-books";
-														else if($grupo->tipo=="NOT")
-															echo "Noticias";
-														else if($grupo->tipo=="VID")
-															echo "Videos";
-														?>
-														
-														</td>
-														<td>
-															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $grupo->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $grupo->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
-															<?php if($grupo->estatus == 'ACT'){ ?>
-																<a style="cursor: pointer;" title="Desactivar" onclick="estado('DES','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
-															<?php } else {?>
-																<a style="cursor: pointer;" title="Activar" onclick="estado('ACT','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
-															<?php } ?>
+															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $user->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
+															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $user->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 														</td>
 													</tr>
 												<?}?>
@@ -221,7 +196,7 @@ $(document).ready(function() {
 function editar(id){
 	$.ajax({
 		type: "POST",
-		url: "/bo/grupos/editar_grupo",
+		url: "/bo/usuarios/editarTipoDeUsuario",
 		data: {
 			id: id
 			}
@@ -230,7 +205,7 @@ function editar(id){
 	.done(function( msg ) {
 		bootbox.dialog({
 			message: msg,
-			title: 'Modificar Grupo',
+			title: 'Modificar Usuario',
 				});
 	});//fin Done ajax
 }
@@ -240,13 +215,13 @@ function eliminar(id) {
 	$.ajax({
 		type: "POST",
 		url: "/auth/show_dialog",
-		data: {message: '¿ Esta seguro que desea Eliminar El grupo ?'},
+		data: {message: '¿ Esta seguro que desea Eliminar El usuario ?'},
 	})
 	.done(function( msg )
 	{
 		bootbox.dialog({
 		message: msg,
-		title: 'Eliminar Grupo',
+		title: 'Eliminar Usuario',
 		buttons: {
 			success: {
 			label: "Aceptar",
@@ -255,20 +230,20 @@ function eliminar(id) {
 
 					$.ajax({
 						type: "POST",
-						url: "/bo/grupos/kill_grupo",
+						url: "/bo/usuarios/kill_user",
 						data: {id: id}
 					})
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado el Grupo.",
+						message: "Se ha eliminado el Usuario.",
 						title: 'Felicitaciones',
 						buttons: {
 							success: {
 							label: "Aceptar",
 							className: "btn-success",
 							callback: function() {
-								location.href="/bo/grupos/listar";
+								location.href="/bo/usuarios/listarTipoDeUsuario";
 								}
 							}
 						}
