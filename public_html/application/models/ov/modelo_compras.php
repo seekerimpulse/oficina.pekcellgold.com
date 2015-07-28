@@ -401,12 +401,29 @@ class modelo_compras extends CI_Model
 		$q=$this->db->query("select Code, Name, Code2 from Country ");
 		return $q->result();
 	}
+	
+	function BancosPagoUsuario($id){
+		$q = $this->db->query("select pais from cross_dir_user where id_user=".$id);
+		$pais = $q->result();
+		$pais = $pais[0]->pais;
+		$q = $this->db->query("select * from cat_banco where id_pais='".$pais."' and estatus = 'ACT'");
+		$bancos = $q->result();
+		return $bancos;
+	}
 	function get_direccion_comprador($id)
 	{
 		$q=$this->db->query("SELECT a.*,b.nombre, b.apellido, b.keyword, c.email FROM cross_dir_user a, user_profiles b, users c 
 		WHERE c.id=a.id_user and c.id=b.user_id and c.id=".$id);
 		return $q->result();
 	}
+	
+	function get_telefonos_comprador($id){
+		$q = $this->db->query("SELECT numero FROM cross_tel_user where estatus = 'ACT' and id_user = ".$id." limit 1;");
+		$telfonos = $q->result();
+		
+		return $telfonos[0]->numero;
+	}
+	
 	function hacer_compra()
 	{
 		if(!isset($_GET["usr"]))
@@ -703,6 +720,22 @@ class modelo_compras extends CI_Model
 		return $puntos;
 	}
 	
+	function registrar_ventaConsignacion($id_usuario, $costo , $id_transacion, $firma, $fecha, $impuesto){
+		$dato_venta=array(
+				"id_user" 			=> $id_usuario,
+				"id_estatus"		=> 2,
+				"costo" 			=> $costo,
+				"impuesto"			=> $impuesto,
+				"id_metodo_pago" 	=> 11,
+				"id_transacion"     => $id_transacion,
+				"firma"				=> $firma,
+				"fecha" 			=> $fecha
+		);
+		$this->db->insert("venta",$dato_venta);
+		$venta = mysql_insert_id();
+		return $venta;
+	}
+	
 	function registrar_impuestos($id_mercancia){
 		$q = $this->db->query("SELECT costo from mercancia where id=".$id_mercancia);
 		$mercancia=$q->result();
@@ -790,6 +823,20 @@ class modelo_compras extends CI_Model
 	
 	function ValorComision($id_grupo){
 		$q = $this->db->query("SELECT * FROM valor_comisiones where id_grupo =".$id_grupo);
+		return $q->result();
+	}
+	
+	function RegsitrarPagoBanco($id_usuario, $id_banco, $id_venta, $valor){
+		$datos = array(
+				'id_usuario' => $id_usuario,
+				'id_banco'	=> $id_banco,
+				'id_venta' 	=> $id_venta,
+				'valor'		=> $valor,
+				'estatus'	=> 3
+		);
+		$this->db->insert('cuenta_pagar_banco_historial', $datos);
+		
+		$q = $this->db->query("SELECT * FROM cat_banco where id_banco =".$id_banco);
 		return $q->result();
 	}
 }
