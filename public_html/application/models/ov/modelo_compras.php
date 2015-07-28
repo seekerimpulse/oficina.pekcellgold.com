@@ -758,7 +758,7 @@ class modelo_compras extends CI_Model
 				$this->db->insert("surtido",$dato_surtido);
 	}
 	
-	function ObtenerRedMercancia($id_mercancia){
+	function ObtenerCategoriaMercancia($id_mercancia){
 		$q = $this->db->query("select id_tipo_mercancia, sku from mercancia where id =".$id_mercancia);
 		$mercancia = $q->result();
 		if($mercancia[0]->id_tipo_mercancia == 1){
@@ -788,8 +788,8 @@ class modelo_compras extends CI_Model
 		$this->db->insert('comision', $datos);
 	}
 	
-	function ValorComision(){
-		$q = $this->db->query("SELECT * FROM valor_comisiones");
+	function ValorComision($id_grupo){
+		$q = $this->db->query("SELECT * FROM valor_comisiones where id_grupo =".$id_grupo);
 		return $q->result();
 	}
 }

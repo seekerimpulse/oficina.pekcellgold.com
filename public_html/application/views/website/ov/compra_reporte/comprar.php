@@ -211,7 +211,7 @@
 							                              <th data-hide="phone,tablet">Subtotal<th>
 							                              <th data-hide="phone,tablet">Impuestos</th>
 							                              <th>Total</th>
-							                              <th></th>
+							                              <th>Metodo de Pago</th>
 							                            </tr>
 							                          	<?php
 										                  	if($this->cart->contents())
@@ -262,8 +262,10 @@
 																				  <input name="buyerEmail"    type="hidden"  value="<?php echo $email[0]->email; ?>" >
 																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
 																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVenta" >
-																				  <input type="submit" value="¡¡Comprar!!" class="btn btn-lg btn-success" style="float:right;">
+																				  <input type="submit" value="PayuLatam" class="btn btn-lg btn-success" style="float:right;">
+																				  <a   class="btn btn-lg btn-danger" onclick="consignacion()">Consignacion</a>
 																			</form>
+																				
 												                         </td>
 												                      </tr>
 												                      
@@ -395,10 +397,7 @@
 
 	})
 	
-	function ProcesarCompra($id){
-			
 
-	}
 			function detalles(id,tipo)
 			{
 				var datos={'id':id,'tipo':tipo};
@@ -1048,5 +1047,29 @@
 					
 				}); 
 });
-			
+
+
+	function consignacion(){
+		bootbox.dialog({
+			message: "Estas Seguro(a) <br> El pago tendra un plazo de 24 horas para ser realizado",
+			title: "Ver carro",
+			className: "",
+			buttons: {
+				success: {
+				label: "Aceptar",
+				className: "btn-success",
+				callback: function() {
+					 window.location="RegistrarVentaConsignacion";
+					}
+				},
+			cancelar: {
+				label: "Cancelar",
+				className: "btn-danger",
+				callback: function() {
+					}
+				}
+			}
+		})
+	}
+		
 		</script>

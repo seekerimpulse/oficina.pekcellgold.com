@@ -16,6 +16,7 @@ class comisiones extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_comisiones');
+		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/general');
 	}
@@ -1194,8 +1195,9 @@ BONO AUTOCOMPRA
 			redirect('/auth');
 		}
 		
-			$id=$this->tank_auth->get_user_id();
+		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		$categorias  = $this->model_mercancia->CategoriasMercancia();
 		
 		if($usuario[0]->id_tipo_usuario!=1)
 		{
@@ -1222,7 +1224,7 @@ BONO AUTOCOMPRA
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
+		
 		if($usuario[0]->id_tipo_usuario!=1)
 		{
 			redirect('/auth/logout');
@@ -1233,19 +1235,14 @@ BONO AUTOCOMPRA
 		}
 	
 		$style=$this->modelo_dashboard->get_style($id);
-	
-		$this->template->set("style",$style);
-	
 		$profundidad  = $this->model_admin->get_Profundidad_tipo_red($_GET['id']) + 1;
-		
 		$configuracion_red = $this->model_admin->get_config_red_comision($_GET['id']);
+		$categoria = $this->model_mercancia->CategoriaMercancia($_GET['id']);
 		
-	
-		$valor_punto  = $this->model_admin->get_config_valor_punto();
-	
+		$this->template->set("style",$style);
 		$this->template->set("profundidad",$profundidad);
 		$this->template->set("configuracion",$configuracion_red);
-		$this->template->set("valor_punto",$valor_punto);
+		$this->template->set("categoria",$categoria);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');

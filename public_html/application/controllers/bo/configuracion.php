@@ -14,13 +14,11 @@ class configuracion extends CI_Controller
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/general');
-<<<<<<< HEAD
 		$this->load->model('bo/model_mercancia');
-=======
 		$this->load->model('model_datos_generales_soporte_tecnico');
 		$this->load->model('model_cat_grupo_soporte_tecnico');
->>>>>>> d7f4fb078b7c939050fcf8abecc9fbb41e21e18f
 	}
+	
 	function index()
 	{
 		if (!$this->tank_auth->is_logged_in()) 

@@ -5,7 +5,9 @@
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> <span>>
-					<a href="/bo/configuracion/"> Configuracion </a> > Comisiones
+					<a href="/bo/configuracion/"> Configuracion </a> >
+					<a href="/bo/configuracion/comisiones"> Grupo </a> > Comision
+					
 				</span>
 			</h1>
 		</div>
@@ -44,7 +46,7 @@
 								action="/bo/comisiones/actualizar_comisiones" method="POST"
 								role="form">
 								<input type="text" name="categoria" value="<?php echo $_GET['id']; ?>" class="hide">
-								<header> Categoria de Producto </header>
+								<header> Categoria <?php echo $categoria[0]->id_grupo.". ".$categoria[0]->descripcion." ( ".$categoria[0]->red." )"; ?> </header>
 								<?php if (isset($configuracion[0]->valor)) { ?>
 								<div class="col col-xs-12 col-md-6 col-lg-6">
 									<fieldset>
