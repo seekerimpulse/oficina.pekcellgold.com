@@ -14,19 +14,28 @@ class Model_datos_generales_soporte_tecnico extends CI_Model{
 		return $q->result();
 	}
 	
-	function actualizar($skype, $pekey, $pinkost){
+	function traer_por_red($id_red)
+	{
+		$q=$this->db->query('select * from datos_generales_soporte_tecnico where id_red='.$id_red);
+		return $q->result();
+	}
+	
+	function actualizar($skype, $pekey, $pinkost, $id_red){
 		$datos = array(
 				'skype' => $skype,
 				'pekey' => $pekey,
 				'pinkost' => $pinkost);
+		$this->db->where("id_red",$id_red);
 		$this->db->update("datos_generales_soporte_tecnico",$datos);
 	}
 	
-	function insertar($skype, $pekey, $pinkost){
+	function insertar($skype, $pekey, $pinkost, $id_red){
 		$datos = array(
 				'skype' => $skype,
 				'pekey' => $pekey,
-				'pinkost' => $pinkost);
+				'pinkost' => $pinkost,
+				'id_red' => $id_red
+		);
 		$this->db->insert("datos_generales_soporte_tecnico",$datos);
 	}
 	

@@ -10,7 +10,10 @@
 								<a href="/bo/configuracion/">Configuracion</a>
 							</span>
 							<span>>
-								<a href="/bo/configuracion/soporte_tecnico">Soporte Técnico</a> > Datos Generales
+								<a href="/bo/configuracion/soporte_tecnico">Soporte Técnico</a> 
+							</span>
+							<span>>
+								<a href="/bo/configuracion/datos_generales_ver_redes">Ver Redes</a> > Datos Generales
 							</span>
 						</h1>
 					</div>
@@ -78,6 +81,10 @@
 		        
 		        <label style="margin: 1rem;" class="input col-xs-10 col-sm-10 col-md-10 col-lg-10">
 					<input type="text" class="hide" name="vacio" placeholder="Numero de Telefono" value='<?php echo $vacio?>'>
+		        </label>
+		        
+		        <label style="margin: 1rem;" class="input col-xs-10 col-sm-10 col-md-10 col-lg-10">
+					<input type="text" class="hide" name="id_red" placeholder="Numero de Telefono" value='<?php echo $id_red?>'>
 		        </label>
 		        
 				<button style="margin: 1rem;margin-bottom: 4rem;" type="submit" class="btn btn-success  col-xs-10 col-sm-10 col-md-10 col-lg-10">Actualizar</button>
