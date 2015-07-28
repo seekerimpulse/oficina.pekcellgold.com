@@ -14,6 +14,12 @@ class configuracion extends CI_Controller
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_admin');
 		$this->load->model('bo/general');
+<<<<<<< HEAD
+		$this->load->model('bo/model_mercancia');
+=======
+		$this->load->model('model_datos_generales_soporte_tecnico');
+		$this->load->model('model_cat_grupo_soporte_tecnico');
+>>>>>>> d7f4fb078b7c939050fcf8abecc9fbb41e21e18f
 	}
 	function index()
 	{
@@ -60,21 +66,9 @@ class configuracion extends CI_Controller
 	
 		$this->template->set("style",$style);
 		
-		$profundidad  = $this->model_admin->get_config_profundidad_tipo_red();
-		$countProfundidad  = $this->model_admin->get_config_count_profundidad();
-		
-		if($profundidad[0]->profundidad!=$countProfundidad[0]->profundidad){
-			$configuracion_profundidad  = false;
-		}else {
-		
-		$configuracion_profundidad  = $this->model_admin->get_config_profundidad();
-		}
-		
-		$valor_punto  = $this->model_admin->get_config_valor_punto();
+		$categorias  = $this->model_mercancia->CategoriasMercancia();
 
-		$this->template->set("profundidad",$profundidad);
-		$this->template->set("configuracion_profundidad",$configuracion_profundidad);
-		$this->template->set("valor_punto",$valor_punto);
+		$this->template->set("categorias",$categorias);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
@@ -113,6 +107,188 @@ class configuracion extends CI_Controller
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/configuracion/tipo_red');
+	}
+	
+	function soporte_tecnico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/soporte_tecnico');
+	}
+	
+	function datos_generales()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+		$datos_generales = $this->model_datos_generales_soporte_tecnico->listar();
+		$vacio = 0;
+		
+		$this->template->set("style",$style);
+		$this->template->set("datos_generales",$datos_generales);
+		$this->template->set("vacio",$vacio);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/soporteTecnico/datos_generales');
+	}
+	
+	function actualizar_datos_generales()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+		
+		if ($_POST['vacio']==3){
+			$this->model_datos_generales_soporte_tecnico->insertar($_POST['skype'], $_POST['pekey'], $_POST['pinkost']);
+		}
+		else $this->model_datos_generales_soporte_tecnico->actualizar($_POST['skype'], $_POST['pekey'], $_POST['pinkost']);
+		
+		$success = "El cambio se ha efectuado satisfactoriamente.";
+		$this->session->set_flashdata('success', $success);
+		
+		redirect('/bo/configuracion/datos_generales');
+	}
+	
+	function grupos_soporte_tecnico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/soporteTecnico/grupos/index');
+	}
+	
+	function alta_grupos_soporte_tecnico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/soporteTecnico/grupos/alta');
+	}
+	
+	function listar_grupos_soporte_tecnico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$grupos  = $this->model_cat_grupo_soporte_tecnico->listar();
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+		$this->template->set("grupos",$grupos);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/soporteTecnico/grupos/listar');
+	}
+	
+	function add_grupo_soporte_tecnico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+	
+		$this->db->query("insert into cat_grupo_soporte_tecnico (descripcion,estatus,tipo) values ('".$_POST['grupo']."','ACT','".$_POST['tipo']."')");
 	}
 	
 	function categorias()

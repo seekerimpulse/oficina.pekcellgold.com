@@ -107,7 +107,7 @@ class modelo_compras extends CI_Model
 	function get_combinados_red($idRed)
 	{
 		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.fecha_alta, a.nombre img, a.id_red from combinado a, mercancia d, cross_combinado
-		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and a.id_red='.$idRed.'');
+		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and a.id_red='.$idRed.' group by (d.id)');
 		return $q->result();
 	}
 	function get_combinado_espec($busqueda)

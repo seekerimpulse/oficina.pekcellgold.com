@@ -12,6 +12,12 @@ class model_mercancia extends CI_Model {
 		$categorias = $this->db->query ( "select * from cat_tipo_mercancia where estatus = 'ACT' " );
 		return $categorias->result ();
 	}
+	
+	function CategoriasMercancia() {
+		$categorias = $this->db->query ( "SELECT ctg.id_grupo, ctg.descripcion, tr.nombre as red  FROM cat_grupo_producto ctg, tipo_red tr where ctg.id_red = tr.id and estatus = 'ACT' " );
+		return $categorias->result ();
+	}
+	
 	function nuevo_servicio() {
 		$dato_servicio = array (
 				"nombre" => $_POST ['nombre'],

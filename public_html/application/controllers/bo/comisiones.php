@@ -16,6 +16,7 @@ class comisiones extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_comisiones');
+		$this->load->model('bo/model_admin');
 		$this->load->model('bo/general');
 	}
 	function index()
@@ -1210,5 +1211,61 @@ BONO AUTOCOMPRA
         $this->template->set_partial('header', 'website/bo/header');
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comisiones/final5');
+	}
+	
+	function editar()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if($usuario[0]->id_tipo_usuario!=1)
+		{
+			redirect('/auth/logout');
+		}
+		
+		if(!isset($_GET['id'])){
+			redirect('/bo/configuracion/comisiones');
+		}
+	
+		$style=$this->modelo_dashboard->get_style($id);
+	
+		$this->template->set("style",$style);
+	
+		$profundidad  = $this->model_admin->get_Profundidad_tipo_red($_GET['id']) + 1;
+		
+		$configuracion_red = $this->model_admin->get_config_red_comision($_GET['id']);
+		
+	
+		$valor_punto  = $this->model_admin->get_config_valor_punto();
+	
+		$this->template->set("profundidad",$profundidad);
+		$this->template->set("configuracion",$configuracion_red);
+		$this->template->set("valor_punto",$valor_punto);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/configuracion/Comision/comisiones');
+	}
+	
+	function actualizar_comisiones(){
+		if(isset($_POST['categoria'])){
+			$id_categoria = $_POST['categoria'];
+			
+			$this->model_admin->new_Config_Comision($id_categoria);
+			$correcto = "La configuracion ha sido actualizada.";
+			$this->session->set_flashdata('correcto', $correcto);
+		}else{
+			$error = "La Configuracion no se ha podido actualizar";
+			$this->session->set_flashdata('error', $error);
+		}
+		
+		redirect('bo/configuracion/comisiones');
 	}
 }
