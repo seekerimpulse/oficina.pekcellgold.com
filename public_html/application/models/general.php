@@ -95,10 +95,12 @@ class general extends CI_Model
 	}
 	function update_login($id)
 	{
+		if(isset($id)){
 		$q=$this->db->query('select last_login from users where id = '.$id);
 		$q=$q->result();
 
 		$this->db->query('update user_profiles set ultima_sesion="'.$q[0]->last_login.'" where user_id='.$id);
+		}
 	}
 
 	function getRetenciones(){
@@ -110,4 +112,67 @@ class general extends CI_Model
 		$q=$this->db->query('SELECT * FROM cat_retenciones_historial where month(now())=mes and year(now())=ano and id_afiliado=0');
 		return $q=$q->result();
 	}
+	
+	function isBlocked(){
+ 
+		if($this->isBlockedExpired())
+			return false;
+		
+		$q=$this->db->query('SELECT blocked FROM users_attempts where ip = "'.$this->input->ip_address().'"');
+		$blocked=$q->result();
+		
+		if(!isset($blocked[0]->blocked))
+			return false;
+
+		if($blocked[0]->blocked==1)
+			return true;
+		return false;
+	}
+	
+	function isBlockedExpired(){
+		$q=$this->db->query('SELECT ip FROM users_attempts where ip = "'.$this->input->ip_address().'" and (attempts>=5) and ("'.date('Y-m-d H:i:s').'") > (last_login + INTERVAL 30 MINUTE)');
+		
+		$intentos=$q->result();
+		
+		if(!isset($intentos[0]->ip))
+			return false;
+		
+		if($intentos[0]->ip){
+			$this->unlocked();
+		}
+		return false;
+	}
+	
+	function addAttempts(){
+		$q=$this->db->query('SELECT attempts , ip FROM users_attempts where ip = "'.$this->input->ip_address().'"');
+		$intentos=$q->result();
+		
+		if(!isset($intentos[0]->ip)){
+			$datos = array(
+					'ip' => $this->input->ip_address(),
+					'last_login'   => date('Y-m-d H:i:s'),
+					'attempts'    => '1',
+			);
+			$this->db->insert('users_attempts',$datos);
+			return "5";
+		}else if($intentos[0]->attempts>=5){
+			$this->locked(); 
+			return "ninguno";
+		}
+		else {
+			$this->db->query('update users_attempts set attempts ="'.(($intentos[0]->attempts)+1).'" , last_login ="'.date('Y-m-d H:i:s').'" where ip = "'.$this->input->ip_address().'"');
+			return "".(6-(($intentos[0]->attempts)+1));
+		}
+	}
+	
+	function locked(){
+		$this->db->query('update users_attempts set blocked ="1" where ip = "'.$this->input->ip_address().'"');
+	}
+	
+	function unlocked(){
+		$this->db->query('update users_attempts set blocked ="0",attempts ="1" where ip = "'.$this->input->ip_address().'"');
+		return true;
+	}
+	
+
 }
