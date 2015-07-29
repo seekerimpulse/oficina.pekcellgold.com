@@ -371,9 +371,16 @@ class configuracion extends CI_Controller
 				$ext=strtolower($extencion);
 				if($ext=="mp4")
 				{
-					$this->db->query('insert into archivo_soporte_tecnico (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico,id_red)
-					values ('.$id.','.$_POST['grupo_frm'].',2,"'.$_POST['desc_frm'].'","'.$ruta.$key["file_name"].'","ACT","'.$_POST["nombre_publico"].'",'.$id_red.')');
-					$video=mysql_insert_id();
+					if (!isset($_POST['grupo_frm'])){
+						$error = "Debe seleccionar un grupo para el archivo.";
+						$this->session->set_flashdata('error', $error);
+						redirect('/bo/configuracion/alta_normal_videos?id_red='.$id_red);
+					}
+					else {
+						$this->db->query('insert into archivo_soporte_tecnico (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico,id_red)
+						values ('.$id.','.$_POST['grupo_frm'].',2,"'.$_POST['desc_frm'].'","'.$ruta.$key["file_name"].'","ACT","'.$_POST["nombre_publico"].'",'.$id_red.')');
+						$video=mysql_insert_id();
+					}
 				}
 				else
 				{
@@ -536,22 +543,30 @@ class configuracion extends CI_Controller
 	}
 	
 	function kill_video(){
-		$id = $_POST["id"];
 		
-		$q = $this->db->query("select * from archivo_soporte_tecnico where id_archivo=".$id);
-		$url = $q->result();
-		$ruta = $url[0]->ruta;
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id = $_POST['id'];
+		$q = $this->db->query('select * from cross_img_archivo_soporte_tecnico where id_archivo='.$id);
+		$cross_img_archivo_s_t = $q->result();
 		
-		echo "<script>alert(".$ruta.")</script>";
-		var_dump($ruta);
-		redirect("/bo/configuracion/listar_videos?id_red=2");
-		var_dump($ruta);
-		exit();
+		$id_img = $cross_img_archivo_s_t[0]->id_img;
+		$q = $this->db->query('select * from cat_img where id_img='.$id_img);
+		$cat_img = $q->result();
+		$url_img = $cat_img[0]->url;
 		
-		if(unlink($_SERVER['DOCUMENT_ROOT'].$ruta)){
+		$url = $this->model_archivo_soporte_tecnico->EliminarArchivo($id);
+		if(unlink($_SERVER['DOCUMENT_ROOT'].$url)){
 			echo "File Deleted.";
 		}
-		$this->db->query("delete from archivo_soporte_tecnico where id_archivo=".$id);	
+		if(unlink($_SERVER['DOCUMENT_ROOT'].$url_img)){
+			echo "File Deleted.";
+		}
+		$this->db->query('delete from cross_img_archivo_soporte_tecnico where id_img='.$id_img);
+		$this->db->query('delete from cat_img where id_img='.$id_img);
+		$this->db->query("delete from comentario_video_soporte_tecnico where id_video=".$id);
 	}
 	
 	function kill_comentario(){
@@ -792,6 +807,13 @@ class configuracion extends CI_Controller
 		$estado = $_POST['estado'];
 		$id_red = $_POST['id_red'];
 		
+		
+		
+		if ($grupo == "0"){
+			$error = "Debe seleccionar un grupo para al archivo.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/configuracion/listar_informacion?id_red='.$id_red);
+		}
 				
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -830,12 +852,6 @@ class configuracion extends CI_Controller
 		$this->load->library('upload', $config);
 	
 		$this->upload->initialize($config);
-	
-		if ($grupo == "0"){
-			$error = "Debe seleccionar un grupo para al archivo.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/configuracion/listar_informacion?id_red='.$id_red);
-		}
 	
 		if(!isset($nombre) && !isset($descripcion)){
 				
@@ -1084,7 +1100,18 @@ class configuracion extends CI_Controller
 	
 	function kill_grupo()
 	{
-		$this->db->query("delete from cat_grupo_soporte_tecnico where id=".$_POST["id"]);
+		$q = $this->db->query("select * from archivo_soporte_tecnico where id_grupo=".$_POST["id"]);
+		$archivo_s_t = $q->result();
+		
+		if ($archivo_s_t == null){
+			$this->db->query("delete from cat_grupo_soporte_tecnico where id=".$_POST["id"]);
+			echo "Felicidades<br> La categoria ha sido eliminada.";
+		}
+		else{
+			echo "La categoria que intenta borrar tiene archivos en su contenido,
+			 <br> para poder eliminarla debe eliminar primero dichos archivos.
+			 <br>          Otra opción es que deshabilite la categoria.";
+		}
 	}
 	
 	function cambiar_estado_grupo(){

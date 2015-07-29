@@ -269,8 +269,8 @@ function eliminar(id) {
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado el Grupo.",
-						title: 'Felicitaciones',
+						message: msg,
+						title: 'Alerta',
 						buttons: {
 							success: {
 							label: "Aceptar",

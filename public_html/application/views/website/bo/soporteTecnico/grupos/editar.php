@@ -2,7 +2,7 @@
 					<form id="nueva" class="smart-form"  novalidate="novalidate" >
 							<fieldset>
 								<input type="text" class="hide" value="<?php echo $_POST['id']; ?>" name="id">
-								<label class="select">
+								<label class="hide">
 								<label class="label">Seleccione una categoria</label>
 									<select name="tipo" id="tipo" required="" style="width: 20rem">
 										<option value="INF" <?php if($grupo[0]->tipo=="INF")echo 'selected="selected"';?>>Información</option>
