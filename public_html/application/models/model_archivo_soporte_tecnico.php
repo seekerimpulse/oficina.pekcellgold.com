@@ -105,4 +105,12 @@ and CI.id_img = CIA.id_img');
 		return $q->result();
 	}
 	
+	function get_comments()
+	{
+		$q=$this->db->query('SELECT CVST.*, U.username FROM comentario_video_soporte_tecnico CVST, users U 
+WHERE CVST.autor = U.id 
+order by fecha DESC;');
+		return $q->result();
+	}
+	
 }

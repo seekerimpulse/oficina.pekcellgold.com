@@ -3,10 +3,23 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							
+							<!-- PAGE HEADER -->
+								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a href="/bo/oficinaVirtual/videos"> Videos</a> 
-								> <a href="/bo/videos/alta"> Alta</a> > Youtube
+								<a href="/bo/configuracion/">Configuracion</a>
+							</span>
+							<span>>
+								<a href="/bo/configuracion/soporte_tecnico">Soporte Técnico</a> 
+							</span>
+							<span>>
+								<a href="/bo/configuracion/videos_ver_redes">Ver Redes</a>
+							</span>
+							<span>>
+								<a href="/bo/configuracion/videos?id_red=<?php echo $id_red;?>">Videos</a>
+							</span>
+							<span>>
+								<a href="/bo/configuracion/alta_videos?id_red=<?php echo $id_red;?>">Alta</a> > Youtube
 							</span>
 						</h1>
 					</div>
@@ -33,7 +46,7 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="col col-lg-4 col-md-6 col-sm-8 col-xs-12" style="margin-bottom: 2rem;"	>
-<form class="smart-form" id="reporte-form" method="post" action="sube_video_youtube" enctype="multipart/form-data">
+<form class="smart-form" id="reporte-form" method="post" action="sube_video_youtube?id_red=<?php echo $id_red;?>" enctype="multipart/form-data">
 
 												<label class="label">Grupo</label>
 												<label class="select">

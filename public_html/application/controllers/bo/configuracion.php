@@ -126,14 +126,13 @@ class configuracion extends CI_Controller
 		}
 	
 		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
 		
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("style",$style);
 	
@@ -246,15 +245,16 @@ class configuracion extends CI_Controller
 		}
 		
 		$id_red = $_GET['id_red'];
-		$this->template->set("id_red",$id_red);
+		
 		$style=$this->modelo_dashboard->get_style($id);
 		$videos=$this->model_archivo_soporte_tecnico->get_video();
 		$grupos = $this->model_cat_grupo_soporte_tecnico->get_groups("VID", $id_red);
 		$data=array();
 		$data['videos']=$videos;
 		$data['grupos']=$grupos;
+		
 		$this->template->set("style",$style);
-	
+		$this->template->set("id_red",$id_red);
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
@@ -263,9 +263,9 @@ class configuracion extends CI_Controller
 	}
 	
 	function sube_video()	{
-		
-		var_dump($_GET['id_red']);
-		exit();
+		$id_red = $_GET['id_red'];
+		//var_dump($id_red);
+		//exit();
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
@@ -330,15 +330,16 @@ class configuracion extends CI_Controller
 			if($extVideo=="mp4"){
 	
 			}else {
+				
 				$this->session->set_flashdata('error','El tipo de archivo de video que se intenta subir no esta permitido , solo se permiten videos en formato MP4');
-				redirect('/bo/configuracion/alta_normal_videos');
+				redirect('/bo/configuracion/alta_normal_videos?id_red='.$id_red);
 			}
 				
-			if($extImagen=="png"||$extImagen=="jpg"||$extImagen=="jpeg"){
+			if($extImagen=="png"||$extImagen=="jpg"||$extImagen=="jpeg"||$extImagen=="gif"){
 					
 			}else {
 				$this->session->set_flashdata('error','El tipo de archivo de imagen que se intenta subir no esta permitido');
-				redirect('/bo/configuracion/alta_normal_videos');
+				redirect('/bo/configuracion/alta_normal_videos?id_red='.$id_red);
 			}
 				
 				
@@ -371,7 +372,7 @@ class configuracion extends CI_Controller
 				if($ext=="mp4")
 				{
 					$this->db->query('insert into archivo_soporte_tecnico (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico,id_red)
-					values ('.$id.','.$_POST['grupo_frm'].',2,"'.$_POST['desc_frm'].'","'.$ruta.$key["file_name"].'","ACT","'.$_POST["nombre_publico"].'","'.$_GET["id_red"].'")');
+					values ('.$id.','.$_POST['grupo_frm'].',2,"'.$_POST['desc_frm'].'","'.$ruta.$key["file_name"].'","ACT","'.$_POST["nombre_publico"].'",'.$id_red.')');
 					$video=mysql_insert_id();
 				}
 				else
@@ -383,10 +384,178 @@ class configuracion extends CI_Controller
 	
 			}
 			$this->db->query('insert into cross_img_archivo_soporte_tecnico	values ('.$video.','.$imgn.')');
-			redirect('/bo/configuracion/listar_videos');
+			redirect('/bo/configuracion/listar_videos?id_red='.$id_red);
 		}
+		
 		$this->session->set_flashdata('error','El tipo de archivo de video que se intenta subir no esta permitido , solo se permiten videos en formato MP4');
-		redirect('/bo/configuracion/alta_normal_videos');
+		redirect('/bo/configuracion/alta_normal_videos?id_red='.$id_red);
+	}
+	
+	function alta_youtube_videos()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+	
+		if(!$this->general->isAValidUser($id,"oficina"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		$id_red = $_GET['id_red'];
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		$videos=$this->model_archivo_soporte_tecnico->get_video();
+		$grupos = $this->model_cat_grupo_soporte_tecnico->get_groups("VID", $id_red);
+		$data=array();
+		$data['videos']=$videos;
+		$this->template->set("style",$style);
+		$this->template->set("id_red",$id_red);
+		$data['grupos']=$grupos;
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/soporteTecnico/videos/alta_youtube',$data);
+	}
+	
+	function sube_video_youtube()
+	{
+		$id_red = $_GET['id_red'];
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		//echo 'heey';
+		$id=$this->tank_auth->get_user_id();
+	
+		if(!$this->general->isAValidUser($id,"oficina"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		//Checamos si el directorio del usuario existe, si no, se crea
+		if(!is_dir(getcwd()."/media/".$id))
+		{
+			mkdir(getcwd()."/media/".$id, 0777);
+		}
+	
+		$ruta="/media/".$id."/";
+		//definimos la ruta para subir la imagen
+		$config['upload_path'] 		= getcwd().$ruta;
+		$config['allowed_types'] 	= 'jpg|png|gif|jpeg';
+	
+		//Cargamos la libreria con las configuraciones de arriba
+		$this->load->library('upload', $config);
+	
+		if (!$this->upload->do_upload())
+		{
+	
+			$error = array('error' => $this->upload->display_errors());
+			$this->session->set_flashdata('error','El tipo de archivo que se intenta subir no esta permitido');
+			redirect('/bo/configuracion/alta_youtube_videos?id_red='.$id_red);
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
+			$filename=strrev($data["upload_data"]["file_name"]);
+			$explode=explode(".",$filename);
+			$nombre=strrev($explode[1]);
+			$extencion=strrev($explode[0]);
+			$ext=strtolower($extencion);
+			if($ext=='jpg'||$ext=="png"||$ext=="jpeg"||$ext=="gif")
+			{
+				$this->db->query('insert into cat_img (url,nombre_completo,nombre,extencion,estatus)
+				values ("'.$ruta.$data["upload_data"]["file_name"].'","'.$data["upload_data"]["file_name"].'","'.$nombre.'","'.$extencion.'","ACT")');
+				$imgn=mysql_insert_id();
+	
+				$this->db->query('insert into archivo_soporte_tecnico (id_usuario,id_grupo,id_tipo,descripcion,ruta,status,nombre_publico,id_red)
+				values ('.$id.','.$_POST['grupo_frm'].',21,"'.$_POST['desc_frm'].'","'.$_POST["url"].'","ACT","'.$_POST["nombre_publico"].'",'.$id_red.')');
+				$video=mysql_insert_id();
+				$this->db->query('insert into cross_img_archivo_soporte_tecnico	values ('.$video.','.$imgn.')');
+			}
+			redirect('/bo/configuracion/listar_videos?id_red='.$id_red);
+		}
+		$this->session->set_flashdata('error','El tipo de archivo que se intenta subir no esta permitido');
+		redirect('/bo/configuracion/alta_youtube_videos?id_red='.$id_red);
+	}
+	
+	function listar_videos()
+	{
+		$id_red = $_GET['id_red'];
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+	
+		if(!$this->general->isAValidUser($id,"oficina"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$videos=$this->model_archivo_soporte_tecnico->get_video();
+		$grupos = $this->model_cat_grupo_soporte_tecnico->get_groups("VID", $id_red);
+		$comentarios=$this->model_archivo_soporte_tecnico->get_comments();
+		$style=$this->modelo_dashboard->get_style(1);
+		$data['videos']=$videos;
+		$data['grupos']=$grupos;
+		$data['comentarios']=$comentarios;
+		$this->template->set("style",$style);
+		$this->template->set("id_red",$id_red);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/soporteTecnico/videos/listar',$data);
+	}
+	
+	function insert_coment()
+	{
+		$id_user=$this->tank_auth->get_user_id();
+		$data=$_GET["info"];
+		$data=json_decode($data,true);
+		$id=$data['video'];
+		$coment=$data['comentario'];
+		$this->db->query('insert into comentario_video_soporte_tecnico (comentario,id_video,autor) values ("'.$coment.'"," '.$id.'","'.$id_user.'")');
+	}
+	
+	function cambiar_estado_video(){
+		$this->db->query("update archivo_soporte_tecnico set status = '".$_POST['estado']."' where id_archivo=".$_POST["id"]);
+	
+	}
+	
+	function kill_video(){
+		$id = $_POST["id"];
+		
+		$q = $this->db->query("select * from archivo_soporte_tecnico where id_archivo=".$id);
+		$url = $q->result();
+		$ruta = $url[0]->ruta;
+		
+		echo "<script>alert(".$ruta.")</script>";
+		var_dump($ruta);
+		redirect("/bo/configuracion/listar_videos?id_red=2");
+		var_dump($ruta);
+		exit();
+		
+		if(unlink($_SERVER['DOCUMENT_ROOT'].$ruta)){
+			echo "File Deleted.";
+		}
+		$this->db->query("delete from archivo_soporte_tecnico where id_archivo=".$id);	
+	}
+	
+	function kill_comentario(){
+		$this->db->query("delete from comentario_video_soporte_tecnico where id=".$_POST["id"]);
 	}
 	
 	function informacion_ver_redes()

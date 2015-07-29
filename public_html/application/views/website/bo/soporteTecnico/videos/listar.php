@@ -3,9 +3,20 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+							
+							<!-- PAGE HEADER -->
+								<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a href="/bo/oficinaVirtual/videos"> Videos</a> > Listar
+								<a href="/bo/configuracion/">Configuracion</a>
+							</span>
+							<span>>
+								<a href="/bo/configuracion/soporte_tecnico">Soporte Técnico</a> 
+							</span>
+							<span>>
+								<a href="/bo/configuracion/videos_ver_redes">Ver Redes</a>
+							</span>
+							<span>>
+								<a href="/bo/configuracion/videos?id_red=<?php echo $id_red;?>">Videos</a> > Listar
 							</span>
 						</h1>
 					</div>
@@ -334,6 +345,7 @@
 			}
 		</script>
 		<script type="text/javascript">
+		
 			function add_coment(id)
 			{
 				var coment=$("#coment").val();
@@ -341,10 +353,10 @@
 				$.ajax({
 					 data:{info:JSON.stringify(datos)},
 			         type: "get",
-			         url: "insert_coment",
+			         url: "/bo/configuracion/insert_coment",
 			         success: function(){
 			              alert("Tu comentario fue añadido con exito");
-			              location.href="/bo/videos/listar";
+			              location.href = "/bo/configuracion/listar_videos?id_red=<?php echo $id_red;?>";
 			         }
 				});
 			}
@@ -368,7 +380,7 @@
 
 								$.ajax({
 									type: "POST",
-									url: "/bo/videos/kill_video",
+									url: "/bo/configuracion/kill_video",
 									data: {id: id}
 								})
 								.done(function( msg )
@@ -381,7 +393,7 @@
 										label: "Aceptar",
 										className: "btn-success",
 										callback: function() {
-											location.href="/bo/videos/listar";
+											location.href = "/bo/configuracion/listar_videos?id_red=<?php echo $id_red;?>";
 											}
 										}
 									}
@@ -422,7 +434,7 @@
 
 								$.ajax({
 									type: "POST",
-									url: "/bo/videos/kill_comentario",
+									url: "/bo/configuracion/kill_comentario",
 									data: {id: id}
 								})
 								.done(function( msg )
@@ -435,7 +447,7 @@
 										label: "Aceptar",
 										className: "btn-success",
 										callback: function() {
-											location.href="/bo/videos/listar";
+											location.href = "/bo/configuracion/listar_videos?id_red=<?php echo $id_red;?>";
 											}
 										}
 									}
@@ -460,14 +472,14 @@
 				
 			$.ajax({
 				type: "POST",
-				url: "/bo/videos/cambiar_estado_video",
+				url: "/bo/configuracion/cambiar_estado_video",
 				data: {
 					id:id, 
 					estado: estatus
 				},
 				}).done(function( msg )
 						{
-							location.href = "/bo/videos/listar";
+							location.href = "/bo/configuracion/listar_videos?id_red=<?php echo $id_red;?>";
 						
 					})
 			}
