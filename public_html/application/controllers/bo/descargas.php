@@ -241,14 +241,16 @@ class descargas extends CI_Controller
 	
 		$id = $this->tank_auth->get_user_id();
 		
-		$extension =  explode('.', $_FILES['userfile1']['name']);
-		
-		$id_archivo = $this->model_descargas-> BuscarTipo(end($extension));
-		if($id_archivo == null){
-			$error = "El tipo de archivo que esta cargando no esta permitido.";
-			$this->session->set_flashdata('error', $error);
-			redirect('/bo/descargas/listar');
+		if($_FILES['userfile1']['name'] != ""){
+			$extension =  explode('.', $_FILES['userfile1']['name']);
+			$id_archivo = $this->model_descargas-> BuscarTipo(end($extension));
+			if($id_archivo == null){
+				$error = "El tipo de archivo que esta cargando no esta permitido.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/descargas/listar');
+			}
 		}
+		
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/archivos/"))
 		{
@@ -282,7 +284,7 @@ class descargas extends CI_Controller
 		if (!$this->upload->do_upload('userfile1')){
 			$extension =  explode('.', $_FILES['userfile1']['name']);
 			$error = array('error' => $this->upload->display_errors());
-			var_dump($error); exit;
+			//var_dump($error); exit;
 			if(isset($extension[1])){
 				$error = "El tipo de archivo que esta cargando no esta permitido.";
 				$this->session->set_flashdata('error', $error);

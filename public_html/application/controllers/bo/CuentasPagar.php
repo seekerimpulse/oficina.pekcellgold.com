@@ -213,4 +213,71 @@ class CuentasPagar extends CI_Controller
 		//$this->email->set_alt_message($this->load->view('email/activate-txt', $data, TRUE));
 		$this->email->send();
 	}
+	
+	function Archivero(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$usuario=$this->general->get_username($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/Archivero/index');
+	}
+	
+	function Archivos(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+	
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		$usuario = $this->general->get_username($id);
+		$style = $this->modelo_dashboard->get_style(1);
+	
+		$archivos = array();
+		$ruta = $_SERVER['DOCUMENT_ROOT']."/media/reportes/";
+		if(is_dir($ruta)){
+			if($aux = opendir($ruta)){
+				while (($archivo = readdir($aux)) != false){
+					if(!is_dir($archivo) && $archivo != 'index.html'){
+						$archi = explode(".", $archivo);
+						$filename = explode("de", $archi[0]);
+						array_push($archivos, array('nombre' => $filename[0], 'fecha' => $filename[1],'ruta' => "/media/reportes/".$archivo));
+					}
+				}
+			}
+		}
+		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
+		$this->template->set("archivos",$archivos);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/comercial/Archivero/archivos_pagos');
+	}
 }

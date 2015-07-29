@@ -18,6 +18,8 @@ class compras extends CI_Controller
 		$this->load->model('ov/model_afiliado');
 		$this->load->model('model_tipo_red');
 		$this->load->model('model_user_profiles');
+		$this->load->model('bo/modelo_historial_consignacion');
+		$this->load->model('bo/model_mercancia');
 	}
 
 function index()
@@ -98,10 +100,12 @@ function index()
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
+		$grupos = $this->model_mercancia->CategoriasMercancia();
 		//$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
+		$this->template->set("grupos",$grupos);
 		$productos=$this->modelo_compras->get_productos();
-		$redes = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->RedesUsuario($id);
 		
 		for($i=0;$i<sizeof($productos);$i++)
 		{
@@ -784,6 +788,86 @@ function index()
 		//force user to download the Excel file without writing it to server's HD
 		$objWriter->save('php://output');	
 	}
+	
+	function ReportePagosBanco(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$cobros = $this->modelo_historial_consignacion->ConsultarPagosBanco($id);
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th>Fecha</th>
+					<th>Banco</th>
+					<th>N° Cuenta</th>
+					<th>Clave</th>
+					<th>Monto</th>
+					<th>Estado</th>
+				</thead>
+				<tbody>";
+		for($i=0;$i < sizeof($cobros);$i++)
+		{
+		echo "<tr>
+			<td class='sorting_1'>".$cobros[$i]->id."</td>
+			<td>".$cobros[$i]->fecha."</td>
+			<td>".$cobros[$i]->banco."</td>
+			<td>".$cobros[$i]->cuenta."</td>
+			<td>".$cobros[$i]->clave."</td>
+			<td>$ ".number_format($cobros[$i]->valor,2)."</td>
+			<td>".$cobros[$i]->estado."</td>
+			</tr>";
+		}
+		
+		
+		echo "</tbody> </table> <tr class='odd' role='row'>";
+	}
+	
+	function reporte_pagos_banco_excel()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$cobros = $this->modelo_historial_consignacion->ConsultarPagosBanco($id);
+	
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte-pagos_banco.xls");
+	
+		$total = 0;
+		$ultima_fila = 0;
+		for($i = 0;$i < sizeof($cobros);$i++)
+		{
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $cobros[$i]->id);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $cobros[$i]->fecha);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $cobros[$i]->banco);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $cobros[$i]->cuenta);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $cobros[$i]->clave);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $cobros[$i]->estado);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), '$ '.number_format($cobros[$i]->valor,2));
+			$total = $total + $cobros[$i]->valor;
+			$ultima_fila = $i+8;
+				
+		}
+	
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($ultima_fila+1), "Total");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($ultima_fila+1), "$ ".number_format($total,2));
+	
+		$filename='Compras por consignacion banco.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+	
+				//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+				//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+				//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+	}
+	
 	function muestra_mercancia()
 	{
 		$data=$_GET["info"];
@@ -1655,9 +1739,11 @@ function index()
 	}
 	function show_todos()
 	{
-	$idRed=$_GET['id'];
-
-		$prod=$this->modelo_compras->get_productos_red($idRed);
+		$id=$this->tank_auth->get_user_id();
+		$idRed=$_GET['id'];
+		$pais = $this->general->get_pais($id);
+		
+		$prod=$this->modelo_compras->get_productos_red($idRed, $pais[0]->pais);
 		for($i=0;$i<sizeof($prod);$i++)
 		{
 			$imagen=$this->modelo_compras->get_img($prod[$i]->id);
@@ -2969,7 +3055,7 @@ function index()
 	}
 
 	
-	private function CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador, $costo_mercancia){
+	function CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador, $costo_mercancia){
 		$red2 = $this->model_afiliado->RedAfiliado ( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id);
 		$estado = $this->model_user_profiles->EstadoUsuario ( $id_afiliado[0]->debajo_de );
 		if(is_null($id_afiliado[0]->lado) || !isset($red2[0]->premium)){
@@ -3006,7 +3092,7 @@ function index()
 		return 0;
 	}
 	
-	private function DarComision($id_venta, $id_afiliado, $costo_comision, $porcentaje_comision, $id_categoria_mercancia){
+	function DarComision($id_venta, $id_afiliado, $costo_comision, $porcentaje_comision, $id_categoria_mercancia){
 		$this->modelo_compras->CalcularComisionVenta ( $id_venta, $id_afiliado[0]->debajo_de, $porcentaje_comision, $costo_comision, $id_categoria_mercancia);
 	} 
 	

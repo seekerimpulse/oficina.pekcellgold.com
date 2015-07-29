@@ -13,6 +13,7 @@ class admin extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/model_admin');
+		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/general');
 	}
 
@@ -285,7 +286,7 @@ class admin extends CI_Controller
 	{
 		
 		$promo          = $this->model_admin->get_promo();
-		$grupo          = $this->model_admin->get_grupo();
+		$grupos         = $this->model_mercancia->CategoriasMercancia();
 		$servicio       = $this->model_admin->get_servicio();
 		$producto       = $this->model_admin->get_producto();
 		$combinado      = $this->model_admin->get_combinado();
@@ -306,7 +307,7 @@ class admin extends CI_Controller
 		$mercancia 		= $this->model_admin->get_mercancia_espec($_POST['id']);
 		$impuestos_merc	= $this->model_admin->get_impuestos_mercancia($_POST['id']);
 		
-		
+		$this->template->set("grupos",$grupos);
 		echo '<div class="row">
 				<form class="smart-form" id="update_merc" method="post" action="/bo/admin/update_mercancia" enctype="multipart/form-data" novalidate="novalidate">  
 			<h3><center><b>Editar mercancía '.$data_merc[0]->nombre.'</b></center></h3>';
@@ -335,7 +336,7 @@ class admin extends CI_Controller
 			
 			$this->template->set("id_mercancia",$id_mercancia);
 			$this->template->set("data_merc",$data_merc);
-			$this->template->set("grupo",$grupo);
+			//$this->template->set("grupo",$grupo);
 			$this->template->set("img",$img);
 			$this->template->set("mercancia",$mercancia);
 			$this->template->set("proveedores",$proveedores);
@@ -664,7 +665,7 @@ class admin extends CI_Controller
 			$proveedores    = $this->model_admin->get_proveedor2(2);
 			$this->template->set("id_mercancia",$id_mercancia);
 			$this->template->set("data_merc",$data_merc);
-			$this->template->set("red",$red);
+			//$this->template->set("red",$red);
 			$this->template->set("img",$img);
 			$this->template->set("mercancia",$mercancia);
 			$this->template->set("proveedores",$proveedores);

@@ -77,7 +77,7 @@ class mercancia extends CI_Controller
 		$productos       = $this->model_admin->get_mercancia();
 		$proveedores	 = $this->model_admin->get_proveedor2($_GET['id']);
 		$promo			 = $this->model_admin->get_promo();
-		$grupo			 = $this->model_admin->get_grupo();
+		$grupos			 = $this->model_mercancia->CategoriasMercancia();
 		$servicio		 = $this->model_admin->get_servicio();
 		$producto		 = $this->model_admin->get_producto();
 		$combinado		 = $this->model_admin->get_combinado();
@@ -101,7 +101,7 @@ class mercancia extends CI_Controller
 		$this->template->set("style",$style);
 		$this->template->set("proveedores",$proveedores);
 		$this->template->set("promo",$promo);
-		$this->template->set("grupo",$grupo);
+		$this->template->set("grupos",$grupos);
 		$this->template->set("servicio",$servicio);
 		$this->template->set("producto",$producto);
 		$this->template->set("combinado",$combinado);

@@ -15,7 +15,7 @@
 	</div>
 	
 
-
+<div class="spinner2"></div>
 		<!-- START ROW -->
 
 		<div class="row">
@@ -37,6 +37,7 @@
 											<option value="2">Compras personales</option>
 											<option value="3">Ventas de la red</option>
 											<option value="4">Ventas web personal</option>
+											<option value="5">Compras por Banco</option>
 										</select> <i></i> </label>
 								</section>
 								<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -97,7 +98,7 @@
 								</section>
 								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 									
-									<label class="input">
+									<label class="input" id="remplazar">
 										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
 									</label>
 								</section>
@@ -289,7 +290,7 @@
 		<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
 		<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 		<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-		
+		<script src="/template/js/spin.js"></script>
 		<script type="text/javascript">
 			$("#tipo-reporte").change(function()
 			{
@@ -576,12 +577,38 @@
 						break;
 					case 4:
 						break;
+					case '5':{
+						$("#well-print-usr").hide();
+						$("#row-print-usr").hide();
+						$("#well-print-af").hide();
+						$("#row-print-af").hide();
+						$("#well-print-web").hide();
+						$("#row-print-web").hide();
+						iniciarSpinner();
+						$.ajax({
+							type: "POST",
+							url: "/ov/compras/ReportePagosBanco"
+						})
+						.done(function( msg ) {
+							
+							FinalizarSpinner();
+							$("#reporte_div").html(msg);
+							var obj = '<a onclick="ReportePagoBancoExcel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+								$("#remplazar").html(obj);
+								$("#row-print-red").show();
+							});
+						}
+					break;
 					default:
 						break;
 				}
 
 			
 			});
+
+		function ReportePagoBancoExcel(){
+			window.location="/ov/compras/reporte_pagos_banco_excel"
+		}
 		</script>
 		<script>
 			function reporte_excel_comprar_usr()
@@ -608,6 +635,39 @@
 								});
 							}
 						}	
+			}
+
+			function iniciarSpinner(){
+				
+				var opts = {
+						  lines: 12 // The number of lines to draw
+						, length: 28 // The length of each line
+						, width: 14 // The line thickness
+						, radius: 42 // The radius of the inner circle
+						, scale: 1 // Scales overall size of the spinner
+						, corners: 1 // Corner roundness (0..1)
+						, color: '#3276B1' // #rgb or #rrggbb or array of colors
+						, opacity: 0.25 // Opacity of the lines
+						, rotate: 0 // The rotation offset
+						, direction: 1 // 1: clockwise, -1: counterclockwise
+						, speed: 1 // Rounds per second
+						, trail: 60 // Afterglow percentage
+						, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+						, zIndex: 2e9 // The z-index (defaults to 2000000000)
+						, className: 'spinner' // The CSS class to assign to the spinner
+						, top: '50%' // Top position relative to parent
+						, left: '50%' // Left position relative to parent
+						, shadow: false // Whether to render a shadow
+						, hwaccel: true // Whether to use hardware acceleration
+						, position: 'absolute' // Element positioning
+						}
+						
+						var spinner = new Spinner(opts).spin(document.getElementById('spinner2'));
+				}
+
+			function FinalizarSpinner(){
+				
+				$("#spinner2").html('');
 			}
 		</script>
 		<script type="text/javascript">
