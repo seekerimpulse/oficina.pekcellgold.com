@@ -238,15 +238,9 @@ class model_admin extends CI_Model
 	}
 	
 	function get_servicios(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , S.nombre, CI.url, 
-								CTM.descripcion, TR.nombre red
-								
-								 from mercancia M, servicio S, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, 
-									  tipo_red TR
-								
-								where M.sku = S.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=2 and 
-								CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and 
-								S.id_red = TR.id");
+		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , S.nombre, CI.url, CTM.descripcion, TR.nombre red
+							from mercancia M, servicio S, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP
+							where M.sku = S.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=2 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = S.id_red and CGP.id_red = TR.id");
 		return $q->result();
 	}
 	
@@ -255,11 +249,11 @@ class model_admin extends CI_Model
 							 CI.url, CTM.descripcion, TR.nombre red
 							
 							 from mercancia M, combinado C, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, 
-								  tipo_red TR
+								  tipo_red TR, cat_grupo_producto CGP
 							
 							where M.sku = C.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=3 and 
-							CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and 
-							C.id_red = TR.id");
+							CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = C.id_red and
+							CGP.id_red = TR.id");
 		return $q->result();
 	}
 	

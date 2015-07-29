@@ -19,7 +19,7 @@ class compras extends CI_Controller
 		$this->load->model('model_tipo_red');
 		$this->load->model('model_user_profiles');
 		$this->load->model('bo/modelo_historial_consignacion');
-		
+		$this->load->model('bo/model_mercancia');
 	}
 
 function index()
@@ -100,10 +100,12 @@ function index()
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
+		$grupos = $this->model_mercancia->CategoriasMercancia();
 		//$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
+		$this->template->set("grupos",$grupos);
 		$productos=$this->modelo_compras->get_productos();
-		$redes = $this->model_tipo_red->listarTodos();
+		$redes = $this->model_tipo_red->RedesUsuario($id);
 		
 		for($i=0;$i<sizeof($productos);$i++)
 		{
@@ -1737,9 +1739,11 @@ function index()
 	}
 	function show_todos()
 	{
-	$idRed=$_GET['id'];
-
-		$prod=$this->modelo_compras->get_productos_red($idRed);
+		$id=$this->tank_auth->get_user_id();
+		$idRed=$_GET['id'];
+		$pais = $this->general->get_pais($id);
+		
+		$prod=$this->modelo_compras->get_productos_red($idRed, $pais[0]->pais);
 		for($i=0;$i<sizeof($prod);$i++)
 		{
 			$imagen=$this->modelo_compras->get_img($prod[$i]->id);

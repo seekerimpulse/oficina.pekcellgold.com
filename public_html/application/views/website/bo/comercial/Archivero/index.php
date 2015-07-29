@@ -5,9 +5,7 @@
 						<h1 class="page-title txt-color-blueDark">
 							
 							<!-- PAGE HEADER -->
-							<i class="fa-fw fa fa-home"></i> 
-								<a href="/bo/dashboard"> Menu</a> 
-							<span> >
+							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> <span> >
 								<a href="/bo/comercial/index"> Comercial</a> > Archivero
 							</span>
 						</h1>
@@ -35,18 +33,18 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-2 link">
+											<div class="col-sm-3 link">
 											</div>
 											<div class="col-sm-8 link">
 												<div class="col-sm-4 link">
 													<a href="/bo/CuentasPagar/Archivos">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
-															<i class="fa fa-edit fa-3x"></i>
+															<i class="fa fa-archive fa-3x"></i>
 															<h1>Historial De Pagos</h1>
 														</div>
 													</a>
 												</div>
-												
+											
 											
 											</div>
 										 </div>

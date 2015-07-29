@@ -71,30 +71,31 @@
 														<input type="text" name="codigo_barras" id="codigo_barras">
 													</label>
 												</section>
-												<section class="col col-3">RED
+												<section class="col col-3">Categoria
 															<label class="select">
-																<select name="red" required>
-																<?foreach ($redes as $key){?>
-																	<option value="<?=$key->id?>">
-																	<?= $key->nombre?>
+																<select name="red">
+																<?foreach ($grupos as $grupo){?>
+																	<option value="<?=$grupo->id_grupo?>">
+																	<?= $grupo->descripcion." (".$grupo->red.")" ?>
+																	</option>
 																<?}?>
 																</select>
 															</label>
 														</section>
 												<div>
-													<section style="padding-left: 0px;" class="col col-6">
-														Descripcion
+													<section style="padding-left: 0px;" class="col col-6">Descripcion
 														<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"></textarea>
 													</section>
+													
 													<section id="imagenes" class="col col-6">
 														<label class="label">Imágen</label>
 														<div class="input input-file">
 															<span class="button">
-																<input id="img" name="img[]" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="" type="text">
+																<input id="img" name="img[]" onchange="this.parentNode.nextSibling.value = this.value" type="file" multiple>Buscar</span><input id="imagen_mr" placeholder="Agregar alguna imágen" readonly="readonly" type="text">
 															</div>
 															<small>Para cargar múltiples archivos, presione la tecla ctrl y sin soltar selecione sus archivos.<br /><cite title="Source Title">Para ver los archivos que va a cargar, deje el puntero sobre el boton de "Buscar"</cite></small>
 														</section>
-													</div>
+												</div>
 												</fieldset>
 												<fieldset>
 													<legend>Fisicos</legend>
@@ -663,44 +664,7 @@ function new_grupo()
 		}
 	})
 }
-function kill_grupo()
-{
-	bootbox.dialog({
-		message: "<form class='smart-form'><label class='select text-center'><select id='imp_sel'><? foreach($grupo as $grp){?><option value='<?=$grp->id_grupo?>'><?=$grp->descripcion?></option><?}?></select></label></form>",
-		title: 'Eliminar grupo',
-		buttons: {
-			success: {
-				label: "Eliminar",
-				className: "btn-danger",
-				callback: function() {
-					var id_g=$("#imp_sel").val()
-					$.ajax({
-						type: "POST",
-						url: "/bo/admin/kill_grupo",
-						data: {id: id_g},
-					})
-					.done(function( msg )
-					{
-						bootbox.dialog({
-							message: "El grupo fue eliminado con exito",
-							title: 'Atención',
-							buttons: {
-								success: {
-									label: "Ok",
-									className: "btn-success",
-									callback: function() {
 
-									}
-								}
-							}
-						})
-						location.href='';
-					})
-				}
-			}
-		}
-	})
-}
 function new_impuesto()
 {
 	bootbox.dialog({
