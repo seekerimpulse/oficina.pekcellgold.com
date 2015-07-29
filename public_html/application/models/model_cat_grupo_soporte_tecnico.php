@@ -14,43 +14,21 @@ class Model_cat_grupo_soporte_tecnico extends CI_Model{
 		return $q->result();
 	}
 	
-	function traerRed($idRed)
+	function traer_grupo($id)
 	{
-		$q=$this->db->query('select nombre, descripcion from tipo_red where id = '.$idRed);
+		$q=$this->db->query('select * from cat_grupo_soporte_tecnico where id="'.$id.'"');
 		return $q->result();
 	}
 	
-	function traer_nombre_red($idRed)
-	{
-		$q=$this->db->query('select nombre from tipo_red where id = '.$idRed);
-		return $q->result();
+	function actualizar_grupo(){
+		$this->db->query('UPDATE cat_grupo_soporte_tecnico SET descripcion="'.$_POST['descripcion'].'",tipo="'.$_POST['tipo'].'",id_red="'.$_POST['red'].'" WHERE id="'.$_POST['id'].'"');
+		return true;
 	}
 	
-	function ObtenerFrontales()
+	function get_groups($tipo, $id_red)
 	{
-		$q=$this->db->query('select frontal from tipo_red where id=1');
+		$q=$this->db->query('select * from cat_grupo_soporte_tecnico where estatus="ACT" and tipo="'.$tipo.'" and id_red='.$id_red);
 		return $q->result();
-	}
-				
-	function traerCapacidadRed()
-	{
-		$q = $this->db->query('select frontal,profundidad from tipo_red where id = 1');
-		
-		return $q->result();
-	}
-	function actualizarCapacidadRed($frontal, $profundidad){
-		$datos = array(	'frontal' => $frontal,
-						'profundidad' => $profundidad);
-		
-		$this->db->update('tipo_red', $datos);
-	}
-	function actualizar($id, $nombre, $descripcion, $profundidad, $frontal){
-		$datos = array(
-				'nombre' => $nombre,
-				'descripcion' => $descripcion,
-				'frontal' => $frontal,
-				'profundidad' => $profundidad);
-		$this->db->update("tipo_red",$datos,"id = ".$id);
 	}
 	
 }

@@ -85,13 +85,22 @@
 									
 									if(isset($data['errors']))
 									{
+										$pswd="";
 										if(isset($data['errors']['login']))
 										{
-											$login='Error en la cuenta';
+											$login='Error en la cuenta. ';
 										}
 										if(isset($data['errors']['password']))
 										{
-											$pswd='Error en la contraseña';
+											$pswd='Error en la contraseña. ';
+										}
+										if(isset($data['errors']['blocked']))
+										{
+											$pswd='Tu cuenta esta bloqueada , intenta ingresar en 30 Minutos.<br>';
+										}
+										if(isset($data['errors']['attempts']))
+										{
+											$pswd.='Solo te queda '.$data['errors']['attempts'].' intentos antes que se bloque la cuenta.<br>';
 										}
 
 									}

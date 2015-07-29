@@ -263,7 +263,7 @@
 																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
 																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVenta" >
 																				  <input type="submit" value="PayuLatam" class="btn btn-lg btn-success" style="float:right;">
-																				  <a   class="btn btn-lg btn-danger" onclick="consignacion()">Consignacion</a>
+																				  <a   class="btn btn-lg btn-danger" onclick="consignacion(<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)">Pago Por Banco</a>
 																			</form>
 																				
 												                         </td>
@@ -1049,27 +1049,34 @@
 });
 
 
-	function consignacion(){
-		bootbox.dialog({
-			message: "Estas Seguro(a) <br> El pago tendra un plazo de 24 horas para ser realizado",
-			title: "Ver carro",
-			className: "",
-			buttons: {
-				success: {
-				label: "Aceptar",
-				className: "btn-success",
-				callback: function() {
-					 window.location="RegistrarVentaConsignacion";
-					}
-				},
-			cancelar: {
-				label: "Cancelar",
-				className: "btn-danger",
-				callback: function() {
-					}
-				}
-			}
-		})
+	function consignacion(id, cant){
+		
+		$.ajax({
+						data:{
+							id_mercancia : id,
+							cantidad : cant
+							},
+						type:"post",
+						url:"/ov/compras/SelecioneBanco?usr=<?php if(isset($_GET['usr'])){ echo $_GET['usr']; } else { echo '0'; } ?>",
+						success: function(msg){
+							
+							bootbox.dialog({
+								message: msg,
+								title: "Selecione Banco",
+								className: "",
+								buttons: {
+									success: {
+									label: "Aceptar",
+									className: "hide",
+									callback: function() {
+										 window.location="/ov/compras/carrito?tipo=1";
+										}
+									}
+								}
+							})
+						}
+					});
+					
 	}
 		
 		</script>

@@ -90,56 +90,68 @@ class Auth extends CI_Controller
 			}
 
 				
-			if ($this->form_validation->run()) {									// validation ok
-				
-				if ($this->tank_auth->login(
-						$this->form_validation->set_value('login'),
-						$this->form_validation->set_value('password'),
-						$this->form_validation->set_value('remember'),
-						$data['login_by_username'],
-						$data['login_by_email'])) {								// success
+			if ($this->form_validation->run()) {	
 
-					$id   = $this->tank_auth->get_user_id();
-					$tipo = $this->general->get_tipo($id);
-					$tipo = $tipo[0]->id_tipo_usuario;
+				if($this->general->isBlocked()){
+					$data['errors']['blocked'] = true;
+					$this->template->set('data',$data);
+					$this->template->build('auth/login');
+				}else {
+					if ($this->tank_auth->login(
+							$this->form_validation->set_value('login'),
+							$this->form_validation->set_value('password'),
+							$this->form_validation->set_value('remember'),
+							$data['login_by_username'],
+							$data['login_by_email'])) {								// success
 					
-					$estatus = $this->general->get_status($id);
-					$estatus = $estatus[0]->id_estatus;
-					
-					if($estatus == '1'){
-						if($tipo==1){
-							$this->cobrarRetenciones();
-							redirect('/bo/dashboard');
-						}
-						elseif ($tipo==2)
+						$id   = $this->tank_auth->get_user_id();
+						$tipo = $this->general->get_tipo($id);
+						$tipo = $tipo[0]->id_tipo_usuario;
+							
+						$estatus = $this->general->get_status($id);
+						$estatus = $estatus[0]->id_estatus;
+							
+						if($estatus == '1'){
+							$this->general->unlocked();
+							
+							if($tipo==1){
+								$this->cobrarRetenciones();
+								redirect('/bo/dashboard');
+							}
+							elseif ($tipo==2)
 							redirect('/ov/dashboard');
-						elseif ($tipo==3)
+							elseif ($tipo==3)
 							redirect('/bos/dashboard');
-						elseif ($tipo==4)
+							elseif ($tipo==4)
 							redirect('/boc/dashboard');
-						elseif ($tipo==5)
+							elseif ($tipo==5)
 							redirect('/bol/dashboard');
-						elseif ($tipo==6)
+							elseif ($tipo==6)
 							redirect('/boo/dashboard');
-						elseif ($tipo==7)
+							elseif ($tipo==7)
 							redirect('/boa/dashboard');
-					}else{
-						$this->logout2();
-
-					}
-
-				} else {
-					$errors = $this->tank_auth->get_error_message();
-					if (isset($errors['banned'])) {								// banned user
-						$this->_show_message($this->lang->line('auth_message_banned').' '.$errors['banned']);
-
-					} elseif (isset($errors['not_activated'])) {				// not activated user
-						redirect('/auth/send_again/');
-
-					} else {													// fail
-						foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+						}else{
+							$this->logout2();
+					
+						}
+					
+					} else {
+						
+						$data['errors']['attempts']= $this->general->addAttempts();
+						
+						$errors = $this->tank_auth->get_error_message();
+						if (isset($errors['banned'])) {								// banned user
+							$this->_show_message($this->lang->line('auth_message_banned').' '.$errors['banned']);
+					
+						} elseif (isset($errors['not_activated'])) {				// not activated user
+							redirect('/auth/send_again/');
+					
+						} else {													// fail
+							foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+						}
 					}
 				}
+
 			}
 			$this->template->set('data',$data);
 			$this->template->build('auth/login');
@@ -169,6 +181,9 @@ class Auth extends CI_Controller
 	function logout2()
 	{
 		$id   = $this->tank_auth->get_user_id();
+		if($id==null){
+			redirect('/auth/login');
+		}
 		$this->general->update_login($id);
 
 		$this->tank_auth->logout(); // Destroys session

@@ -5,11 +5,22 @@
 								<label class="select">
 								<label class="label">Seleccione una categoria</label>
 									<select name="tipo" id="tipo" required="" style="width: 20rem">
-										<option value="PRE" <?php if($grupo[0]->tipo=="PRE")echo 'selected="selected"';?>>Presentaciones</option>
-										<option value="DES" <?php if($grupo[0]->tipo=="DES")echo 'selected="selected"';?>>Descargas</option>
-										<option value="EBO" <?php if($grupo[0]->tipo=="EBO")echo 'selected="selected"';?>>E-books</option>
-										<option value="NOT" <?php if($grupo[0]->tipo=="NOT")echo 'selected="selected"';?>>Noticias</option>
+										<option value="INF" <?php if($grupo[0]->tipo=="INF")echo 'selected="selected"';?>>Información</option>
 										<option value="VID" <?php if($grupo[0]->tipo=="VID")echo 'selected="selected"';?>>Videos</option>
+									</select>
+								</label>
+								<br>
+								<label class="select">
+								<label class="label">Seleccione la red de la categoria</label>
+									<select name="red" id="red" required="">
+										<?php 
+											foreach ($redes as $red){
+												if ($grupo[0]->id_red == $red->id){
+													echo '<option selected value='.$red->id.'>'.$red->nombre.'</option>';
+												}
+												else echo '<option value='.$red->id.'>'.$red->nombre.'</option>';
+											}
+										?>
 									</select>
 								</label>
 								<br>
@@ -32,7 +43,7 @@ function enviar() {
 	
 	 $.ajax({
 							type: "POST",
-							url: "/bo/grupos/actualizar_grupo",
+							url: "/bo/configuracion/actualizar_grupo",
 							data: $('#nueva').serialize()
 						})
 						.done(function( msg ) {
@@ -45,7 +56,7 @@ function enviar() {
 											label: "Ok!",
 											className: "btn-success",
 											callback: function() {
-												location.href="/bo/grupos/listar";
+												location.href="/bo/configuracion/listar_grupos_soporte_tecnico";
 												}
 											}
 										}
