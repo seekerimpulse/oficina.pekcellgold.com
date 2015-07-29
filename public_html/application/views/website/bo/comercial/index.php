@@ -76,10 +76,10 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">	
-													<a href="#">
+													<a href="/bo/cuentasporcobrar/index">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-users fa-3x"></i>
-															<h1>Atencion al afiliado</h1>
+															<i class="fa fa-bank fa-3x"></i>
+															<h1>Cuentas Por Cobrar</h1>
 														</div>
 													</a>
 												</div>
@@ -100,7 +100,7 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">	
-													<a href="#">
+													<a href="/bo/CuentasPagar/Archivero">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-folder fa-3x"></i>
 															<h1>Archivero <br>&nbsp</h1>

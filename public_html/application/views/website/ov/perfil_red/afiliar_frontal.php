@@ -6,7 +6,7 @@
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
 $(document).ready(function() {
-
+	//Para local /ov/perfil_red/crear_user
 	// fuelux 
 
 			  var wizard = $('.wizard').wizard();
