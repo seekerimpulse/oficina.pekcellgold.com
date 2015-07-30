@@ -493,7 +493,7 @@
 												<div class="col-sm-12">
 													<a href="cgeneral/chat">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
-															<i class="fa fa-users fa-3x"></i>
+															<i class="fa fa-weixin fa-3x"></i>
 															<h5>Chat</h5>
 														</div>
 													</a>
