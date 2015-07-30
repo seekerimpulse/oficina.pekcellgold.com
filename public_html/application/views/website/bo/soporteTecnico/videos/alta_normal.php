@@ -80,13 +80,13 @@
 												<label class="label">Archivo de Video</label>
 												<section>
 													<div class="input input-file">
-														<span class="button"><input id="file" onchange="this.parentNode.nextSibling.value = this.value" name="userfile[]" type="file" required>Buscar</span><input placeholder="Seleccione un archivo" readonly="" type="text">
+														<span class="button"><input id="file" onchange="this.parentNode.nextSibling.value = this.value" name="userfile[]" type="file" required>Buscar</span><input placeholder="Verifique que el nombre no tenga caracteres especiales" readonly="" type="text">
 													</div>
 												</section>
 												<label class="label">Imagen</label>
 												<section>
 													<div class="input input-file">
-														<span class="button"><input id="file" onchange="this.parentNode.nextSibling.value = this.value" name="userfile[]" type="file" required>Buscar</span><input placeholder="Seleccione un archivo" readonly="" type="text">
+														<span class="button"><input id="file" onchange="this.parentNode.nextSibling.value = this.value" name="userfile[]" type="file" required>Buscar</span><input placeholder="Verifique que el nombre no tenga caracteres especiales" readonly="" type="text">
 													</div>
 												</section>
 												<br>

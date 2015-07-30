@@ -65,12 +65,13 @@
 														<label class="input">Fecha de termino
 														<input type="text" name="fecha_fin" id="finishdate" readonly="readonly"/> </label>
 													</section>
-													<section class="col col-3">RED
+													<section class="col col-3">Categoria
 															<label class="select">
 																<select name="red">
-																<?foreach ($redes as $key){?>
-																	<option value="<?=$key->id?>">
-																	<?= $key->nombre?>
+																<?foreach ($grupos as $grupo){?>
+																	<option value="<?=$grupo->id_grupo?>">
+																	<?= $grupo->descripcion." (".$grupo->red.")" ?>
+																	</option>
 																<?}?>
 																</select>
 															</label>

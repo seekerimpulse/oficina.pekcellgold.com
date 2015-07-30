@@ -65,14 +65,16 @@
 												<section class="col col-12" style="width: 100%;">GRUPO
 															<label class="select">
 																<select name="grupo">
-																<?foreach ($grupo as $key){
+																<?foreach ($grupos as $key){
 																	
-																	if ($data_merc[0]->descripcion_red == $key->descripcion){?>
+																	if ($data_merc[0]->id_grupo == $key->id_grupo){?>
 																		<option selected value='<?=$key->id_grupo?>'>
-																			<?= $key->descripcion?>
+																			<?= $key->descripcion." (".$key->red.")" ?>
+																		</option>
 																	<? }	else{?>
-																		<option value='<?=$key->id_grupo?>'>
-																			<?= $key->descripcion?>
+																		<option value='<?=$key->id_grupo ?>'>
+																			<?= $key->descripcion." (".$key->red.")" ?>
+																		</option>
 																	<? }?>
 																<?}?>
 																</select>

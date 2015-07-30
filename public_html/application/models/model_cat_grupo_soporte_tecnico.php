@@ -21,7 +21,8 @@ class Model_cat_grupo_soporte_tecnico extends CI_Model{
 	}
 	
 	function actualizar_grupo(){
-		$this->db->query('UPDATE cat_grupo_soporte_tecnico SET descripcion="'.$_POST['descripcion'].'",tipo="'.$_POST['tipo'].'",id_red="'.$_POST['red'].'" WHERE id="'.$_POST['id'].'"');
+		$this->db->query('UPDATE archivo_soporte_tecnico SET id_red="'.$_POST['red'].'" WHERE id_grupo="'.$_POST['id'].'"');
+		$this->db->query('UPDATE cat_grupo_soporte_tecnico SET descripcion="'.$_POST['descripcion'].'",id_red="'.$_POST['red'].'" WHERE id="'.$_POST['id'].'"');
 		return true;
 	}
 	

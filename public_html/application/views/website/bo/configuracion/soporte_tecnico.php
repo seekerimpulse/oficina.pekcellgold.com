@@ -38,6 +38,15 @@
 											</div>
 											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " style="padding-left: 13%;">
 												
+												<div class="col-xs-10 col-sm-10 col-md-2 col-lg-2" style="padding-right: 1%; padding-bottom: 3rem;">
+												<a href="grupos_soporte_tecnico">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+														<i class="fa fa-group fa-3x"></i>
+														<h1>Grupos<br><br></h1>
+													</div>
+												</a>
+												</div>
+												
 												<div class="col-xs-10 col-sm-10 col-md-2 col-lg-2" style="padding-right: 1%;padding-bottom: 3rem">
 												<a href="informacion_ver_redes">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
@@ -64,16 +73,6 @@
 													</div>
 												</a>
 												</div>
-												
-												<div class="col-xs-10 col-sm-10 col-md-2 col-lg-2" style="padding-bottom: 3rem;">
-												<a href="grupos_soporte_tecnico">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-group fa-3x"></i>
-														<h1>Grupos<br><br></h1>
-													</div>
-												</a>
-												</div>
-												
 												
 											</div>
 										 </div>

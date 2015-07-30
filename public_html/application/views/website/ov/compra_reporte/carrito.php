@@ -222,8 +222,19 @@
 						<!-- widget content -->
 						<div class="widget-body">
 							<? foreach ($redes as $red) {?>
-								<a class="btn bg-color-blueDark txt-color-white btn-block" 
-								onclick="show_todos('<?= $red->id;?>');"><?= $red->nombre;?></a>
+								<div class="dropdown">
+											<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-target="#"> <?= $red->nombre;?></a>
+											<ul class="dropdown-menu " role="menu">
+												<?php foreach ($grupos as $grupo) {
+													if ($red->nombre == $grupo->red ){
+													?>
+												<li class="btn btn-lg">
+													<a onclick="show_todos('<?= $grupo->id_grupo;?>');" class="btn btn-block"><?php echo $grupo->descripcion; ?></a>
+												</li>
+												<?php } }?>
+											</ul>
+										</div>
+								
 							<? } ?>
 						</div>
 						<!-- end widget content -->

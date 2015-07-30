@@ -59,16 +59,16 @@
 												<input id="precio_promo" type="number" name="descuento">
 											</label>
 											</section>
-											<section class="col col-3">RED
+											<section class="col col-3">Categoria
 															<label class="select">
 																<select name="red">
-																<?foreach ($redes as $key){?>
-																	<option value="<?=$key->id?>">
-																	<?= $key->nombre?>
+																<?foreach ($grupos as $grupo){?>
+																	<option value="<?=$grupo->id_grupo?>">
+																	<?= $grupo->descripcion." (".$grupo->red.")" ?>
 																<?}?>
 																</select>
-														</label>
-											</section>
+															</label>
+														</section>
 											<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" id="prods">
 											<section class="col col-8">Productos
 											<label class="select">
@@ -583,44 +583,7 @@ function new_grupo()
 		}
 	})
 }
-function kill_grupo()
-{
-	bootbox.dialog({
-		message: "<form class='smart-form'><label class='select text-center'><select id='imp_sel'><? foreach($grupo as $grp){?><option value='<?=$grp->id_grupo?>'><?=$grp->descripcion?></option><?}?></select></label></form>",
-		title: 'Eliminar grupo',
-		buttons: {
-			success: {
-				label: "Eliminar",
-				className: "btn-danger",
-				callback: function() {
-					var id_g=$("#imp_sel").val()
-					$.ajax({
-						type: "POST",
-						url: "/bo/admin/kill_grupo",
-						data: {id: id_g},
-					})
-					.done(function( msg )
-					{
-						bootbox.dialog({
-							message: "El grupo fue eliminado con exito",
-							title: 'Atención',
-							buttons: {
-								success: {
-									label: "Ok",
-									className: "btn-success",
-									callback: function() {
 
-									}
-								}
-							}
-						})
-						location.href='';
-					})
-				}
-			}
-		}
-	})
-}
 function new_impuesto()
 {
 	bootbox.dialog({
