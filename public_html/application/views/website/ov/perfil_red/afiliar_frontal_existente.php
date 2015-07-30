@@ -477,8 +477,11 @@ function codpos_red()
 																type="text" name="id" value="<?php echo $id; ?>"
 																class="hide">
 														</fieldset>
-														<input type="button" class="btn btn-primary"
+														<div class="col col-5"></div>
+														<div class="col col-2 col-xs-12">
+															<input type="button" class="btn btn-primary btn-block"
 															value="Afiliar" onclick="Crear()">
+														</div>
 													</form>
 												</div>
 											</div>
