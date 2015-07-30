@@ -126,6 +126,7 @@ class configuracion extends CI_Controller
 		}
 	
 		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
 		
 		if(!$this->general->isAValidUser($id,"soporte"))
 		{
@@ -152,14 +153,15 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$redes = $this->model_tipo_red->listarTodos();
-		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->set("style",$style);
 		$this->template->set("redes",$redes);
@@ -180,14 +182,15 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$id_red = $_GET['id_red'];
-		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->set("style",$style);
 		$this->template->set("id_red",$id_red);
@@ -208,14 +211,15 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$id_red = $_GET['id_red'];
-		$style=$this->modelo_dashboard->get_style($id);
 		$videos=$this->model_archivo_soporte_tecnico->get_video();
 		$data=array();
 		$data['videos']=$videos;
@@ -238,15 +242,16 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
 		
+		$style=$this->modelo_dashboard->get_style(1);
+		
 		$id_red = $_GET['id_red'];
 		
-		$style=$this->modelo_dashboard->get_style($id);
 		$videos=$this->model_archivo_soporte_tecnico->get_video();
 		$grupos = $this->model_cat_grupo_soporte_tecnico->get_groups("VID", $id_red);
 		$data=array();
@@ -273,8 +278,8 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
@@ -406,15 +411,17 @@ class configuracion extends CI_Controller
 		}
 	
 		$id=$this->tank_auth->get_user_id();
-	
-		if(!$this->general->isAValidUser($id,"oficina"))
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$id_red = $_GET['id_red'];
 		
-		$style=$this->modelo_dashboard->get_style(1);
 		$videos=$this->model_archivo_soporte_tecnico->get_video();
 		$grupos = $this->model_cat_grupo_soporte_tecnico->get_groups("VID", $id_red);
 		$data=array();
@@ -438,10 +445,11 @@ class configuracion extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
-		//echo 'heey';
-		$id=$this->tank_auth->get_user_id();
 	
-		if(!$this->general->isAValidUser($id,"oficina"))
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
@@ -502,18 +510,20 @@ class configuracion extends CI_Controller
 		}
 	
 		$id=$this->tank_auth->get_user_id();
-	
-		if(!$this->general->isAValidUser($id,"oficina"))
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$videos=$this->model_archivo_soporte_tecnico->get_video();
 		$grupos = $this->model_cat_grupo_soporte_tecnico->get_groups("VID", $id_red);
 		$comentarios=$this->model_archivo_soporte_tecnico->get_comments();
-		$style=$this->modelo_dashboard->get_style(1);
 		$data['videos']=$videos;
 		$data['grupos']=$grupos;
 		$data['comentarios']=$comentarios;
@@ -529,6 +539,14 @@ class configuracion extends CI_Controller
 	
 	function insert_coment()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
 		$id_user=$this->tank_auth->get_user_id();
 		$data=$_GET["info"];
 		$data=json_decode($data,true);
@@ -538,16 +556,36 @@ class configuracion extends CI_Controller
 	}
 	
 	function cambiar_estado_video(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
 		$this->db->query("update archivo_soporte_tecnico set status = '".$_POST['estado']."' where id_archivo=".$_POST["id"]);
-	
 	}
 	
 	function kill_video(){
 		
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
-		redirect('/auth');
+			redirect('/auth');
 		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+		
 		$id = $_POST['id'];
 		$q = $this->db->query('select * from cross_img_archivo_soporte_tecnico where id_archivo='.$id);
 		$cross_img_archivo_s_t = $q->result();
@@ -570,6 +608,14 @@ class configuracion extends CI_Controller
 	}
 	
 	function kill_comentario(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
 		$this->db->query("delete from comentario_video_soporte_tecnico where id=".$_POST["id"]);
 	}
 	
@@ -582,14 +628,15 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$redes = $this->model_tipo_red->listarTodos();
-		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->set("style",$style);
 		$this->template->set("redes",$redes);
@@ -610,14 +657,15 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$id_red = $_GET['id_red'];
-		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->set("style",$style);
 		$this->template->set("id_red",$id_red);
@@ -638,14 +686,18 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 		$id_red = $_GET['id_red'];
 		$this->template->set("id_red",$id_red);
 		
 		$grupos = $this->model_cat_grupo_soporte_tecnico->get_groups("INF", $id_red);
 		$this->template->set("grupos",$grupos);
-		
-		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->set("style",$style);
 	
@@ -668,7 +720,13 @@ class configuracion extends CI_Controller
 			redirect('/auth');
 		}
 	
-		$id = $this->tank_auth->get_user_id();
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
 	
 		//Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/archivos/"))
@@ -733,12 +791,20 @@ class configuracion extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 		$id_red = $_GET['id_red'];
 		$archivos = $this->model_archivo_soporte_tecnico->Archivos($id_red);
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		$style=$this->modelo_dashboard->get_style($id);
 
 		$this->template->set("id_red",$id_red);
 		$this->template->set("style",$style);
@@ -756,6 +822,15 @@ class configuracion extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+	
 		$id = $_POST['id'];
 		$estado = $_POST['estado'];
 		$this->model_archivo_soporte_tecnico->CambiarEstado($id, $estado);
@@ -766,6 +841,15 @@ class configuracion extends CI_Controller
 		{																		// logged in
 			redirect('/auth');
 		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+		
 		$id = $_POST['id'];
 		$url = $this->model_archivo_soporte_tecnico->EliminarArchivo($id);
 		if(unlink($_SERVER['DOCUMENT_ROOT'].$url)){
@@ -781,14 +865,17 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		$style=$this->modelo_dashboard->get_style($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("style",$style);
 	
-	
 		$archivo = $this->model_archivo_soporte_tecnico->consultar_archivo($_POST["id"]);
-	
 	
 		$this->template->set("archivo",$archivo);
 	
@@ -806,8 +893,18 @@ class configuracion extends CI_Controller
 		$descripcion = $_POST['descripcion'];
 		$estado = $_POST['estado'];
 		$id_red = $_POST['id_red'];
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
 		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
 		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
 		
 		if ($grupo == "0"){
 			$error = "Debe seleccionar un grupo para al archivo.";
@@ -894,14 +991,15 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
 		
+		$style=$this->modelo_dashboard->get_style(1);
+		
 		$redes = $this->model_tipo_red->listarTodos();
-		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->set("style",$style);
 		$this->template->set("redes",$redes);
@@ -922,14 +1020,15 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
 		
+		$style=$this->modelo_dashboard->get_style(1);
+		
 		$id_red = $_GET['id_red'];
-		$style=$this->modelo_dashboard->get_style($id);
 		$datos_generales = $this->model_datos_generales_soporte_tecnico->traer_por_red($id_red);
 		$vacio = 0;
 		
@@ -954,14 +1053,12 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
-	
-		$style=$this->modelo_dashboard->get_style($id);
-		
+
 		if ($_POST['vacio']==3){
 			$this->model_datos_generales_soporte_tecnico->insertar($_POST['skype'], $_POST['pekey'], $_POST['pinkost'], $_POST['id_red']);
 		}
@@ -982,13 +1079,13 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
-	
-		$style=$this->modelo_dashboard->get_style($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$this->template->set("style",$style);
 	
@@ -1008,13 +1105,13 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
-	
-		$style=$this->modelo_dashboard->get_style($id);
+		
+		$style=$this->modelo_dashboard->get_style(1);
 		$redes = $this->model_tipo_red->listarTodos();
 		
 		$this->template->set("style",$style);
@@ -1036,15 +1133,16 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
+		
+		$style=$this->modelo_dashboard->get_style(1);
 	
 		$grupos  = $this->model_cat_grupo_soporte_tecnico->listar();
 		$redes = $this->model_tipo_red->listarTodos();
-		$style=$this->modelo_dashboard->get_style($id);
 	
 		$this->template->set("style",$style);
 		$this->template->set("grupos",$grupos);
@@ -1066,8 +1164,8 @@ class configuracion extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
 		{
 			redirect('/auth/logout');
 		}
@@ -1076,8 +1174,21 @@ class configuracion extends CI_Controller
 	}
 	
 	function editar_grupo(){
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+		
 		$id              = $this->tank_auth->get_user_id();
-		$style           = $this->general->get_style($id);
 		
 		$redes = $this->model_tipo_red->listarTodos();
 		$grupo  = $this->model_cat_grupo_soporte_tecnico->traer_grupo($_POST['id']);
@@ -1088,6 +1199,19 @@ class configuracion extends CI_Controller
 	}
 	
 	function actualizar_grupo(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+		
 		$correcto = $this->model_cat_grupo_soporte_tecnico->actualizar_grupo();
 		if($correcto){
 			echo "Grupo Actualizado";
@@ -1100,6 +1224,19 @@ class configuracion extends CI_Controller
 	
 	function kill_grupo()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+		
 		$q = $this->db->query("select * from archivo_soporte_tecnico where id_grupo=".$_POST["id"]);
 		$archivo_s_t = $q->result();
 		
@@ -1115,8 +1252,20 @@ class configuracion extends CI_Controller
 	}
 	
 	function cambiar_estado_grupo(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+		
 		$this->db->query("update cat_grupo_soporte_tecnico set estatus = '".$_POST['estado']."' where id=".$_POST["id"]);
-	
 	}
 	
 	function categorias()
