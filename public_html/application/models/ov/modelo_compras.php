@@ -84,10 +84,11 @@ class modelo_compras extends CI_Model
 		return $q->result();
 	}
 	
-	function get_servicios_red($idRed)
+	function get_servicios_red($idRed,$idPais)
 	{
-		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red from servicio a, mercancia b
-		where a.id=b.sku and b.id_tipo_mercancia=2 and b.estatus like "ACT" and a.id_red='.$idRed.'');
+		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, a.nombre img,a.id_red 
+		from servicio a, mercancia b
+		where a.id=b.sku and b.id_tipo_mercancia= 2 and b.estatus like "ACT" and a.id_red= '.$idRed.' and b.pais = "'.$idPais.'"');
 		return $q->result();
 	}
 	function get_servicio_espec($busqueda)
@@ -104,10 +105,10 @@ class modelo_compras extends CI_Model
 		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3');
 		return $q->result();
 	}
-	function get_combinados_red($idRed)
+	function get_combinados_red($idRed, $pais)
 	{
 		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.fecha_alta, a.nombre img, a.id_red from combinado a, mercancia d, cross_combinado
-		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and a.id_red='.$idRed.' group by (d.id)');
+		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and a.id_red='.$idRed.' and d.pais = "'.$pais.'" group by (d.id)');
 		return $q->result();
 	}
 	function get_combinado_espec($busqueda)
@@ -838,5 +839,11 @@ class modelo_compras extends CI_Model
 		
 		$q = $this->db->query("SELECT * FROM cat_banco where id_banco =".$id_banco);
 		return $q->result();
+	}
+	
+	function ConsultarIdRedMercancia($id_categoria_mercancia){
+		$q = $this->db->query("select id_red from cat_grupo_producto where id_grupo = ".$id_categoria_mercancia);
+		$red = $q->result();
+		return $red[0]->id_red;
 	}
 }

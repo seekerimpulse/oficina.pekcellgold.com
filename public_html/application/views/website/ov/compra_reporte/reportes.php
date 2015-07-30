@@ -584,9 +584,16 @@
 						$("#row-print-af").hide();
 						$("#well-print-web").hide();
 						$("#row-print-web").hide();
+						var inicio=$("#startdate").val();
+						var fin=$("#finishdate").val();
+						if (inicio == '' || fin == ''){
+							alert('Introduzca las fechas para buscar');
+							return 0;
+						}
 						iniciarSpinner();
 						$.ajax({
 							type: "POST",
+							data: {inicio : inicio, fin : fin},
 							url: "/ov/compras/ReportePagosBanco"
 						})
 						.done(function( msg ) {
@@ -607,7 +614,13 @@
 			});
 
 		function ReportePagoBancoExcel(){
-			window.location="/ov/compras/reporte_pagos_banco_excel"
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+			if (inicio == '' || fin == ''){
+				alert('Introduzca las fechas para buscar');
+				return 0;
+			}
+			window.location="/ov/compras/reporte_pagos_banco_excel?inicio="+inicio+"&&fin="+fin
 		}
 		</script>
 		<script>
@@ -831,7 +844,7 @@
 			});
 			
 			$('#startdate').datepicker({
-				dateFormat : 'dd.mm.yy',
+				dateFormat : 'yy-mm-dd',
 				prevText : '<i class="fa fa-chevron-left"></i>',
 				nextText : '<i class="fa fa-chevron-right"></i>',
 				onSelect : function(selectedDate) {
@@ -840,7 +853,7 @@
 			});
 			
 			$('#finishdate').datepicker({
-				dateFormat : 'dd.mm.yy',
+				dateFormat : 'yy-mm-dd',
 				prevText : '<i class="fa fa-chevron-left"></i>',
 				nextText : '<i class="fa fa-chevron-right"></i>',
 				onSelect : function(selectedDate) {
