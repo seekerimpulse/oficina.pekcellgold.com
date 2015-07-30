@@ -549,4 +549,65 @@ class model_afiliado extends CI_Model{
 		$comision = $q->result();
 		return $comision[0]->comision;
 	}
+	
+	function AgregarAfiliadoRed($id_debajo, $red, $email){
+		$mi_red= $red;
+		$id = $this->obtenrIdUser($email);
+		$lado = 1;
+		if(!isset($_POST['lado']))
+			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
+		else{
+			$lado = $_POST['lado'];
+		}
+		
+		$dato_afiliar =array(
+				"id_red"      => $mi_red,
+				"id_afiliado" => $id,
+				"debajo_de"   => $id_debajo,
+				"directo"     => 1,
+				"lado"        => $lado
+		);
+		$this->db->insert("afiliar",$dato_afiliar);
+		
+		$q = $this->db->query("select estatus from red where id_red = ".$mi_red." and id_usuario = ".$id);
+		$red = $q->result();
+		
+		if(isset($red[0]->estatus)){
+			$this->db->query("update red set estatus = 'ACT' where id_red = ".$mi_red." and id_usuario = ".$id);
+		}else{
+			$dato_red=array(
+					'id_red'        => $mi_red,
+					"id_usuario"	=> $id,
+					"profundidad"	=> "0",
+					"estatus"		=> "ACT",
+					"premium"			=> '0'
+			);
+			$this->db->insert("red",$dato_red);
+		}
+		return true;
+	}
+	
+	function ConprobarUsuario($username,$email,$red, $id){
+		$q = $this->db->query("select id_afiliado from afiliar where id_afiliado = ".$id." and id_red = ".$red);
+		$padre = $q->result();
+		
+		if(isset($padre[0]->id_afiliado)){
+			$q = $this->db->query("select id from users where username = '".$username."' and email = '".$email."'");
+			$afiliado = $q->result();
+			
+			if(isset($afiliado[0]->id)){
+				$q = $this->db->query("select id_red from afiliar where id_afiliado = ".$afiliado[0]->id." and id_red = ".$red);
+				$afiliado1 = $q->result();
+				if(!isset($afiliado1[0]->id_red))
+					return true;
+				else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
 }

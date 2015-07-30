@@ -99,14 +99,16 @@ function index()
 		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-		$style=$this->general->get_style($id);
+		//$style=$this->general->get_style($id);
 		$grupos = $this->model_mercancia->CategoriasMercancia();
-		//$this->template->set("style",$style);
-		$this->template->set("usuario",$usuario);
-		$this->template->set("grupos",$grupos);
-		$productos=$this->modelo_compras->get_productos();
 		$redes = $this->model_tipo_red->RedesUsuario($id);
 		
+		$this->template->set("usuario",$usuario);
+		$this->template->set("grupos",$grupos);
+		
+		/*
+		$this->template->set("style",$style);
+		$productos=$this->modelo_compras->get_productos();
 		for($i=0;$i<sizeof($productos);$i++)
 		{
 			$imagen=$this->modelo_compras->get_img($productos[$i]->id);
@@ -238,6 +240,7 @@ function index()
 			}
 			$promocion_c[$l]->costo=$costo_total;
 		}
+		*/
 		$info_compras=Array();
 		$producto=0;
 		if($this->cart->contents())
@@ -283,17 +286,17 @@ function index()
 			} 
 		} 
 		$data=array();
-		$data['prod']=$productos;
-		$data['serv']=$servicios;
-		$data['comb']=$combinados;
-		$data['prom_p']=$promocion_p;
-		$data['prom_s']=$promocion_s;
-		$data['prom_c']=$promocion_c;
-		$data['compras']=$info_compras;
+		//$data['prod']=$productos;
+		//$data['serv']=$servicios;
+		//$data['comb']=$combinados;
+		//$data['prom_p']=$promocion_p;
+		//$data['prom_s']=$promocion_s;
+		//$data['prom_c']=$promocion_c;
+		$data['compras']= $info_compras;
 		$this->template->set("redes", $redes);
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
-        //$this->template->set_partial('header', 'website/ov/header');
+        
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/carrito',$data);
 	}
@@ -794,8 +797,10 @@ function index()
 		{																		// logged in
 		redirect('/auth');
 		}
+		$inicio = $_POST['inicio'];
+		$fin = $_POST['fin'];
 		$id=$this->tank_auth->get_user_id();
-		$cobros = $this->modelo_historial_consignacion->ConsultarPagosBanco($id);
+		$cobros = $this->modelo_historial_consignacion->ConsultarPagosBanco($id, $inicio, $fin);
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
@@ -832,7 +837,9 @@ function index()
 		redirect('/auth');
 		}
 		$id=$this->tank_auth->get_user_id();
-		$cobros = $this->modelo_historial_consignacion->ConsultarPagosBanco($id);
+		$inicio = $_GET['inicio'];
+		$fin = $_GET['fin'];
+		$cobros = $this->modelo_historial_consignacion->ConsultarPagosBanco($id,$inicio,$fin);
 	
 		$this->load->library('excel');
 		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte-pagos_banco.xls");
@@ -1756,7 +1763,7 @@ function index()
 				$prod[$i]->img="";
 			}
 		}
-		$serv=$this->modelo_compras->get_servicios_red($idRed);
+		$serv=$this->modelo_compras->get_servicios_red($idRed,$pais[0]->pais);
 		for($j=0;$j<sizeof($serv);$j++)
 		{
 			$imagen=$this->modelo_compras->get_img($serv[$j]->id);
@@ -1769,7 +1776,7 @@ function index()
 				$serv[$j]->img="";
 			}
 		}
-		$comb=$this->modelo_compras->get_combinados_red($idRed);
+		$comb=$this->modelo_compras->get_combinados_red($idRed, $pais[0]->pais);
 		for($k=0;$k<sizeof($comb);$k++)
 		{
 			$imagen=$this->modelo_compras->get_img($comb[$k]->id);
@@ -3046,9 +3053,10 @@ function index()
 			$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($id_mercancia);
 			$costo_comision = $this->modelo_compras->ValorComision($id_categoria_mercancia);
 			
-			$id_red = $this->model_perfil_red->ConsultarIdRedPadre ($id_usuario);
+			$id_red = $this->modelo_compras->ConsultarIdRedMercancia($id_categoria_mercancia);
 			$capacidad_red = $this->model_tipo_red->CapacidadRed($id_red);
 			$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $id_usuario, $id_red);
+			
 			$this->CalcularComision2($id_afiliado, $venta, $id_categoria_mercancia ,$costo_comision, $capacidad_red, 1, $puntos);
 			return "Regsitro Corecto";
 		}	
@@ -3058,13 +3066,14 @@ function index()
 	function CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia,$config_comision, $capacidad_red ,$contador, $costo_mercancia){
 		$red2 = $this->model_afiliado->RedAfiliado ( $id_afiliado[0]->debajo_de, $capacidad_red[0]->id);
 		$estado = $this->model_user_profiles->EstadoUsuario ( $id_afiliado[0]->debajo_de );
+		
 		if(is_null($id_afiliado[0]->lado) || !isset($red2[0]->premium)){
 			return 0;
 		}
 		if ($red2[0]->premium == 2 && $id_afiliado[0]->lado >= $capacidad_red[0]->frontal) {
 			
 			$valor_comision = 0;
-			$porcentaje = $config_comision[$contador-1]->valor;
+			$porcentaje = 0;
 			if( $contador <= $capacidad_red[0]->profundidad){
 				$valor_comision = ($config_comision[$contador-1]->valor * $costo_mercancia) / 100;
 			}else{
@@ -3081,6 +3090,7 @@ function index()
 		}else{
 			
 			if( $contador <= $capacidad_red[0]->profundidad){
+				
 				$valor_comision = (($config_comision[0]->valor-$config_comision[1]->valor) * $costo_mercancia) / 100;
 				$this->DarComision($id_venta, $id_afiliado, $valor_comision, ($config_comision[0]->valor-$config_comision[1]->valor), $id_categoria_mercancia);
 			}

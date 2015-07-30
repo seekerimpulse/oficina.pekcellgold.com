@@ -948,7 +948,8 @@ function detalles(id)
 			<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span> 
-				> <a href="/ov/perfil_red/afiliar">Redes</a>
+				> <a href="/ov/perfil_red/TipoAfiliacion">Tipo de Afiliacion</a>
+				> <a href="/ov/perfil_red/afiliar?tipo=1">Red</a>
 				> <a href="/ov/perfil_red/nuevo_afilido?id=<?php echo $_GET['id']; ?>">Afiliar</a>
 				> Red
 				</span>
