@@ -44,36 +44,6 @@
 
 					<!-- widget div-->
 					<div>
-
-						<form id="register1" class="smart-form">
-							<fieldset>
-								<legend>Información de cuenta</legend>
-								<section id="usuario1" class="col col-3">
-									<label class="input"> <i class="icon-prepend fa fa-user"></i> <input
-										id="username1" onkeyup="use_username1()" required type="text"
-										name="username" placeholder="Usuario">
-									</label>
-								</section>
-								<section id="correo1" class="col col-3">
-									<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
-										<input id="email1" onkeyup="use_mail1()" required type="email"
-										name="email" placeholder="Email">
-									</label>
-								</section>
-								<section class="col col-3">
-									<label class="input"> <i class="icon-prepend fa fa-lock"></i> <input
-										required type="password" name="password" id="password"
-										placeholder="Contraseña">
-									</label>
-								</section>
-								<section class="col col-3">
-									<label class="input"> <i class="icon-prepend fa fa-lock"></i> <input
-										required type="password" name="confirm_password" id="confirm_password"
-										placeholder="Repite contraseña">
-									</label>
-								</section>
-							</fieldset>
-						</form>
 						<form method="POST"
 							id="proveedor" class="smart-form" novalidate="novalidate">
 							<fieldset>
@@ -91,10 +61,10 @@
 											placeholder="Apellido">
 										</label>
 									</section>
-									<section class="col col-3">
-										<label class="input"> <i class="icon-append fa fa-calendar"></i>
-											<input required id="datepicker1" type="text"
-											name="nacimiento" placeholder="Fecha de nacimiento" readonly="readonly">
+									<section id="correo1" class="col col-3">
+										<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
+											<input id="email" required type="email"
+											name="email" placeholder="Email">
 										</label>
 									</section>
 								</div>
@@ -122,69 +92,6 @@
 											class="btn btn-primary">
 											&nbsp;Agregar <i class="fa fa-phone"></i>&nbsp;
 										</button>
-									</section>
-								</div>
-							</fieldset>
-							<fieldset>
-								<legend>Estadistica</legend>
-								<div class="row">
-									<section class="col col-3">
-										Estado civil <label class="select"> <select name="civil">
-													<? foreach ( $civil as $key ) {
-														if ($key->id_edo_civil == $usuario [0]->id_edo_civil)
-															echo '<option selected value="' . $key->id_edo_civil . '">' . $key->descripcion . '</option>';
-														else
-															echo '<option value="' . $key->id_edo_civil . '">' . $key->descripcion . '</option>';
-													}
-													?>
-												</select>
-										</label>
-									</section>
-									<section class="col col-2">
-										Sexo&nbsp;
-										<div class="inline-group">
-												<?
-												foreach ( $sexo as $value ) {
-													?>
-												<label class="radio"> <input type="radio"
-												value="<?=$value->id_sexo?>" name="sexo" placeholder="sexo">
-												<i></i><?=$value->descripcion?></label>
-													<?}?>
-												</div>
-									</section>
-									<section class="col col-2">
-										Estudio&nbsp;
-										<div class="inline-group">
-													<?
-													foreach ( $estudios as $value ) {
-														?>
-													<label class="radio"> <input type="radio"
-												value="<?=$value->id_estudio?>" name="estudios"> <i></i><?=$value->descripcion?></label>
-														<?}?>
-													</div>
-									</section>
-									<section class="col col-2">
-										Ocupación&nbsp;
-										<div class="inline-group">
-														<?
-														foreach ( $ocupacion as $value ) {
-															?>
-														<label class="radio"> <input type="radio"
-												value="<?=$value->id_ocupacion?>" name="ocupacion"> <i></i><?=$value->descripcion?></label>
-															<?}?>
-														</div>
-									</section>
-									<section class="col col-2">
-										Tiempo dedicado&nbsp;
-										<div class="inline-group">
-															<?
-															foreach ( $tiempo_dedicado as $value ) {
-																?>
-															<label class="radio"> <input type="radio"
-												value="<?=$value->id_tiempo_dedicado?>"
-												name="tiempo_dedicado"> <i></i><?=$value->descripcion?></label>
-																<?}?>
-															</div>
 									</section>
 								</div>
 							</fieldset>
@@ -386,7 +293,7 @@
 										Credito autorizado
 										<div class="inline-group">
 											<label class="radio"> <input type="radio" value="1"
-												name="credito_autorizado"> <i></i>Si
+												name="credito_autorizado" checked> <i></i>Si
 											</label> <label class="radio"> <input type="radio" value="0"
 												name="credito_autorizado"> <i></i>No
 											</label>
@@ -395,10 +302,11 @@
 									<section class="col col-3">
 										Credito suspendido
 										<div class="inline-group">
-											<label class="radio"> <input type="radio" value="1"
-												name="credito_suspendido"> <i></i>Si
-											</label> <label class="radio"> <input type="radio" value="0"
-												name="credito_suspendido"> <i></i>No
+											<label class="radio">
+												<input type="radio" value="1" name="credito_suspendido">Si
+											</label>
+											<label class="radio">
+												<input type="radio" value="0" name="credito_suspendido" checked> <i></i>No
 											</label>
 										</div>
 									</section>
@@ -434,69 +342,65 @@
 <script type="text/javascript">
 function new_proveedor()
 {
-	var ids = new Array( 
+		var ids = new Array( 
 			"#nombre",
 		 	"#apellido",
-		 	"#datepicker1",
+		 	"#pais",
 		 	"#cp",
-		 	"#username1",
-		 	"#email1",
-		 	"#password",
-		 	"#confirm_password"
-		 	
+		 	"#tipo_proveedor",
+		 	"#email",
+		 	"#empresa"
 		 );
 		var mensajes = new Array( 
 			"Por favor ingresa tu nombre",
 		 	"Por favor ingresa tu apellido",
-		 	"Por favor ingresa tu fecha de nacimiento",
+		 	"Por favor seleciona un pais",
 		 	"Por favor ingresa tu código postal",
-		 	"Por favor ingresa un nombre de usuario",
+		 	"Por favor seleciona el tipo de proveedor",
 		 	"Por favor ingresa un correo",
-		 	"Por favor ingresa una contraseña",
-		 	"Por favor confirma tu contraseña"
+		 	"Por favor seleciona una empresa"
 		 );
-
-		var idss=new Array(
-			"#username1"
-		);
-		var mensajess=new Array(
-			"El nombre de usuario no puede contener espacios en blanco"
-		);
-		var validacion_ = valida_espacios(idss,mensajess);
+		
 		var validacion = valida_vacios(ids,mensajes);
-		if(validacion&&validacion_)
+		
+		if(validacion)
 		{
-			//auth/register
+			
 			$.ajax({
 				type: "POST",
-				url: "/ov/perfil_red/crear_user",
-				data: $('#register1').serialize()
+				url: "/bo/mercancia/new_proveedor",
+				data: $('#proveedor').serialize()
 			})
-			.done(function( msg ) {
-				
-				var email=$("#email1").val();
-				$("#proveedor").append("<input value='"+email+"' type='hidden' name='mail_important'>");
-				$.ajax({
-					type: "POST",
-					url: "/bo/mercancia/new_proveedor",
-					data: $('#proveedor').serialize()
-					})
-					.done(function( msg1) {
-					
-						bootbox.dialog({
-							message: "Se ha creado el proveedor"+msg1,
-							title: "Atención",
-							buttons: {
-								success: {
+			.done(function( msg1) {
+				if(msg1 == ''){
+					bootbox.dialog({
+						message: "No se logro crear el proveedor",
+						title: "Atención",
+						buttons: {
+							success: {
 								label: "Ok!",
 								className: "btn-success",
 								callback: function() {
 									location.href="";
-									}
 								}
 							}
-						});
+						}
 					});
+				}else{
+					bootbox.dialog({
+						message: "Se ha creado el proveedor "+msg1,
+						title: "Atención",
+						buttons: {
+							success: {
+								label: "Ok!",
+								className: "btn-success",
+								callback: function() {
+									location.href="";
+								}
+							}
+						}
+					});
+				}
 			});
 		}else{
 			$.smallBox({

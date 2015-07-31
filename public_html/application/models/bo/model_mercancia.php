@@ -189,7 +189,7 @@ class model_mercancia extends CI_Model {
 				"sku" => $sku,
 				"sku_2" => $sku2,
 				"id_tipo_mercancia" => $tipo,
-				"estatus" => 'DES',
+				"estatus" => 'ACT',
 				"pais" => $pais,
 				"id_proveedor" => $proveedor,
 				"real" => $real,
@@ -263,164 +263,22 @@ class model_mercancia extends CI_Model {
 		return $q->result ();
 	}
 	function new_proveedor($id) {
-		$id_afiliador = $this->db->query ( 'select id from users where email like "' . $_POST ['mail_important'] . '"' );
 		
-		$id_afiliador = $id_afiliador->result ();
+		$telefonos = "";
 		
-		if ($id_afiliador[0]->id)
-			$id_nuevo = $id_afiliador [0]->id;
-		else
-			$id_nuevo = $id_afiliador->id;
-		
-		$q = $this->db->query("select * from user_profiles where user_id=".$id_nuevo);
-		$perfil = $q->result();
-		if(isset($perfil[0]->user_id)){
-			return true;
-		}
-		$directo = 0;
-		if (! isset ( $_POST ['afiliados'] )) {
-			$_POST ['afiliados'] = $id;
-			$directo = 1;
-		}
-		$dato_style = array (
-				"id_usuario" => $id_nuevo,
-				"bg_color" => "#EEEEEE",
-				"btn_1_color" => "#475795",
-				"btn_2_color" => "#3DB2E5" 
-		);
-		$this->db->insert ( "estilo_usuario", $dato_style );
-		
-		/* ################ PERFIL DEL USUARIO ######################### */
-		
-		$dato_profile = array (
-				"user_id" => $id_nuevo,
-				"id_sexo" => $_POST ['sexo'],
-				"id_edo_civil" => $_POST ['civil'],
-				"id_tipo_usuario" => 3,
-				"nombre" => $_POST ['nombre'],
-				"apellido" => $_POST ['apellido'],
-				"fecha_nacimiento" => $_POST ['nacimiento'],
-				"id_estudio" => $_POST ['estudios'],
-				"id_ocupacion" => $_POST ['ocupacion'],
-				"id_tiempo_dedicado" => $_POST ['tiempo_dedicado'],
-				"keyword" => $_POST ['rfc'],
-				'id_estatus' => 1 
-		);
-		$this->db->insert ( "user_profiles", $dato_profile );
-		/* ############# FIN PERFIL DEL USUARIO ######################### */
-		
-		/* ################### DATO PERMISO ######################### */
-		$dato_permiso = array (
-				"id_user" => $id_nuevo,
-				"id_perfil" => 1 
-		);
-		$this->db->insert ( "cross_perfil_usuario", $dato_permiso );
-		/* ################### FIN DATO PERMISO ######################### */
-		
-		/* ################### DATO RED ######################### */
-		$dato_red = array (
-				"id_usuario" => $id_nuevo,
-				"profundidad" => "0",
-				"estatus" => "ACT" 
-		);
-		$this->db->insert ( "red", $dato_red );
-		/* ################### FIN DATO RED ######################### */
-		
-		/* ################### DATO AFILIAR ######################### */
-		$mi_red = $this->db->query ( 'select id_red from red where id_usuario=' . $id );
-		$mi_red = $mi_red->result ();
-		$mi_red = $mi_red [0]->id_red;
-		
-		$dato_afiliar = array (
-				"id_red" => $mi_red,
-				"id_afiliado" => $id_nuevo,
-				"debajo_de" => $_POST ['afiliados'],
-				"directo" => $directo 
-		);
-		$this->db->insert ( "afiliar", $dato_afiliar );
-		
-		/* ################### FIN DATO AFILIAR ######################### */
-		
-		/* ################### DATO TELEFONOS ######################### */
-		// tipo_tel 1=fijo 2=movil
 		if ($_POST ["fijo"]) {
 			foreach ( $_POST ["fijo"] as $fijo ) {
-				$dato_tel = array (
-						"id_user" => $id_nuevo,
-						"id_tipo_tel" => 1,
-						"numero" => $fijo,
-						"estatus" => "ACT" 
-				);
-				$this->db->insert ( "cross_tel_user", $dato_tel );
+				$telefonos = $telefonos." - ".$fijo;
 			}
 		}
 		if ($_POST ["movil"]) {
 			foreach ( $_POST ["movil"] as $movil ) {
-				$dato_tel = array (
-						"id_user" => $id_nuevo,
-						"id_tipo_tel" => 2,
-						"numero" => $movil,
-						"estatus" => "ACT" 
-				);
-				$this->db->insert ( "cross_tel_user", $dato_tel );
+				$telefonos = $telefonos." - ".$movil;
 			}
 		}
 		
-		/* ################### FIN DATO TELEFONOS ######################### */
-		
-		/* ################### DATO DIRECCION ######################### */
-		$dato_dir = array (
-				"id_user" => $id,
-				"cp" => $_POST ['cp'],
-				"calle" => $_POST ['calle'],
-				"colonia" => $_POST ['colonia'],
-				"municipio" => $_POST ['municipio'],
-				"estado" => 'NULL',
-				"pais" => $_POST ['pais'] 
-		);
-		$this->db->insert ( "cross_dir_user", $dato_dir );
-		/* ################### FIN DATO DIRECCION ######################### */
-		
-		/* ################### DATO BILLETERA ######################### */
-		$dato_billetera = array (
-				"id_user" => $id_nuevo,
-				"estatus" => "DES",
-				"activo" => "No" 
-		);
-		$this->db->insert ( "billetera", $dato_billetera );
-		/* ################### FIN DATO BILLETERA ######################### */
-		
-		/* ################### FIN DATO COBRO ######################### */
-		$dato_cobro = array (
-				"id_user" => $id_nuevo,
-				"id_metodo" => 1,
-				"id_estatus" => 1,
-				"monto" => 0 
-		);
-		$this->db->insert ( "cobro", $dato_cobro );
-		
-		$dato_cobro = array (
-				"id_user" => $id_nuevo,
-				"id_metodo" => 1,
-				"id_estatus" => 4,
-				"monto" => 0 
-		);
-		$this->db->insert ( "cobro", $dato_cobro );
-		
-		/* ################### FIN DATO COBRO ######################### */
-		
-		/* ################### DATO PROVEEDOR ######################### */
-		$dato_cat_proveedor = array (
-				"id_usuario" => $id_nuevo,
-				"comision" => $_POST ['comision'] 
-		);
-		
-		$this->db->insert ( "cat_proveedor", $dato_cat_proveedor );
-		
-		$id_proveedor = mysql_insert_id();
 		
 		$dato_proveedor = array (
-				"id_proveedor" => $id_proveedor,
 				"id_empresa" => $_POST ['empresa'],
 				"id_regimen" => $_POST ['regimen'],
 				"id_zona" => $_POST ['zona'],
@@ -440,12 +298,31 @@ class model_mercancia extends CI_Model {
 				"dia_pago" => $_POST ['dia_pago'],
 				"credito_autorizado" => $_POST ['credito_autorizado'],
 				"credito_suspendido" => $_POST ['credito_suspendido'],
-				"estatus" => 'ACT' 
+				"estatus" => 'ACT',
 		);
 		
-		$this->db->insert ( "proveedor", $dato_proveedor );
 		
-		/* ################### FIN DATO PROVEEDOR ######################### */
+		$this->db->insert("proveedor", $dato_proveedor );
+		
+		$id_nuevo = mysql_insert_id();
+		
+		
+		$dato_proveedor = array (
+				"id_proveedor" => $id_nuevo,
+				"nombre"     => $_POST['nombre'],
+				"apellido"     => $_POST['apellido'],
+				"pais" => $_POST['pais'],
+				"provincia" => $_POST ['municipio'],
+				"ciudad" => $_POST ['colonia'],
+				"codigo_postal" => $_POST['cp'],
+				"comision"     => $_POST['comision'],
+				"email"     => $_POST['email'],
+				"telefono"     => $telefonos,
+				"direccion" => $_POST ['calle']
+		);
+		
+		$this->db->insert("proveedor_datos", $dato_proveedor );
+		
 		$cuentas = $_POST ['Cuenta'];
 		$bancos = $_POST ['banco'];
 		for ($i = 0 ; $i < count($cuentas) ; $i++){
@@ -463,6 +340,11 @@ class model_mercancia extends CI_Model {
 	
 	function Bancos(){
 		$q = $this->db->query("SELECT * FROM cat_banco");
+		return $q->result();
+	}
+	
+	function get_proveedor($tipo){
+		$q = $this->db->query("select p.id_proveedor as user_id, pd.nombre, pd.apellido from proveedor p, proveedor_datos pd where p.id_proveedor = pd.id_proveedor and mercancia = ".$tipo);
 		return $q->result();
 	}
 }

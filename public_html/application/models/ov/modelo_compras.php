@@ -30,9 +30,9 @@ class modelo_compras extends CI_Model
 	}
 	function get_productos_red($idRed, $pais)
 	{
-		$q=$this->db->query('Select a.nombre, a.descripcion, b.id, b.costo, b.costo_publico, b.fecha_alta, d.descripcion grupo, d.id_grupo, a.nombre img,d.id_red from producto a,
-		mercancia b, cat_grupo_producto d where a.id=b.sku and d.id_grupo=a.id_grupo and b.id_tipo_mercancia=1
-		and b.estatus like "ACT" and b.pais = "'.$pais.'" and d.id_red='.$idRed.' order by d.descripcion');
+		$q=$this->db->query('Select a.nombre, a.descripcion, b.id , b.costo, b.costo_publico, b.fecha_alta, d.descripcion grupo, d.id_grupo, a.nombre img,d.id_red 
+from producto a, mercancia b, cat_grupo_producto d
+where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.estatus like "ACT" and b.pais = "'.$pais.'" and a.id_grupo='.$idRed.' order by d.descripcion');
 		return $q->result();
 	}
 	function get_grupo_prod()
