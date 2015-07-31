@@ -57,7 +57,7 @@
 											<div class="col-sm-1">
 											</div>
 											<div class="col-sm-3">
-												<a href="/index.php/ov/perfil_red/perfil">
+												<a href="/ov/perfil_red/perfil">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard primary botones">
 														<i class="fa fa-user fa-4x"></i>
 														<h1>Datos Personales</h1>
@@ -65,7 +65,7 @@
 												</a>
 											</div>
 											<div class="col-sm-3 link">
-												<a href="/index.php/auth/change_password">
+												<a href="/auth/change_password">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard primary botones">
 														<i class="fa fa-unlock fa-4x"></i>
 														<h1>Cambiar Contraseña</h1>
@@ -73,7 +73,7 @@
 												</a>
 											</div>
 											<div class="col-sm-3 link">
-												<a href="/index.php/ov/perfil_red/foto">
+												<a href="/ov/perfil_red/foto">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard primary botones">
 														<i class="fa fa-camera fa-4x"></i>
 														<h1>Foto</h1>
