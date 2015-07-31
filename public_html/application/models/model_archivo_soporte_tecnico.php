@@ -41,6 +41,16 @@ WHERE CGST.id = AST.id_grupo and UP.user_id= AST.id_usuario and CTA.id_tipo = AS
 		return $q->result();
 	}
 	
+	function Archivos_usuarios($id_red)
+	{
+		$q=$this->db->query('SELECT CGST.descripcion grupo, concat(UP.nombre," ",UP.apellido) usuario,AST.fecha fecha,
+AST.nombre_publico n_publico, CTA.descripcion tipo, AST.descripcion descripcion,AST.ruta ruta,
+AST.id_archivo id, AST.status estado
+FROM cat_grupo_soporte_tecnico CGST, user_profiles UP, archivo_soporte_tecnico AST, cat_tipo_archivo CTA
+WHERE CGST.id = AST.id_grupo and UP.user_id= AST.id_usuario and CTA.id_tipo = AST.id_tipo and CGST.tipo = "INF" and AST.id_red ='.$id_red.' and CGST.estatus="ACT" and AST.status="ACT"');
+		return $q->result();
+	}
+	
 	function CambiarEstado($id, $estado){
 		$this->db->query("update archivo_soporte_tecnico set status ='".$estado."' where id_archivo = '$id'");
 	}
@@ -102,6 +112,17 @@ AST.status
 FROM cat_grupo_soporte_tecnico CGST, users U, archivo_soporte_tecnico AST, cross_img_archivo_soporte_tecnico CIA, cat_img CI 
 WHERE AST.id_tipo in (2,21) and CGST.id = AST.id_grupo and U.id = AST.id_usuario and AST.id_archivo = CIA.id_archivo 
 and CI.id_img = CIA.id_img');
+		return $q->result();
+	}
+	
+	function get_video_usuarios()
+	{
+		$q=$this->db->query('SELECT AST.id_archivo id, AST.id_grupo id_grp, CGST.descripcion grupo, U.username usuario, AST.fecha fecha,
+AST.nombre_publico n_publico, AST.descripcion descripcion, AST.ruta ruta, CI.url img, AST.id_tipo tipo,
+AST.status
+FROM cat_grupo_soporte_tecnico CGST, users U, archivo_soporte_tecnico AST, cross_img_archivo_soporte_tecnico CIA, cat_img CI
+WHERE AST.id_tipo in (2,21) and CGST.id = AST.id_grupo and U.id = AST.id_usuario and AST.id_archivo = CIA.id_archivo
+and CI.id_img = CIA.id_img and AST.status="ACT"');
 		return $q->result();
 	}
 	

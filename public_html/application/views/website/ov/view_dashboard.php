@@ -163,7 +163,7 @@
 												if($permiso){
 												?>
 												<div class="col-sm-6">
-													<a href="/ov/perfil_red/afiliar">
+													<a href="/ov/perfil_red/TipoAfiliacion">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-edit fa-3x"></i>
 															<h5>Afiliar</h5>
@@ -463,7 +463,7 @@
 												if($permiso){
 												?>
 												<div class="col-sm-12">
-													<a href="cgeneral/soporte_tecnico">
+													<a href="cgeneral/soporte_tecnico_ver_redes">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
 															<i class="fa fa-support fa-3x"></i>
 															<h5>Soporte Técnico</h5>

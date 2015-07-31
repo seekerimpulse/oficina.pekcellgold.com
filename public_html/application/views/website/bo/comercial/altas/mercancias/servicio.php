@@ -119,6 +119,7 @@
 													<section class="col col-3">País del producto
 														<label class="select">
 															<select id="pais" required name="pais" onChange="ImpuestosPais()">
+															<option value="-" selected>-- Seleciona un pais --</option>
 															<?foreach ($pais as $key){?>
 																<option value="<?=$key->Code?>">
 																<?=$key->Name?></option>
@@ -133,7 +134,7 @@
 															</select>
 															
 														</label>
-														<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+														<a style="cursor: pointer;" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
 													</section>
 													<section class="col col-3">Proveedor
 														<label class="select">
@@ -184,7 +185,7 @@
 											<script type="text/javascript">
 
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
-
+var i = 0;
 $(document).ready(function() {
 	
 	$("#mymarkdown").markdown({
@@ -283,12 +284,9 @@ $(document).ready(function() {
 
 });
 
-
-
-
 function add_impuesto()
 {
-	var code=	'<section class="col col-3" id="impuesto">Impuesto'
+	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
 	<?foreach ($impuesto as $key)
@@ -297,11 +295,18 @@ function add_impuesto()
 	}?>
 	+'</select>'
 	+'</label>'
-	+'</section>';
+	+'<a class="txt-color-red" style="cursor: pointer;" onclick="dell_impuesto('+i+')">Eliminar <i class="fa fa-minus"></i></a>'
+	+'</section></div>';
 	$("#moneda_field").append(code);
-	ImpuestosPais()
+	ImpuestosPais();
+	i = i + 1
 }
 
+function dell_impuesto(id)
+{	
+	$("#"+id+"").remove();
+	
+}
 function ImpuestosPais(){
 	var pa = $("#pais").val();
 	

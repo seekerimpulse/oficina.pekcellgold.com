@@ -73,9 +73,15 @@ class mercancia extends CI_Controller
 		$this->template->set("style",$style);
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
+		$proveedores = array();
+		if($_GET['id'] == 3){
+			$proveedores	 = $this->model_mercancia->get_proveedor(2);
+		}else{
+			$proveedores	 = $this->model_mercancia->get_proveedor($_GET['id']);
+		}
 		
 		$productos       = $this->model_admin->get_mercancia();
-		$proveedores	 = $this->model_admin->get_proveedor2($_GET['id']);
+		
 		$promo			 = $this->model_admin->get_promo();
 		$grupos			 = $this->model_mercancia->CategoriasMercancia();
 		$servicio		 = $this->model_admin->get_servicio();
@@ -129,7 +135,7 @@ class mercancia extends CI_Controller
 	}
 	
 	private function validarMercancia($datos){
-		if($datos['pais'] == null){
+		if($datos['pais'] == "-"){
 			return false;
 		}
 		if($datos['real'] == null){
@@ -312,7 +318,13 @@ class mercancia extends CI_Controller
 	
 	function new_proveedor()
 	{
-		$id=$this->tank_auth->get_user_id();
-		$this->model_mercancia->new_proveedor($id);
+		if(isset($_POST)){
+			if($_POST['empresa'] != null && $_POST['email'] != null && $_POST['nombre'] != null && $_POST['cp'] != null)
+			$id=$this->tank_auth->get_user_id();
+			$this->model_mercancia->new_proveedor($id);
+			echo $_POST['nombre']." ".$_POST['apellido']; 
+		}
+		
+		
 	}
 }

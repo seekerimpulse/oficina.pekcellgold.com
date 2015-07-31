@@ -83,7 +83,7 @@ class cuentasporcobrar extends compras{
 		$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($id_mercancia);
 		$costo_comision = $this->modelo_compras->ValorComision($id_categoria_mercancia);
 		
-		$id_red = $this->model_perfil_red->ConsultarIdRedPadre ($historico[0]->id_usuario);
+		$id_red = $this->modelo_compras->ConsultarIdRedMercancia($id_categoria_mercancia);
 		$capacidad_red = $this->model_tipo_red->CapacidadRed($id_red);
 		$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $historico[0]->id_usuario, $id_red);
 		

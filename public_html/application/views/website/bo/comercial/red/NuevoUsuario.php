@@ -4,11 +4,13 @@
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/red">Red</a>
-								> Afiliar
-							</span>
+				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<span>
+					> <a href="/bo/comercial">Comercial</a> 
+					> <a href="/bo/comercial/red">Red</a>
+					> <a href="/bo/usuarios/afiliar">Tipo de Afiliacion</a>
+					> Afiliar Nuevo
+				</span>
 			</h1>
 		</div>
 	</div>

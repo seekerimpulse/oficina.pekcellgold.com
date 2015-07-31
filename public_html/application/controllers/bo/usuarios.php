@@ -47,6 +47,7 @@ class usuarios extends CI_Controller
 	}
 	
 	function alta(){
+		
 		if (!$this->tank_auth->is_logged_in()){																		// logged in
 		redirect('/auth');
 		}
@@ -104,7 +105,81 @@ class usuarios extends CI_Controller
 		$this->template->build('website/bo/comercial/red/NuevoUsuario');
 	}
 	
+	function afiliar(){
+		if (!$this->tank_auth->is_logged_in()){																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$usuario=$this->general->get_username($id);
+		
+		$id              =  2;
+		$style           = $this->general->get_style(1);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set("style",$style);
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/red/tipoAfiliacion');
+	}
 	
+	function afiliar_existente(){
+		if (!$this->tank_auth->is_logged_in()){																		// logged in
+			redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+		
+		$usuario=$this->general->get_username($id);
+		
+		$id              =  2;
+		$sexo            = $this->model_perfil_red->sexo();
+		$pais            = $this->model_perfil_red->get_pais();
+		$style           = $this->general->get_style(1);
+		$civil           = $this->model_perfil_red->edo_civil();
+		$tipo_fiscal     = $this->model_perfil_red->tipo_fiscal();
+		$estudios        = $this->model_perfil_red->get_estudios();
+		$ocupacion       = $this->model_perfil_red->get_ocupacion();
+		$tiempo_dedicado = $this->model_perfil_red->get_tiempo_dedicado();
+		$redes 			 = $this->model_tipo_red->listarTodos();
+		$tipos 			 = $this->model_tipo_usuario->listarTodos();
+		
+		$image 			 = $this->model_perfil_red->get_images($id);
+		$red_forntales 	 = $this->model_tipo_red->ObtenerFrontales();
+		
+		
+		
+		$img_perfil="/template/img/empresario.jpg";
+		foreach ($image as $img)
+		{
+			$cadena=explode(".", $img->img);
+			if($cadena[0]=="user")
+			{
+				$img_perfil=$img->url;
+			}
+		}
+		
+		$this->template->set("id",$id);
+		$this->template->set("redes",$redes);
+		$this->template->set("tipos",$tipos);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set("style",$style);
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/red/AfiliarExistente');
+	}
 	function altaTipoDeUsuario(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in

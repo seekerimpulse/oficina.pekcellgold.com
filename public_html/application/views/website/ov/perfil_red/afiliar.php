@@ -5,7 +5,7 @@
 			<h1 class="page-title txt-color-blueDark">
 				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 				<span> 
-				> <a href="/ov/perfil_red/afiliar">Redes</a>
+				> <a href="/ov/perfil_red/TipoAfiliacion">Tipo Afiliacion</a>
 				> Afiliar
 				</span>
 			</h1>
@@ -13,7 +13,7 @@
 	</div>
 <div class="well">
 				<fieldset>
-					<legend>Red</legend>
+					<legend>Nuevo Afiliado</legend>
 					<div class="row">
 						<div class="col-lg-1 col-sm-1 col-md-1 col-xs-12"></div>
 						<div class="col-lg-5 col-sm-5 col-md-5 col-xs-12">

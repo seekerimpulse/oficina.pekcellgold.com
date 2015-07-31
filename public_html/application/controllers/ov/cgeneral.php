@@ -14,8 +14,11 @@ class cgeneral extends CI_Controller
 		$this->load->model('ov/modelo_general');
 		$this->load->model('ov/general');
 		$this->load->model('model_tipo_red');
+		$this->load->model('model_datos_generales_soporte_tecnico');
+		$this->load->model('model_cat_grupo_soporte_tecnico');
+		$this->load->model('model_archivo_soporte_tecnico');
 	}
-	function soporte_tecnico()
+	function soporte_tecnico_ver_redes()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
 		{																		// logged in
@@ -33,7 +36,84 @@ class cgeneral extends CI_Controller
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/general/soporte_tecnico_ver_redes');
+	}
+	
+	function soporte_tecnico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$style=$this->general->get_style($id);
+		$redes = $this->model_tipo_red->listarTodos();
+		$id_red = $_GET['id_red'];
+		$datos_generales = $this->model_datos_generales_soporte_tecnico->traer_por_red($id_red);
+		
+		$this->template->set("style",$style);
+		$this->template->set("redes",$redes);
+		$this->template->set("id_red",$id_red);
+		$this->template->set("datos_generales",$datos_generales);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/general/soporte_tecnico');
+	}
+	
+	function listar_videos()
+	{
+		$id_red = $_GET['id_red'];
+	
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$style=$this->general->get_style($id);
+		$videos=$this->model_archivo_soporte_tecnico->get_video_usuarios();
+		$grupos = $this->model_cat_grupo_soporte_tecnico->get_groups("VID", $id_red);
+		$comentarios=$this->model_archivo_soporte_tecnico->get_comments();
+		$data['videos']=$videos;
+		$data['grupos']=$grupos;
+		$data['comentarios']=$comentarios;
+		$this->template->set("style",$style);
+		$this->template->set("id_red",$id_red);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/ov/soporteTecnico/videos/listar',$data);
+	}
+	
+	function listar_informacion()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$style=$this->general->get_style($id);
+		$id_red = $_GET['id_red'];
+		$archivos = $this->model_archivo_soporte_tecnico->Archivos_usuarios($id_red);
+	
+		$this->template->set("id_red",$id_red);
+		$this->template->set("style",$style);
+		$this->template->set("archivos",$archivos);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/ov/soporteTecnico/informacion/listar');
 	}
 	
 	function chat()
