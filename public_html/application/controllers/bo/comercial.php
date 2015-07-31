@@ -150,7 +150,7 @@ class comercial extends CI_Controller
 			$longitud_nombre =	strlen($_POST['nombre_buscado']);
 			$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
-			if ( $longitud_nombre > 0 && $longitud_nombre < 4){
+			if ( $longitud_nombre >= 0 && $longitud_nombre < 4){
 				$error = "La casilla nombre debe contener al menos 4 letras.";
 				$this->session->set_flashdata('error', $error);
 				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
@@ -166,7 +166,7 @@ class comercial extends CI_Controller
 			$longitud_apellido =	strlen($_POST['apellido_buscado']);
 			$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
-			if ($longitud_apellido > 0 && $longitud_apellido < 4){
+			if ($longitud_apellido >= 0 && $longitud_apellido < 4){
 				$error = "La casilla apellido debe contener al menos 4 letras.";
 				$this->session->set_flashdata('error', $error);
 				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
@@ -182,7 +182,7 @@ class comercial extends CI_Controller
 			$longitud_username =	strlen($_POST['username_buscado']);
 			$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
-			if ($longitud_username > 0 && $longitud_username < 4){
+			if ($longitud_username >= 0 && $longitud_username < 4){
 				$error = "La casilla username debe contener al menos 4 letras.";
 				$this->session->set_flashdata('error', $error);
 				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
@@ -198,7 +198,7 @@ class comercial extends CI_Controller
 			$longitud_email =	strlen($_POST['email_buscado']);
 			$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
-			if ($longitud_email > 0 && $longitud_email < 10){
+			if ($longitud_email >= 0 && $longitud_email < 10){
 				$error = "La casilla email debe contener al menos 10 letras.";
 				$this->session->set_flashdata('error', $error);
 				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
@@ -212,9 +212,17 @@ class comercial extends CI_Controller
 		
 		if(isset($_POST['id_buscado'])){
 			$id_red        = 0;
+			$longitud_id =	strlen($_POST['id_buscado']);
+			if ($longitud_id == 0){
+				$error = "La casilla id no puede estar vacia.";
+				$this->session->set_flashdata('error', $error);
+				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
+			}
 			//$id_red        = $_POST['id_red'];
-			$afiliados     = $this->model_perfil_red->get_tabla_por_id_buscado($_POST['id_buscado'],$id_red);
-			$image		   = $this->model_perfil_red->get_images_users();
+			else{
+				$afiliados     = $this->model_perfil_red->get_tabla_por_id_buscado($_POST['id_buscado'],$id_red);
+				$image		   = $this->model_perfil_red->get_images_users();
+			}
 		}
 
 		if ( $afiliados[0]==NULL){

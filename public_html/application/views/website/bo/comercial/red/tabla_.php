@@ -143,7 +143,7 @@
 					
 				<label  class="input col col-xs-12 col-md-12">
 					</label>
-					<button type="submit" class="hide" style="margin-right: 4.5%;" id="buscar" onclick="Actualizar_Tabla()" disabled="disabled">Buscar</button>
+					<button type="submit" class="hide" style="margin-right: 4.5%;" id="buscar" disabled="disabled">Buscar</button>
 					
 				</section>
 				

@@ -357,7 +357,7 @@ where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_
 
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R 
 
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus 
+where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus 
 = UP.id_estatus and R.id_usuario = U.id and U.id like ".$id_buscado." 
 
 group by (U.id) 
@@ -371,7 +371,7 @@ order by (U.id);");
 	
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
+where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
 = UP.id_estatus and R.id_usuario = U.id and upper(UP.nombre) like upper('%".$nombre_buscado.'%'."') 
 
 group by (U.id) 
@@ -385,7 +385,7 @@ order by (U.id);");
 	
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
+where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
 = UP.id_estatus and R.id_usuario = U.id and upper(UP.apellido) like upper('".$apellido_buscado.'%'."')  
 
 group by (U.id) 
@@ -399,7 +399,7 @@ order by (U.id);");
 	
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
+where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
 = UP.id_estatus and R.id_usuario = U.id and upper(U.username) like upper('".$username_buscado.'%'."') 
 group by (U.id) 
 order by (U.id);");
@@ -412,7 +412,7 @@ order by (U.id);");
 	
 from users U, user_profiles UP, cat_tipo_usuario CTU, cat_estatus_afiliado CEA, red R
 	
-where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CEA.id_estatus
+where U.id = UP.user_id and CTU.id_tipo_usuario = UP.id_tipo_usuario and CTU.id_tipo_usuario=2 and CEA.id_estatus
 = UP.id_estatus and R.id_usuario = U.id and upper(U.email) like upper('".$email_buscado.'%'."') 
 
 group by (U.id) 
