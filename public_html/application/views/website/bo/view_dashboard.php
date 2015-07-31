@@ -107,7 +107,7 @@ $ci->load->model("model_permissions");?>
 											//	if($permiso){
 												?>
 												<div class="col-sm-4">
-													<a href="#">
+													<a href="administracion/">
 														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-folder-open fa-3x"></i>
 															<h5>Administrativo</h5>

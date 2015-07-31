@@ -12,6 +12,7 @@ class cabecera extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('ov/model_cabecera');
 		$this->load->model('ov/general');
+		$this->load->model('model_emails_departamentos');
 	}
 	function tablero()
 	{
@@ -125,9 +126,12 @@ class cabecera extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$style=$this->general->get_style($id);
-
+		
+		$datos_departamentos = $this->model_emails_departamentos->buscar();
+		
   		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
+		$this->template->set("datos_departamentos",$datos_departamentos);
 
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');

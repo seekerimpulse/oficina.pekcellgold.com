@@ -46,16 +46,7 @@
 						<!-- end widget edit box -->
 						<!-- widget content -->
 						<div class="widget-body">
-							<ul id="myTab1" class="nav nav-tabs bordered">
-								<li class="active">
-									<a href="#s1" data-toggle="tab">Contacto</a>
-								</li>
-								<li>
-									<a href="#s2" data-toggle="tab">Invitacion</a>
-								</li>
-							</ul>
-							<div id="myTabContent1" class="tab-content padding-10">
-								<div class="tab-pane fade in active" id="s1">
+							
 									<form action="send_mail" method="post" id="contact-form" class="smart-form">
 										<header>Contacto</header>
 										
@@ -72,9 +63,11 @@
 													<label class="label">Departamento</label>
 													<label class="select">
 														<select name="departamento">
-															<option value="general@general.com">Dirección general</option>
-															<option value="comercial@comercial.com">Dirección comercial</option>
-															<option value="soporte@soporte.com">Soporte técnico</option>
+														<?php foreach ($datos_departamentos as $dato_departamento){
+															  	  if ($dato_departamento->nombre==''){}
+															  	  else	echo '<option value="'.$dato_departamento->email.'">'.$dato_departamento->nombre.'</option>';
+															  }
+														?>
 														</select>
 														
 													</label>
@@ -91,29 +84,6 @@
 											</button>
 										</footer>
 									</form>
-								</div>
-								<div class="tab-pane fade" id="s2">
-									<form action="send_mail" method="post" id="contact-form1" class="smart-form">
-									<header>Invitar a un conocido</header>
-									<fieldset>
-										<div class="row">
-											<section class="col col-8">
-												<label class="label" >Correo</label>
-												<label class="input">
-													<i class="icon-append fa fa-tag"></i>
-													<input type="email" name="correo" required>
-												</label>
-											</section>
-										</div>
-									</fieldset>	
-										<footer>
-											<button type="button" onclick="invitar()" class="btn btn-primary">
-												Invitar
-											</button>
-										</footer>
-									</form>
-								</div>
-							</div>
 						</div>
 						<!-- end widget content -->
 						
