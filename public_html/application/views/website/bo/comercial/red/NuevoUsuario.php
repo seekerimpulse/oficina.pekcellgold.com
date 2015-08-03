@@ -234,7 +234,7 @@
 																<section class="col col-2">
 																	<label class="input">
 																		Código postal
-																		<input required onkeyup="codpos()" type="text" id="cp" name="cp">
+																		<input required type="text" id="cp" name="cp">
 																	</label>
 																</section>
 																<section class="col col-2">
