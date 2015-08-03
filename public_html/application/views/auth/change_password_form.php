@@ -19,7 +19,7 @@ $confirm_new_password = array(
 );
 ?>
 <div class="widget-body" style="margin-bottom: 10rem;">
-<form class="smart-form" action="/index.php/auth/change_password" method="post" accept-charset="utf-8">
+<form class="smart-form" action="/auth/change_password" method="post" accept-charset="utf-8">
 <?php echo form_open($this->uri->uri_string()); ?>
 <fieldset id="pswd">
 	<legend>Contraseña</legend>

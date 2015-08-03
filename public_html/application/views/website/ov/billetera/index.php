@@ -15,7 +15,7 @@
 						<div class="col-lg-6 col-sm-4 col-md-4 col-xs-12">
 						<a href="estado">
 							<div class="well well-sm txt-color-white text-center link_dashboard" style="background:#60a917">
-								<i class="fa fa-signal fa-3x"></i>
+								<i class="fa fa-dollar fa-3x"></i>
 								<h5>Estado de Cuenta</h5>
 							</div>	
 						</a>

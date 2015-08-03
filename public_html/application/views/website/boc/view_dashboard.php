@@ -113,7 +113,7 @@ $ci->load->model("model_permissions");?>
 													</a>
 												</div>
 												<div class="col-sm-4 link">	
-													<a href="#">
+													<a href="/bo/CuentasPagar/Archivero">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-folder fa-3x"></i>
 															<h1>Archivero <br>&nbsp</h1>

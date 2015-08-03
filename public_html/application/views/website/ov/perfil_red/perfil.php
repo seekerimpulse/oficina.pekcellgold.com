@@ -380,7 +380,7 @@ function actualizar()
 	{
 		$.ajax({
 		type: "POST",
-		url: "/index.php/ov/perfil_red/actualizar",
+		url: "/ov/perfil_red/actualizar",
 		data: $('#checkout-form').serialize()
 		})
 		.done(function( msg ) {
@@ -405,7 +405,7 @@ function changepswd()
 
 		$.ajax({
 			type: "POST",
-			url: "/index.php/auth/change_password",
+			url: "/auth/change_password",
 			data: $('#pswd').serialize()
 		})
 		.done(function( msg ) {
@@ -417,7 +417,7 @@ function changepswd()
 							label: "Ok!",
 							className: "btn-success",
 							callback: function() {
-								location.href="/index.php/auth/change_password";
+								location.href="/auth/change_password";
 								}
 							}
 						}
@@ -432,7 +432,7 @@ function codpos()
 		var cp=$("#cp").val();
 		$.ajax({
 			type: "POST",
-			url: "/index.php/ov/perfil_red/cp",
+			url: "/ov/perfil_red/cp",
 			data: {cp: cp},
 		})
 		.done(function( msg )

@@ -61,7 +61,7 @@ $confirm_new_password = array(
 					<!-- widget div-->
 		<div>
     <fieldset id="pswd">
-      <form style="margin-bottom: 4rem;" class="smart-form" action="/index.php/auth/change_password" method="post" accept-charset="utf-8">
+      <form style="margin-bottom: 4rem;" class="smart-form" action="/auth/change_password" method="post" accept-charset="utf-8">
       <?php echo form_open($this->uri->uri_string()); ?>
           <div>
             <section>

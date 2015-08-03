@@ -71,7 +71,7 @@
                                             <div class="titulo">Foto</div>
                                             <canvas id="foto" style="display:none" ></canvas>
 
-                                          <form METHOD="POST" ENCTYPE="multipart/form-data" action="/index.php/ov/perfil_red/sube_foto_tomar/0" id="uploadPicture" name="picture">
+                                          <form METHOD="POST" ENCTYPE="multipart/form-data" action="/ov/perfil_red/sube_foto_tomar/0" id="uploadPicture" name="picture">
                                           </form>
 
                                         </div>
@@ -254,7 +254,7 @@ $(document).ready(function() {
     Dropzone.autoDiscover = false;
     $("#personal").dropzone({
         paramName: "foto",
-        url: "/index.php/ov/perfil_red/sube_foto/0",
+        url: "/ov/perfil_red/sube_foto/0",
         addRemoveLinks : true,
         maxFilesize: 5,
         dictResponseError: 'Error uploading file!',
@@ -263,7 +263,7 @@ $(document).ready(function() {
     Dropzone.autoDiscover = false;
     $("#fondo").dropzone({
         paramName: "foto",
-        url: "/index.php/ov/perfil_red/sube_foto/1",
+        url: "/ov/perfil_red/sube_foto/1",
         addRemoveLinks : true,
         maxFilesize: 5,
         dictResponseError: 'Error uploading file!',
@@ -338,7 +338,7 @@ $('#botonDetener').on('click', function(e) {
 
     $.ajax({
             type: "POST",
-            url: "/index.php/ov/perfil_red/sube_foto_tomar/0",
+            url: "/ov/perfil_red/sube_foto_tomar/0",
             enctype: 'multipart/form-data',
             data: {
                 foto: dataURL

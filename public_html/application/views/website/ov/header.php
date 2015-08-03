@@ -74,7 +74,7 @@
 							</li>
 							<li class="divider"></li>
 							<li>
-								<a href="/index.php/auth/logout" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><u>L</u>ogout</strong></a>
+								<a href="/auth/logout" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><u>L</u>ogout</strong></a>
 							</li>
 						</ul>
 					</li>
@@ -83,7 +83,7 @@
 				<!-- logout button -->
 				<div style="margin-top: 1rem;" class=" transparent pull-right" id="logout">
 
-					<span> <a style="color: rgb(255, 255, 255); background: rgb(206, 53, 44) none repeat scroll 0% 0%;" class="btn btn-default btn-circle btn-lg" href="/index.php/auth/logout" style="color: #CE352C" title="Salir" data-action="userLogout" data-logout-msg="¿Realmente desea salir?">
+					<span> <a style="color: rgb(255, 255, 255); background: rgb(206, 53, 44) none repeat scroll 0% 0%;" class="btn btn-default btn-circle btn-lg" href="/auth/logout" style="color: #CE352C" title="Salir" data-action="userLogout" data-logout-msg="¿Realmente desea salir?">
 							<i style="font-size: 3rem;" class="fa fa-sign-out"></i>
 							</a></span>
 				</div>

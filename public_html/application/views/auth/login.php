@@ -58,7 +58,7 @@
 		<header id="header" class="fade in">
 		<br />
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				<h1>Sistema Integral de Operaciones Networksoft &reg;</h1>
+				<h1>Sistema Integral de Operaciones NetworkSoft &reg;</h1>
 			</div>
 		</header>
 
@@ -76,7 +76,7 @@
 							<img id="compania" src="/logo.png" alt="">
 						</div>
 						<div class="well no-padding">
-							<form id="login-form" method="POST" action="/index.php/auth/login" class="smart-form client-form">
+							<form id="login-form" method="POST" action="/auth/login" class="smart-form client-form">
 								<header>
 									Iniciar sesión
 								</header>
