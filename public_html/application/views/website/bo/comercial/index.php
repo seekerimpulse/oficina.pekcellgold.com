@@ -60,34 +60,10 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">
-													<a href="/bo/comercial/carrito">
+													<a href="/bo/comercial/carrito_de_compras">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-shopping-cart fa-3x"></i>
-															<h1>Carrito de compras</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">	
-													<a href="/bo/CuentasPagar/PorPagar">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-money fa-3x"></i>
-															<h1>Cuentas por Pagar</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">	
-													<a href="/bo/cuentasporcobrar/index">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-bank fa-3x"></i>
-															<h1>Cuentas Por Cobrar</h1>
-														</div>
-													</a>
-												</div>
-																								<div class="col-sm-3 link">
-													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-bar-chart-o fa-3x"></i>
-															<h1>Estudios de Mercados</h1>
+															<h1>Carrito de Compras</h1>
 														</div>
 													</a>
 												</div>

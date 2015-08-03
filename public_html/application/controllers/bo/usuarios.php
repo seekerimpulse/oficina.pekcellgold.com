@@ -27,7 +27,7 @@ class usuarios extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+		if(!$this->general->isAValidUser($id,"administracion"))
 		{
 			redirect('/auth/logout');
 		}
@@ -187,7 +187,7 @@ class usuarios extends CI_Controller
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+		if(!$this->general->isAValidUser($id,"administracion"))
 		{
 			redirect('/auth/logout');
 		}
@@ -276,7 +276,7 @@ class usuarios extends CI_Controller
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+		if(!$this->general->isAValidUser($id,"administracion"))
 		{
 			redirect('/auth/logout');
 		}

@@ -2086,6 +2086,32 @@ class comercial extends CI_Controller
         $this->template->set_partial('footer', 'website/bo/footer');
 		$this->template->build('website/bo/comercial/altas/mercancia');		
 	}
+	
+	function carrito_de_compras()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+	
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+
+		$style         = $this->general->get_style(1);
+	
+		$this->template->set("id",$id);
+		$this->template->set("style",$style);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/bo/comercial/carrito/index');
+	}
 
 	function carrito(){
 		if (!$this->tank_auth->is_logged_in()) 

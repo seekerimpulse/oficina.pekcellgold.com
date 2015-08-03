@@ -95,7 +95,7 @@ class CuentasPagar extends CI_Controller
 		}
 		$id=$this->tank_auth->get_user_id();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+		if(!$this->general->isAValidUser($id,"administracion"))
 		{
 			redirect('/auth/logout');
 		}
@@ -111,7 +111,7 @@ class CuentasPagar extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/comercial/Cuentas/PorPagar');
+		$this->template->build('website/bo/administracion/Cuentas/PorPagar');
 	}
 	
 	function reporte_cobros(){

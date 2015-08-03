@@ -2,11 +2,13 @@
 			<div id="content" >
 				<div class="row">
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-					<h1 class="page-title txt-color-blueDark">
-						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>&gt;
-								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/carrito_de_compras">Carrito de Compras</a>
-								> Alta
+						<h1 class="page-title txt-color-blueDark">
+							
+							<!-- PAGE HEADER -->
+							<i class="fa-fw fa fa-home"></i> 
+								<a href="/bo/dashboard"> Menu</a> 
+							<span>>
+								Comercial
 							</span>
 						</h1>
 					</div>
@@ -32,18 +34,29 @@
 						<div class="widget-body no-padding smart-form">
                 <fieldset>
                   <div class="contenidoBotones">
-						<div class="row">
-												<div class="col-sm-1 link"></div>
-												<?php foreach ($tipos as $tipo ) {?>
-												<div class="col-sm-3 link">
-												<a href="/bo/mercancia/nueva_mercancia?id=<?php echo $tipo->id; ?>">
-													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-														<i class="fa fa-tags fa-3x"></i>
-														<h1><?php echo $tipo->descripcion; ?></h1>
-													</div>
-												</a>
+										<div class="row">
+											<div class="col-sm-2 link">
+											</div>
+											<div class="col-sm-8 link">
+												<div class="col-sm-4 link">
+													<a href="/bo/CuentasPagar/historial">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-edit fa-3x"></i>
+															<h1>Historial</h1>
+														</div>
+													</a>
 												</div>
-												<?php } ?>
+												
+												<div class="col-sm-4 link">
+													<a href="/bo/CuentasPagar/porPagar">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+															<i class="fa fa-edit fa-3x"></i>
+															<h1>Por Pagar</h1>
+														</div>
+													</a>
+												</div>
+											
+											</div>
 										 </div>
 									</div>
 								</fieldset>
@@ -80,4 +93,3 @@
 	text-decoration: none !important;
 }
 </style>
-			

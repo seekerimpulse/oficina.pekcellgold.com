@@ -45,98 +45,46 @@ $ci->load->model("model_permissions");?>
 								  	<div class="well" style="box-shadow: 0px 0px 0px !important;border-color: transparent;">
 										<fieldset>
 											<legend><b>Sistema Integral de Operaciones Administrativo</b></legend>
-											<!--<div class="row">
-												<?php $permiso=$ci->model_permissions->check($id,'perfil');
-												//if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="configuracion/">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-wrench fa-3x"></i>
-															<h5>Configuracion</h5>
+											                  <div class="contenidoBotones">
+										<div class="row">
+											<div class="col-sm-12 link">
+											<div class="col-sm-6 link">
+													<a href="/bo/usuarios">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-user fa-3x"></i>
+															<h1>Usuarios<br>&nbsp</h1>
 														</div>
 													</a>
-												</div>
-
-												<?php //}
-												$permiso=$ci->model_permissions->check($id,'foto');
-											//	if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="comercial/">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+											</div>
+											<div class="col-sm-6 link">
+													<a href="/bo/administracion/emails_departamentos">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															
+																<i class="fa fa-envelope fa-3x"></i>
+																<h1>E-mails<br>Departamentos</h1>
+															
+														</div>
+													</a>
+											</div>
+											<div class="col-sm-6 link">	
+													<a href="/bo/CuentasPagar/PorPagar">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-money fa-3x"></i>
-															<h5>Comercial</h5>
+															<h1>Cuentas por Pagar</h1>
 														</div>
 													</a>
 												</div>
-												<?php //}
-												?>
-
-												<?php //}
-												$permiso=$ci->model_permissions->check($id,'foto');
-											//	if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="#">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-folder-open fa-3x"></i>
-															<h5>Administrativo</h5>
+												<div class="col-sm-6 link">	
+													<a href="/bo/cuentasporcobrar/index">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-bank fa-3x"></i>
+															<h1>Cuentas Por Cobrar</h1>
 														</div>
 													</a>
 												</div>
-												<?php //}
-												?>
 											</div>
-											<div class="row">
-												<?php $permiso=$ci->model_permissions->check($id,'perfil');
-												//if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="oficinaVirtual/">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-desktop fa-3x"></i>
-															<h5>Oficina Virtual</h5>
-														</div>
-													</a>
-												</div>
-
-												<?php //}
-												$permiso=$ci->model_permissions->check($id,'foto');
-											//	if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="/bo/reportes">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-book fa-3x"></i>
-															<h5>Reportes</h5>
-														</div>
-													</a>
-												</div>
-												<?php //}
-												?>
-
-												<?php //}
-												$permiso=$ci->model_permissions->check($id,'foto');
-											//	if($permiso){
-												?>
-												<div class="col-sm-4">
-													<a href="#">
-														<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-cubes fa-3x"></i>
-															<h5>Logistico</h5>
-														</div>
-													</a>
-												</div>
-												<?php //}
-												?>
-											</div>
-									</fieldset>
-									<!--Termina la secciion de perfil y red-->
-									<footer>
-										Version: <i>3.0.0</i>
-										<a href="/changelog">Changelog</a>
-									</footer>
+										 </div>
+									</div>
 						</div> 
 						</div>
 				</div>

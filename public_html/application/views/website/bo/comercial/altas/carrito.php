@@ -6,7 +6,7 @@
 			<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/comercial">Comercial</a> > Carrito de Compras
+								<a href="/bo/comercial">Comercial</a> > <a href="/bo/comercial/carrito_de_compras"> Carrito de Compras </a> > Listar
 							</span>
 			</h1>
 		</div>

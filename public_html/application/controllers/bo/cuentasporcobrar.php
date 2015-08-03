@@ -16,7 +16,7 @@ class cuentasporcobrar extends compras{
 		
 		$id = $this->tank_auth->get_user_id ();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+		if(!$this->general->isAValidUser($id,"administracion"))
 		{
 			redirect('/auth/logout');
 		}
@@ -36,7 +36,7 @@ class cuentasporcobrar extends compras{
 		$this->template->set_layout ( 'website/main' );
 		$this->template->set_partial ( 'header', 'website/ov/header' );
 		$this->template->set_partial ( 'footer', 'website/ov/footer' );
-		$this->template->build ( 'website/bo/comercial/CuentasCobrar/listar' );
+		$this->template->build ( 'website/bo/administracion/CuentasCobrar/listar' );
 	}
 	
 	function cambiar_estado(){
@@ -46,7 +46,7 @@ class cuentasporcobrar extends compras{
 		
 		$id = $this->tank_auth->get_user_id ();
 		
-		if(!$this->general->isAValidUser($id,"comercial"))
+		if(!$this->general->isAValidUser($id,"administracion"))
 		{
 			redirect('/auth/logout');
 		}

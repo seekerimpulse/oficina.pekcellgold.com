@@ -5,8 +5,9 @@
 						<h1 class="page-title txt-color-blueDark">
 					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<span>>
-								<a href="/bo/comercial/">Comercial</a> > <a href="/bo/comercial/altas">Altas </a> > 
-								<a href="/bo/usuarios" > Usuarios </a> > Alta
+								<a href="/bo/administracion">Administración </a>
+								<a href="/bo/usuarios"> > Usuarios </a>
+								 > Alta
 							</span>
 						</h1>
 					</div>

@@ -32,34 +32,26 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-2 link">
+											<div class="col-sm-12 link">
+											<div class="col-sm-1 link">
 											</div>
-											<div class="col-sm-8 link">
-												<div class="col-sm-3 link">
+											<!--  	<div class="col-sm-3 link">
 													<a href="/bo/usuarios">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-user fa-3x"></i>
 															<h1>Usuarios</h1>
 														</div>
 													</a>
-												</div>
-												<div class="col-sm-3 link">
+												</div> -->
+												<div class="col-sm-2 link">
 													<a href="/bo/comercial/nuevo_proveedor">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-truck fa-3x"></i>
-															<h1>Proveedor</h1>
+															<h1>Proveedor<br>&nbsp</h1>
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-3 link">
-													<a href="/bo/mercancia/index">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-cubes fa-3x"></i>
-															<h1>Mercancia</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-3 link">
+												<div class="col-sm-2 link">
 													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															<i class="fa fa-gift fa-3x"></i>
@@ -67,7 +59,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-3 link">	
+												<div class="col-sm-2 link">	
 													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-inbox fa-3x"></i>
@@ -75,7 +67,7 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-sm-3 link">	
+												<div class="col-sm-2 link">	
 													<a href="#">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 															<i class="fa fa-shopping-cart  fa-3x"></i>

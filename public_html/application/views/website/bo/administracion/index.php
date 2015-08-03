@@ -32,10 +32,18 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-2 link">
+											<div class="col-sm-12 link">
+											<div class="col-sm-1 link">
 											</div>
-											<div class="col-sm-8 link">
-												<div class="col-sm-3 link">
+											<div class="col-sm-2 link">
+													<a href="/bo/usuarios">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															<i class="fa fa-user fa-3x"></i>
+															<h1>Usuarios<br>&nbsp</h1>
+														</div>
+													</a>
+											</div>
+											<div class="col-sm-2 link">
 													<a href="/bo/administracion/emails_departamentos">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
 															
@@ -44,8 +52,23 @@
 															
 														</div>
 													</a>
+											</div>
+											<div class="col-sm-2 link">	
+													<a href="/bo/CuentasPagar/PorPagar">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-money fa-3x"></i>
+															<h1>Cuentas por Pagar</h1>
+														</div>
+													</a>
 												</div>
-												
+												<div class="col-sm-2 link">	
+													<a href="/bo/cuentasporcobrar/index">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-bank fa-3x"></i>
+															<h1>Cuentas Por Cobrar</h1>
+														</div>
+													</a>
+												</div>
 											</div>
 										 </div>
 									</div>
