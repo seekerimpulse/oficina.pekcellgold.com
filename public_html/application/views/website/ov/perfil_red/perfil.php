@@ -162,7 +162,7 @@
 										<section class="col col-2">
 											<label class="input">
 												Código postal
-												<input required onkeyup="codpos()" type="text" id="cp" name="cp" value="<?=$dir[0]->cp?>">
+												<input required type="text" id="cp" name="cp" value="<?=$dir[0]->cp?>">
 											</label>
 										</section>
 										<section class="col col-2">

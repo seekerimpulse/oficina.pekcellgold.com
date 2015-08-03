@@ -1,470 +1,15 @@
-<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
-<script src="/template/js/validacion.js"></script>
-<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
-<script type="text/javascript">
 
-// DO NOT REMOVE : GLOBAL FUNCTIONS!
-
-$(document).ready(function() {
-	//Para local /ov/perfil_red/crear_user
-	//Produccion /auth/register
-	// fuelux 
-
-			  var wizard = $('.wizard').wizard();
-
-			  wizard.on('finished', function (e, data) {
-
-			  	var ids = new Array( 
-						"#nombre",
-					 	"#apellido",
-					 	"#datepicker",
-					 	"#cp",
-					 	"#username",
-					 	"#email",
-					 	"#password",
-					 	"#confirm_password"
-					 	
-					 );
-					var mensajes = new Array( 
-						"Por favor ingresa tu nombre",
-					 	"Por favor ingresa tu apellido",
-					 	"Por favor ingresa tu fecha de nacimiento",
-					 	"Por favor ingresa tu código postal",
-					 	"Por favor ingresa un nombre de usuario",
-					 	"Por favor ingresa un correo",
-					 	"Por favor ingresa una contraseña",
-					 	"Por favor confirma tu contraseña"
-					 );
-
-					var idss=new Array(
-						"#username"
-					);
-					var mensajess=new Array(
-						"El nombre de usuario no puede contener espacios en blanco"
-					);
-					var validacion_=valida_espacios(idss,mensajess);
-					var validacion=valida_vacios(ids,mensajes);
-					if(validacion&&validacion_)
-					{
-						$( ".steps" ).slideUp();
-						$( ".steps" ).remove();
-						$( ".actions" ).slideUp();
-						$( ".actions" ).remove();
-						$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
-						
-						$.ajax({
-							type: "POST",
-							url: "/auth/register",
-							data: $('#register').serialize()
-						})
-						.done(function( msg1 ) {
-							
-							$("#progress").attr('style','width: 40%');
-							var email=$("#email").val();
-							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
-							$.ajax({
-								type: "POST",
-								url: "/ov/perfil_red/afiliar_nuevo",
-								data: $('#checkout-form').serialize()
-								})
-								.done(function( msg ) {
-									$("#progress").attr('style','width: 100%');
-									bootbox.dialog({
-										message: msg,
-										title: "Atención",
-										buttons: {
-											success: {
-											label: "Ok!",
-											className: "btn-success",
-											callback: function() {
-												location.href="";
-												}
-											}
-										}
-									});
-								});
-						});//fin Done ajax
-					}
-					else
-					{
-						$.smallBox({
-					      title: "<h1>Atención</h1>",
-					      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
-					      color: "#C46A69",
-					      icon : "fa fa-warning fadeInLeft animated",
-					      timeout: 4000
-					    });
-					}
-			    
-			  });
-	
-	pageSetUp();
-});
-
-
-$("#remove_step").click(function() {
-	$("#tipo_plan").attr("name","tipo_plan");
-	$('.wizard').wizard('selectedItem', {
-			step: 4
-		});
-	$( "#step4" ).slideUp();
-	$( "#step4" ).remove();
-	$( "#paso4" ).slideUp();
-	$( "#paso4" ).remove();
-	$( this ).slideUp();
-	$( this ).remove();
-});
-
-$("#plan1").click(function(event) {
-	$("#tipo_plan").attr("value","1");
-	$("#planuno").addClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-
-$("#plan2").click(function(event) {
-	$("#tipo_plan").attr("value","2");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").addClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-$("#plan3").click(function(event) {
-	$("#tipo_plan").attr("value","3");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").addClass('packselected');
-	$("#plancuatro").removeClass('packselected');
-});
-$("#plan4").click(function(event) {
-	$("#tipo_plan").attr("value","4");
-	$("#planuno").removeClass('packselected');
-	$("#plandos").removeClass('packselected');
-	$("#plantres").removeClass('packselected');
-	$("#plancuatro").addClass('packselected');
-});
-
-
-
-/*
-CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
-$("input").click(function() {
-$( this ).slideUp();
-$( this ).remove();
-});
-*/
-function codpos()
-{
-	var pais = $("#pais").val();
-	if(pais=="MEX")
-	{
-		var cp=$("#cp").val();
-		$.ajax({
-			type: "POST",
-			url: "/ov/perfil_red/cp",
-			data: {cp: cp},
-		})
-		.done(function( msg )
-		{
-			$("#colonia").remove();
-			$("#municipio").remove();
-			$("#estado").remove();
-			$("#dir").append(msg);
-		})
-	}
-}
-function clickme()
-{
-}
-
-function SelecionarFase()
-{
-
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/MensajeFase",
-		data: {	id: <?php echo $id ?>, red: <?php echo $_GET['id']; ?> }
-	})
-	.done(function( msg )
-	{
-		bootbox.dialog({
-			message: msg,
-			title: "Informacion Personal",
-			buttons: {
-				success: {
-				label: "Cerrar!",
-				className: "hide",
-				callback: function() {
-					//location.href="";
-					}
-				}
-			}
-		});
-	});
-}
-
-function faseCambio(fase){
-	
-	bootbox.dialog({
-		message: "¿Estas Seguro?",
-		title: "Atención",
-		buttons: {
-			success: {
-			label: "Si",
-			className: "btn-success",
-			callback: function() {
-				
-				$.ajax({
-					type: "POST",
-					url: "/ov/perfil_red/CambioFase",
-					data: {
-						id: <?php echo $id ?>,
-						red: <?php echo $_GET['id']; ?>,
-						fase: fase
-							},
-					})
-					.done(function(msg)
-					{
-						alert('Has Cambiado de fase'+msg);
-						location.reload();
-					})
-				}
-			},
-			close:{
-				label: "NO",
-				className: "btn-danger",
-				callback: function() {
-					
-					}
-				}
-		}
-	});
-	
-}
-
-function use_username()
-{
-	$("#msg_usuario").remove();
-	var username=$("#username").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_username",
-		data: {username: username},
-	})
-	.done(function( msg )
-	{
-		$("#usuario").append("<p id='msg_usuario'>"+msg+"</msg>")
-	});
-}
-function use_mail()
-{
-	$("#msg_correo").remove();
-	var mail=$("#email").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_mail",
-		data: {mail: mail},
-	})
-	.done(function( msg )
-	{
-		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
-	});
-}
-function use_username_r()
-{
-	$("#msg_usuario_r").remove();
-	var username=$("#username_r").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_username",
-		data: {username: username},
-	})
-	.done(function( msg )
-	{
-		$("#usuario_r").append("<p id='msg_usuario_r'>"+msg+"</msg>")
-	});
-}
-function use_mail_r()
-{
-	$("#msg_correo_r").remove();
-	var mail=$("#email_r").val();
-	$("#mail_important").attr('value',mail);
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_mail",
-		data: {mail: mail},
-	})
-	.done(function( msg )
-	{
-		$("#correo_r").append("<p id='msg_correo_r'>"+msg+"</msg>")
-	});
-}
-function otra()
-{
-	if($("#otro:checked").val()=="on")
-	{
-		$("#b_persona").removeClass("hidden");
-		$("#afiliado_value").attr("name","afiliados");
-	}
-	else
-	{
-		$("#b_persona").addClass("hidden");
-		$("#afiliado_value").attr("name","");
-	}
-}
-function agregar(tipo)
-{
-	if(tipo==1)
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-	else
-	{
-		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-}
-function agregar_red(tipo)
-{
-	if(tipo==1)
-	{
-		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-	else
-	{
-		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
-	}
-}
- $(function()
- {
- 	a = new Date();
-	año = a.getFullYear()-19;
-	$( "#datepicker" ).datepicker({
-	changeMonth: true,
-	numberOfMonths: 2,
-	maxDate: año+"-12-31",
-	dateFormat:"yy-mm-dd",
-	changeYear: true
-	});
-});
-
-function subred(id)
-{
-	$("#"+id).children(".quitar").attr('onclick','');
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/get_red_afiliar",
-		data: {id: id,
-				red: <?php echo $_GET['id']; ?>},
-	})
-	.done(function( msg )
-	{
-		$("#"+id).append(msg);
-	});
-}
-
-
-function check_keyword()
-{
-	$("#msg_key").remove();
-	$("#key_").append('<i id="ajax_" class="icon-append fa fa-spinner fa-spin"></i>');
-
-	var keyword=$("#keyword").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#msg_key").remove();
-		$("#key").append("<p id='msg_key'>"+msg+"</msg>");
-		$("#ajax_").remove();
-	});
-}
-function check_keyword_co()
-{
-	$("#msg_key_co").remove();
-	$("#key_1").append('<i id="ajax_1" class="icon-append fa fa-spinner fa-spin"></i>');
-	var keyword=$("#keyword_co").val();
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#msg_key_co").remove();
-		$("#key_co").append("<p id='msg_key_co'>"+msg+"</msg>");
-		$("#ajax_1").remove();
-	});
-}
-function check_keyword_red()
-{
-	$("#msg_key_red").remove();
-	var keyword=$("#keyword_red").val();
-	$("#key_2").append('<i id="ajax_2" class="icon-append fa fa-spinner fa-spin"></i>');
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#key_red").append("<p id='msg_key_red'>"+msg+"</msg>");
-		$("#ajax_2").remove();
-	});
-}
-function check_keyword_red_co()
-{
-	$("#msg_key_red_co").remove();
-	var keyword=$("#keyword_red_co").val();
-	$("#key_3").append('<i id="ajax_3" class="icon-append fa fa-spinner fa-spin"></i>');
-	$.ajax({
-		type: "POST",
-		url: "/ov/perfil_red/use_keyword",
-		data: {keyword: keyword},
-	})
-	.done(function( msg )
-	{
-		$("#msg_key_red_co").remove();
-		$("#key_red_co").append("<p id='msg_key_red_co'>"+msg+"</msg>");
-		$("#ajax_3").remove();
-	});
-}
-function codpos_red()
-{
-	var pais = $("#pais_red").val();
-	if(pais=="MEX")
-	{
-		var cp=$("#cp_red").val();
-		$.ajax({
-			type: "POST",
-			url: "/ov/perfil_red/cp_red",
-			data: {cp: cp},
-		})
-		.done(function( msg )
-		{
-			$("#colonia_red").remove();
-			$("#municipio_red").remove();
-			$("#estado_red").remove();
-			$("#dir_red").append(msg);
-		})
-	}
-}
-
-</script>
 <!-- MAIN CONTENT -->
 <div id="content">
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<h1 class="page-title txt-color-blueDark">
-					<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-				<span> 
-				> <a href="/ov/perfil_red/TipoAfiliacion">Tipo de Afiliacion</a>
-				> <a href="/ov/perfil_red/afiliar?tipo=1">Red</a>
-				> <a href="/ov/perfil_red/nuevo_afilido?id=<?php echo $_GET['id']; ?>">Afiliar</a>
-				> Frontal
+				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
+				<span>
+					> <a href="/bo/comercial">Comercial</a> 
+					> <a href="/bo/comercial/red">Red</a>
+					> <a href="/bo/usuarios/afiliar">Tipo de Afiliacion</a>
+					> Afiliar Nuevo
 				</span>
 			</h1>
 		</div>
@@ -506,12 +51,17 @@ function codpos_red()
 						<!-- end widget edit box -->
 						<!-- widget content -->
 						<div class="widget-body">
+							<ul id="myTab1" class="nav nav-tabs bordered">
+								<li id="tab1" class="active">
+									<a href="#s1" data-toggle="tab">Frontal</a>
+								</li>
+								
+							</ul>
 							<div id="myTabContent1" class="tab-content padding-10">
 								<div class="tab-pane fade in active" id="s1">
+									
 									<div id="uno" class="row fuelux">
 									
-									<? 
-									if( $contar < $red_frontales[0]->frontal || $premium == '2' )  {   ?>
 	                                    
 	                                	<div id="myWizard" class="wizard">
 		                                	
@@ -523,7 +73,8 @@ function codpos_red()
 												<li data-target="#step2">
 													<span class="badge">2</span>Datos personales<span class="chevron"></span>
 												</li>
-												<?php /* ocultar afiliado ?><li data-target="#step3">
+												<?php /* ?>
+												<li data-target="#step3">
 													<span class="badge">3</span>Selección del plan<span class="chevron"></span>
 												</li>
 												<li id="paso4" data-target="#step4">
@@ -567,6 +118,7 @@ function codpos_red()
 																	<input id="confirm_password" required type="password" name="confirm_password" placeholder="Repite contraseña">
 																</label>
 															</section>
+															
 														</fieldset>
 													</form>
 												</div>
@@ -574,6 +126,15 @@ function codpos_red()
 													<form method="POST" action="/perfil_red/afiliar_nuevo" id="checkout-form" class="smart-form" novalidate="novalidate">
 														<fieldset>
 															<legend>Datos personales del afiliado</legend>
+															<section class="col col-3">
+																<label class="input">RED
+																	<select class="form-control input-sm" name="red">
+																		<?php foreach ($redes as $red) { ?>
+																			<option value="<?php echo $red->id; ?>"><?php echo $red->nombre; ?></option>
+																		<?php }?>
+																	</select>
+																</label>
+															</section>
 															<div class="row">
 																<section class="col col-3">
 																	<label class="input"> <i class="icon-prepend fa fa-user"></i>
@@ -587,7 +148,7 @@ function codpos_red()
 																</section>
 																<section class="col col-3">
 																	<label class="input"> <i class="icon-prepend fa fa-calendar"></i>
-																		<input required id="datepicker" type="text" name="nacimiento" placeholder="Fecha de nacimiento" readonly="readonly">
+																		<input required id="datepicker" type="text" name="nacimiento" placeholder="Fecha de nacimiento">
 																	</label>
 																</section>
 																<section class="col col-3" id="key">
@@ -673,7 +234,7 @@ function codpos_red()
 																<section class="col col-2">
 																	<label class="input">
 																		Código postal
-																		<input required type="text" id="cp" name="cp">
+																		<input required onkeyup="codpos()" type="text" id="cp" name="cp">
 																	</label>
 																</section>
 																<section class="col col-2">
@@ -765,15 +326,13 @@ function codpos_red()
 																</section>
 															</div>
 														</fieldset>
-															<input class='hide' type="text" name="red" id='red' value="<?php echo $_GET['id']; ?>" placeholder="">
-															<input type="text" name="id" value="<?php echo $id; ?>" class="hide">
 															
 													</form>
 												</div>
 												<div class="step-pane" id="step3">
 
 													<div class="row">
-														<br/>
+														<br />
 													</div>
 													<div class="hidden-xs hidden-sm hidden-md col-lg-1"></div>
 													<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
@@ -896,23 +455,13 @@ function codpos_red()
 												</div>
 												<div class="step-pane" id="step4">
 													<div class="well">
--														<p>El pago se realizara despues en la enttrega de su primer pedido</p>
+-														<p>El pago se realizara despues, en la enttrega de su primer pedido</p>
 -													</div>
 												</div>
 				
 											</div>
 										</div>
-										<?}	elseif($premium == '0'){ ?> 
-										<script type="text/javascript">
-										window.onload = function() {
-										    SelecionarFase();
-										    // Puedes agregar mas eventos que se ejecutaran al cargar la pagina
-										}
-										</script>
-											<a id="fases"  onclick="SelecionarFase()">Mas informacion</a>
-										<?php } else {?>
-										<h1>   Solo puedes tener <?php echo $red_frontales[0]->frontal ?>, pero puedes afiliar en red"</h1>
-											<?php }?>
+										
 									</div>
 								</div>
 								
@@ -1055,3 +604,394 @@ right connector from last child*/
 /*Thats all. I hope you enjoyed it.
 Thanks :)*/
 </style>
+<script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
+<script src="/template/js/validacion.js"></script>
+<script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+	// fuelux 
+
+			  var wizard = $('.wizard').wizard();
+
+			  wizard.on('finished', function (e, data) {
+
+			  	var ids = new Array( 
+						"#nombre",
+					 	"#apellido",
+					 	"#datepicker",
+					 	"#cp",
+					 	"#username",
+					 	"#email",
+					 	"#password",
+					 	"#confirm_password"
+					 	
+					 );
+					var mensajes = new Array( 
+						"Por favor ingresa tu nombre",
+					 	"Por favor ingresa tu apellido",
+					 	"Por favor ingresa tu fecha de nacimiento",
+					 	"Por favor ingresa tu código postal",
+					 	"Por favor ingresa un nombre de usuario",
+					 	"Por favor ingresa un correo",
+					 	"Por favor ingresa una contraseña",
+					 	"Por favor confirma tu contraseña"
+					 );
+
+					var idss=new Array(
+						"#username"
+					);
+					var mensajess=new Array(
+						"El nombre de usuario no puede contener espacios en blanco"
+					);
+					var validacion_=valida_espacios(idss,mensajess);
+					var validacion=valida_vacios(ids,mensajes);
+					if(validacion&&validacion_)
+					{
+						$( ".steps" ).slideUp();
+						$( ".steps" ).remove();
+						$( ".actions" ).slideUp();
+						$( ".actions" ).remove();
+						$("#myWizard").append('<div class="progress progress-sm progress-striped active"><div id="progress" class="progress-bar bg-color-darken"  role="progressbar" style=""></div></div>');
+						
+						$.ajax({
+							type: "POST",
+							url: "/auth/register",
+							data: $('#register').serialize()
+						})
+						.done(function( msg1 ) {
+						
+							$("#progress").attr('style','width: 40%');
+							var email=$("#email").val();
+							$("#checkout-form").append("<input value='"+email+"' type='hidden' name='mail_important'>");
+							$.ajax({
+								type: "POST",
+								url: "/bo/usuarios/afiliar_nuevo",
+								data: $('#checkout-form').serialize()
+								})
+								.done(function( msg ) {
+									
+									$("#progress").attr('style','width: 100%');
+									bootbox.dialog({
+										message: msg,
+										title: "Atención",
+										buttons: {
+											success: {
+											label: "Ok!",
+											className: "btn-success",
+											callback: function() {
+												location.href="";
+												}
+											}
+										}
+									});
+								});
+						});//fin Done ajax
+					}
+					else
+					{
+						$.smallBox({
+					      title: "<h1>Atención</h1>",
+					      content: "<h3>Por favor reviza que todos los datos estén correctos</h3>",
+					      color: "#C46A69",
+					      icon : "fa fa-warning fadeInLeft animated",
+					      timeout: 4000
+					    });
+					}
+			    
+			  });
+	
+	pageSetUp();
+})
+$("#remove_step").click(function() {
+	$("#tipo_plan").attr("name","tipo_plan");
+	$('.wizard').wizard('selectedItem', {
+			step: 4
+		});
+	$( "#step4" ).slideUp();
+	$( "#step4" ).remove();
+	$( "#paso4" ).slideUp();
+	$( "#paso4" ).remove();
+	$( this ).slideUp();
+	$( this ).remove();
+});
+
+$("#plan1").click(function(event) {
+	$("#tipo_plan").attr("value","1");
+	$("#planuno").addClass('packselected');
+	$("#plandos").removeClass('packselected');
+	$("#plantres").removeClass('packselected');
+	$("#plancuatro").removeClass('packselected');
+});
+
+$("#plan2").click(function(event) {
+	$("#tipo_plan").attr("value","2");
+	$("#planuno").removeClass('packselected');
+	$("#plandos").addClass('packselected');
+	$("#plantres").removeClass('packselected');
+	$("#plancuatro").removeClass('packselected');
+});
+$("#plan3").click(function(event) {
+	$("#tipo_plan").attr("value","3");
+	$("#planuno").removeClass('packselected');
+	$("#plandos").removeClass('packselected');
+	$("#plantres").addClass('packselected');
+	$("#plancuatro").removeClass('packselected');
+});
+$("#plan4").click(function(event) {
+	$("#tipo_plan").attr("value","4");
+	$("#planuno").removeClass('packselected');
+	$("#plandos").removeClass('packselected');
+	$("#plantres").removeClass('packselected');
+	$("#plancuatro").addClass('packselected');
+});
+
+/*
+CODIGO PARA QUITAR ELEMENTO HACIENDO CLICK EN ELLOS
+$("input").click(function() {
+$( this ).slideUp();
+$( this ).remove();
+});
+*/
+function codpos()
+{
+	var pais = $("#pais").val();
+	if(pais=="MEX")
+	{
+		var cp=$("#cp").val();
+		$.ajax({
+			type: "POST",
+			url: "/ov/perfil_red/cp",
+			data: {cp: cp},
+		})
+		.done(function( msg )
+		{
+			$("#colonia").remove();
+			$("#municipio").remove();
+			$("#estado").remove();
+			$("#dir").append(msg);
+		})
+	}
+}
+function clickme()
+{
+}
+function use_username()
+{
+	$("#msg_usuario").remove();
+	var username=$("#username").val();
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/use_username",
+		data: {username: username},
+	})
+	.done(function( msg )
+	{
+		$("#usuario").append("<p id='msg_usuario'>"+msg+"</msg>")
+	});
+}
+function use_mail()
+{
+	$("#msg_correo").remove();
+	var mail=$("#email").val();
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/use_mail",
+		data: {mail: mail},
+	})
+	.done(function( msg )
+	{
+		$("#correo").append("<p id='msg_correo'>"+msg+"</msg>")
+	});
+}
+function use_username_r()
+{
+	$("#msg_usuario_r").remove();
+	var username=$("#username_r").val();
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/use_username",
+		data: {username: username},
+	})
+	.done(function( msg )
+	{
+		$("#usuario_r").append("<p id='msg_usuario_r'>"+msg+"</msg>")
+	});
+}
+function use_mail_r()
+{
+	$("#msg_correo_r").remove();
+	var mail=$("#email_r").val();
+	$("#mail_important").attr('value',mail);
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/use_mail",
+		data: {mail: mail},
+	})
+	.done(function( msg )
+	{
+		$("#correo_r").append("<p id='msg_correo_r'>"+msg+"</msg>")
+	});
+}
+function otra()
+{
+	if($("#otro:checked").val()=="on")
+	{
+		$("#b_persona").removeClass("hidden");
+		$("#afiliado_value").attr("name","afiliados");
+	}
+	else
+	{
+		$("#b_persona").addClass("hidden");
+		$("#afiliado_value").attr("name","");
+	}
+}
+function agregar(tipo)
+{
+	if(tipo==1)
+	{
+		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+	}
+	else
+	{
+		$("#tel").append("<section class='col col-3'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+	}
+}
+function agregar_red(tipo)
+{
+	if(tipo==1)
+	{
+		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-mobile'></i><input type='tel' name='movil[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+	}
+	else
+	{
+		$("#tel_red").append("<section class='col col-6'><label class='input'> <i class='icon-prepend fa fa-phone'></i><input type='tel' name='fijo[]' placeholder='(999) 99-99-99-99-99'></label></section>");
+	}
+}
+ $(function()
+ {
+ 	var a = new Date();
+ 	año = a.getFullYear()-19;
+	$( "#datepicker" ).datepicker({
+	changeMonth: true,
+	numberOfMonths: 2,
+	dateFormat:"yy-mm-dd",
+	maxDate: año+"-12-31",
+	changeYear: true
+	});
+});
+
+function check_keyword()
+{
+	$("#msg_key").remove();
+	$("#key_").append('<i id="ajax_" class="icon-append fa fa-spinner fa-spin"></i>');
+
+	var keyword=$("#keyword").val();
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/use_keyword",
+		data: {keyword: keyword},
+	})
+	.done(function( msg )
+	{
+		$("#msg_key").remove();
+		$("#key").append("<p id='msg_key'>"+msg+"</msg>");
+		$("#ajax_").remove();
+	});
+}
+function check_keyword_co()
+{
+	$("#msg_key_co").remove();
+	$("#key_1").append('<i id="ajax_1" class="icon-append fa fa-spinner fa-spin"></i>');
+	var keyword=$("#keyword_co").val();
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/use_keyword",
+		data: {keyword: keyword},
+	})
+	.done(function( msg )
+	{
+		$("#msg_key_co").remove();
+		$("#key_co").append("<p id='msg_key_co'>"+msg+"</msg>");
+		$("#ajax_1").remove();
+	});
+}
+function check_keyword_red()
+{
+	$("#msg_key_red").remove();
+	var keyword=$("#keyword_red").val();
+	$("#key_2").append('<i id="ajax_2" class="icon-append fa fa-spinner fa-spin"></i>');
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/use_keyword",
+		data: {keyword: keyword},
+	})
+	.done(function( msg )
+	{
+		$("#key_red").append("<p id='msg_key_red'>"+msg+"</msg>");
+		$("#ajax_2").remove();
+	});
+}
+function check_keyword_red_co()
+{
+	$("#msg_key_red_co").remove();
+	var keyword=$("#keyword_red_co").val();
+	$("#key_3").append('<i id="ajax_3" class="icon-append fa fa-spinner fa-spin"></i>');
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/use_keyword",
+		data: {keyword: keyword},
+	})
+	.done(function( msg )
+	{
+		$("#msg_key_red_co").remove();
+		$("#key_red_co").append("<p id='msg_key_red_co'>"+msg+"</msg>");
+		$("#ajax_3").remove();
+	});
+}
+function codpos_red()
+{
+	var pais = $("#pais_red").val();
+	if(pais=="MEX")
+	{
+		var cp=$("#cp_red").val();
+		$.ajax({
+			type: "POST",
+			url: "/ov/perfil_red/cp_red",
+			data: {cp: cp},
+		})
+		.done(function( msg )
+		{
+			$("#colonia_red").remove();
+			$("#municipio_red").remove();
+			$("#estado_red").remove();
+			$("#dir_red").append(msg);
+		})
+	}
+}
+function detalles(id)
+{
+	$.ajax({
+		type: "POST",
+		url: "/ov/perfil_red/detalle_usuario",
+		data: {id: id},
+	})
+	.done(function( msg )
+	{
+		bootbox.dialog({
+			message: msg,
+			title: "Detalles",
+			buttons: {
+				success: {
+				label: "Cerrar!",
+				className: "btn-success",
+				callback: function() {
+					//location.href="";
+					}
+				}
+			}
+		});
+	});
+}
+</script>

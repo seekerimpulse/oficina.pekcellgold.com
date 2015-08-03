@@ -309,26 +309,8 @@
 		
 			function reporte_excel_comprar_usr()
 			{
-				bootbox.dialog({
-					message: "No tiene productos en el carrito",
-					title: "Alerta!",
-					className: "div_info_merc",
-					buttons: {
-						success: {
-							label: "Aceptar",
-							className: "btn-success",
-							callback: function() {
-								}
-						}
-						danger: {
-							label: "Aceptar",
-							className: "btn-danger",
-							callback: function() {
-								}
-						}
-					}
 				
-				var inicio=$("#startdate").val();
+						var inicio=$("#startdate").val();
 						var fin=$("#finishdate").val();
 						if(inicio=='')
 						{

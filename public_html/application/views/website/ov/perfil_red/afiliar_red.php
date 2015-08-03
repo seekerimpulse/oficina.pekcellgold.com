@@ -510,7 +510,7 @@ function botbox(nombre, id, lado)
 								+'</section>'
 								+'<section class="col col-6">'
 									+'<label class="input">Código postal'
-										+'<input required onkeyup="codpos_red()" type="text" id="cp_red" name="cp">'
+										+'<input required type="text" id="cp_red" name="cp">'
 									+'</label>'
 								+'</section>'
 								+'<section class="col col-6">País'
