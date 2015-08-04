@@ -1,16 +1,7 @@
 
 <!-- MAIN CONTENT -->
 <div id="content">
-	<div class="row">
-		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-			<h1 class="page-title txt-color-blueDark">
-				<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a> <span>>
-					<a href="/bo/oficinaVirtual/"> Oficina Virtual</a> > <a
-					href="/bo/oficinaVirtual/encuestas"> Encuestas</a> > Alta
-				</span>
-			</h1>
-		</div>
-	</div>
+	
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
@@ -32,13 +23,15 @@
 							<fieldset>
 								<div class="contenidoBotones">
 									<div class="col col-lg-12 col-md-12 col-xs-12 col-md-12">
-										<form class="smart-form" id="reporte-form" method="post" action="crear_encuesta">
+									
+										<form class="smart-form" id="encuesta_editar" method="post" action="actualizar_encuesta">
 											<div class="row">
 												<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
 													id="busquedatodos">
 													<label class="label">Nombre</label><label
-														class="input"><input type="text"
-														placeholder="Nombre de la Encuesta" id="enc_nom">
+														class="input">
+														<input type="text"
+														placeholder="Nombre de la Encuesta" id="enc_nom" value="<?php echo $encuesta[0]->nombre; ?>">
 													</label>
 												</section>
 											</div>
@@ -48,7 +41,7 @@
 													<label class="label">Descripcion</label>
 													<label
 														class="textarea"><textarea rows="3"
-															class="custom-scroll" id="desc_enc"></textarea>
+															class="custom-scroll" id="desc_enc"><?php echo $encuesta[0]->descripcion; ?></textarea>
 													</label>
 												</section>
 											</div>
@@ -59,19 +52,53 @@
 													<label class="label">Cantidad de preguntas</label>
 													<label
 														class="input"><input type="number" id="preg_qty"
-														min="1" max="30">
+														min="1" max="30" value="<?php echo count($preguntas); ?>" readonly="readonly">
 													</label>
 												</section>
 											</div>
 											<div class="row">
+												<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<?php $i=0;
+													foreach ($preguntas as $pregunta) {
+													$i++;
+													?>
+													<fieldset>
+														<div class="form-group has-error">
+															<label>Pregunta <?php echo $i; ?></label>
+															<label class="input">
+																<input type="text" value="<?php echo $pregunta->pregunta; ?>">
+															</label>
+														</div>
+														<br>
+														<?php $j=0;
+														foreach ($opciones as $opcion) {
+														$j++;
+														if($opcion->id_pregunta == $pregunta->id_pregunta){?>
+														<div class="form-group has-success">
+															<label class="col-md-2 control-label text-color-red">Opcion <?php echo $j; ?></label>
+															<div class="col-md-10">
+																<input class="form-control" type="text" value="<?php echo $opcion->respuesta; ?>">
+															</div>
+														</div>
+													
+														<?php } 
+														} ?>
+														</fieldset>
+													<?php }?>
+												</section>
+											</div>
+											
+											<div class="row">
 												<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
 													id="busquedatodos">
 													<div class="col col-lg-8 col-md-8 col-sm-8 col-xs-8"></div>
-													<div class="col col-lg-4 col-md-4 col-sm-4 col-xs-4"><a onclick="agregar_preguntas()"
-															class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12">Siguiente</a>
+													<div class="col col-lg-4 col-md-4 col-sm-4 col-xs-4"><a onclick="actualizar_preguntas()"
+															class="btn btn-success col-lg-12 col-md-12 col-sm-12 col-xs-12">Actualizar</a>
 													</div>
 												</section>
 											</div>
+											
+											
 										</form>
 									</div>
 								</div>
@@ -119,51 +146,33 @@
 <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>
 <script type="text/javascript">
-function agregar_preguntas()
+
+function actualizar_preguntas()
 {
-	var nom=$("#enc_nom").val();
-	var qty=$("#preg_qty").val();
-	var desc=$("#desc_enc").val();
-	if(nom=="")
-	{
-		alert("El campo nombre es requerido")
-	}
-	else
-	{
-		if(qty<1||qty>30)
-		{
-			alert("La cantidad de preguntas debe de estar entre 1 y 30")
-		}
-		else
-		{
-			$.ajax({
-				data: {
-					nombre: nom,
-					cantidad: qty,
-					descripcion: desc
-					},
-				type: "post",
-				url: "crear_encuesta",
-				success: function(msg){
-			             
-			             bootbox.dialog({
-							message: msg,
-							title: "Preguntas",
-							className: "",
-							buttons: {
-								success: {
-									label: "Ok",
-									className: "hide",
-									callback: function() {
+	
+	$.ajax({
+						 data: $('#encuesta_editar').serialize(),
+				         type: "post",
+				         url: "actualizar_encuesta",
+				         success: function(){
+				        	 bootbox.dialog({
+									message: "Felicitaciones! La encuesta se a actualizado.",
+									title: 'Felicitaciones',
+									buttons: {
+										success: {
+										label: "Aceptar",
+										className: "btn-success",
+										callback: function() {
+											window.location.href="listar";
 										}
-								}
-							}
-						})
-			    }
-			});
-			
-		}
-	}
+									}
+									}
+								})
+				        	 
+				              
+				         }
+					});
+	
 }
 </script>
 
