@@ -151,7 +151,7 @@ class bancos extends CI_Controller
 		
 		
 		if(isset($_POST['id'])){
-			$this->modelo_bancos->CambiarEstadoBanco($_POST['id'], $_POST['estatus']);
+			$this->modelo_bancos->CambiarEstadoBanco($_POST['id'], $_POST['estado']);
 		}
 	}
 	
@@ -163,13 +163,57 @@ class bancos extends CI_Controller
 	
 		$id=$this->tank_auth->get_user_id();
 		$usuario = $this->general->get_username($id);
-	
+		$paises            = $this->model_admin->get_pais_activo();
+		
 		$style=$this->modelo_dashboard->get_style(1);
 		$banco = $this->modelo_bancos->Banco($_POST['id']);
 		
 		$this->template->set("style",$style);
 		$this->template->set("banco",$banco);
-	
+		$this->template->set("paices",$paises);
+		
 		$this->template->build('website/bo/configuracion/Bancos/editar');
 	}
+	
+	function actualizar_banco(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $this->tank_auth->get_user_id();
+	
+		if(isset($_POST)){
+			$id_banco = $_POST['id'];
+			$banco = $_POST['banco'];
+			$pais = $_POST['pais'];
+			$cuenta = $_POST['cuenta'];
+			$clabe = $_POST['clabe'];
+				
+			if($this->ValidarDatos2($banco, $pais, $cuenta, $clabe)){
+					
+				$this->ValidarDatos2($banco,$pais,$cuenta, $clabe);
+			
+				$this->modelo_bancos->actualizar_banco($id_banco, $banco, $cuenta, $pais, $clabe);
+				echo "El Banco a sido actualizado.";
+					
+					
+			}
+		}
+	}
+	
+	function ValidarDatos2($banco,$pais,$cuenta, $clabe){
+		if (!isset($banco) && !isset($pais) && !isset($cuenta)){
+			
+			echo "Por favor llena el formulario.";
+			return false;
+		}else if (!is_numeric($clabe) || $clabe > 999){
+			
+			echo "La clabe es un numero de tres digitos.";
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 }

@@ -148,8 +148,20 @@ function agregar_banco()
 	         type: "post",
 	         url: "nuevo_banco",
 	         success: function(msg){
-		         alert(msg);
-	             location.href="/bo/bancos/listar";
+	        	 bootbox.dialog({
+						message: msg,
+						title: 'Felicitaciones',
+						buttons: {
+							success: {
+							label: "Aceptar",
+							className: "btn-success",
+							callback: function() {
+								location.href="listar";
+								}
+							}
+						}
+					})//fin done ajax
+	             
 	         }
 		});
 	}

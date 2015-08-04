@@ -3189,10 +3189,11 @@ function index()
 		$banco = $this->modelo_compras->RegsitrarPagoBanco($id, $_POST['banco'], $venta, ($costo+$impuestos));
 		if(isset($banco[0]->id_banco)){
 			$respuesta = "<div class='alert alert-success alert-block'>
-								<a class='close' data-dismiss='alert' href='#'>×</a>
+								<a class='close' data-dismiss='alert' href='#'></a>
 								<p> Nombre de Banco: ".$banco[0]->descripcion.'</p>';
 			$respuesta = $respuesta."<p> Numero de Cuenta: ".$banco[0]->cuenta.'</p>';
 			$respuesta = $respuesta."<p> CLABE: ".$banco[0]->clave.'</p></div>';
+			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago</p></div>";
 			echo $respuesta;
 		}else{
 			echo "La venta se a registrado";

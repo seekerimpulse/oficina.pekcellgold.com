@@ -21,6 +21,14 @@
 								<i class="fa-fw fa fa-check"></i>
 								<strong>Error </strong> '.$this->session->flashdata('error').'
 			</div>'; 
+	}else if($this->session->flashdata('correcto')) {
+		echo '<div class="alert alert-succes fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('correcto').'
+			</div>'; 
 	}
 ?>	 
 	<section id="widget-grid" class="">
@@ -245,6 +253,7 @@ function estado_banco(estatus, id)
 					},
 					}).done(function( msg )
 							{
+							
 								location.href = "listar";
 						})
 
@@ -263,10 +272,10 @@ function estado_banco(estatus, id)
 	
 	}
 
-	function editar_ebook(id){
+	function editar_banco(id){
 		$.ajax({
 			type: "POST",
-			url: "/bo/ebooks/editar_ebook",
+			url: "/bo/bancos/editar_banco",
 			data: {
 				id: id
 				}
@@ -332,4 +341,45 @@ function estado_banco(estatus, id)
 		})
 		});
 }
+
+	function actualizar_banco()
+	{
+		
+		var banco = $("#banco").val();
+		var cuenta = $("#cuenta").val();
+		var pais = $("#pais").val();
+		var clabe = $("#clabe").val();
+		var id = $("#id_banco").val();
+		
+		if(ValidarVacio(banco, pais, cuenta)){
+			$.ajax({
+				 data:{
+					 id: id,
+					 banco: banco,
+					 pais: pais,
+					 cuenta: cuenta,
+					 clabe: clabe
+					},
+		         type: "post",
+		         url: "actualizar_banco"
+				}).done(function( msg )
+						{
+					bootbox.dialog({
+					message: msg,
+					title: 'Atención !!',
+					buttons: {
+						success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
+							location.href="listar";
+							}
+						}
+					}
+				})
+				
+				});//Fin callback bootbox
+		}
+			
+	}
 </script>

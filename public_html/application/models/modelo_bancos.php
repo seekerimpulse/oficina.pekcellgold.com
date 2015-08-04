@@ -21,7 +21,7 @@ class modelo_bancos extends CI_Model
 	}
 	
 	function Bancos(){
-		$q = $this->db->query("SELECT cb.id_banco, p.Name as pais , cb.descripcion as nombre, cb.cuenta, cb.clave, cb.estatus FROM cat_banco cb, Country p where cb.id_pais = p.Code order by cb.id_pais;");
+		$q = $this->db->query("SELECT cb.id_banco, p.Name as pais , cb.descripcion as nombre, cb.cuenta, cb.clave, cb.estatus FROM cat_banco cb, Country p where cb.id_pais = p.Code order by cb.id_pais");
 		$banco_con = $q->result();
 		return $banco_con;
 	}
@@ -45,4 +45,18 @@ class modelo_bancos extends CI_Model
 		$banco_con = $q->result();
 		return $banco_con;
 	}
+	
+	function actualizar_banco($id ,$banco, $cuenta, $pais, $clabe)
+	{
+		$datos = array(
+					'descripcion' => $banco,
+					'id_pais'	=> $pais,
+					'cuenta'   => $cuenta,
+					'clave'		=> $clabe,
+					'estatus'	=> 'ACT'
+			);
+			
+		$this->db->update('cat_banco', $datos, "id_banco = ".$id);
+	}
+	
 }
