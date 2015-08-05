@@ -236,96 +236,7 @@
 				<!-- end widget -->
 			</article>
 			<!-- END COL -->
-			<!-- NEW COL START -->
-			<article class="col-sm-12 col-md-6 col-lg-6">
-				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-5" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
-					<header>
-						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Compras personales</h2>				
-						
-					</header>
-
-					<!-- widget div-->
-					<div>
-						
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-							
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body">
-							<h5>Tus compras</h5><hr>
-							<div id="sales-graph" class="chart no-padding"></div>
-						</div>
-						<!-- end widget content -->
-						
-					</div>
-					<!-- end widget div -->
-				</div>
-				<!-- end widget -->
-			</article>
-			<!-- END COL -->
-			<!-- NEW COL START -->
-			<article class="col-sm-12 col-md-6 col-lg-6">
-				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-7" data-widget-editbutton="false" data-widget-custombutton="false">
-					<!-- widget options:
-						usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
-						
-						data-widget-colorbutton="false"	
-						data-widget-editbutton="false"
-						data-widget-togglebutton="false"
-						data-widget-deletebutton="false"
-						data-widget-fullscreenbutton="false"
-						data-widget-custombutton="false"
-						data-widget-collapsed="true" 
-						data-widget-sortable="false"
-						
-					-->
-					<header>
-						<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
-						<h2>Compras de la red</h2>				
-						
-					</header>
-
-					<!-- widget div-->
-					<div>
-						
-						<!-- widget edit box -->
-						<div class="jarviswidget-editbox">
-							<!-- This area used as dropdown edit box -->
-							
-						</div>
-						<!-- end widget edit box -->
-						<!-- widget content -->
-						<div class="widget-body">
-							<h5>Tu red compro</h5><hr>
-							<div id="sales-graph1" class="chart no-padding"></div>
-						</div>
-						<!-- end widget content -->
-						
-					</div>
-					<!-- end widget div -->
-				</div>
-				<!-- end widget -->
-			</article>
-			<!-- END COL -->
+			
 				<div class="row">         
 			        <!-- a blank row to get started -->
 			        <div class="col-sm-12">
@@ -359,15 +270,15 @@
 				
 				pageSetUp();
 			})
-
+//sexo
 if ($('#donut-graph').length) {
 	Morris.Donut({
 		element : 'donut-graph',
 		data : [{
-			value : 65,
+			value : <?= $porcentaje_de_hombres ?>,
 			label : 'Hombres'
 		}, {
-			value : 45,
+			value : <?= $porcentaje_de_mujeres ?>,
 			label : 'Mujeres'
 		}],
 		formatter : function(x) {
@@ -375,24 +286,24 @@ if ($('#donut-graph').length) {
 		}
 	});
 }
-
+//estado civil
 if ($('#donut-graph1').length) {
 	Morris.Donut({
 		element : 'donut-graph1',
 		data : [{
-			value : 10,
+			value : <?= $porcentaje_solteros ?>,
 			label : 'Soltero/a'
 		}, {
-			value : 15,
+			value : <?= $porcentaje_casados ?>,
 			label : 'Casado/a'
 		}, {
-			value : 20,
+			value : <?= $porcentaje_union_libre ?>,
 			label : 'Union libre'
 		}, {
-			value : 25,
+			value : <?= $porcentaje_divorciados ?>,
 			label : 'Divorciado/a'
 		}, {
-			value : 30,
+			value : <?= $porcentaje_viudos ?>,
 			label : 'Viudo/a'
 		}],
 		formatter : function(x) {
@@ -400,15 +311,16 @@ if ($('#donut-graph1').length) {
 		}
 	});
 }
+//tiempo dedicado
 
 if ($('#donut-graph2').length) {
 	Morris.Donut({
 		element : 'donut-graph2',
 		data : [{
-			value : 25,
+			value : <?= $porcentaje_tiempo_completo ?>,
 			label : 'Tiempo completo'
 		}, {
-			value : 75,
+			value : <?= $porcentaje_medio_tiempo ?>,
 			label : 'Medio tiempo'
 		}],
 		formatter : function(x) {
@@ -417,52 +329,53 @@ if ($('#donut-graph2').length) {
 	});
 }
 	// bar graph color
+	// edad
 	if ($('#bar-graph').length) {
 
 		Morris.Bar({
 			element : 'bar-graph',
 			data : [{
 				x : '18-20',
-				y : 1
+				y : <?= $cantidad_edad_18_20 ?>
 			}, {
 				x : '21-23',
-				y : 1
+				y : <?= $cantidad_edad_21_23 ?>
 			}, {
 				x : '24-26',
-				y : 2
+				y : <?= $cantidad_edad_24_26 ?>
 			}, {
 				x : '27-29',
-				y : 3
+				y : <?= $cantidad_edad_27_29 ?>
 			}, {
 				x : '30-32',
-				y : 4
+				y : <?= $cantidad_edad_30_32 ?>
 			}, {
 				x : '33-35',
-				y : 5
+				y : <?= $cantidad_edad_33_35 ?>
 			}, {
 				x : '36-38',
-				y : 6
+				y : <?= $cantidad_edad_36_38 ?>
 			}, {
 				x : '39-41',
-				y : 7
+				y : <?= $cantidad_edad_39_41 ?>
 			}, {
 				x : '42-43',
-				y : 7
+				y : <?= $cantidad_edad_42_43?>
 			}, {
 				x : '44-46',
-				y : 7
+				y : <?= $cantidad_edad_44_46 ?>
 			}, {
 				x : '47-49',
-				y : 8
+				y : <?= $cantidad_edad_47_49 ?>
 			}, {
 				x : '50-52',
-				y : 7
+				y : <?= $cantidad_edad_50_52 ?>
 			},{
 				x : '53-55',
-				y : 7
+				y : <?= $cantidad_edad_53_55 ?>
 			},{
 				x : '55-+',
-				y : 7
+				y : <?= $cantidad_edad_55_mas ?>
 			}],
 			xkey : 'x',
 			ykeys : ['y'],
@@ -470,22 +383,23 @@ if ($('#donut-graph2').length) {
 		});
 	}
 	// bar graph color
+	//ocupación
 	if ($('#bar-graph1').length) {
 
 		Morris.Bar({
 			element : 'bar-graph1',
 			data : [{
 				x : 'Estudiante',
-				y : 10
+				y : <?= $cantidad_estudiantes ?>
 			}, {
 				x : 'Ama de casa',
-				y : 15
+				y : <?= $cantidad_amas_de_casa ?>
 			}, {
 				x : 'Empleado',
-				y : 2
+				y : <?= $cantidad_empleados ?>
 			}, {
 				x : 'Negocio propio',
-				y : 14
+				y : <?= $cantidad_negocio_propio ?>
 			}],
 			xkey : 'x',
 			ykeys : ['y'],
@@ -493,6 +407,8 @@ if ($('#donut-graph2').length) {
 		});
 	}
 
+	
+//////////////////////	esto no va	//////////////////////
 	if ($('#sales-graph').length) {
 		Morris.Area({
 			element : 'sales-graph',
