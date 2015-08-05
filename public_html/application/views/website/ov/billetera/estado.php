@@ -4,9 +4,10 @@
 				<div class="row">
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h1 class="page-title txt-color-blueDark">
+							<span>
 							<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
 							<a href="/ov/billetera2/index"> > Billetera</a>
-							<span> > Estado</span>
+							 > Estado</span>
 							
 						</h1>
 					</div>
