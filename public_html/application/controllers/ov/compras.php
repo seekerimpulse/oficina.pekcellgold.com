@@ -1501,11 +1501,17 @@ function index()
 		$data=$_GET["info"];
 		$data=json_decode($data,true);
 		$id=$data['id'];
+		$cantidad = -100;
+		if ($data['tipo'] == '1'){
+			$cantidad_disp=$this->modelo_compras->get_cantidad_almacen($id);
+			if (isset($cantidad_disp[0]->cantidad)){
+				$cantidad = $cantidad_disp[0]->cantidad;
+			}else{
+				$cantidad = 0;
+			}
+		}
 		
-		$cantidad_disp=$this->modelo_compras->get_cantidad_almacen($id);
-	
-		if(!isset($cantidad_disp[0]->cantidad)  && ($data['tipo'] == '1') && $cantidad_disp[0]->cantidad*1<$data['qty']*1)
-		{
+		if ($cantidad < $data['qty']*1 && $cantidad >= 0){
 			echo "Error";
 		}
 		else 
@@ -1514,7 +1520,7 @@ function index()
 				{
 					case 1:
 						$detalles=$this->modelo_compras->detalles_productos($id);
-						$costo_ini=$detalles[0]->costo*(1-$data['desc']);
+						$costo_ini=$detalles[0]->costo;
 						$costo_total=$costo_ini;
 						
 						$add_cart = array(
@@ -1528,7 +1534,7 @@ function index()
 						
 					case 2:
 						$detalles=$this->modelo_compras->detalles_servicios($id);
-						$costo_ini=$detalles[0]->costo*(1-$data['desc']);
+						$costo_ini=$detalles[0]->costo;
 						$costo_total=$costo_ini;
 						
 						$add_cart = array(
@@ -1544,7 +1550,7 @@ function index()
 						$detalles=$this->modelo_compras->detalles_combinados($id);
 						$comb=$this->modelo_compras->comb_espec($id);
 						$costo_q=$this->modelo_compras->costo_merc($id);
-						$costo_ini=$costo_q[0]->costo*(1-$data['desc']);
+						$costo_ini=$costo_q[0]->costo - (($costo_q[0]->costo * $data['desc'])/100);
 						$costo_total=$costo_ini;
 						
 						$add_cart = array(
@@ -1601,22 +1607,23 @@ function index()
 				$this->cart->insert($add_cart);
 				echo ' <div class="navbar-header">
 					      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> </button>
-					      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i class="fa fa-shopping-cart colorWhite"> </i> <span class="cartRespons colorWhite"> Cart ('.$this->cart->total_items().') </span> </button>
-					      <a class="navbar-brand titulo_carrito" href="/ov/dashboard"> Dashboard &nbsp;</a> 
+					      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i class="fa fa-shopping-cart colorWhite fa-2x"> </i> <span class="cartRespons colorWhite"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> </button>
+					      <a style="color :#263569; margin-left:3rem;" class="navbar-brand titulo_carrito" href="/ov/dashboard" > <i class="fa fa-home"></i> Menu &nbsp;</a> 
 					      
-					      <!-- this part for mobile -->
+					      <!-- this part for mobile -
 					      <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
 					        <div class="input-group">
 					          <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
 					        </div>
-					        <!-- /input-group --> 
+					        <!-- /input-group --
 					        
-					      </div>
+					      </div> -->
 					    </div>';
-				echo '<div class="cartMenu  hidden-lg col-xs-12 hidden-md hidden-sm ">
-		        <div class="w100 miniCartTable scroll-pane">
-		          <table  >
-		            <tbody>';
+				echo '<div class="navbar-cart  collapse">
+					      <div class="cartMenu  hidden-lg col-xs-12 hidden-md hidden-sm">
+					        <div class="w100 miniCartTable scroll-pane">
+					          <table  >
+					            <tbody>';
 		            	 
 		                  	if($this->cart->contents())
 							{ 
@@ -1672,15 +1679,6 @@ function index()
 		    <!--/.navbar-cart-->
 		    
 		    <div class="navbar-collapse collapse">
-		      <ul class="nav navbar-nav">
-		        <li class="active"> <a onclick="show_todos()"> Todos </a> </li>
-		        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prod()"> Productos </a></li>
-		        
-		        <!-- change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width -->
-		        <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_serv()"> Servicios </a></li>
-		        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_comb()"> Combinados </a></li>
-		        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prom()"> Promociones </a></li>
-		      </ul>
 		      
 		      <!--- this part will be hidden for mobile version -->
 		      <div class="nav navbar-nav navbar-right hidden-xs" >
@@ -3625,7 +3623,7 @@ function index()
 								<p> Nombre de Banco: ".$banco[0]->descripcion.'</p>';
 			$respuesta = $respuesta."<p> Numero de Cuenta: ".$banco[0]->cuenta.'</p>';
 			$respuesta = $respuesta."<p> CLABE: ".$banco[0]->clave.'</p></div>';
-			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago</p></div>";
+			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago al depertamento de Pagos(pagosgolden@pekcell.com)</p></div>";
 			echo $respuesta;
 		}else{
 			echo "La venta se a registrado";

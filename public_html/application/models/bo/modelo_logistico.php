@@ -149,11 +149,27 @@ class modelo_logistico extends CI_Model
 	}
 	function get_surtidos()
 	{
-		$q=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e FROM surtido a, movimiento b, 
-		cat_movimiento c, almacen d, cat_estatus_surtido e WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen 
-		and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and a.estatus<>2");
+		$q=$this->db->query("SELECT s.*, m.keyword, a.nombre as origen,m.destino,  e.descripcion estatus_e, m.id_mercancia, m.cantidad, cve.correo
+FROM surtido s, movimiento m, cat_estatus_surtido e, cross_venta_envio cve, almacen a
+WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_venta = s.id_venta and a.id_almacen = m.origen and s.estatus<>2");
+		
 		return $q->result();
 	}
+	
+	function ObtenerMercancia($id_mercancia){
+		$q = $this->db->query("select id_tipo_mercancia, sku from mercancia where id =".$id_mercancia);
+		$mercancia = $q->result();
+		if($mercancia[0]->id_tipo_mercancia == 1){
+			$q = $this->db->query("SELECT * FROM producto where id =".$mercancia[0]->sku);
+		}elseif ($mercancia[0]->id_tipo_mercancia == 2){
+			$q = $this->db->query("SELECT * FROM servicio where id=".$mercancia[0]->sku);
+		}else{
+			$q = $this->db->query("SELECT * FROM combinado where id=".$mercancia[0]->sku);
+		}
+		$mercancia = $q->result();
+		return $mercancia;
+	}
+	
 	function surtir()
 	{
 		if($_POST["venta"]==0||$_POST["unico"]==1)
@@ -202,9 +218,10 @@ class modelo_logistico extends CI_Model
 		foreach($embarques as $embarque)
 		{
 			$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega, 
-			h.descripcion estado_e FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, 
+			h.descripcion estado_e, b.id_mercancia, b.cantidad, cve.correo
+FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, cross_venta_envio cve,
 			cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido 
-			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and f.id_embarque=".$embarque->id_embarque." limit 1");
+			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
 			$dato_embarque=$q2->result();
 			$embarques_array[$dato]=$dato_embarque[0];
 			$dato++;
@@ -220,11 +237,14 @@ class modelo_logistico extends CI_Model
 		foreach($embarques as $embarque)
 		{
 			$q2=$this->db->query("SELECT a.*, b.keyword, b.destino, c.descripcion tipo, d.nombre origen, e.descripcion estatus_e, f.id_embarque,f.fecha_entrega, 
-			h.descripcion estado_e FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, 
+			h.descripcion estado_e, b.id_mercancia, b.cantidad, cve.correo
+			FROM surtido a, movimiento b, cat_movimiento c, almacen d, cat_estatus_surtido e, embarque f, cross_surtido_embarque g, cross_venta_envio cve,
 			cat_estatus_embarque h WHERE a.id_movimiento=b.id_movimiento and a.id_almacen_origen=d.id_almacen and f.id_embarque=g.id_embarque and a.id_surtido=g.id_surtido 
-			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and f.id_embarque=".$embarque->id_embarque." limit 1");
+			and b.id_tipo=c.id_movimiento and a.estatus=e.id_estatus and h.id_estatus=f.id_estatus and cve.id_venta = a.id_venta and f.id_embarque=".$embarque->id_embarque." limit 1");
 			$dato_embarque=$q2->result();
-			$embarques_array[$dato]=$dato_embarque[0];
+			if(isset($dato_embarque[0]->id_embarque)){
+				$embarques_array[$dato]=$dato_embarque[0];
+			}
 			$dato++;
 		}
 		return $embarques_array;
