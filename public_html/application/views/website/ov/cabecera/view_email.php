@@ -47,12 +47,12 @@
 						<!-- widget content -->
 						<div class="widget-body">
 							
-									<form action="send_mail" method="post" id="contact-form" class="smart-form">
+									<form method="post" id="contact-form" class="smart-form" enctype='multipart/form-data'>
 										<header>Contacto</header>
 										
 										<fieldset>
 											<div class="row">
-												<section class="col col-8">
+												<section class="col col-4">
 													<label class="label" >Asunto</label>
 													<label class="input">
 														<i class="icon-append fa fa-tag"></i>
@@ -73,13 +73,17 @@
 													</label>
 												</section>
 											</div>
-											<section class="col col-12">
+											<section class="col col-8">
+											<label class="label">Archivos Adjuntos <i class="fa fa-paperclip fa-2x"></i></label>
+											<input type="file" multiple name="userfile[]"/><br> 
+											</section>
+											<section class="col col-8">
 												<label class="label" >Mensaje</label>
-												<textarea name="mensaje" cols="180" id="mymarkdown" class="custom-scroll" style="width: 100%;max-height:200px;"></textarea>
+												<textarea name="mensaje" cols="160" id="mymarkdown" class="custom-scroll" style="width: 100%;max-height:200px;"></textarea>
 											</section>
 										</fieldset>	
 										<footer>
-											<button type="button" onclick="enviar()" class="btn btn-primary">
+											<button type="submit" class="btn btn-primary">
 												Enviar
 											</button>
 										</footer>
@@ -128,17 +132,19 @@
 							
 			
 			})
-function enviar()
+/*function enviar()
 {
+
+	
 	$.ajax({
 		type: "POST",
-		url: "/ov/cabecera/envia_mail/0",
+		url: "/ov/cabecera/envia_mail",
 		data: $('#contact-form').serialize()
 	})
 	.done(function( msg ) {
 
 		bootbox.dialog({
-		message: "Tu mensaje ha sido enviado con exito",
+		message: msg,
 		title: "Contacto",
 		buttons: {
 			success: {
@@ -152,19 +158,30 @@ function enviar()
 	});
 
 	});
-}
-function invitar()
-{
-	$.ajax({
-		type: "POST",
-		url: "/ov/cabecera/envia_mail/1",
-		data: $('#contact-form1').serialize()
-	})
-	.done(function( msg ) {
+}*/
+
+//Program a custom submit function for the form
+$("#contact-form").submit(function(event){
+ 
+  //disable the default form submission
+  event.preventDefault();
+ 
+  //grab all form data  
+  var formData = new FormData($(this)[0]);
+ 
+  $.ajax({
+    url: '/ov/cabecera/envia_mail',
+    type: 'POST',
+    data: formData,
+    async: false,
+    cache: false,
+    contentType: false,
+    processData: false,
+  })	.done(function( msg ) {
 
 		bootbox.dialog({
-		message: "Tu Invitación ha sido enviada con exito",
-		title: "Invitación",
+		message: msg,
+		title: "Contacto",
 		buttons: {
 			success: {
 			label: "Ok!",
@@ -177,5 +194,5 @@ function invitar()
 	});
 
 	});
-}
+});
 		</script>

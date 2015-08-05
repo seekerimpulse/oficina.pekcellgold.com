@@ -89,14 +89,16 @@
 														</div>
 													</a>
 												</div>
-												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">
-													<a href="#">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-signal fa-3x"></i>
-															<h1>Niveles / Rangos<br><br></h1>
+											<div class="col-sm-2 link">
+													<a href="/bo/administracion/emails_departamentos">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
+															
+																<i class="fa fa-envelope fa-3x"></i>
+																<h1>E-mails<br>Departamentos<br><br></h1>
+															
 														</div>
 													</a>
-												</div>
+											</div>
 												<div class="col-xs-10 col-sm-4 col-md-3 col-lg-2 link">	
 													<a href="/bo/configuracion/soporte_tecnico">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">

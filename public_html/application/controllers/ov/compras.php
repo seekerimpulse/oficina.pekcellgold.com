@@ -23,6 +23,7 @@ class compras extends CI_Controller
 	}
 	
 	private $afiliados = array();
+	private $afiliadosEstadisticas = array();
 	
 function index()
 {
@@ -406,6 +407,19 @@ function index()
 		else
 		echo "Error tu contraseña contiene errores, por favor verificalo";
 	}
+	
+	function preOrdenEstadisticas($id){
+	
+		$datos = $this->modelo_compras->traer_afiliados_estadisticas($id);
+	
+		foreach ($datos as $dato){
+			if ($dato!=NULL){
+				array_push($this->afiliadosEstadisticas, $dato);
+				$this->preOrdenEstadisticas($dato->id_afiliado);
+			}
+		}
+	}
+	
 	function estadistica()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -418,7 +432,198 @@ function index()
 		$style=$this->general->get_style($id);
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
-
+		
+		$this->preOrdenEstadisticas($id);
+		$cantidad_hombres = 0;
+		$cantidad_mujeres = 0;
+		$cantidad_total_sexo = 0;
+		$porcentaje_de_hombres = 0;
+		$porcentaje_de_mujeres = 0;
+		$porcentaje_total = 0;
+		
+		foreach ($this->afiliadosEstadisticas as $afiliado){
+			if ($afiliado->id_sexo==1){
+				$cantidad_hombres = $cantidad_hombres + 1;
+			}
+			else $cantidad_mujeres = $cantidad_mujeres + 1;
+		}
+		$cantidad_total_sexo = $cantidad_hombres+$cantidad_mujeres;
+		
+		$porcentaje_total = 100/$cantidad_total_sexo;
+		$porcentaje_de_hombres = round($porcentaje_total*$cantidad_hombres,1, PHP_ROUND_HALF_UP);
+		$porcentaje_de_mujeres = round($porcentaje_total*$cantidad_mujeres,1, PHP_ROUND_HALF_UP);
+		
+		$this->template->set("porcentaje_de_hombres",$porcentaje_de_hombres);
+		$this->template->set("porcentaje_de_mujeres",$porcentaje_de_mujeres);
+		
+		$cantidad_edad_18_20 = 0;
+		$cantidad_edad_21_23 = 0;
+		$cantidad_edad_24_26 = 0;
+		$cantidad_edad_27_29 = 0;
+		$cantidad_edad_30_32 = 0;
+		$cantidad_edad_33_35 = 0;
+		$cantidad_edad_36_38 = 0;
+		$cantidad_edad_39_41 = 0;
+		$cantidad_edad_42_43 = 0;
+		$cantidad_edad_44_46 = 0;
+		$cantidad_edad_47_49 = 0;
+		$cantidad_edad_50_52 = 0;
+		$cantidad_edad_53_55 = 0;
+		$cantidad_edad_55_mas = 0;
+		
+				
+		foreach ($this->afiliadosEstadisticas as $afiliado){
+			if ($afiliado->edad >= 18 && $afiliado->edad <= 20){
+				$cantidad_edad_18_20 = $cantidad_edad_18_20 + 1;
+			} 
+			else if ($afiliado->edad >= 21 && $afiliado->edad <= 23){
+				$cantidad_edad_21_23++;
+			}
+			else if ($afiliado->edad >= 24 && $afiliado->edad <= 26){
+				$cantidad_edad_24_26++;
+			}
+			else if ($afiliado->edad >= 27 && $afiliado->edad <= 29){
+				$cantidad_edad_27_29++;
+			}
+			else if ($afiliado->edad >= 30 && $afiliado->edad <= 32){
+				$cantidad_edad_30_32++;
+			}
+			else if ($afiliado->edad >= 33 && $afiliado->edad <= 35){
+				$cantidad_edad_33_35++;
+			}
+			else if ($afiliado->edad >= 36 && $afiliado->edad <= 38){
+				$cantidad_edad_36_38++;
+			}
+			else if ($afiliado->edad >= 39 && $afiliado->edad <= 41){
+				$cantidad_edad_39_41++;
+			}
+			else if ($afiliado->edad >= 42 && $afiliado->edad <= 43){
+				$cantidad_edad_42_43++;
+			}
+			else if ($afiliado->edad >= 44 && $afiliado->edad <= 46){
+				$cantidad_edad_44_46++;
+			}
+			else if ($afiliado->edad >= 47 && $afiliado->edad <= 49){
+				$cantidad_edad_47_49++;
+			}
+			else if ($afiliado->edad >= 50 && $afiliado->edad <= 52){
+				$cantidad_edad_50_52++;
+			}	
+			else if ($afiliado->edad >= 53 && $afiliado->edad <= 55){
+				$cantidad_edad_53_55++;
+			}
+			else $cantidad_edad_55_mas++;
+		}
+		
+		$this->template->set("cantidad_edad_18_20",$cantidad_edad_18_20);
+		$this->template->set("cantidad_edad_21_23",$cantidad_edad_21_23);
+		$this->template->set("cantidad_edad_24_26",$cantidad_edad_24_26);
+		$this->template->set("cantidad_edad_27_29",$cantidad_edad_27_29);
+		$this->template->set("cantidad_edad_30_32",$cantidad_edad_30_32);
+		$this->template->set("cantidad_edad_33_35",$cantidad_edad_33_35);
+		$this->template->set("cantidad_edad_36_38",$cantidad_edad_36_38);
+		$this->template->set("cantidad_edad_39_41",$cantidad_edad_39_41);
+		$this->template->set("cantidad_edad_42_43",$cantidad_edad_42_43);
+		$this->template->set("cantidad_edad_44_46",$cantidad_edad_44_46);
+		$this->template->set("cantidad_edad_47_49",$cantidad_edad_47_49);
+		$this->template->set("cantidad_edad_50_52",$cantidad_edad_50_52);
+		$this->template->set("cantidad_edad_53_55",$cantidad_edad_53_55);
+		$this->template->set("cantidad_edad_55_mas",$cantidad_edad_55_mas);
+	
+		$cantidad_solteros = 0;//1
+		$cantidad_casados = 0;//2
+		$cantidad_union_libre = 0;//5
+		$cantidad_divorciados = 0;//3
+		$cantidad_viudos = 0;//4
+		$cantidad_total_estado_civil = 0;
+		$porcentaje_solteros = 0;
+		$porcentaje_casados = 0;
+		$porcentaje_union_libre = 0;
+		$porcentaje_divorciados = 0;
+		$porcentaje_viudos = 0;
+		$porcentaje_total_estado_civil = 0;
+		
+		foreach ($this->afiliadosEstadisticas as $afiliado){
+			if ($afiliado->id_edo_civil==1){
+				$cantidad_solteros++;
+			}
+			else if ($afiliado->id_edo_civil==2){
+				$cantidad_casados++;
+			}
+			else if ($afiliado->id_edo_civil==3){
+				$cantidad_divorciados++;
+			}
+			else if ($afiliado->id_edo_civil==4){
+				$cantidad_viudos++;
+			}
+			else if ($afiliado->id_edo_civil==5){
+				$cantidad_union_libre++;
+			}
+		}
+		$cantidad_total_estado_civil = $cantidad_solteros +	$cantidad_casados + $cantidad_union_libre + $cantidad_divorciados + $cantidad_viudos;
+		
+		$porcentaje_total_estado_civil = 100/$cantidad_total_estado_civil;
+		$porcentaje_solteros = round($porcentaje_total_estado_civil*$cantidad_solteros,1, PHP_ROUND_HALF_UP);
+		$porcentaje_casados = round($porcentaje_total_estado_civil*$cantidad_casados,1, PHP_ROUND_HALF_UP);
+		$porcentaje_union_libre = round($porcentaje_total_estado_civil*$cantidad_union_libre,1, PHP_ROUND_HALF_UP);
+		$porcentaje_divorciados = round($porcentaje_total_estado_civil*$cantidad_divorciados,1, PHP_ROUND_HALF_UP);
+		$porcentaje_viudos = round($porcentaje_total_estado_civil*$cantidad_viudos,1, PHP_ROUND_HALF_UP);
+		
+		$this->template->set("porcentaje_solteros",$porcentaje_solteros);
+		$this->template->set("porcentaje_casados",$porcentaje_casados);
+		$this->template->set("porcentaje_union_libre",$porcentaje_union_libre);
+		$this->template->set("porcentaje_divorciados",$porcentaje_divorciados);
+		$this->template->set("porcentaje_viudos",$porcentaje_viudos);
+		
+		$cantidad_estudiantes = 0;//1
+		$cantidad_amas_de_casa = 0;//2
+		$cantidad_empleados = 0;//3
+		$cantidad_negocio_propio = 0;//4
+		
+		foreach ($this->afiliadosEstadisticas as $afiliado){
+			if ($afiliado->id_ocupacion==1){
+				$cantidad_estudiantes++;
+			}
+			else if ($afiliado->id_ocupacion==2){
+				$cantidad_amas_de_casa++;
+			}
+			else if ($afiliado->id_ocupacion==3){
+				$cantidad_empleados++;
+			}
+			else if ($afiliado->id_ocupacion==4){
+				$cantidad_negocio_propio++;
+			}
+		}
+		
+		$this->template->set("cantidad_estudiantes",$cantidad_estudiantes);
+		$this->template->set("cantidad_amas_de_casa",$cantidad_amas_de_casa);
+		$this->template->set("cantidad_empleados",$cantidad_empleados);
+		$this->template->set("cantidad_negocio_propio",$cantidad_negocio_propio);
+		
+		$cantidad_tiempo_completo = 0;
+		$cantidad_medio_tiempo = 0;
+		$cantidad_total_tiempo_dedicado = 0;
+		$porcentaje_tiempo_completo = 0;
+		$porcentaje_medio_tiempo = 0;
+		$porcentaje_total_tiempo_dedicado = 0;
+		
+		foreach ($this->afiliadosEstadisticas as $afiliado){
+			if ($afiliado->id_tiempo_dedicado==1){
+				$cantidad_tiempo_completo++;
+			}
+			else if ($afiliado->id_tiempo_dedicado==2){
+				$cantidad_medio_tiempo++;
+			}
+		}
+		$cantidad_total_tiempo_dedicado = $cantidad_tiempo_completo + $cantidad_medio_tiempo;
+		
+		$porcentaje_total_tiempo_dedicado = 100/$cantidad_total_sexo;
+		$porcentaje_tiempo_completo = round($porcentaje_total_tiempo_dedicado*$cantidad_tiempo_completo,1, PHP_ROUND_HALF_UP);
+		$porcentaje_medio_tiempo = round($porcentaje_total_tiempo_dedicado*$cantidad_medio_tiempo,1, PHP_ROUND_HALF_UP);
+		
+		$this->template->set("porcentaje_tiempo_completo",$porcentaje_tiempo_completo);
+		$this->template->set("porcentaje_medio_tiempo",$porcentaje_medio_tiempo);
+		
 		$this->template->set_theme('desktop');
         $this->template->set_layout('website/main');
         $this->template->set_partial('header', 'website/ov/header');
@@ -612,7 +817,7 @@ function index()
 			}
 			
 			if ($telefonos_usuario==""){
-				$telefonos_usuario = "El afiliado no tiene números inscritos.";
+				$telefonos_usuario = " --- ";
 			}
 		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $this->afiliados[$i]->id_afiliado);
 		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $this->afiliados[$i]->nombre);

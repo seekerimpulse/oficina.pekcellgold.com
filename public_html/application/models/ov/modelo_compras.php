@@ -30,6 +30,16 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 		return $q->result();
 	}
 	
+	function traer_afiliados_estadisticas($id)
+	{
+		$q=$this->db->query('select UP.id_sexo, 
+(YEAR(CURDATE())-YEAR(UP.fecha_nacimiento)) - (RIGHT(CURDATE(),5)<RIGHT(UP.fecha_nacimiento,5)) edad,
+UP.id_edo_civil, UP.id_ocupacion, UP.id_tiempo_dedicado, U.id id_afiliado
+from afiliar A, user_profiles UP, users U
+where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id');
+		return $q->result();
+	}
+	
 	function traer_telefonos($id)
 	{
 		$q=$this->db->query('select * from cross_tel_user where id_user='.$id);
@@ -59,28 +69,28 @@ where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U
 		$q=$this->db->query("select TR.nombre red, P.nombre, M.costo costo_unitario, CVM.cantidad, V.costo, V.impuesto
 	from venta V, cross_venta_mercancia CVM, mercancia M, producto P, tipo_red TR, cat_grupo_producto CGP
 	where V.id_user = ".$id." and CVM.id_venta = V.id_venta and CVM.id_mercancia = M.id
-	and V.fecha between '".$inicio."' and '".$fin."' and M.sku = P.id and
-	P.id_grupo = CGP.id_grupo and CGP.id_red = TR.id and M.estatus = 'ACT' and V.id_estatus=2");
+	and V.fecha between '".$inicio."' and '".$fin."' and M.sku = P.id and M.id_tipo_mercancia = 1 and
+	P.id_grupo = CGP.id_grupo and CGP.id_red = TR.id and V.id_estatus=2");
 		return $q->result();
 	}
 	
 	function traer_mis_compras_servicios($id, $inicio, $fin)
 	{
 		$q=$this->db->query("select TR.nombre red, S.nombre, M.costo costo_unitario, CVM.cantidad, V.costo, V.impuesto 
-	from venta V, cross_venta_mercancia CVM, mercancia M, servicio S, tipo_red TR
+	from venta V, cross_venta_mercancia CVM, mercancia M, servicio S, tipo_red TR, cat_grupo_producto CGP
 	where V.id_user = ".$id." and CVM.id_venta = V.id_venta and CVM.id_mercancia = M.id 
-	and V.fecha between '".$inicio."' and '".$fin."' and M.sku = S.id and 
-	S.id_red = TR.id and M.estatus = 'ACT' and V.id_estatus=2");
+	and V.fecha between '".$inicio."' and '".$fin."' and M.sku = S.id and M.id_tipo_mercancia = 2 and 
+	S.id_red = CGP.id_grupo and CGP.id_red = TR.id and V.id_estatus=2");
 		return $q->result();
 	}
 	
 	function traer_mis_compras_combinados($id, $inicio, $fin)
 	{
 		$q=$this->db->query("select TR.nombre red, C.nombre, M.costo costo_unitario, CVM.cantidad, V.costo, V.impuesto 
-	from venta V, cross_venta_mercancia CVM, mercancia M, combinado C, tipo_red TR
+	from venta V, cross_venta_mercancia CVM, mercancia M, combinado C, tipo_red TR, cat_grupo_producto CGP
 	where V.id_user = ".$id." and CVM.id_venta = V.id_venta and CVM.id_mercancia = M.id 
-	and V.fecha between '".$inicio."' and '".$fin."' and M.sku = C.id and 
-	C.id_red = TR.id and M.estatus = 'ACT' and V.id_estatus=2");
+	and V.fecha between '".$inicio."' and '".$fin."' and M.sku = C.id and M.id_tipo_mercancia = 3 and
+	C.id_red = CGP.id_grupo and CGP.id_red = TR.id and V.id_estatus=2");
 		return $q->result();
 	}
 	

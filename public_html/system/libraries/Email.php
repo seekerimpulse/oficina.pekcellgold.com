@@ -69,6 +69,7 @@ class CI_Email {
 	var	$_bcc_array		= array();
 	var	$_headers		= array();
 	var	$_attach_name	= array();
+	var $_attach_new_name = array();
 	var	$_attach_type	= array();
 	var	$_attach_disp	= array();
 	var	$_protocols		= array('mail', 'sendmail', 'smtp');
@@ -158,6 +159,7 @@ class CI_Email {
 
 		if ($clear_attachments !== FALSE)
 		{
+			$this->_attach_new_name = array();
 			$this->_attach_name = array();
 			$this->_attach_type = array();
 			$this->_attach_disp = array();
@@ -404,12 +406,13 @@ class CI_Email {
 	 * @param	string
 	 * @return	void
 	 */
-	public function attach($filename, $disposition = 'attachment')
+	public function attach($filename, $disposition = 'attachment', $new_name = NULL)
 	{
-		$this->_attach_name[] = $filename;
-		$this->_attach_type[] = $this->_mime_types(pathinfo($filename, PATHINFO_EXTENSION));
-		$this->_attach_disp[] = $disposition; // Can also be 'inline'  Not sure if it matters
-		return $this;
+	    $this->_attach_new_name[] = $new_name;
+	    $this->_attach_name[]     = $filename;
+	    $this->_attach_type[]     = $this->_mime_types(pathinfo($filename, PATHINFO_EXTENSION));
+	    $this->_attach_disp[]     = $disposition; // Can also be 'inline'  Not sure if it matters
+	    return $this;
 	}
 
 	// --------------------------------------------------------------------
@@ -1138,7 +1141,8 @@ class CI_Email {
 		for ($i=0; $i < count($this->_attach_name); $i++)
 		{
 			$filename = $this->_attach_name[$i];
-			$basename = basename($filename);
+			$basename = ($this->_attach_new_name[$i] === NULL)
+    			? basename($filename) : $this->_attach_new_name[$i];
 			$ctype = $this->_attach_type[$i];
 
 			if ( ! file_exists($filename))
