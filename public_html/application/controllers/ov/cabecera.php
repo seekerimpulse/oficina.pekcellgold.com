@@ -141,9 +141,9 @@ class cabecera extends CI_Controller
 		
 		
 	}
-	function envia_mail($tipo)
+	function envia_mail()
 	{
-		$this->load->library('email');
+		$this->load->library('Email');
 
 		$id=$this->tank_auth->get_user_id();
 		$email=$this->model_cabecera->get_mail($id);
@@ -153,31 +153,36 @@ class cabecera extends CI_Controller
 		$nombre=$usuario[0]->nombre." ".$usuario[0]->apellido;
 
 		$this->email->from($email, $nombre);
-
-		if ($tipo==0) {
 			
-			$this->email->to($_POST['departamento']);
-			$mensaje=$_POST['mensaje'];
-			$this->email->message($mensaje);
-			$this->email->subject($_POST['subject']);
+		$this->email->to($_POST['departamento']);
+		$mensaje=$_POST['mensaje'];
+		$this->email->message($mensaje);
+		$this->email->subject($_POST['subject']);
+		
+	    $files = array();
+        $fdata = $_FILES["userfile"];
+        if (is_array($fdata["name"])) {//This is the problem
+                for ($i = 0; $i < count($fdata['name']); ++$i) {
+                        $files[] = array(
+                            'name' => $fdata['name'][$i],
+                            'tmp_name' => $fdata['tmp_name'][$i],
+                        );
+                }
+        } else {
+                $files[] = $fdata;
+        }
+
+        foreach ($files as $file) {
+        	$this->email->attach($file['tmp_name'], 'attachment',$file['name']);
+                // uploaded location of file is $file['tmp_name']
+                // original filename of file is $file['file']
+        }
+
+		if($this->email->send()){
+			echo "Se ha enviado el email Exitosamente .";
+		}else{
+			echo "Error enviando el email .<br>Porfavor verificar la informacion e intentar nuevamente .";
 		}
-		else
-		{
-			$this->email->to($_POST['correo']);
-
-			//$this->email->attach('/path/to/photo1.jpg');
-			//$this->email->cc('another@another-example.com'); 
-			//$this->email->bcc('them@their-example.com');
-
-			//$mensaje=$_POST['mensaje'];
-
-			$mensaje="invitacion";
-
-			$this->email->message($this->template->build('email/invitacion',$mensaje));
-			$this->email->subject('Invitación');
-		}
-
-		$this->email->send();
 	}
 	function send_mail(){
 		
