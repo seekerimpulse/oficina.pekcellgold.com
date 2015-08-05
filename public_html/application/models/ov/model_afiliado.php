@@ -601,12 +601,21 @@ class model_afiliado extends CI_Model{
 				if(!isset($afiliado1[0]->id_red))
 					return true;
 				else{
+					echo "<div id='msg_usuario' class='alert alert-danger fade in'>
+							 UPS¡ lo sentimos, los datos ingresados pertenecen a un afiliado que ya pertenece a esta red
+						</div>";
 					return false;
 				}
 			}else{
+				echo "<div id='msg_usuario' class='alert alert-danger fade in'>
+						!UPS¡ lo sentimos, los datos ingresados no pertenecen al afiliado, comprueba que el email y username esten correctos
+					</div>";
 				return false;
 			}
 		}else{
+			echo "<div id='msg_usuario' class='alert alert-danger fade in'>
+					!UPS¡ lo sentimos, no podemos afiliar al usuario a esta red
+				</div>";
 			return false;
 		}
 	}

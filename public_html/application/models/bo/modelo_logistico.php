@@ -150,8 +150,8 @@ class modelo_logistico extends CI_Model
 	function get_surtidos()
 	{
 		$q=$this->db->query("SELECT s.*, m.keyword, a.nombre as origen,m.destino,  e.descripcion estatus_e, m.id_mercancia, m.cantidad, cve.correo
-FROM surtido s, movimiento m, cat_estatus_surtido e, cross_venta_envio cve, almacen a
-WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_venta = s.id_venta and a.id_almacen = m.origen and s.estatus<>2");
+FROM surtido s, movimiento m, cat_estatus_surtido e, cross_venta_envio cve, almacen a, venta v
+WHERE s.id_movimiento = m.id_movimiento and s.estatus=e.id_estatus and cve.id_venta = s.id_venta and a.id_almacen = m.origen and v.id_venta = cve.id_venta and v.id_estatus = 2 and s.estatus<>2");
 		
 		return $q->result();
 	}

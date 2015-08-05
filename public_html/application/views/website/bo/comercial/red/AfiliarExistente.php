@@ -492,11 +492,20 @@ function use_username()
 	.done(function( msg )
 	{
 		if( msg != ''){
-			$("#usuario").append("<p id='msg_usuario'>Username Correcto</msg>")
-		}
+			$("#usuario").append('<div id="msg_usuario" class="alert alert-success fade in">'
+						+'<i class="fa-fw fa fa-check"></i>'
+						+'<strong>Corecto </strong> Username Correcto'
+					+'</div>')
+		}else{
+			$("#usuario").append('<div id="msg_usuario" class="alert alert-danger fade in">'
+						+'<i class="fa-fw fa fa-check"></i>'
+						+'<strong>Error </strong> Username no esta registrado en el sistema'
+					+'</div>')
+			}
 		
 	});
 }
+
 function use_mail()
 {
 	$("#msg_correo").remove();
@@ -509,8 +518,19 @@ function use_mail()
 	.done(function( msg )
 	{
 		if( msg != ''){
-			$("#correo").append("<p id='msg_correo'>Email Correcto</msg>")
-		}
+			$("#correo").append('<div id="msg_correo" class="alert alert-success fade in">'
+					
+						+'<i class="fa-fw fa fa-check"></i>'
+						+'<strong>Corecto </strong> Emial Correcto'
+					+'</div>')
+		}else{
+			$("#correo").append('<div id="msg_correo" class="alert alert-danger fade in">'
+					
+						+'<i class="fa-fw fa fa-check"></i>'
+						+'<strong>Error </strong> Email no esta registrado en el sistema'
+					+'</div>')
+			}
+		
 		
 	});
 }

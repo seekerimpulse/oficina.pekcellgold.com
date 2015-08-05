@@ -3774,7 +3774,7 @@ function index()
 			redirect('/auth');
 		}
 		$productos = $this->cart->contents();
-		
+		$id = 2;
 		if($_POST['usr'] != 0){
 			$id = $_POST['usr'];	
 		}else{
@@ -3797,9 +3797,10 @@ function index()
 		
 		$venta = $this->modelo_compras->registrar_ventaConsignacion($id, $costo , $id_transacion, $firma, $fecha, $impuestos);
 				
-		$this->modelo_compras->registrar_envio("1".$venta, $id, $direcion_envio , $telefono, $email);
+		$envio=$this->modelo_compras->registrar_envio($venta, $id, $direcion_envio , $telefono, $email);
+		
 		$this->modelo_compras->registrar_factura($venta, $id, $direcion_envio , $telefono, $email);
-				
+		
 		$puntos = $this->modelo_compras->registrar_venta_mercancia($id_mercancia, $venta, $cantidad);
 		$total = $this->modelo_compras->registrar_impuestos($id_mercancia);
 		$this->modelo_compras->registrar_movimiento($id, $id_mercancia, $cantidad, $costo+$impuestos, $total, $venta, $puntos);

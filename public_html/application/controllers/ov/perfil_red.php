@@ -826,8 +826,6 @@ class perfil_red extends CI_Controller
 			
 			$this->model_afiliado->AgregarAfiliadoRed($id, $red, $email);
 			echo "Felicitaciones el usuario ha sido afiliado a otra red";
-		}else{
-			echo "!UPS¡ lo sentimos, los datos ingresados no coinciden con los de un usuario afiliado";
 		}
 		
 	}

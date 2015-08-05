@@ -736,7 +736,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		$edad    =$this->model_perfil_red->edad($id_usuario);
 		$dir    =$this->model_perfil_red->dir($id_usuario);
 		
-		$dato_envio=array(
+		$dato_envio = array(
 				"id_venta"	=> $venta,
 				"nombre" 	=> $usuario[0]->nombre,
 				"apellido" 	=> $usuario[0]->apellido,
@@ -753,6 +753,8 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		);
 		
 		$this->db->insert("cross_venta_envio",$dato_envio);
+		
+		return mysql_error();
 	}
 	
 	function registrar_factura($venta, $id_usuario, $direccion , $telefono, $correo){
@@ -797,7 +799,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	function registrar_ventaConsignacion($id_usuario, $costo , $id_transacion, $firma, $fecha, $impuesto){
 		$dato_venta=array(
 				"id_user" 			=> $id_usuario,
-				"id_estatus"		=> 2,
+				"id_estatus"		=> 3,
 				"costo" 			=> $costo,
 				"impuesto"			=> $impuesto,
 				"id_metodo_pago" 	=> 11,
