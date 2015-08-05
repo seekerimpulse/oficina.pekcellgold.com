@@ -34,8 +34,6 @@
 										<select id="tipo-reporte">
 											<option value="0" selected="" disabled="">Tipo de reporte</option>
 											<option value="1">Afliados nuevos</option>
-											<option value="2">Compras personales</option>
-											<option value="3">Ventas de la red</option>
 											<option value="4">Ventas web personal</option>
 											<option value="5">Compras por Banco</option>
 											<option value="6">Ver consecutivo de mi red</option>
@@ -366,7 +364,7 @@
 								}		
 								
 							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 						    	   
 							    // Apply the filter
 							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
@@ -451,7 +449,7 @@
 										}		
 										
 									    });
-								    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+								    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 								    	   
 									    // Apply the filter
 									    $("#datatable_fixed_column2 thead th input[type=text]").on( 'keyup change', function () {
@@ -548,7 +546,7 @@
 										}		
 										
 									    });
-								    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+								    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 								    	   
 									    // Apply the filter
 									    $("#datatable_fixed_column3 thead th input[type=text]").on( 'keyup change', function () {
@@ -610,6 +608,52 @@
 							
 							FinalizarSpinner();
 							$("#reporte_div").html(msg);
+							var responsiveHelper_dt_basic = undefined;
+							var responsiveHelper_datatable_fixed_column = undefined;
+							var responsiveHelper_datatable_col_reorder = undefined;
+							var responsiveHelper_datatable_tabletools = undefined;
+							
+							var breakpointDefinition = {
+								tablet : 1024,
+								phone : 480
+							};
+										var otable = $('#datatable_fixed_column1').DataTable({
+					    	//"bFilter": false,
+					    	//"bInfo": false,
+					    	//"bLengthChange": false
+					    	//"bAutoWidth": false,
+					    	//"bPaginate": false,
+					    	//"bStateSave": true // saves sort state using localStorage
+							"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
+									"t"+
+									"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+							"autoWidth" : true,
+							"preDrawCallback" : function() {
+								// Initialize the responsive datatables helper once.
+								if (!responsiveHelper_datatable_fixed_column) {
+									responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
+								}
+							},
+							"rowCallback" : function(nRow) {
+								responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+							},
+							"drawCallback" : function(oSettings) {
+								responsiveHelper_datatable_fixed_column.respond();
+							}		
+							
+						    });
+					    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+					    	   
+						    // Apply the filter
+						    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
+						    	
+						        otable
+						            .column( $(this).parent().index()+':visible' )
+						            .search( this.value )
+						            .draw();
+
+						       
+						    } );
 							var obj = '<a onclick="ReportePagoBancoExcel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
 								$("#remplazar").html(obj);
 								$("#row-print-red").show();
@@ -659,7 +703,7 @@
 								}		
 								
 							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 						    	   
 							    // Apply the filter
 							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
@@ -738,7 +782,7 @@
 								}		
 								
 							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 						    	   
 							    // Apply the filter
 							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
@@ -792,7 +836,7 @@
 									tablet : 1024,
 									phone : 480
 								};
-											var otable = $('#datatable_fixed_column1').DataTable({
+											var otable = $('#dt_basic').DataTable({
 						    	//"bFilter": false,
 						    	//"bInfo": false,
 						    	//"bLengthChange": false
@@ -805,30 +849,21 @@
 								"autoWidth" : true,
 								"preDrawCallback" : function() {
 									// Initialize the responsive datatables helper once.
-									if (!responsiveHelper_datatable_fixed_column) {
-										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
+									if (!responsiveHelper_dt_basic) {
+										responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
 									}
 								},
 								"rowCallback" : function(nRow) {
-									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+									responsiveHelper_dt_basic.createExpandIcon(nRow);
 								},
 								"drawCallback" : function(oSettings) {
-									responsiveHelper_datatable_fixed_column.respond();
+									responsiveHelper_dt_basic.respond();
 								}		
 								
 							    });
-						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+						    	$("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 						    	   
-							    // Apply the filter
-							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
-							    	
-							        otable
-							            .column( $(this).parent().index()+':visible' )
-							            .search( this.value )
-							            .draw();
-
-							       
-							    } );
+							   
 							    $("#well-print-usr").hide();
 								$("#row-print-usr").hide();
 								$("#well-print-red").hide();
@@ -1029,7 +1064,7 @@
 		    });
 		    
 		    // custom toolbar
-		    $("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+		    $("div.toolbar").html('<div class="text-right"><img src="" alt="" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
 		    	   
 		    // Apply the filter
 		    $("#datatable_fixed_column thead th input[type=text]").on( 'keyup change', function () {
