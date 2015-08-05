@@ -447,25 +447,26 @@ class reportes extends CI_Controller
 			$total_comision = $total_comision + $servicio->comision;
 			$total_neto = $total_neto + (($servicio->costo)-($servicio->impuesto+$servicio->comision));
 		}				
-						
+		$contador_filas = 0;
 		for($i = 0;$i < count($servicios);$i++)
 		{
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $servicios[$i]->nombre_red);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $servicios[$i]->nombre);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $servicios[$i]->cantidad);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $servicios[$i]->costo);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $servicios[$i]->impuesto);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $servicios[$i]->comision);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), (($servicios[$i]->costo)-($servicios[$i]->impuesto+$servicios[$i]->comision)));
+			$contador_filas = $contador_filas+1;
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($contador_filas+8), $servicios[$i]->nombre_red);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($contador_filas+8), $servicios[$i]->nombre);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($contador_filas+8), $servicios[$i]->cantidad);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($contador_filas+8), $servicios[$i]->costo);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($contador_filas+8), $servicios[$i]->impuesto);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($contador_filas+8), $servicios[$i]->comision);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($contador_filas+8), (($servicios[$i]->costo)-($servicios[$i]->impuesto+$servicios[$i]->comision)));
 		}
-		
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), "TOTALES");
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), "");
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), "");
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $total_costo);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $total_impuesto);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $total_comision);
-		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $total_neto);
+		$contador_filas = $contador_filas+1;
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($contador_filas+8), "TOTALES");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($contador_filas+8), "");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($contador_filas+8), "");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($contador_filas+8), $total_costo);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($contador_filas+8), $total_impuesto);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($contador_filas+8), $total_comision);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($contador_filas+8), $total_neto);
 		
 		
 		$filename='Ventas_Oficina_virtual_de '.$_GET['inicio'].' al '.$_GET['fin'].'.xls'; //save our workbook as this file name

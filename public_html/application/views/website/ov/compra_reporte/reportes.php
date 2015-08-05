@@ -38,6 +38,9 @@
 											<option value="3">Ventas de la red</option>
 											<option value="4">Ventas web personal</option>
 											<option value="5">Compras por Banco</option>
+											<option value="6">Ver consecutivo de mi red</option>
+											<option value="7">Ver compras de mi red</option>
+											<option value="8">Ver mis compras</option>
 										</select> <i></i> </label>
 								</section>
 								<section class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -63,7 +66,7 @@
 								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 									
 									<label class="input">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
 									</label>
 								</section>
 								
@@ -75,7 +78,7 @@
 								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 									
 									<label class="input">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
 									</label>
 								</section>
 								
@@ -87,7 +90,7 @@
 								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 									
 									<label class="input">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
 									</label>
 								</section>
 								
@@ -99,7 +102,7 @@
 								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 									
 									<label class="input" id="remplazar">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
 									</label>
 								</section>
 								
@@ -111,7 +114,7 @@
 								<section class="col col-lg-3 col-md-3 col-sm-6 col-xs-12">
 									
 									<label class="input">
-										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
+										<a id="imprimir-1" onclick="window.print()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 hide"><i class="fa fa-print"></i>&nbsp;Imprimir</a>
 									</label>
 								</section>
 								
@@ -165,7 +168,7 @@
 					</div>
 					
 					<!-- end widget -->
-					<div class="well" id="well-print-af" style="display: none;">
+					<div class="well hide" id="well-print-af" style="display: none;">
 						<div class="row">
 							<form class="smart-form" id="reporte-form" method="post">
 								
@@ -190,7 +193,7 @@
 							</form>
 						</div>
 					</div>
-					<div class="well" id="well-print-usr" style="display: none;">
+					<div class="well hide" id="well-print-usr" style="display: none;">
 						<div class="row">
 							<form class="smart-form" id="reporte-form" method="post">
 								
@@ -215,7 +218,7 @@
 							</form>
 						</div>
 					</div>
-					<div class="well" id="well-print-red" style="display: none;">
+					<div class="well hide" id="well-print-red" style="display: none;">
 						<div class="row">
 							<form class="smart-form" id="reporte-form" method="post">
 								
@@ -240,7 +243,7 @@
 							</form>
 						</div>
 					</div>
-					<div class="well" id="well-print-web" style="display: none;">
+					<div class="well hide" id="well-print-web" style="display: none;">
 						<div class="row">
 							<form class="smart-form" id="reporte-form" method="post">
 								
@@ -294,7 +297,7 @@
 		<script type="text/javascript">
 			$("#tipo-reporte").change(function()
 			{
-				if($("#tipo-reporte").val()==1)
+				if($("#tipo-reporte").val()==1 || $("#tipo-reporte").val()==6)
 				{
 					$("#startdate").prop( "disabled", true );
 					$("#finishdate").prop( "disabled", true );
@@ -303,6 +306,7 @@
 				{
 					$("#startdate").prop( "disabled", false);
 					$("#finishdate").prop( "disabled", false );
+					$("#imprimir-1").prop( "hide", true );
 				}
 			});
 		</script>
@@ -312,7 +316,9 @@
 				alert("hola");
 			}
 		</script>
+		
 		<script type="text/javascript">
+		
 			$("#genera-reporte").click(function()
 			{
 				tipo=$("#tipo-reporte").val();
@@ -380,7 +386,9 @@
 							    $("#well-print-af").show();
 								$("#row-print-af").show();
 						    // custom toolbar
-						    
+								 var obj = '<a onclick="" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+										$("#remplazar").html(obj);
+										$("#row-print-red").show();
 							}
 						});
 						
@@ -463,7 +471,9 @@
 									    $("#well-print-usr").show();
 										$("#row-print-usr").show();
 								    // custom toolbar
-								    
+										 var obj = '<a onclick="" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+												$("#remplazar").html(obj);
+												$("#row-print-red").show();
 									}
 								});
 								$.ajax({
@@ -600,12 +610,243 @@
 							
 							FinalizarSpinner();
 							$("#reporte_div").html(msg);
-							var obj = '<a onclick="ReportePagoBancoExcel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12"><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+							var obj = '<a onclick="ReportePagoBancoExcel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
 								$("#remplazar").html(obj);
 								$("#row-print-red").show();
 							});
 						}
 					break;
+
+					case '6':
+						$("#nuevos-afiliados").show();
+						$.ajax({
+					         type: "post",
+					         url: "reporte_afiliados_todos",
+							success: function( msg )
+							{
+								$("#reporte_div").html(msg);
+								var responsiveHelper_dt_basic = undefined;
+								var responsiveHelper_datatable_fixed_column = undefined;
+								var responsiveHelper_datatable_col_reorder = undefined;
+								var responsiveHelper_datatable_tabletools = undefined;
+								
+								var breakpointDefinition = {
+									tablet : 1024,
+									phone : 480
+								};
+											var otable = $('#datatable_fixed_column1').DataTable({
+						    	//"bFilter": false,
+						    	//"bInfo": false,
+						    	//"bLengthChange": false
+						    	//"bAutoWidth": false,
+						    	//"bPaginate": false,
+						    	//"bStateSave": true // saves sort state using localStorage
+								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
+										"t"+
+										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+								"autoWidth" : true,
+								"preDrawCallback" : function() {
+									// Initialize the responsive datatables helper once.
+									if (!responsiveHelper_datatable_fixed_column) {
+										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
+									}
+								},
+								"rowCallback" : function(nRow) {
+									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+								},
+								"drawCallback" : function(oSettings) {
+									responsiveHelper_datatable_fixed_column.respond();
+								}		
+								
+							    });
+						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+						    	   
+							    // Apply the filter
+							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
+							    	
+							        otable
+							            .column( $(this).parent().index()+':visible' )
+							            .search( this.value )
+							            .draw();
+
+							       
+							    } );
+							    $("#well-print-usr").hide();
+								$("#row-print-usr").hide();
+								$("#well-print-red").hide();
+								$("#row-print-red").hide();
+								$("#well-print-web").hide();
+								$("#row-print-web").hide();
+							    $("#well-print-af").show();
+								$("#row-print-af").show();
+								
+						    // custom toolbar
+								 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+										$("#remplazar").html(obj);
+										$("#row-print-red").show();
+							}
+						});
+						
+						break;
+
+					case '7':
+						var inicio=$("#startdate").val();
+						var fin=$("#finishdate").val();
+						if (inicio == '' || fin == ''){
+							alert('Introduzca las fechas para buscar');
+							return 0;
+						}
+						$("#nuevos-afiliados").show();
+						$.ajax({
+					         type: "post",
+					         data: {inicio : inicio, fin : fin},
+					         url: "reporte_compras_afiliados_todos",
+							success: function( msg )
+							{
+								$("#reporte_div").html(msg);
+								var responsiveHelper_dt_basic = undefined;
+								var responsiveHelper_datatable_fixed_column = undefined;
+								var responsiveHelper_datatable_col_reorder = undefined;
+								var responsiveHelper_datatable_tabletools = undefined;
+								
+								var breakpointDefinition = {
+									tablet : 1024,
+									phone : 480
+								};
+											var otable = $('#datatable_fixed_column1').DataTable({
+						    	//"bFilter": false,
+						    	//"bInfo": false,
+						    	//"bLengthChange": false
+						    	//"bAutoWidth": false,
+						    	//"bPaginate": false,
+						    	//"bStateSave": true // saves sort state using localStorage
+								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
+										"t"+
+										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+								"autoWidth" : true,
+								"preDrawCallback" : function() {
+									// Initialize the responsive datatables helper once.
+									if (!responsiveHelper_datatable_fixed_column) {
+										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
+									}
+								},
+								"rowCallback" : function(nRow) {
+									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+								},
+								"drawCallback" : function(oSettings) {
+									responsiveHelper_datatable_fixed_column.respond();
+								}		
+								
+							    });
+						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+						    	   
+							    // Apply the filter
+							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
+							    	
+							        otable
+							            .column( $(this).parent().index()+':visible' )
+							            .search( this.value )
+							            .draw();
+
+							       
+							    } );
+							    $("#well-print-usr").hide();
+								$("#row-print-usr").hide();
+								$("#well-print-red").hide();
+								$("#row-print-red").hide();
+								$("#well-print-web").hide();
+								$("#row-print-web").hide();
+							    $("#well-print-af").show();
+								$("#row-print-af").show();
+								
+						    // custom toolbar
+								 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+										$("#remplazar").html(obj);
+										$("#row-print-red").show();
+							}
+						});
+						
+						break;
+
+					case '8':
+						var inicio=$("#startdate").val();
+						var fin=$("#finishdate").val();
+						if (inicio == '' || fin == ''){
+							alert('Introduzca las fechas para buscar');
+							return 0;
+						}
+						$("#nuevos-afiliados").show();
+						$.ajax({
+					         type: "post",
+					         data: {inicio : inicio, fin : fin},
+					         url: "reporte_compras_personales",
+							success: function( msg )
+							{
+								$("#reporte_div").html(msg);
+								var responsiveHelper_dt_basic = undefined;
+								var responsiveHelper_datatable_fixed_column = undefined;
+								var responsiveHelper_datatable_col_reorder = undefined;
+								var responsiveHelper_datatable_tabletools = undefined;
+								
+								var breakpointDefinition = {
+									tablet : 1024,
+									phone : 480
+								};
+											var otable = $('#datatable_fixed_column1').DataTable({
+						    	//"bFilter": false,
+						    	//"bInfo": false,
+						    	//"bLengthChange": false
+						    	//"bAutoWidth": false,
+						    	//"bPaginate": false,
+						    	//"bStateSave": true // saves sort state using localStorage
+								"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
+										"t"+
+										"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+								"autoWidth" : true,
+								"preDrawCallback" : function() {
+									// Initialize the responsive datatables helper once.
+									if (!responsiveHelper_datatable_fixed_column) {
+										responsiveHelper_datatable_fixed_column = new ResponsiveDatatablesHelper($('#datatable_fixed_column1'), breakpointDefinition);
+									}
+								},
+								"rowCallback" : function(nRow) {
+									responsiveHelper_datatable_fixed_column.createExpandIcon(nRow);
+								},
+								"drawCallback" : function(oSettings) {
+									responsiveHelper_datatable_fixed_column.respond();
+								}		
+								
+							    });
+						    	$("div.toolbar").html('<div class="text-right"><img src="/template/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+						    	   
+							    // Apply the filter
+							    $("#datatable_fixed_column1 thead th input[type=text]").on( 'keyup change', function () {
+							    	
+							        otable
+							            .column( $(this).parent().index()+':visible' )
+							            .search( this.value )
+							            .draw();
+
+							       
+							    } );
+							    $("#well-print-usr").hide();
+								$("#row-print-usr").hide();
+								$("#well-print-red").hide();
+								$("#row-print-red").hide();
+								$("#well-print-web").hide();
+								$("#row-print-web").hide();
+							    $("#well-print-af").show();
+								$("#row-print-af").show();
+								
+						    // custom toolbar
+								 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+										$("#remplazar").html(obj);
+										$("#row-print-red").show();
+							}
+						});
+						
+						break;
+						
 					default:
 						break;
 				}
@@ -621,6 +862,27 @@
 				return 0;
 			}
 			window.location="/ov/compras/reporte_pagos_banco_excel?inicio="+inicio+"&&fin="+fin
+		}
+		function reporte_excel(){
+			
+			var inicio=$("#startdate").val();
+			var fin=$("#finishdate").val();
+			
+			switch($("#tipo-reporte").val()){
+				
+			case "6" :{
+				window.location="/ov/compras/reporte_afiliados_todos_excel";
+			}
+			break;
+			case "7" :{
+				window.location="/ov/compras/reporte_compras_afiliados_todos_excel?inicio="+inicio+"&fin="+fin;
+			}
+			break;
+			case "8" :{
+				window.location="/ov/compras/reporte_compras_personales_excel?inicio="+inicio+"&fin="+fin;
+			}
+			break;
+			}
 		}
 		</script>
 		<script>

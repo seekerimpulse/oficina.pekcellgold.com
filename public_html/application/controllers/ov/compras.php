@@ -21,7 +21,9 @@ class compras extends CI_Controller
 		$this->load->model('bo/modelo_historial_consignacion');
 		$this->load->model('bo/model_mercancia');
 	}
-
+	
+	private $afiliados = array();
+	
 function index()
 {
 	if (!$this->tank_auth->is_logged_in()) 
@@ -498,13 +500,443 @@ function index()
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/menu_carro',$data);
 	}
+	
+	function preOrden($id){
+				
+		$datos = $this->modelo_compras->traer_afiliados($id);
+		
+		foreach ($datos as $dato){
+			if ($dato!=NULL){
+				array_push($this->afiliados, $dato);
+				$this->preOrden($dato->id_afiliado);
+			}
+		}
+	}
+	
+	/*preorden(nodo)
+	si nodo != nulo entonces retorna
+	imprime nodo.valor
+	preorden(nodo.izquierda)
+	preorden(nodo.derecha)*/
+	
+	function reporte_afiliados_todos()
+	{
+		$id=$this->tank_auth->get_user_id();
+		
+		$this->preOrden($id);
+		$fotos = $this->modelo_compras->traer_fotos();
+		
+		echo 
+			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th data-class='expand'>Foto</th>
+					<th>Nombre</th>
+					<th data-hide='phone'>Correo</th>
+					<th data-hide='phone,tablet'>Telefonos</th>
+				</thead>
+				<tbody>";
+			foreach ($this->afiliados as $afiliado)
+			{
+				foreach ($fotos as $key){
+					if ($afiliado->id_afiliado == $key->id_user){
+						$foto = $key->url;
+					}
+					else $foto = "/template/img/empresario.jpg";
+				}
+				$telefonos = array();
+				$telefonos_usuario = "";
+				$telefonos = $this->modelo_compras->traer_telefonos($afiliado->id_afiliado);
+				$contador = 0;
+				
+				foreach ($telefonos as $key){
+					$contador = $contador+1;
+					if ($key->numero!=""){
+						if ($contador==1){
+							$telefonos_usuario = $key->numero;
+						}
+						else $telefonos_usuario = $telefonos_usuario.", ".$key->numero;
+					}
+					else ;
+				}
+				
+				if ($telefonos_usuario==""){
+					$telefonos_usuario = "El afiliado no tiene números inscritos.";
+				}
+				
+					echo "<tr>
+					<td class='sorting_1'>".$afiliado->id_afiliado."</td>
+					<td><img src=".$foto." style='height: 10rem; width: 10rem;'></img></td>
+					<td>".$afiliado->nombre."</td>
+					<td>".$afiliado->email."</td>
+					<td>".$telefonos_usuario."</td>
+				</tr>";
+			}
+				
+			
+			echo "</tbody>
+			</table><tr class='odd' role='row'>";
+		
+		
+	}
+	
+	function reporte_afiliados_todos_excel()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		
+		$this->preOrden($id);
+		
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_afiliados_todos.xls");
+		for($i = 0;$i < count($this->afiliados);$i++)
+		{
+			$telefonos = array();
+			$telefonos_usuario = "";
+			$telefonos = $this->modelo_compras->traer_telefonos($this->afiliados[$i]->id_afiliado);
+			$contador = 0;
+			
+			foreach ($telefonos as $key){
+				$contador = $contador+1;
+				if ($key->numero!=""){
+					if ($contador==1){
+						$telefonos_usuario = $key->numero;
+					}
+					else $telefonos_usuario = $telefonos_usuario.", ".$key->numero;
+				}
+				else ;
+			}
+			
+			if ($telefonos_usuario==""){
+				$telefonos_usuario = "El afiliado no tiene números inscritos.";
+			}
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $this->afiliados[$i]->id_afiliado);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $this->afiliados[$i]->nombre);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $this->afiliados[$i]->email);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $telefonos_usuario);
+		}
+	
+		$filename='Consecutivo_de_mi_red.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+	
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		//$objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save('php://output');
+	}
+	
+	function reporte_compras_afiliados_todos()
+	{
+		$id=$this->tank_auth->get_user_id();
+		
+		$inicio = $_POST['inicio'];
+		$fin = $_POST['fin'];
+		
+		$this->preOrden($id);
+		$fotos = $this->modelo_compras->traer_fotos();
+	
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th>ID</th>
+					<th data-class='expand'>Foto</th>
+					<th>Nombre</th>
+					<th data-hide='phone'>Correo</th>
+					<th data-hide='phone,tablet'>Telefonos</th>
+					<th data-hide='phone,tablet'>Compras</th>
+				</thead>
+				<tbody>";
+		foreach ($this->afiliados as $afiliado)
+		{
+			foreach ($fotos as $key){
+				if ($afiliado->id_afiliado == $key->id_user){
+					$foto = $key->url;
+				}
+				else $foto = "/template/img/empresario.jpg";
+			}
+			$telefonos = array();
+			$telefonos_usuario = "";
+			$telefonos = $this->modelo_compras->traer_telefonos($afiliado->id_afiliado);
+			$contador = 0;
+			
+			foreach ($telefonos as $key){
+				$contador = $contador+1;
+				if ($key->numero!=""){
+					if ($contador==1){
+						$telefonos_usuario = $key->numero;
+					}
+					else $telefonos_usuario = $telefonos_usuario.", ".$key->numero;
+				}
+				else ;
+			}
+	
+			if ($telefonos_usuario==""){
+				$telefonos_usuario = "El afiliado no tiene números inscritos.";
+			}
+			
+			$compras = 0;
+			$compras = $this->modelo_compras->traer_compras($afiliado->id_afiliado, $inicio, $fin);
+			
+			$compras_impresion = "$ ".$compras[0]->compras;
+			
+			if ($compras[0]->compras==NULL){
+				$compras_impresion = "El afiliado no ha realizado compras.";
+			}
+			
+			$impuestos = 0;
+			$impuestos = $this->modelo_compras->traer_impuestos($afiliado->id_afiliado, $inicio, $fin);
+				
+			$impuestos_impresion = "$ ".$impuestos[0]->impuestos;
+				
+			if ($impuestos[0]->impuestos==NULL){
+				$impuestos_impresion = "$ 0.00";
+			}
+			
+			echo "<tr>
+					<td class='sorting_1'>".$afiliado->id_afiliado."</td>
+					<td><img src=".$foto." style='height: 10rem; width: 10rem;'></img></td>
+					<td>".$afiliado->nombre."</td>
+					<td>".$afiliado->email."</td>
+					<td>".$telefonos_usuario."</td>
+					<td>".$compras_impresion."</td>
+				</tr>";
+		}
+	
+			
+		echo "</tbody>
+			</table><tr class='odd' role='row'>";
+	
+	
+	}
+	
+	function reporte_compras_afiliados_todos_excel()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		
+		$inicio = $_GET['inicio'];
+		$fin = $_GET['fin'];
+		$this->preOrden($id);
+	
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_compras_afiliados_todos.xls");
+		for($i = 0;$i < count($this->afiliados);$i++)
+		{
+		$telefonos = array();
+		$telefonos_usuario = "";
+		$telefonos = $this->modelo_compras->traer_telefonos($this->afiliados[$i]->id_afiliado);
+		$contador = 0;
+			
+		foreach ($telefonos as $key){
+		$contador = $contador+1;
+		if ($key->numero!=""){
+		if ($contador==1){
+			$telefonos_usuario = $key->numero;
+			}
+			else $telefonos_usuario = $telefonos_usuario.", ".$key->numero;
+		}
+		else ;
+		}
+			
+		if ($telefonos_usuario==""){
+		$telefonos_usuario = " --- ";
+		}
+		
+		$compras = 0;
+		$compras = $this->modelo_compras->traer_compras($this->afiliados[$i]->id_afiliado, $inicio, $fin);
+			
+		$compras_impresion = "$ ".$compras[0]->compras;
+			
+		if ($compras[0]->compras==NULL){
+			$compras_impresion = "$ 0.00";
+		}
+		
+		$impuestos = 0;
+		$impuestos = $this->modelo_compras->traer_impuestos($this->afiliados[$i]->id_afiliado, $inicio, $fin);
+		
+		$impuestos_impresion = "$ ".$impuestos[0]->impuestos;
+		
+		if ($impuestos[0]->impuestos==NULL){
+			$impuestos_impresion = "$ 0.00";
+		}
+		
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $this->afiliados[$i]->id_afiliado);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $this->afiliados[$i]->nombre);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $this->afiliados[$i]->email);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $telefonos_usuario);
+			$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $compras_impresion);
+	}
+	
+	$filename='Compras_de_mi_red_desde_'.$inicio.'_hasta_'.$fin.'.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+			header('Cache-Control: max-age=0'); //no cache
+	
+			//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+			//if you want to save it as .XLSX Excel 2007 format
+			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+			//force user to download the Excel file without writing it to server's HD
+			//$objWriter->save(getcwd()."/media/reportes/".$filename);
+			$objWriter->save('php://output');
+	}
+	
+	function reporte_compras_personales()
+	{
+		$id=$this->tank_auth->get_user_id();
+		$inicio = $_POST['inicio'];
+		$fin = $_POST['fin'];
+		
+		$productos = $this->modelo_compras->traer_mis_compras_productos($id, $inicio, $fin);
+		$servicios = $this->modelo_compras->traer_mis_compras_servicios($id, $inicio, $fin);
+		$combinados = $this->modelo_compras->traer_mis_compras_combinados($id, $inicio, $fin);
+		
+		echo
+		"<table id='dt_basic' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead>
+					<th>Red</th>
+					<th data-class='expand'>Nombre</th>
+					<th>Costo unidad</th>
+					<th data-hide='phone'>Cantidad</th>
+					<th data-hide='phone,tablet'>Costo Total</th>
+				</thead>
+				<tbody>";
+		$costo_total = 0;
+		foreach ($productos as $producto)
+		{
+			echo "<tr>
+					<td>".$producto->red."</td>
+					<td>".$producto->nombre."</td>
+					<td>$ ".$producto->costo_unitario."</td>
+					<td>".$producto->cantidad."</td>
+					<td>$ ".$producto->costo."</td>
+				</tr>";
+			$costo_total = $costo_total + $producto->costo;
+		}
+		foreach ($servicios as $servicio)
+		{
+			echo "<tr>
+					<td>".$servicio->red."</td>
+					<td>".$servicio->nombre."</td>
+					<td>$ ".$servicio->costo_unitario."</td>
+					<td>".$servicio->cantidad."</td>
+					<td>$ ".$servicio->costo."</td>
+				</tr>";
+			$costo_total = $costo_total + $servicio->costo;
+		}
+		foreach ($combinados as $combinado)
+		{
+			echo "<tr>
+					<td>".$combinado->red."</td>
+					<td>".$combinado->nombre."</td>
+					<td>$ ".$combinado->costo_unitario."</td>
+					<td>".$combinado->cantidad."</td>
+					<td>$ ".$combinado->costo."</td>
+				</tr>";
+			$costo_total = $costo_total + $combinado->costo;
+		}
+		
+		echo "<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><b>TOTAL</b></td>
+					<td><b>$ ".$costo_total."</b></td>
+				</tr>
+				</tbody>
+			</table><tr class='odd' role='row'>";
+	
+	
+	}
+	
+	function reporte_compras_personales_excel()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$inicio = $_GET['inicio'];
+		$fin = $_GET['fin'];
+		
+		$productos = $this->modelo_compras->traer_mis_compras_productos($id, $inicio, $fin);
+		$servicios = $this->modelo_compras->traer_mis_compras_servicios($id, $inicio, $fin);
+		$combinados = $this->modelo_compras->traer_mis_compras_combinados($id, $inicio, $fin);
+		$costo_total = 0;
+
+		$contador_filas = 0;
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_compras_personales.xls");
+		for($i = 0;$i < count($productos);$i++)
+		{
+				$contador_filas = $contador_filas+1;
+				$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($contador_filas+8), $productos[$i]->red);
+				$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($contador_filas+8), $productos[$i]->nombre);
+				$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($contador_filas+8), $productos[$i]->costo_unitario);
+				$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($contador_filas+8), $productos[$i]->cantidad);
+				$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($contador_filas+8), $productos[$i]->costo);
+				$costo_total = $costo_total + $productos[$i]->costo;
+		}
+		for($i = 0;$i < count($servicios);$i++)
+		{
+			$contador_filas = $contador_filas+1;
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($contador_filas+8), $servicios[$i]->red);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($contador_filas+8), $servicios[$i]->nombre);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($contador_filas+8), $servicios[$i]->costo_unitario);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($contador_filas+8), $servicios[$i]->cantidad);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($contador_filas+8), $servicios[$i]->costo);
+		$costo_total = $costo_total + $servicios[$i]->costo;
+		}
+		for($i = 0;$i < count($combinados);$i++)
+		{
+			$contador_filas = $contador_filas+1;
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($contador_filas+8), $combinados[$i]->red);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($contador_filas+8), $combinados[$i]->nombre);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($contador_filas+8), $combinados[$i]->costo_unitario);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($contador_filas+8), $combinados[$i]->cantidad);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($contador_filas+8), $combinados[$i]->costo);
+		$costo_total = $costo_total + $combinados[$i]->costo;
+		}
+		$contador_filas = $contador_filas+1;
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($contador_filas+8), "TOTAL");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($contador_filas+8), "");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($contador_filas+8), "");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($contador_filas+8), "");
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($contador_filas+8), $costo_total);
+		
+		$filename='mis_compras_desde_'.$inicio.'_hasta_'.$fin.'.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+	
+		//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		//$objWriter->save(getcwd()."/media/reportes/".$filename);
+		$objWriter->save('php://output');
+	}
+	
+	
 	function reporte_afiliados()
 	{
 		$id=$this->tank_auth->get_user_id();
 		$red=$this->modelo_compras->get_red($id);
 		$afiliados=$this->modelo_compras->reporte_afiliados($red[0]->id_red);
-		echo 
-			"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
 					<th>ID</th>
 					<th>Fecha de Registro</th>
@@ -516,25 +948,25 @@ function index()
 					<th>Estado Civil</th>
 				</thead>
 				<tbody>";
-			for($i=0;$i<sizeof($afiliados);$i++)
-			{
-					echo "<tr>
-					<td class='sorting_1'>".($i+1)."</td>
-					<td>".$afiliados[$i]->creacion."</td>
-					<td>".$afiliados[$i]->usuario."</td>
-					<td>".$afiliados[$i]->nombre."</td>
-					<td>".$afiliados[$i]->apellido."</td>
-					<td>".$afiliados[$i]->nacimiento."</td>
-					<td>".$afiliados[$i]->sexo."</td>
-					<td>".$afiliados[$i]->edo_civil."</td>
-				</tr>";
+		for($i=0;$i<sizeof($afiliados);$i++)
+		{
+		echo "<tr>
+		<td class='sorting_1'>".($i+1)."</td>
+		<td>".$afiliados[$i]->creacion."</td>
+		<td>".$afiliados[$i]->usuario."</td>
+		<td>".$afiliados[$i]->nombre."</td>
+		<td>".$afiliados[$i]->apellido."</td>
+		<td>".$afiliados[$i]->nacimiento."</td>
+		<td>".$afiliados[$i]->sexo."</td>
+		<td>".$afiliados[$i]->edo_civil."</td>
+		</tr>";
 			}
-				
-			
+	
+		
 			echo "</tbody>
-			</table><tr class='odd' role='row'>";
-		
-		
+		</table><tr class='odd' role='row'>";
+	
+	
 	}
 	function reporte_afiliados_excel()
 	{
@@ -3189,10 +3621,11 @@ function index()
 		$banco = $this->modelo_compras->RegsitrarPagoBanco($id, $_POST['banco'], $venta, ($costo+$impuestos));
 		if(isset($banco[0]->id_banco)){
 			$respuesta = "<div class='alert alert-success alert-block'>
-								<a class='close' data-dismiss='alert' href='#'>×</a>
+								<a class='close' data-dismiss='alert' href='#'></a>
 								<p> Nombre de Banco: ".$banco[0]->descripcion.'</p>';
 			$respuesta = $respuesta."<p> Numero de Cuenta: ".$banco[0]->cuenta.'</p>';
 			$respuesta = $respuesta."<p> CLABE: ".$banco[0]->clave.'</p></div>';
+			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago</p></div>";
 			echo $respuesta;
 		}else{
 			echo "La venta se a registrado";

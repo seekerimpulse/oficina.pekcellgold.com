@@ -4,8 +4,9 @@
 					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<h1 class="page-title txt-color-blueDark">
 						<a class="backHome" href="/bo"><i class="fa fa-home"></i> Menu</a>
-							<span>>
-								Administración
+							<span>
+								> <a href="/bo/configuracion/"> Configuracion</a> 
+								> Banco
 							</span>
 						</h1>
 					</div>
@@ -32,40 +33,24 @@
                 <fieldset>
                   <div class="contenidoBotones">
 										<div class="row">
-											<div class="col-sm-12 link">
-											<div class="col-sm-1 link">
+											<div class="col-sm-3 link">
 											</div>
-											<div class="col-sm-2 link">
-													<a href="/bo/usuarios">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															<i class="fa fa-user fa-3x"></i>
-															<h1>Usuarios<br>&nbsp</h1>
-														</div>
-													</a>
-											</div>
-												<div class="col-sm-2 link">	
-													<a href="http://pekcell.com:2095/" target="_blank">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-envelope fa-3x"></i>
-															<h1>Email <br>&nbsp</h1>
-														</div>
-													</a>
+											<div class="col-sm-6 link">
+												<div class="col-sm-4 link">
+												<a href="/bo/bancos/alta">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+														<i class="fa fa-edit fa-3x"></i>
+														<h1>Alta</h1>
+													</div>
+												</a>
 												</div>
-											<div class="col-sm-2 link">	
-													<a href="/bo/CuentasPagar/PorPagar">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-money fa-3x"></i>
-															<h1>Cuentas por Pagar</h1>
-														</div>
-													</a>
-												</div>
-												<div class="col-sm-2 link">	
-													<a href="/bo/cuentasporcobrar/index">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-bank fa-3x"></i>
-															<h1>Cuentas Por Cobrar</h1>
-														</div>
-													</a>
+												<div class="col-sm-4 link">
+												<a href="/bo/bancos/listar">
+													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>">
+														<i class="fa fa-list-alt fa-3x"></i>
+														<h1>Listar</h1>
+													</div>
+												</a>
 												</div>
 											</div>
 										 </div>
@@ -104,3 +89,4 @@
 	text-decoration: none !important;
 }
 </style>
+			

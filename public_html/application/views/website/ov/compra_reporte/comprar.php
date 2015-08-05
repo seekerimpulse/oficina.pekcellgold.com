@@ -239,6 +239,7 @@
 												                         	<form method="post" action="https://stg.gateway.payulatam.com/ppp-web-gateway">
 												                         	 <?php 
 													                         	 $valortotal= $total+$impuesto;
+													                         	 $valortotal = $valortotal + (0.045 * $valortotal);
 													                         	 $time = $items['options']['time'].$items['id'];
 													                         	 $firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~500238~".$time."~".$valortotal."~USD");
 													                         	 $id_usuario = $id;
@@ -251,7 +252,7 @@
 																				  <input name="accountId"     type="hidden"  value="500538" >
 																				  <input name="description"   type="hidden"  value="<?php echo $compras[$cantidad]['nombre']; ?>"  >
 																				  <input name="referenceCode" type="hidden"  value="<?php echo $time; ?>" >
-																				  <input name="amount"        type="hidden"  value="<?php echo $valortotal;	?>"   >
+																				  <input name="amount"        type="hidden"  value="<?php echo $valortotal; ?>"   >
 																				  <input name="tax"           type="hidden"  value="0"  >
 																				  <input name="taxReturnBase" type="hidden"  value="0" >
 																				  <input name="currency"      type="hidden"  value="USD" >
