@@ -55,7 +55,8 @@ class modelo_billetera extends CI_Model
 	}
 	
 	function get_comisiones($id,$id_red){
-		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t where(c.id_red=t.id) and(c.id_red='.$id_red.') and c.id_afiliado='.$id.'');
+		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,nombre as nombre FROM comision c,tipo_red t , cat_grupo_producto cp where(c.id_red=cp.id_grupo) 
+		and (cp.id_red=t.id) and(t.id='.$id_red.') and c.id_afiliado='.$id.'');
 		return $q->result();
 	}
 	
@@ -67,7 +68,8 @@ class modelo_billetera extends CI_Model
 	}
 	
 	function get_comisiones_mes($id,$id_red,$fecha){
-		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t where(c.id_red=t.id) and(c.id_red='.$id_red.') and MONTH("'.$fecha.'")=MONTH(fecha) and c.id_afiliado='.$id.'');
+		$q=$this->db->query('SELECT sum(c.puntos) as puntos,sum(c.valor) as valor,t.nombre as nombre FROM comision c,tipo_red t ,cat_grupo_producto cp where(c.id_red=cp.id_grupo) 
+		and (cp.id_red=t.id) and(t.id='.$id_red.') and MONTH("'.$fecha.'")=MONTH(fecha) and c.id_afiliado='.$id.'');
 		return $q->result();
 	}
 	

@@ -159,7 +159,7 @@
 				background: #2A9BDD !important;
 
 			}
-			#compania{width: 40%; margin: 0 auto;}
+			#compania{width: 45%; margin: 0 auto;}
 			#header h1{margin-top: -5px;}
 			#login-form{
 				-webkit-box-shadow: inset 0px 0px 10px #000;
