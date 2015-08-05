@@ -1010,7 +1010,7 @@ function index()
 		echo
 		"<table id='dt_basic' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead>
-					<th>Red</th>
+					<th >Red</th>
 					<th data-class='expand'>Nombre</th>
 					<th>Costo unidad</th>
 					<th data-hide='phone'>Cantidad</th>
@@ -1143,14 +1143,14 @@ function index()
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
-					<th>ID</th>
-					<th>Fecha de Registro</th>
-					<th>Usuario</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Fecha de Nacimiento</th>
-					<th>Sexo</th>
-					<th>Estado Civil</th>
+					<th data-class='expand'>ID</th>
+					<th data-hide='phone,tablet'>Fecha de Registro</th>
+					<th >Usuario</th>
+					<th >Nombre</th>
+					<th >Apellido</th>
+					<th data-hide='phone,tablet'>Fecha de Nacimiento</th>
+					<th data-hide='phone,tablet'>Sexo</th>
+					<th data-hide='phone,tablet'>Estado Civil</th>
 				</thead>
 				<tbody>";
 		for($i=0;$i<sizeof($afiliados);$i++)
@@ -1223,12 +1223,10 @@ function index()
 			echo 
 			"<table id='datatable_fixed_column2' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
-					<th>ID</th>
-					<th>Fecha</th>
+					<th data-class='expand'>ID</th>
+					<th data-hide='phone'>Fecha</th>
 					<th>Costo</th>
 					<th>Estatus</th>
-					<th>Usuario</th>
-					<th>Mas...</th>
 				</thead>
 				<tbody>";
 				
@@ -1239,10 +1237,6 @@ function index()
 					<td>".$ventas[$i]->fecha."</td>
 					<td>".$ventas[$i]->costo."</td>
 					<td>".$ventas[$i]->descripcion."</td>
-					<td>".$ventas[$i]->username."</td>
-					<td>
-					</td>
-					
 				</tr>";
 			}
 			echo "</tbody>
@@ -1373,12 +1367,11 @@ function index()
 			echo 
 			"<table id='datatable_fixed_column3' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
-					<th>ID</th>
-					<th>Fecha</th>
-					<th>Costo</th>
+					<th data-class='expand'>ID</th>
+					<th data-hide='phone,tablet'>Fecha</th>
+					<th data-hide='phone'>Costo</th>
 					<th>Estatus</th>
 					<th>Usuario</th>
-					<th>Mas...</th>
 				</thead>
 				<tbody>";
 				
@@ -1390,8 +1383,6 @@ function index()
 					<td>".$ventas[$i]->costo."</td>
 					<td>".$ventas[$i]->descripcion."</td>
 					<td>".$ventas[$i]->username."</td>
-					<td>
-					</td>
 					
 				</tr>";
 			}
@@ -1441,13 +1432,13 @@ function index()
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
 				<thead id='tablacabeza'>
-					<th>ID</th>
-					<th>Fecha</th>
-					<th>Banco</th>
-					<th>N° Cuenta</th>
-					<th>Clave</th>
-					<th>Monto</th>
-					<th>Estado</th>
+					<th >ID</th>
+					<th data-class='expand'>Fecha</th>
+					<th >Banco</th>
+					<th data-hide='phone'>N° Cuenta</th>
+					<th data-hide='phone'>Clave</th>
+					<th data-hide='phone,tablet'>Monto</th>
+					<th data-hide='phone,tablet'>Estado</th>
 				</thead>
 				<tbody>";
 		for($i=0;$i < sizeof($cobros);$i++)

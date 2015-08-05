@@ -84,9 +84,11 @@
 												<div>
 													<section style="padding-left: 15px; width: 100%;" class="col col-12">
 														Descripcion
-														<textarea name="descripcion" style="max-width: 96%" id="mymarkdown"><?php echo $data_merc[0]->descripcion?>
-														</textarea>
+														<label class="textarea"> 										
+															<textarea name="descripcion" rows="3" class="custom-scroll"><?php echo $data_merc[0]->descripcion?></textarea> 
+														</label>
 													</section>
+													
 													
 													<section id="imagenes2" class="col col-12">
 											        	<label class="label">
@@ -244,28 +246,31 @@
 															<input type="number" min="1" max="" value='<?php echo $mercancia[0]->puntos_comisionables?>' name="puntos_com" id="puntos_com">
 														</label>
 													</section>
-													
+													<?$i=0?>
 													<?foreach($impuestos_merc as $merc)
 													{?>	
-														<section class="col col-6" id="impuesto">Impuesto
+														<section class="col col-6" id="<?= $i=$i+1?>">Impuesto
 															<label class="select">
-																<select name="id_impuesto[]">
-																	<?foreach ($impuesto as $key){
-																		if($merc->id_impuesto==$key->id_impuesto && $key->id_pais==$mercancia[0]->pais)
+																
+																	<?foreach ($impuesto as $key){?>
+																		<select name="id_impuesto[]">
+																		<?if($merc->id_impuesto==$key->id_impuesto && $key->id_pais==$mercancia[0]->pais)
 																		{?>
 																			<option selected value='<?php echo $key->id_impuesto?>'>
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' % (ACTIVO)'?>
 																			</option>
-																		<?}
+																				<?}
 																		else if($key->id_pais==$mercancia[0]->pais)
 																		{?>
 																			<option value='<?php echo $key->id_impuesto?>'>
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' %'?>
 																			</option>
-																		<?}
-																	}?>
+																		<?}?>
+																		
+																	
 																</select>
-															</label>
+																<a class='txt-color-red' onclick="dell_impuesto(<?=$i?>)" style='cursor: pointer;'>Eliminar <i class="fa fa-minus"></i></a>
+														<?}?>	</label>
 															
 														</section>
 													<?}?>
@@ -273,7 +278,7 @@
 													<section class="col col-6" style="width: 50%">
 														<br>
 														<br>
-														<a href="#" onclick="add_impuesto()">Agregar impuesto<i class="fa fa-plus"></i></a>
+														<a onclick="add_impuesto()" style='cursor: pointer;'>Agregar impuesto<i class="fa fa-plus"></i></a>
 													</section>
 												
 											</fieldset>
@@ -404,11 +409,12 @@
 											<!-- END MAIN CONTENT -->
 							
 <script type="text/javascript">
+var i = <?= $i?>;
 // DO NOT REMOVE : GLOBAL FUNCTIONS!
 
 function add_impuesto()
 {
-	var code=	'<section class="col col-3" id="impuesto">Impuesto'
+	var code=	'<div id="'+i+'"><section class="col col-3" id="impuesto">Impuesto'
 	+'<label class="select">'
 	+'<select name="id_impuesto[]">'
 	<?foreach ($impuesto as $key)
@@ -417,10 +423,19 @@ function add_impuesto()
 	}?>
 	+'</select>'
 	+'</label>'
-	+'</section>';
+	+'<a class="txt-color-red" onclick="dell_impuesto('+i+')" style="cursor: pointer;">Eliminar <i class="fa fa-minus"></i></a>'
+	+'</section></div>';
 	$("#moneda_field").append(code);
 	ImpuestosPais();
+	i = i + 1
 }
+
+function dell_impuesto(id)
+{	
+	$("#"+id+"").remove();
+	
+}
+
 function ImpuestosPais(){
 	var pa = $("#pais2").val();
 	

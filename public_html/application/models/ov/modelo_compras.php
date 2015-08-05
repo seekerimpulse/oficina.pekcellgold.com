@@ -26,7 +26,7 @@ class modelo_compras extends CI_Model
 	{
 		$q=$this->db->query('select A.id_afiliado, concat(UP.nombre," ",UP.apellido) nombre, U.email
 from afiliar A, user_profiles UP, users U
-where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id');
+where A.debajo_de = '.$id.' and A.id_afiliado = UP.user_id and A.id_afiliado = U.id group by(U.id)');
 		return $q->result();
 	}
 	
