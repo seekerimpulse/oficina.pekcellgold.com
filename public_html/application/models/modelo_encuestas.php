@@ -47,4 +47,42 @@ class modelo_encuestas extends CI_Model
 		$opciones=$q->result();
 		return $opciones;
 	}
+	
+	function ActualizarEncuesta($id, $nombre, $descripcion, $id_usuario){
+		$datos = array(
+				'nombre' => $nombre,
+				'descripcion' => $descripcion,
+				'id_usuario'	=> $id_usuario
+		);
+		$this->db->update('encuesta',$datos,'id_encuesta = '.$id);
+		
+		$n=$this->db->query('SELECT id_encuesta_contestada FROM encuesta_contestada WHERE id_encuesta='.$id);
+		$cont=$n->result();
+		if(isset($cont[0]->id_encuesta_contestada)){
+			
+		}
+	}
+	function BorrarPreguntas($id_encuesta){
+		$this->db->query("delete from encuesta_pregunta where id_encuesta = ".$id_encuesta);
+	}
+	
+	function BorrarRespuesta($id_pregunta){
+		$this->db->query("delete from encuesta_respuesta where id_pregunta = ".$id_pregunta);
+	}
+	function ActualizarPregunta($id_pregunta, $pregunta){
+		$datos = array(
+			'pregunta' => $pregunta
+		);
+		
+		$this->db->update('encuesta_pregunta', $datos,'id_pregunta = '.$id_pregunta);
+		
+	}
+	
+	function ActualizarRepuesta($id_respuesta, $respuesta){
+		
+		$datos = array(
+				'respuesta' => $respuesta
+		);
+		$this->db->update('encuesta_respuesta',$datos,'id_respuesta = '.$id_respuesta);
+	}
 }
