@@ -259,13 +259,20 @@
 						        type: "get",
 						        url: "borrar_encuesta",
 						        success: function(){
-						        	$.smallBox({
-							       	      title: "La encuesta se a elinado",
-							       	      content: "<i class='fa fa-clock-o'></i> <i></i>",
-							       	      color: "#5F895F",
-							       	      iconSmall: "fa fa-check bounce animated",
-							       	      timeout: 4000
-							       	    });
+						        	bootbox.dialog({
+										message: "La encuesta a sido eliminada.",
+										title: 'Eliminar Encuesta',
+										buttons: {
+											success: {
+											label: "Aceptar",
+											className: "btn-success",
+											callback: function(msg) {
+												
+												window.location.href="listar";
+											}
+										}
+										}
+									})
 						             location.reload();
 						        }
 							})

@@ -43,16 +43,14 @@
 														</div>
 													</a>
 											</div>
-											<div class="col-sm-2 link">
-													<a href="/bo/administracion/emails_departamentos">
-														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>">
-															
-																<i class="fa fa-envelope fa-3x"></i>
-																<h1>E-mails<br>Departamentos</h1>
-															
+												<div class="col-sm-2 link">	
+													<a href="http://pekcell.com:2095/" target="_blank">
+														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
+															<i class="fa fa-envelope fa-3x"></i>
+															<h1>Email <br>&nbsp</h1>
 														</div>
 													</a>
-											</div>
+												</div>
 											<div class="col-sm-2 link">	
 													<a href="/bo/CuentasPagar/PorPagar">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">

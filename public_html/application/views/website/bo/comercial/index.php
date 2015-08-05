@@ -68,10 +68,10 @@
 													</a>
 												</div>
 												<div class="col-sm-3 link">	
-													<a href="#">
+													<a href="http://pekcell.com:2095/" target="_blank">
 														<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
-															<i class="fa fa-rss-square fa-3x"></i>
-															<h1>Telemarketing <br>&nbsp</h1>
+															<i class="fa fa-envelope fa-3x"></i>
+															<h1>Email <br>&nbsp</h1>
 														</div>
 													</a>
 												</div>

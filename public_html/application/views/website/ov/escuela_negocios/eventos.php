@@ -7,8 +7,8 @@
 						<h1 class="page-title txt-color-blueDark">
 							
 							<!-- PAGE HEADER -->
-							<i class="fa-fw fa fa-home"></i> 
-								<a href="/ov/dashboard"> Menu</a> 
+							 
+								<a class="backHome" href="/ov/dashboard"> <i class="fa-fw fa fa-home"></i> Menu</a> 
 							<span>>
 								<a href="/ov/escuela_negocios/eventos"> Eventos</a> > Ver
 							</span>

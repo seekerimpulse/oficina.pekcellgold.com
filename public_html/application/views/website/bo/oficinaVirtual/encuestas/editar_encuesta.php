@@ -25,13 +25,14 @@
 									<div class="col col-lg-12 col-md-12 col-xs-12 col-md-12">
 									
 										<form class="smart-form" id="encuesta_editar" method="post" action="actualizar_encuesta">
+											<input type="hidden" value="<?php echo $encuesta[0]->id_encuesta; ?>" name='id'>
 											<div class="row">
 												<section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"
 													id="busquedatodos">
 													<label class="label">Nombre</label><label
 														class="input">
 														<input type="text"
-														placeholder="Nombre de la Encuesta" id="enc_nom" value="<?php echo $encuesta[0]->nombre; ?>">
+														placeholder="Nombre de la Encuesta" id="enc_nom" name="nombre" value="<?php echo $encuesta[0]->nombre; ?>">
 													</label>
 												</section>
 											</div>
@@ -41,7 +42,7 @@
 													<label class="label">Descripcion</label>
 													<label
 														class="textarea"><textarea rows="3"
-															class="custom-scroll" id="desc_enc"><?php echo $encuesta[0]->descripcion; ?></textarea>
+															class="custom-scroll" id="desc_enc" name="descripcion"><?php echo $encuesta[0]->descripcion; ?></textarea>
 													</label>
 												</section>
 											</div>
@@ -52,7 +53,7 @@
 													<label class="label">Cantidad de preguntas</label>
 													<label
 														class="input"><input type="number" id="preg_qty"
-														min="1" max="30" value="<?php echo count($preguntas); ?>" readonly="readonly">
+														min="1" max="30" value="<?php echo count($preguntas); ?>" readonly="readonly" name="cantidad">
 													</label>
 												</section>
 											</div>
@@ -66,23 +67,26 @@
 														<div class="form-group has-error">
 															<label>Pregunta <?php echo $i; ?></label>
 															<label class="input">
-																<input type="text" value="<?php echo $pregunta->pregunta; ?>">
+																<input type="text" value="<?php echo $pregunta->pregunta; ?>" name="pregunta-<?php echo $i; ?>">
+																<input type="hidden" value="<?php echo $pregunta->id_pregunta; ?>" name="id_pregunta-<?php echo $i; ?>">
 															</label>
 														</div>
 														<br>
-														<?php $j=0;
-														foreach ($opciones as $opcion) {
-														$j++;
-														if($opcion->id_pregunta == $pregunta->id_pregunta){?>
-														<div class="form-group has-success">
-															<label class="col-md-2 control-label text-color-red">Opcion <?php echo $j; ?></label>
-															<div class="col-md-10">
-																<input class="form-control" type="text" value="<?php echo $opcion->respuesta; ?>">
+															<?php 
+															$j = 0;
+															foreach ($opciones as $opcion) {
+															if($opcion->id_pregunta == $pregunta->id_pregunta){
+																$j++;?>
+															<div class="form-group has-success">
+																<label class="col-md-2 control-label text-color-red">Opcion <?php echo $j; ?></label>
+																<div class="col-md-10">
+																	<input class="form-control" type="text" value="<?php echo $opcion->respuesta; ?>" name="respuesta-<?php echo $i."-".$j; ?>">
+																	<input class="form-control" type="hidden" value="<?php echo $opcion->id_respuesta; ?>" name="id_respuesta-<?php echo $i."-".$j; ?>">
+																</div>
 															</div>
-														</div>
-													
-														<?php } 
-														} ?>
+														
+															<?php } 
+															} ?>
 														</fieldset>
 													<?php }?>
 												</section>
@@ -149,7 +153,21 @@
 
 function actualizar_preguntas()
 {
-	
+	bootbox.dialog({
+		message: "La encuesta esta siendo actualizada, esto pueder tardar unos minutos.",
+		title: 'Atencion !!!',
+		buttons: {
+			success: {
+			label: "Aceptar",
+			className: "btn-success",
+			callback: function(msg) {
+				
+				
+			}
+		}
+		}
+	})
+
 	$.ajax({
 						 data: $('#encuesta_editar').serialize(),
 				         type: "post",
@@ -162,7 +180,8 @@ function actualizar_preguntas()
 										success: {
 										label: "Aceptar",
 										className: "btn-success",
-										callback: function() {
+										callback: function(msg) {
+											
 											window.location.href="listar";
 										}
 									}

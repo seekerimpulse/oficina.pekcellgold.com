@@ -193,6 +193,33 @@ class encuestas extends CI_Controller
 		$this->template->build('website/bo/oficinaVirtual/encuestas/editar_encuesta');
 	}
 	function actualizar_encuesta(){
-		echo "si";
+	if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"oficina"))
+		{
+			redirect('/auth/logout');
+		}
+		if(isset($_POST)){
+			$id_encuesta = $_POST['id'];
+			$nombre = $_POST['nombre'];
+			$descripcion = $_POST['descripcion'];
+			$cantidad = $_POST['cantidad'];
+			
+			$this->modelo_encuestas->ActualizarEncuesta($id_encuesta,$nombre,$descripcion,$id);
+			
+			//$this->modelo_encuestas->BorrarPreguntas($id_encuesta);
+			for ($i = 1; $i <= $cantidad ; $i++){
+				$this->modelo_encuestas->ActualizarPregunta($_POST['id_pregunta-'.$i], $_POST['pregunta-'.$i]);
+				
+				for ($j = 1; $j <= 5 ; $j++){
+					$this->modelo_encuestas->ActualizarRepuesta($_POST['id_respuesta-'.$i.'-'.$j], $_POST['respuesta-'.$i.'-'.$j]);
+				}	
+			}
+		}
 	}
 }
