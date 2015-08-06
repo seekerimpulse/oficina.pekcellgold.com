@@ -41,28 +41,28 @@
 										<br>
 											<div class="col-xs-4 col-md-6 col-sm-4 col-lg-1" style="float: right;">
 												<center>
-													<a title="Editar"  class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+													<a title="Editar" style="cursor: pointer;" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 													<br> Editar 
 												</center>
 											</div>
 											
 											<div class="col-xs-4 col-md-6 col-sm-4 col-lg-1" style="float: right;">
 												<center>
-													<a title="Eliminar"  class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a> 
+													<a title="Eliminar" style="cursor: pointer;" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a> 
 													<br> Eliminar 
 												</center>
 											</div>
 											
 											<div class="col-xs-4 col-md-6 col-sm-4 col-lg-1" style="float: right;">
 												<center>
-													<a title="Activar"  class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a> 
+													<a title="Activar" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a> 
 													<br> Activado 
 												</center>
 											</div>
 											
 											<div class="col-xs-4 col-md-6 col-sm-4 col-lg-1" style="float: right;">
 												<center>
-													<a title="Desactivar"  class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+													<a title="Desactivar" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 													<br>Desactivado 
 												</center>
 											</div>
@@ -71,11 +71,12 @@
 									<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 											<thead>			                
 												<tr>
-													<th data-hide="phone">ID</th>
+													<th data-hide="phone,tablet">ID</th>
 													<th data-class="expand">NOMBRE</th>
 													<th data-hide="phone">IMAGEN</th>
-													<th data-hide="phone">RED</th>
-													<th data-hide="phone"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> TIPO</th>
+													<th data-hide="phone,tablet">RED</th>
+													<th data-hide="phone">PAIS</th>
+													<th data-hide="phone,tablet"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> TIPO</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> ALTA</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO REAL</th>
 													<th data-hide="phone,tablet"><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> PRECIO COSTO</th>
@@ -90,6 +91,10 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td>
+															<img class="flag flag-<?php echo strtolower($key->Code2); ?>" src="img/blank.gif">
+															<?php echo $key->Name; ?>
+													</td>
 													<td><?=$key->descripcion?></td>
 													<td><?=$key->fecha_alta?></td>
 													<td><?=$key->real?></td>
@@ -113,7 +118,10 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
-													<td><?=$key->descripcion?></td>
+													<td>
+															<img class="flag flag-<?php echo strtolower($key->Code2); ?>" src="img/blank.gif">
+															<?php echo $key->Name; ?>
+													</td>													<td><?=$key->descripcion?></td>
 													<td><?=$key->fecha_alta?></td>
 													<td><?=$key->real?></td>
 													<td><?=$key->costo?></td>
@@ -135,6 +143,10 @@
 													<td><?=$key->nombre?></td>
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
+													<td>
+															<img class="flag flag-<?php echo strtolower($key->Code2); ?>" src="img/blank.gif">
+															<?php echo $key->Name; ?>
+													</td>
 													<td><?=$key->descripcion?></td>
 													<td><?=$key->fecha_alta?></td>
 													<td><?=$key->real?></td>

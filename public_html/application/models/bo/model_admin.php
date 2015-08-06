@@ -226,34 +226,34 @@ class model_admin extends CI_Model
 		return $q->result();
 	}
 	function get_productos(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus, P.nombre, CI.url, CTM.descripcion, TR.nombre red
+		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus, P.nombre, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2
 							
 							 from mercancia M, producto P, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, 
-								  cat_grupo_producto CGP, tipo_red TR
+								  cat_grupo_producto CGP, tipo_red TR, Country C
 							
 							where M.sku = P.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=1 and 
 							CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and 
-							P.id_grupo = CGP.id_grupo and CGP.id_red = TR.id");
+							P.id_grupo = CGP.id_grupo and CGP.id_red = TR.id and C.Code = M.pais");
 		return $q->result();
 	}
 	
 	function get_servicios(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , S.nombre, CI.url, CTM.descripcion, TR.nombre red
-							from mercancia M, servicio S, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP
-							where M.sku = S.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=2 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = S.id_red and CGP.id_red = TR.id");
+		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus , S.nombre, CI.url, CTM.descripcion, TR.nombre red, M.pais, C.Name, C.Code2
+							from mercancia M, servicio S, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, tipo_red TR, cat_grupo_producto CGP, Country C
+							where M.sku = S.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=2 and CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = S.id_red and CGP.id_red = TR.id and C.Code = M.pais");
 		return $q->result();
 	}
 	
 	function get_combinados(){
-		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus, C.nombre,
-							 CI.url, CTM.descripcion, TR.nombre red
+		$q=$this->db->query("select M.id, M.sku, M.fecha_alta, M.real, M.costo, M.costo_publico, M.estatus, C.nombre, M.pais,
+							 CI.url, CTM.descripcion, TR.nombre red, CO.Name, CO.Code2
 							
 							 from mercancia M, combinado C, cat_tipo_mercancia CTM, cat_img CI, cross_merc_img CMI, 
-								  tipo_red TR, cat_grupo_producto CGP
+								  tipo_red TR, cat_grupo_producto CGP, Country CO
 							
 							where M.sku = C.id and CTM.id = M.id_tipo_mercancia and M.id_tipo_mercancia=3 and 
 							CI.id_img = CMI.id_cat_imagen and M.id = CMI.id_mercancia and CGP.id_grupo = C.id_red and
-							CGP.id_red = TR.id");
+							CGP.id_red = TR.id and CO.Code = M.pais");
 		return $q->result();
 	}
 	
