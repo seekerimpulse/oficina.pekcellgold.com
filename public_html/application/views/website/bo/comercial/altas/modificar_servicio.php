@@ -192,15 +192,16 @@
 														<section class="col col-6" id="<?= $i=$i+1?>">Impuesto
 															<label class="select">
 																
-																	<?foreach ($impuesto as $key){?>
+																	<?foreach ($impuesto as $key){
+																		if($key->id_pais==$mercancia[0]->pais){?>
 																		<select name="id_impuesto[]">
-																		<?if($merc->id_impuesto==$key->id_impuesto && $key->id_pais==$mercancia[0]->pais)
+																		<?if($merc->id_impuesto==$key->id_impuesto)
 																		{?>
 																			<option selected value='<?php echo $key->id_impuesto?>'>
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' % (ACTIVO)'?>
 																			</option>
 																		<?}
-																		else if($key->id_pais==$mercancia[0]->pais)
+																		else
 																		{?>
 																			<option value='<?php echo $key->id_impuesto?>'>
 																				<?php echo $key->descripcion.' '.$key->porcentaje.' %'?>
@@ -209,7 +210,7 @@
 																	
 																</select>
 																<a class='txt-color-red' onclick="dell_impuesto(<?=$i?>)" style='cursor: pointer;'>Eliminar <i class="fa fa-minus"></i></a>
-														<?}?>	</label>
+														<?}}?>	</label>
 														</section>
 													<?}?>
 													<section class="col col-6" style="width: 50%">
