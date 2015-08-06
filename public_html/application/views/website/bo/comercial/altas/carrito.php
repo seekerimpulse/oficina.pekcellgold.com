@@ -92,7 +92,7 @@
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
 													<td>
-															<img class="flag flag-<?php echo strtolower($key->Code2); ?>" src="img/blank.gif">
+															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>
@@ -119,7 +119,7 @@
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
 													<td>
-															<img class="flag flag-<?php echo strtolower($key->Code2); ?>" src="img/blank.gif">
+															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>													<td><?=$key->descripcion?></td>
 													<td><?=$key->fecha_alta?></td>
@@ -144,7 +144,7 @@
 													<td><img style="width: 10rem; height: 10rem;" src="<?=$key->url?>"></img></td>
 													<td><?=$key->red?></td>
 													<td>
-															<img class="flag flag-<?php echo strtolower($key->Code2); ?>" src="img/blank.gif">
+															<img class="flag flag-<?php echo strtolower($key->Code2); ?>">
 															<?php echo $key->Name; ?>
 													</td>
 													<td><?=$key->descripcion?></td>

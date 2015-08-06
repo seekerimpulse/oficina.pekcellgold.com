@@ -54,7 +54,7 @@
 															<ul class="list-unstyled ">
                                 <li>
                                 <div class="demo-icon-font">
-																		<img class="flag flag-<?=strtolower($pais)?>" src="img/blank.gif">
+																		<img class="flag flag-<?=strtolower($pais)?>">
                                 </div>
 																</li>
 																<li>

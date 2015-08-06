@@ -82,7 +82,7 @@
 														<td><?php echo $impuesto->descripcion; ?></td>
 														<td><?php echo $impuesto->porcentaje; ?> %</td>
 														<td>
-															<img class="flag flag-<?php echo strtolower($impuesto->Code2); ?>" src="img/blank.gif">
+															<img class="flag flag-<?php echo strtolower($impuesto->Code2); ?>" >
 															<?php echo $impuesto->Name; ?>
 														</td>
 														<td>
