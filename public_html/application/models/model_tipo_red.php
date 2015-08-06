@@ -16,6 +16,9 @@ class Model_tipo_red extends CI_Model{
 						'frontal' => $frontal,
 						'profundidad' => $profundidad);
 		$this->db->insert("tipo_red",$datos);
+		$id_red = mysql_insert_id();
+		$datos = array('id_red' => $id_red,'id_afiliado' => 2,'debajo_de' => 1,'directo' => 1,'lado' => 0);
+		$this->db->insert("afiliar",$datos);
 	}
 
 	function listarTodos()
