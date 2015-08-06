@@ -203,7 +203,7 @@
 									<div id="cuenta" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 										<section class="col col-3">Banco
 											<label class="select"> 
-											<select class="custom-scroll" name="banco[]" id="banco">
+											<select class="custom-scroll" name="banco[]" id="banco" required>
 												<?foreach ($bancos as $key){?>
 												<option value="<?=$key->clave ?>">
 													<?=$key->descripcion?></option>
@@ -349,7 +349,8 @@ function new_proveedor()
 		 	"#cp",
 		 	"#tipo_proveedor",
 		 	"#email",
-		 	"#empresa"
+		 	"#empresa",
+		 	"#Cuenta"
 		 );
 		var mensajes = new Array( 
 			"Por favor ingresa tu nombre",
@@ -358,7 +359,8 @@ function new_proveedor()
 		 	"Por favor ingresa tu código postal",
 		 	"Por favor seleciona el tipo de proveedor",
 		 	"Por favor ingresa un correo",
-		 	"Por favor seleciona una empresa"
+		 	"Por favor seleciona una empresa",
+		 	"Por favor ingresa el numero de cuenta"
 		 );
 		
 		var validacion = valida_vacios(ids,mensajes);
@@ -372,9 +374,9 @@ function new_proveedor()
 				data: $('#proveedor').serialize()
 			})
 			.done(function( msg1) {
-				if(msg1 == ''){
+				
 					bootbox.dialog({
-						message: "No se logro crear el proveedor",
+						message: msg1,
 						title: "Atención",
 						buttons: {
 							success: {
@@ -386,21 +388,7 @@ function new_proveedor()
 							}
 						}
 					});
-				}else{
-					bootbox.dialog({
-						message: "Se ha creado el proveedor "+msg1,
-						title: "Atención",
-						buttons: {
-							success: {
-								label: "Ok!",
-								className: "btn-success",
-								callback: function() {
-									location.href="";
-								}
-							}
-						}
-					});
-				}
+				
 			});
 		}else{
 			$.smallBox({
@@ -560,7 +548,7 @@ function agregar_cuenta()
 	
 	$("#cuenta").append('<section class="col col-3">Banco'
 			+'<label class="select"> '
-			+'<select class="custom-scroll" name="banco[]" id="banco">'
+			+'<select class="custom-scroll" name="banco[]" id="banco" required>'
 				+'<?foreach ($bancos as $key){?>'
 				+'<option value="<?=$key->clave ?>">'
 					+'<?=$key->descripcion?></option>'
