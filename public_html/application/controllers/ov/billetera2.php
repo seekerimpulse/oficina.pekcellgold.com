@@ -183,11 +183,6 @@ class billetera2 extends CI_Controller
 			echo "ERROR <br>El numero de la cuenta debe ser un numero valido";
 			exit();
 		}
-		
-		if(intval($_POST['cclabe'])==0){
-			echo "ERROR <br>El numero de la CLABE debe ser un numero valido";
-			exit();
-		}
 	
 		
 		$id=$this->tank_auth->get_user_id();

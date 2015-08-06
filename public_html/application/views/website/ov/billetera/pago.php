@@ -184,7 +184,7 @@
 																		</label>
 																	</section>
 																	<section class="col col-10">
-																		<label class="label"><b>CLABE</b></label>
+																		<label class="label"><b>CLABE (Solo en Mexico)</b></label>
 																		<label class="input input">
 																			<input value="" type="number" name="cclabe" id="cclabe" class="from-control" />
 																		</label>
@@ -337,8 +337,6 @@ function validarCampos(){
 	if($('#cbanco').val()=="")
 		return false;
 
-	if($('#cclabe').val()=="")
-		return false;
 	return true;
 }
 	</script>

@@ -103,7 +103,7 @@
 																	<? foreach ($datatable as $key) {?>
 																	<tr>
 																		<td><?=$key->fecha?></td>
-																		<td><?echo number_format($key->monto,2)?></td>
+																		<td>$ <?echo number_format($key->monto,2)?></td>
 																		<td><?=$key->metodo?></td>
 																		<td><?=$key->cuenta ?></td>
 																		<td><?=$key->titular ?></td>
