@@ -358,6 +358,8 @@ class perfil_red extends CI_Controller
 		$edad    =$this->model_perfil_red->edad($_POST['id']);
 		$telefonos    =$this->model_perfil_red->telefonos($_POST['id']);
 		$dir    =$this->model_perfil_red->dir($_POST['id']);
+		$username = $this->general->username($_POST['id']);
+		
 		echo '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 		echo '<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				<img alt="'.$usuario[0]->nombre.'" src="'.$img_perfil.'" style="max-width: 100%; max-height: 100%">
@@ -369,6 +371,7 @@ class perfil_red extends CI_Controller
 		echo '
 				<div class="row">Id: <b>'.$_POST["id"].'</b></div>';
 		
+		echo '<div class="row">Username: <b>'.$username[0]->username.'</b></div>';
 		echo '<div class="row">Nombre: <b>'.$usuario[0]->nombre.'</b></div>';
 		echo '<div class="row">Apellido: <b>'.$usuario[0]->apellido.'</b></div>';
 		echo '<div class="row">Nacimiento: <b>'.$usuario[0]->nacimiento.'</b></div>';
@@ -401,7 +404,9 @@ class perfil_red extends CI_Controller
 		$img_perfil = $this->imagenPerfil($_POST['id']);
 	
 		$pais=$this->modelo_dashboard->get_user_country_code($_POST['id']);
-	
+		
+		$username = $this->general->username($_POST['id']);
+		
 		$usuario = $this->model_perfil_red->datos_perfil($_POST['id']);
 		$compras = $this->model_afiliado->ComprasUsuario($_POST['id']);
 		//$puntos  = $this->model_afiliado->PuntosUsuario($_POST['id']);
@@ -410,6 +415,7 @@ class perfil_red extends CI_Controller
 		$this->template->set("img_perfil",$img_perfil);
 		$this->template->set("id",$_POST['id']);
 		$this->template->set("usuario",$usuario);
+		$this->template->set("username",$username[0]->username);
 		$this->template->set("compras",$compras);
 		//$this->template->set("puntos",$puntos);
 		$this->template->set("comision",$comision);

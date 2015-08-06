@@ -199,20 +199,22 @@
 							                    <h2 class="block-title-2"> Productos </h2>
 							                </div>
 							            <div class="col-xs-12 col-sm-12 col-lg-12">
-							                      <div class="cartContent w100 checkoutReview ">
-							                        <table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
-							                          <tbody>
+							                      <div class="cartContent w100 checkoutReview">
+							                        <table id="dt_basic" class="table table-striped table-hover" width="100%">
+							                          <thead>
 							                          	<tr class="CartProduct cartTableHeader">
-							                              <th data-class="expand" > Productos </th>
-							                              <th data-hide="phone,tablet" class="checkoutReviewTdDetails" >Detalles</th>
+							                              <th data-hide="phone,tablet"> Productos </th>
+							                              <th data-class="expand" class="checkoutReviewTdDetails" >Detalles</th>
 							                              <th data-hide="phone,tablet" >Valor Unitario</th>
 							                              <th data-hide="phone,tablet" >Cantidad</th>
 							                              <th data-hide="phone,tablet" >Descuento</th>
-							                              <th data-hide="phone,tablet">Subtotal<th>
-							                              <th data-hide="phone,tablet">Impuestos</th>
-							                              <th>Total</th>
-							                              <th>Metodo de Pago</th>
+							                              <th data-hide="phone">Subtotal<th>
+							                              <th data-hide="phone">Impuestos</th>
+							                              <th data-hide="phone">Total</th>
+							                              <th data-hide="phone" ></th>
 							                            </tr>
+							                            </thead>
+							                            <tbody>
 							                          	<?php
 										                  	if($this->cart->contents())
 															{
@@ -222,10 +224,15 @@
 																	$impuesto = $this->modelo_compras->ImpuestoMercancia($items['id'], $items['price'])*$items['qty'];	
 																	$total=$items['qty']*$items['price']; ?>	
 																	
-																	<tr class="CartProduct">
-												                        <td  class="CartProductThumb"><div> <a href=""><img src="<?php echo $compras[$cantidad]['imagen']; ?>"></a> </div></td>
-												                        <td><div class="CartDescription">
-												                        	<h4> <a href=""><?php echo $compras[$cantidad]['nombre']; ?> </a> </h4>
+																	<tr>
+												                        <td  class="CartProductThumb">
+												                        	<div>
+												                        		<a href=""><img  src="<?php echo $compras[$cantidad]['imagen']; ?>"></a> 
+												                        	</div>
+												                        </td>
+												                        <td>
+												                        	<div class="CartDescription">
+												                        		<h4><?php echo $compras[$cantidad]['nombre']; ?></h4>
 												                         	</div>
 												                         </td>
 												                         <td class="price">$ <?echo number_format($items['price'],2)?></td>
@@ -263,10 +270,9 @@
 																				  <input name="buyerEmail"    type="hidden"  value="<?php echo $email[0]->email; ?>" >
 																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
 																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVenta" >
-																				  <input type="submit" value="PayuLatam" class="btn btn-lg btn-success" style="float:right;">
-																				  <a   class="btn btn-lg btn-danger" onclick="consignacion(<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)">Pago Por Banco</a>
-																			</form>
-																				
+																				  <input type="submit" value="Pago PayuLatam" class="btn btn-block btn-success" >
+																				  <br><a class="btn btn-block btn-danger" onclick="consignacion(<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)"> Pago Por Banco</a>
+																			</form>	
 												                         </td>
 												                      </tr>
 												                      

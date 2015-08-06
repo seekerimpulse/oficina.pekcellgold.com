@@ -2,7 +2,7 @@
 <!-- MAIN CONTENT -->
 <div id="content">
 	<div class="row">
-		<div class="row">
+		
 			<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 				<h1 class="page-title txt-color-blueDark">
 					<!-- PAGE HEADER -->
@@ -13,7 +13,7 @@
 					</span>
 				</h1>
 			</div>
-		</div>
+		
 	</div>
 	<?php if($this->session->flashdata('error')) {
 		echo '<div class="alert alert-danger fade in">

@@ -58,4 +58,10 @@ class general extends CI_Model
 		$q=$this->db->query('select pais from cross_dir_user where id_user = '.$id);
 		return $q->result();
 	}
+	
+	function username($id)
+	{
+		$q=$this->db->query('select username from users where id = '.$id);
+		return $q->result();
+	}
 }

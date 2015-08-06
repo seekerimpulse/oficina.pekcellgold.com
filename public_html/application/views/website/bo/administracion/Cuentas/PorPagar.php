@@ -309,25 +309,46 @@
 		
 			function reporte_excel_comprar_usr()
 			{
-				
-						var inicio=$("#startdate").val();
-						var fin=$("#finishdate").val();
-						if(inicio=='')
-						{
-							alert('Introduzca fecha de inicio');
-						}
-						else
-						{
-							if(fin=='')
+				bootbox.dialog({
+					message: "¿Estas seguro de realizar el pago de todas la peticiones de pago?",
+					title: "Atencion !!",
+					buttons: {
+						success: {
+						label: "Aceptar",
+						className: "btn-success",
+						callback: function() {
+							var inicio=$("#startdate").val();
+							var fin=$("#finishdate").val();
+							if(inicio=='')
 							{
-								alert('Introduzca fecha de fin');
+								alert('Introduzca fecha de inicio');
 							}
 							else
 							{
-								window.location="reporte_cobros_excel?inicio="+inicio+"&&fin="+fin;
-								
-							}
-						}	
+								if(fin=='')
+								{
+									alert('Introduzca fecha de fin');
+								}
+								else
+								{
+									window.location="reporte_cobros_excel?inicio="+inicio+"&&fin="+fin;
+									
+								}
+							}	
+							
+						}
+				},
+							danger: {
+							label: "Cancelar!",
+							className: "btn-danger",
+							callback: function() {
+
+								}
+						}
+					}
+				})
+				
+						
 			}
 		</script>
 		<script type="text/javascript">

@@ -11,6 +11,9 @@
 				Id: <b><?php echo $id; ?></b>
 			</div>
 			<div class="row">
+				Username: <b><?php echo $username; ?></b>
+			</div>
+			<div class="row">
 				Nombre: <b><?php echo $usuario[0]->nombre; ?></b>
 			</div>
 			<div class="row">

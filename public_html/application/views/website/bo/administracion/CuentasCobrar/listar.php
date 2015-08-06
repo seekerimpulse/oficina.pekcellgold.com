@@ -67,7 +67,7 @@
 										<td><?php echo $cobro->email; ?></td>
 										<td><?php echo $cobro->banco; ?></td>
 										<td><?php echo $cobro->cuenta; ?></td>
-										<td><?php echo $cobro->valor; ?></td>
+										<td>$ <?php echo number_format($cobro->valor,2); ?></td>
 										<td><?php echo $cobro->estado; ?></td>
 										<td class='text-center'>
 											<a class="btn btn-success" style='cursor: pointer;' onclick="estado_cobro('<?php echo $cobro->id_venta; ?>','<?php echo $cobro->id; ?>','<?php echo $cobro->id_usuario; ?>')" class="txt-color-green">Cambiar a Pago</a>

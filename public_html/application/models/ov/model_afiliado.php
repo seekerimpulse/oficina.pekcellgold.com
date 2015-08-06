@@ -533,7 +533,7 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function ComprasUsuario($id){
-		$q = $this->db->query("SELECT sum(costo) as compras FROM venta where id_user = ".$id.";");
+		$q = $this->db->query("SELECT sum(costo) as compras FROM venta where id_user = ".$id);
 		$costos = $q->result();
 		return $costos[0]->compras;
 	}
@@ -545,7 +545,7 @@ class model_afiliado extends CI_Model{
 	}
 	
 	function ComisionUsuario($id){
-		$q = $this->db->query("SELECT sum(monto) as comision FROM cobro where id_afiliado = ".$id.";");
+		$q = $this->db->query("SELECT sum(valor) as comision FROM comision where id_afiliado = ".$id.";");
 		$comision = $q->result();
 		return $comision[0]->comision;
 	}
