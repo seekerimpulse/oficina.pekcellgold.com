@@ -13,6 +13,7 @@ class logistico2 extends CI_Controller
 		$this->lang->load('tank_auth');
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/general');
+		$this->load->model('general');
 		$this->load->model('bo/modelo_logistico');
 	}
 
@@ -23,15 +24,15 @@ class logistico2 extends CI_Controller
 			redirect('/auth');
 		}
 
-				$id=$this->tank_auth->get_user_id();
+		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"logistica"))
 		{
 			redirect('/auth/logout');
 		}
 
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
 
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
@@ -48,17 +49,15 @@ class logistico2 extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
-		
+			
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"logistica"))
 		{
 			redirect('/auth/logout');
 		}
-		
-		$style=$this->modelo_dashboard->get_style($id);
-		
+		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("style",$style);
 		
@@ -78,14 +77,13 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"logistica"))
 		{
 			redirect('/auth/logout');
 		}
-		
-		$style=$this->modelo_dashboard->get_style($id);
-		
+		$style=$this->modelo_dashboard->get_style(1);
 		$this->template->set("usuario",$usuario);
+		$this->template->set("style",$style);
 		
 		$surtido_movimiento =$this->modelo_logistico->get_surtidos();
 		$surtidos = array();
@@ -123,20 +121,16 @@ class logistico2 extends CI_Controller
 	
 	}
 	function pedidos_transito(){
-		if (!$this->tank_auth->is_logged_in())
-		{																		// logged in
-			redirect('/auth');
-		}
-	
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
-	
-		if($usuario[0]->id_tipo_usuario!=1)
+		
+		if(!$this->general->isAValidUser($id,"logistica"))
 		{
 			redirect('/auth/logout');
 		}
-	
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
+		$this->template->set("usuario",$usuario);
+		
 	
 		$this->template->set("usuario",$usuario);
 	
@@ -185,12 +179,12 @@ class logistico2 extends CI_Controller
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		
-		if($usuario[0]->id_tipo_usuario!=1)
+		if(!$this->general->isAValidUser($id,"logistica"))
 		{
 			redirect('/auth/logout');
 		}
-		
-		$style=$this->modelo_dashboard->get_style($id);
+		$style=$this->modelo_dashboard->get_style(1);
+		$this->template->set("usuario",$usuario);
 		
 		$this->template->set("usuario",$usuario);
 		
