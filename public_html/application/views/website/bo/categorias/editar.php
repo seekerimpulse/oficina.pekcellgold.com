@@ -1,12 +1,13 @@
 
-<form id="nueva" class="smart-form"  novalidate="novalidate" >
+<form id="nueva" class="smart-form"  novalidate="novalidate" method="POST" action="/bo/categorias/actualizar_categoria" >
 							<fieldset>
 								<input type="text" class="hide" value="<?php echo $_POST['id']; ?>" name="id">
-								<label class="input"> Nombre
-											<input type="text" name="nombre" placeholder="Nombre"class="form-control" value="<?php echo $categoria[0]->descripcion; ?>" required>
+								<label class="input" required> Nombre
+											<input type="text" name="nombre"  placeholder="Nombre"class="form-control" value="<?php echo $categoria[0]->descripcion; ?>" required>
 										</label>
-										<label class="select"> Selecione Red
-											<select name="red"">
+										 Selecione Red
+										<label class="select">
+											<select name="red">
 												<?php foreach ($redes as $red){
 												
 													if( $categoria[0]->id_red == $red->id ) {?>
@@ -16,7 +17,8 @@
 													<?php }
 													}?>
 											</select> <i></i> </label>
-										<label class="select" > Estatus
+											Estatus
+										<label class="select" > 
 											<select name="estado" required value="<?php echo $categoria[0]->estatus; ?>">
 												<?php if($categoria[0]->estatus == 'ACT'){ ?>
 													<option value="ACT" selected="selected">Activado</option>
@@ -26,13 +28,17 @@
 													<option value="DES" selected="selected">Desactivado</option>
 												<?php }?>
 											</select> <i></i> </label>
-									
+											<br><br>
+									<div class="row">
+											<section  id="div_subir" >
+																											
+												<div >
+													<input type="submit" class="btn btn-success pull-right" style="margin-right: 3%;" id="boton_subir" value="Actualizar">
+												</div>
+											</section>
+										</div>	
 							</fieldset>
-							<footer>
-								<a class="btn btn-primary" onclick="enviar()">
-									Guardar
-								</a>
-							</footer>
+						
 						</form>
 
 <script src="/template/js/plugin/jquery-form/jquery-form.min.js"></script>

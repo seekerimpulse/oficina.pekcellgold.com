@@ -71,13 +71,18 @@ class categorias extends CI_Controller
 	}
 	
 	function crear_categoria(){
+		
+		if ($_POST['nombre']==""){
+			$error = "Debe agregar un nombre a la categoria.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/categorias/nueva_categoria');
+		}
+		
 		$correcto = $this->model_grupo_producto->CrearCategoria();
-		if($correcto){
-			echo "Categoria Creada";
-		}
-		else{
-			echo "NO se logro crear la categoria";
-		}
+		$success = "La categoria ha sido agregada satisfactoriamente.";
+		$this->session->set_flashdata('success', $success);
+		redirect("/bo/categorias/index");
+		
 	}
 	
 	function editar(){
@@ -92,7 +97,16 @@ class categorias extends CI_Controller
 	}
 	
 	function actualizar_categoria(){
+		if ($_POST['nombre']==""){
+			$error = "Debe agregar un nombre a la categoria.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/bo/categorias/index');
+		}
+		
 		$correcto = $this->model_grupo_producto->actualizar_categoria();
+		$success = "La categoria ha sido actualizada satisfactoriamente.";
+		$this->session->set_flashdata('success', $success);
+		redirect("/bo/categorias/index");
 		if($correcto){
 			echo "Categoria Actualizada";
 		}
