@@ -12,6 +12,17 @@
 			</h1>
 		</div>
 	</div>
+	<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+?>	
+	
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
@@ -51,29 +62,35 @@
 					<!-- widget content -->
 					<div class="widget-body no-padding">
 						
-						<form id="nueva" class="smart-form"  novalidate="novalidate" >
+						<form id="nueva" class="smart-form"  novalidate="novalidate" method="POST" action="/bo/categorias/crear_categoria">
 							<fieldset>
-								<label class="input"> Nombre
+								<label class="input" required> Nombre
 											<input style="width: 25rem;" type="text" name="nombre" placeholder="Nombre"class="form-control" required>
 										</label>
-										<label class="select"> Selecione Red
+										Selecione Red
+										<label class="select" style="width: 25rem;"> 
 											<select style="width: 25rem;" name="red" required>
 												<?php foreach ($redes as $red){?>
 												<option value="<?php echo $red->id; ?>"><?php echo $red->nombre; ?></option>
 												<?php } ?>
 											</select> <i></i> </label>
-										<label class="select"> Estatus
+											Estatus
+										<label class="select" style="width: 25rem;"> 
 											<select style="width: 25rem;" name="estado" required>
 												<option value="ACT">Activado</option>
 												<option value="DES">Desactivado</option>
 											</select> <i></i> </label>
-									
+							<br>
+										<div class="row">
+											<section  id="div_subir" style="width: 25rem;">
+																											
+												<div style="width: 25rem;">
+													<input type="submit" class="btn btn-success" style="margin-left: 66% ! important; width: 40%;" id="boton_subir" value="Agregar">
+												</div>
+											</section>
+										</div>		
 							</fieldset>
-							<footer>
-								<a class="btn btn-primary" onclick="enviar()">
-									Guardar
-								</a>
-							</footer>
+							
 						</form>
 
 					</div>
@@ -108,20 +125,7 @@ function enviar() {
 							data: $('#nueva').serialize()
 						})
 						.done(function( msg ) {
-							
-									bootbox.dialog({
-										message: msg,
-										title: "Atención",
-										buttons: {
-											success: {
-											label: "Ok!",
-											className: "btn-success",
-											callback: function() {
-												location.href="/bo/categorias/index";
-												}
-											}
-										}
-									});
+							location.href="/bo/categorias/index";
 						});//fin Done ajax
 		
 }

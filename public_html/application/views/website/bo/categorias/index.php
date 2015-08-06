@@ -12,6 +12,27 @@
 			</h1>
 		</div>
 	</div>
+	<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+?>	
+<?php if($this->session->flashdata('success')) {
+		echo '<div class="alert alert-success fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Exito </strong> '.$this->session->flashdata('success').'
+			</div>'; 
+	}
+?>	
+	
 	<section id="widget-grid" class="">
 		<!-- START ROW -->
 		<div class="row">
@@ -41,25 +62,25 @@
 									<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
 										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
 											<center>
-											<a title="Editar" href="#" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+											<a title="Editar" style="cursor: pointer;" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 											<br>Editar
 											</center>
 										</div>
 										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
 										<center>	
-											<a title="Eliminar" href="#" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+											<a title="Eliminar" style="cursor: pointer;"" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 											<br>Eliminar
 											</center>
 										</div>
 										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
 										<center>	
-											<a title="Desactivar" href="#" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+											<a title="Desactivar" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 											<br>Desactivado
 											</center>
 										</div>
 										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
 											<center>
-												<a title="Activar" href="#" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+												<a title="Activar" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 												<br>Activado
 											</center>
 										</div>
@@ -74,7 +95,7 @@
 													<th data-class="expand">Red</th>
 													<th data-hide="phone,tablet">Nombre</th>
 													<th data-hide="phone,tablet">Estatus</th>
-													<th></th>
+													<th> Acciones</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -86,12 +107,12 @@
 														<td><?php echo $categoria->descripcion; ?></td>
 														<td><?php echo $categoria->estatus; ?></td>
 														<td>
-															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $categoria->id_grupo; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $categoria->id_grupo; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															<a title="Editar" style="cursor: pointer;" class="txt-color-blue" onclick="editar('<?php echo $categoria->id_grupo; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
+															<a title="Eliminar"  style="cursor: pointer;" class="txt-color-red" onclick="eliminar('<?php echo $categoria->id_grupo; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 															<?php if($categoria->estatus == 'ACT'){ ?>
-																<a title="Desactivar" onclick="estado('DES','<?php echo $categoria->id_grupo; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+																<a title="Desactivar" style="cursor: pointer;" onclick="estado('DES','<?php echo $categoria->id_grupo; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>
-																<a title="Activar" onclick="estado('ACT','<?php echo $categoria->id_grupo; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+																<a title="Activar" style="cursor: pointer;" onclick="estado('ACT','<?php echo $categoria->id_grupo; ?>')" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 															<?php } ?>
 														</td>
 													</tr>
