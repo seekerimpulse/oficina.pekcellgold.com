@@ -49,4 +49,26 @@ function __construct()
 		$this->db->query("update cat_grupo_producto set estatus = '".$_POST['estado']."' where id_grupo=".$_POST["id"]);
 		return true;
 	}
+	
+	function VerificarCategoria($id_categoria){
+		$q = $this->db->query("select nombre from producto where id_grupo = ".$id_categoria);
+		$pro = $q->result();
+		if(isset($pro[0]->nombre)){
+			return false;
+		}
+		
+		$q = $this->db->query("select nombre from servicio where id_red = ".$id_categoria);
+		$pro = $q->result();
+		if(isset($pro[0]->nombre)){
+			return false;
+		}
+		
+		$q = $this->db->query("select nombre from combinado where id_red = ".$id_categoria);
+		$pro = $q->result();
+		if(isset($pro[0]->nombre)){
+			return false;
+		}
+		
+		return true;
+	}
 }

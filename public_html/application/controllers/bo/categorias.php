@@ -117,14 +117,19 @@ class categorias extends CI_Controller
 	}
 	
 	function eliminar_categoria(){
-		$correcto = $this->model_grupo_producto->eliminar_categoria();
-		if($correcto){
-			echo "Categoria Eliminada";
+		
+		if($this->model_grupo_producto->VerificarCategoria($_POST['id'])){
+			$correcto = $this->model_grupo_producto->eliminar_categoria();
+			if($correcto){
+				echo "Se ha eliminada la categoria.";
+			}
+			else{
+				echo "No se logro eliminada la categoria";
+			}
+		}else{
+			echo "Ha ocurrido un error eliminado la categoria, debido a que tiene mercancias creadas.<br>
+					Lo mas recomendable es que desative la categoria o elimine las mercancias.";
 		}
-		else{
-			echo "No se logro eliminada la categoria";
-		}
-	
 	}
 	
 	function cambiar_estado_categoria(){

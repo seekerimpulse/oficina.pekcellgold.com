@@ -49,6 +49,7 @@
 															<div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
 																<label class="col-lg-6 col-sm-6 col-md-12 col-xs-12">Año
 																	<select id="año" onChange="buscar()" class="form-control">
+																		<option value="">-- Selecione Año --</option>
 																	<? foreach ($años as $key) {?>
 																			<option value="<?=$key->año?>"><?=$key->año?></option>
 																	<?}?>
@@ -56,6 +57,7 @@
 																</label>
 																<label class="col-lg-6 col-sm-6 col-md-12 col-xs-12">Mes
 																	<select id="mes" onChange="buscarmes()" class="form-control">
+																		<option value="">-- Selecione Mes --</option>
 																		<option value="01">Enero</option>
 																		<option value="02">Febrero</option>
 																		<option value="03">Marzo</option>
@@ -178,7 +180,7 @@
 	
 			/* END BASIC */
 
-				$("#dt_basic_filter").children('label').addClass("");
+				$("#dt_basic_filter").children('label').addClass("hide");
 					});
 
 			//setup_flots();
@@ -208,7 +210,9 @@
 			buscador.val($("#mes").val());
 		else{
 			año = buscador.val();
-			if(año.length <= 4)
+			if(año.length < 4 ){
+				buscador.val($("#mes").val());
+			}else if(año.length <= 4)
 				buscador.val(año+"-"+$("#mes").val());
 			else{
 				año = año.substring(0, 4); 

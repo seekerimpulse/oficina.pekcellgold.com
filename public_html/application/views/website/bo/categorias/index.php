@@ -277,8 +277,8 @@ function eliminar(id) {
 						.done(function( msg )
 						{
 							bootbox.dialog({
-							message: "Se ha eliminado la categoria.",
-							title: 'Felicitaciones',
+							message: msg,
+							title: 'Atención',
 							buttons: {
 								success: {
 								label: "Aceptar",

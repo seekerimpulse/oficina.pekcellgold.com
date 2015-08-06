@@ -88,9 +88,6 @@ class bancos extends CI_Controller
 		if (!isset($banco) && !isset($pais) && !isset($cuenta)){
 			echo "Por favor llena el formulario";
 			return false;
-		}else if (!is_numeric($clabe) || $clabe > 999){
-			echo "La clabe es un numero de tres digitos";
-			return false;
 		}else{
 			return true;
 		}
@@ -206,10 +203,6 @@ class bancos extends CI_Controller
 		if (!isset($banco) && !isset($pais) && !isset($cuenta)){
 			
 			echo "Por favor llena el formulario.";
-			return false;
-		}else if (!is_numeric($clabe) || $clabe > 999){
-			
-			echo "La clabe es un numero de tres digitos.";
 			return false;
 		}else{
 			return true;
