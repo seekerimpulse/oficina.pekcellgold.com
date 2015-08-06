@@ -16,7 +16,7 @@
 										<a href="/bo/comercial/red_tabla">Listar Afiliados</a>
 									</span>
 									<span>>
-										<a href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $id;?>">Selección de Red</a> > Genealogico <?php echo $nombre_red[0]->nombre;?>
+										<a href="/bo/comercial/tipos_de_red_grafico_2?id_afiliado=<?php echo $id;?>">Selección de Red</a> > Arbol 2 <?php echo $nombre_red[0]->nombre;?>
 									</span>
                               </h1>
                          </div>
@@ -46,7 +46,7 @@
                                         -->
                                         <header>
                                              <span class="widget-icon"> <i class="fa fa-sitemap"></i> </span>
-                                             <h2>Grafico 2</h2>
+                                             <h2>Listado dinámico</h2>
                     
                                         </header>
                     

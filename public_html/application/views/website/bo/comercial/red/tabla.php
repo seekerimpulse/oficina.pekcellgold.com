@@ -54,49 +54,49 @@
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 				<center>	
-					<a title="Bloquear" href="" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
+					<a title="Bloquear" style="cursor: pointer;" class="txt-color-gray"><i class="fa fa-unlock fa-3x"></i></a>
 					<br>Bloquear
 					</center>
 				</div>
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-						<a title="Desbloquear" href="" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
+						<a title="Desbloquear" style="cursor: pointer;" class="txt-color-gray"><i class="fa fa-lock fa-3x"></i></a>
 						<br>Desbloquear
 					</center>
 				</div>
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-					<a title="Editar" href="" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+					<a title="Editar" style="cursor: pointer;" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 					<br>Editar
 					</center>
 				</div>
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-					<a title="Sustituir" href="" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a>
+					<a title="Sustituir" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-exchange fa-3x"></i></a>
 					<br>Sustituir
 					</center>
 				</div>
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-						<a title="Genealogico" href="" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
+						<a title="Genealogico" style="cursor: pointer;" class="txt-color-gray"><i class="fa fa-sitemap fa-3x"></i></a>
 						<br>Genealogico
 					</center>
 				</div>
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-						<a title="Grafico 1" href="" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
-						<br>Grafico 1
+						<a title="Arbol 1" style="cursor: pointer;" class="txt-color-red"><i class="fa fa-sitemap fa-3x"></i></a>
+						<br>Arbol 1
 					</center>
 				</div>
 				
 				<div class="col-xs-4 col-md-1 col-sm-2 col-lg-1">
 					<center>
-						<a title="Grafico 2" href="" class="txt-color-gray"><i class="fa fa-bar-chart-o fa-3x"></i></a>
-						<br>Grafico 2
+						<a title="Arbol 2" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-sitemap fa-3x"></i></a>
+						<br>Arbol 2
 					</center>
 				</div>
 				
