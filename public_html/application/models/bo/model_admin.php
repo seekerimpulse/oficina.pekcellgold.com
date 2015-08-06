@@ -95,6 +95,14 @@ class model_admin extends CI_Model
 	
 		return $datos->result();
 	}
+	
+	function ver_si_red_tiene_categorias($id)
+	{
+		$datos = $this->db->query('select * from cat_grupo_producto where id_red ='.$id);
+	
+		return $datos->result();
+	}
+	
 	function traer_foto($id){
 		$datos = $this->db->query('select CI.url url, M.id_tipo_mercancia id_tipo_mercancia, CI.id_img id_img, M.sku sku
 								from cat_img CI, cross_merc_img CMI, mercancia M
@@ -912,9 +920,9 @@ where(a.id_pais=b.Code)");
 		$this->db->query("delete from cat_retencion where id_retencion=".$_POST["id"]);
 	}
 	
-	function kill_tipo_red()
+	function kill_tipo_red($id)
 	{
-		$this->db->query("delete from tipo_red where id=".$_POST["id"]);
+		$this->db->query("delete from tipo_red where id=".$id);
 	}
 	
 	function get_dato_pais()

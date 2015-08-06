@@ -36,25 +36,25 @@
 									<div class="row col-xs-12 col-md-6 col-sm-4 col-lg-3 pull-right">
 										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
 											<center>
-											<a title="Editar" href="#" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
+											<a title="Editar" style="cursor: pointer;" class="txt-color-blue"><i class="fa fa-pencil fa-3x"></i></a>
 											<br>Editar
 											</center>
 										</div>
 										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
 										<center>	
-											<a title="Eliminar" href="#" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
+											<a title="Eliminar" style="cursor: pointer;" class="txt-color-red"><i class="fa fa-trash-o fa-3x"></i></a>
 											<br>Eliminar
 											</center>
 										</div>
 										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
 										<center>	
-											<a title="Desactivar" href="#" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
+											<a title="Desactivar" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-square-o fa-3x"></i></a>
 											<br>Desactivado
 											</center>
 										</div>
 										<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3">
 											<center>
-												<a title="Activar" href="#" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
+												<a title="Activar" style="cursor: pointer;" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 												<br>Activado
 											</center>
 										</div>
@@ -92,8 +92,8 @@
 														
 														</td>
 														<td>
-															<a title="Editar" class="txt-color-blue" onclick="editar('<?php echo $grupo->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
-															<a title="Eliminar"  class="txt-color-red" onclick="eliminar('<?php echo $grupo->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
+															<a title="Editar" style="cursor: pointer;" class="txt-color-blue" onclick="editar('<?php echo $grupo->id; ?>');"><i class="fa fa-pencil fa-3x"></i></a>
+															<a title="Eliminar" style="cursor: pointer;" class="txt-color-red" onclick="eliminar('<?php echo $grupo->id; ?>');"><i class="fa fa-trash-o fa-3x"></i></a>
 															<?php if($grupo->estatus == 'ACT'){ ?>
 																<a style="cursor: pointer;" title="Desactivar" onclick="estado('DES','<?php echo $grupo->id; ?>')" class="txt-color-green"><i class="fa fa-check-square-o fa-3x"></i></a>
 															<?php } else {?>

@@ -64,8 +64,6 @@ class tipo_red extends CI_Controller{
 		$this->template->set("id_red",$id_red);
 		$this->template->set("datosDeRed",$datosDeRed);
 		$this->template->set("style",$style);
-		$this->template->set_theme('desktop');
-		$this->template->set_layout('website/main');
 		$this->template->build('website/bo/TipoRed/modificarRed');
 	}
 	

@@ -96,7 +96,7 @@ $.ajax({
 {
 	bootbox.dialog({
 	message: msg,
-	title: 'Modificar Red',
+	title: 'Atención !!!',
 })//fin done ajax
 });//Fin callback bootbox
 }
@@ -111,7 +111,7 @@ function eliminar(id) {
 	{
 		bootbox.dialog({
 		message: msg,
-		title: 'Eliminar Tipo de Red',
+		title: 'Atención !!!',
 		buttons: {
 			success: {
 			label: "Aceptar",
@@ -126,8 +126,8 @@ function eliminar(id) {
 					.done(function( msg )
 					{
 						bootbox.dialog({
-						message: "Se ha eliminado el Tipo de Red.",
-						title: 'Felicitaciones',
+						message: msg,
+						title: 'Atención !!!',
 						buttons: {
 							success: {
 							label: "Aceptar",

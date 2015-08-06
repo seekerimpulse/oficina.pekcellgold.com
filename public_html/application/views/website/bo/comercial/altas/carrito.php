@@ -287,7 +287,7 @@ function editar(id_merc)
 	{
 		bootbox.dialog({
 		message: msg,
-		title: '',
+		title: 'Atención !!!',
 	})//fin done ajax
 	});//Fin callback bootbox
 }
@@ -313,7 +313,7 @@ function eliminar(id)
 					{
 						bootbox.dialog({
 						message: msg,
-						title: 'Alerta',
+						title: 'Atención !!!',
 						buttons: {
 							success: {
 							label: "Aceptar",
@@ -344,7 +344,7 @@ function estatus(tipo,id)
 	if (tipo==1){
 		bootbox.dialog({
 			message: "Confirme que desea activar en carrito de compra",
-			title: "Activar",
+			title: "Atención !!!",
 			buttons: {
 				success: {
 				label: "Aceptar",
@@ -377,7 +377,7 @@ function estatus(tipo,id)
 	{
 		bootbox.dialog({
 			message: "Confirme que desea desactivar en carrito de compra",
-			title: "Descativar",
+			title: "Atención !!!",
 			buttons: {
 				success: {
 				label: "Aceptar",
