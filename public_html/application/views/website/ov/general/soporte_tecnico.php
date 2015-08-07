@@ -55,7 +55,7 @@
 												</div>
 												
 												<div class="col-xs-10 col-sm-10 col-md-3 col-lg-3" style="padding-right: 1%;padding-bottom: 3rem">
-												<a href="#?id_red=<?php echo $id_red;?>">
+												<a  href="/ov/cgeneral/chat_soporte?id=red_soporte">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 														<i class="fa fa-wechat fa-3x"></i>
 														<h1>Chat</h1>

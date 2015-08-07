@@ -27,6 +27,8 @@ class configuracion extends CI_Controller
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('model_datos_generales_soporte_tecnico');
 		$this->load->model('model_cat_grupo_soporte_tecnico');
+		
+		$this->load->model('bo/model_soporte_tecnico');
 
 	}
 	 
@@ -619,8 +621,9 @@ class configuracion extends CI_Controller
 		$this->db->query("delete from comentario_video_soporte_tecnico where id=".$_POST["id"]);
 	}
 	
-	function informacion_ver_redes()
+function informacion_ver_redes()
 	{
+		$id_para_soporte=$_GET['id'];
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
@@ -645,37 +648,57 @@ class configuracion extends CI_Controller
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/soporteTecnico/informacion_ver_redes');
+		if($id_para_soporte!=1){
+			$this->template->build('website/bo/soporteTecnico/informacion_ver_redes');
+				
+		}else{
+			
+			$this->template->build('website/bo/soporteTecnico/redes_chat');
+		}
 	}
 	
-	function informacion()
-	{
+	
+function chat_soporte(){
+		$red_temporal=$_GET['id_red'];
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
-			redirect('/auth');
-		}
-	
-		$id=$this->tank_auth->get_user_id();
-		$usuario=$this->general->get_username($id);
-		
-		if(!$this->general->isAValidUser($id,"soporte"))
-		{
-			redirect('/auth/logout');
+		redirect('/auth');
 		}
 		
-		$style=$this->modelo_dashboard->get_style(1);
-	
-		$id_red = $_GET['id_red'];
-	
+		if (!($_COOKIE['red1']=="3")){
+			header("Refresh:0;url='/bo/configuracion/chat_soporte?id_red=".$red_temporal."'");
+		}
+		
+		include_once("cometchat/model_soporte_chat.php");
+		$chat_r=new Red_chat;
+		$chat_r->soporte_red();
+
+		
+		
+		$id=$this->tank_auth->get_user_id();		
+		$style=$this->modelo_dashboard->get_style(1);		
 		$this->template->set("style",$style);
-		$this->template->set("id_red",$id_red);
 	
+		
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
-		$this->template->build('website/bo/soporteTecnico/informacion/index');
-	}
+		
+		$consultar_siesta_asignada=$this->model_soporte_tecnico->consultar_asignacion_de_soporte($id);
+		
+		if($consultar_siesta_asignada!=null){
+			$this->model_soporte_tecnico->actualizar_asignacion_de_red($id);
+		}else{
+			$this->model_soporte_tecnico->asignar_red_de_soporte($id);
+		}
+	
+		
+ 		$this->template->build('website/bo/soporteTecnico/chat_soporte');
+ 	
+		
+		
+}
 	
 	function alta_informacion()
 	{

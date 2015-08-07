@@ -17,6 +17,8 @@ class cgeneral extends CI_Controller
 		$this->load->model('model_datos_generales_soporte_tecnico');
 		$this->load->model('model_cat_grupo_soporte_tecnico');
 		$this->load->model('model_archivo_soporte_tecnico');
+		
+		$this->load->model('bo/model_soporte_tecnico');
 	}
 	function soporte_tecnico_ver_redes()
 	{
@@ -39,7 +41,7 @@ class cgeneral extends CI_Controller
 		$this->template->build('website/ov/general/soporte_tecnico_ver_redes');
 	}
 	
-	function soporte_tecnico()
+ function soporte_tecnico()
 	{
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -50,7 +52,17 @@ class cgeneral extends CI_Controller
 		$style=$this->general->get_style($id);
 		$redes = $this->model_tipo_red->listarTodos();
 		$id_red = $_GET['id_red'];
+		
 		$datos_generales = $this->model_datos_generales_soporte_tecnico->traer_por_red($id_red);
+		
+	
+		$consultar_red=$this->model_soporte_tecnico->consultar_asignacion_de_soporte_a_usuario($id);
+		
+		if($consultar_red!=null){
+			$this->model_soporte_tecnico->actualizar_asignacion_de_red_a_usuario($id);
+		}else{
+			$this->model_soporte_tecnico->asignar_red_de_soporte_a_usuario($id);
+		}
 		
 		$this->template->set("style",$style);
 		$this->template->set("redes",$redes);
@@ -135,25 +147,69 @@ class cgeneral extends CI_Controller
 		$this->template->build('website/ov/general/menu_chat');
 	}
 
-	function chat_red()
-	{
-		if (!$this->tank_auth->is_logged_in()) 
+	
+
+	function chat_soporte(){
+		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
 		}
-
+		 
+		$var=$_GET['id'];
+		if (!($_COOKIE['red1']=="2")){
+			header("Refresh:0;url='/ov/cgeneral/chat_soporte?id=red_soporte'");
+		}
+	
+		include_once("cometchat/model_soporte_chat.php");
+		$chat_r=new Red_chat;
+		$chat_r->red_soporte();
+	
 		$id=$this->tank_auth->get_user_id();
 		$style=$this->general->get_style($id);
-
+	
 		$this->template->set("style",$style);
-
+		 
 		$this->template->set_theme('desktop');
-        $this->template->set_layout('website/main');
-        $this->template->set_partial('header', 'website/ov/header');
-        $this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		 
+		 
 		$this->template->build('website/ov/general/chat_red');
 	}
-
+	
+	
+	
+	function chat_red()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		if (!($_COOKIE['red1']=="1")){
+			header("Refresh:0;url='/ov/cgeneral/chat_red?id=red_personal'");
+		}	
+		$var=$_GET['id'];
+		include_once("cometchat/model_soporte_chat.php");
+		$chat_r=new Red_chat;
+		$chat_r->red_a_red();
+		 
+	
+		$id=$this->tank_auth->get_user_id();
+		$style=$this->general->get_style($id);
+		$this->template->set("style",$style);
+	
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/general/chat_red');
+	}
+	
+	
+	
+	
 	function chat_social()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
