@@ -78,6 +78,7 @@
 																	<input id="username" onkeyup="use_username()" required
 																	type="text" name="username" placeholder="Usuario">
 																</label>
+																<div id="usuario2"></div>
 															</section>
 															<section id="correo" class="col col-4">
 																Email
@@ -86,6 +87,7 @@
 																	id="email" onkeyup="use_mail()" required type="email"
 																	name="email" placeholder="Email">
 																</label>
+																<div id="correo2"></div>
 															</section>
 															
 															<input type="text" name="id" value="<?php echo $id; ?>" class="hide">
@@ -492,12 +494,12 @@ function use_username()
 	.done(function( msg )
 	{
 		if( msg != ''){
-			$("#usuario").append('<div id="msg_usuario" class="alert alert-success fade in">'
+			$("#usuario2").html('<div id="msg_usuario" class="alert alert-success fade in">'
 						+'<i class="fa-fw fa fa-check"></i>'
 						+'<strong>Corecto </strong> Username Correcto'
 					+'</div>')
 		}else{
-			$("#usuario").append('<div id="msg_usuario" class="alert alert-danger fade in">'
+			$("#usuario2").html('<div id="msg_usuario" class="alert alert-danger fade in">'
 						+'<i class="fa-fw fa fa-check"></i>'
 						+'<strong>Error </strong> Username no esta registrado en el sistema'
 					+'</div>')
@@ -518,13 +520,13 @@ function use_mail()
 	.done(function( msg )
 	{
 		if( msg != ''){
-			$("#correo").append('<div id="msg_correo" class="alert alert-success fade in">'
+			$("#correo2").html('<div id="msg_correo" class="alert alert-success fade in">'
 					
 						+'<i class="fa-fw fa fa-check"></i>'
 						+'<strong>Corecto </strong> Emial Correcto'
 					+'</div>')
 		}else{
-			$("#correo").append('<div id="msg_correo" class="alert alert-danger fade in">'
+			$("#correo2").html('<div id="msg_correo" class="alert alert-danger fade in">'
 					
 						+'<i class="fa-fw fa fa-check"></i>'
 						+'<strong>Error </strong> Email no esta registrado en el sistema'

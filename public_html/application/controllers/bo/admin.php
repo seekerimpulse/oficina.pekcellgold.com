@@ -1365,15 +1365,17 @@ class admin extends CI_Controller
 		$id = $_POST['id'];
 		
 		$esta = $this->model_admin->ver_si_red_tiene_categorias($id);
-		
-		if ($esta == NULL){
+		$afiliados = $this->model_admin->ver_afiliados_red($id);
+		if ($esta == NULL && $afiliados == 0){
 			
 			$this->model_admin->kill_tipo_red($id);
 			echo "Se ha eliminado la red.";
 		}
-		else {
+		else if($afiliados == 1){
+			echo "Ha ocurrido un error eliminando la red, debido a que tiene afiliados.";
+		}else{
 			echo "Ha ocurrido un error eliminando la red, debido a que tiene categorias creadas.
-					<br> Lo mas recomendable es que la desactive o elimine las categorias.";
+					<br> Lo mas recomendable es que elimine las categorias.";
 		}
 		
 	}
