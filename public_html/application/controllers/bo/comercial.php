@@ -150,8 +150,8 @@ class comercial extends CI_Controller
 			$longitud_nombre =	strlen($_POST['nombre_buscado']);
 			$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
-			if ( $longitud_nombre >= 0 && $longitud_nombre < 4){
-				$error = "La casilla nombre debe contener al menos 4 letras.";
+			if ( $longitud_nombre >= 0 && $longitud_nombre < 2){
+				$error = "La casilla nombre debe contener al menos 2 letras.";
 				$this->session->set_flashdata('error', $error);
 				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
 			}
@@ -166,8 +166,8 @@ class comercial extends CI_Controller
 			$longitud_apellido =	strlen($_POST['apellido_buscado']);
 			$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
-			if ($longitud_apellido >= 0 && $longitud_apellido < 4){
-				$error = "La casilla apellido debe contener al menos 4 letras.";
+			if ($longitud_apellido >= 0 && $longitud_apellido < 2){
+				$error = "La casilla apellido debe contener al menos 2 letras.";
 				$this->session->set_flashdata('error', $error);
 				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
 			}
@@ -182,8 +182,8 @@ class comercial extends CI_Controller
 			$longitud_username =	strlen($_POST['username_buscado']);
 			$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
-			if ($longitud_username >= 0 && $longitud_username < 4){
-				$error = "La casilla username debe contener al menos 4 letras.";
+			if ($longitud_username >= 0 && $longitud_username < 2){
+				$error = "La casilla username debe contener al menos 2 letras.";
 				$this->session->set_flashdata('error', $error);
 				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
 			}
@@ -198,8 +198,8 @@ class comercial extends CI_Controller
 			$longitud_email =	strlen($_POST['email_buscado']);
 			$id_red        = 0;
 			//$id_red        = $_POST['id_red'];
-			if ($longitud_email >= 0 && $longitud_email < 10){
-				$error = "La casilla email debe contener al menos 10 letras.";
+			if ($longitud_email >= 0 && $longitud_email < 6){
+				$error = "La casilla email debe contener al menos 6 letras.";
 				$this->session->set_flashdata('error', $error);
 				redirect('/bo/comercial/red_tabla?id_red='.$id_red.'');
 			}
