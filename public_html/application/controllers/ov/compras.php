@@ -649,13 +649,8 @@ function index()
         $this->template->set_partial('header', 'website/ov/header');
         $this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/reportes');
-		
-		
-		if($_GET['compra']=true)
-		{
-			
-		}
 	}
+	
 	function carrito_menu()
 	{
 		if (!$this->tank_auth->is_logged_in()) 
@@ -1008,8 +1003,9 @@ function index()
 		$combinados = $this->modelo_compras->traer_mis_compras_combinados($id, $inicio, $fin);
 		
 		echo
-		"<table id='dt_basic' class='table table-striped table-bordered table-hover' width='100%'>
-				<thead>
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					
 					<th >Red</th>
 					<th data-class='expand'>Nombre</th>
 					<th>Costo unidad</th>
@@ -1021,6 +1017,7 @@ function index()
 		foreach ($productos as $producto)
 		{
 			echo "<tr>
+					
 					<td>".$producto->red."</td>
 					<td>".$producto->nombre."</td>
 					<td>$ ".$producto->costo_unitario."</td>
