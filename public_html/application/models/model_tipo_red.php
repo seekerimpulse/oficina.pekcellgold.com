@@ -14,22 +14,26 @@ class Model_tipo_red extends CI_Model{
 						'nombre' => $nombre,
 						'descripcion' => $descripcion,
 						'frontal' => $frontal,
-						'profundidad' => $profundidad);
+						'profundidad' => $profundidad,
+						'valor_punto' => 1
+		);
 		$this->db->insert("tipo_red",$datos);
 		$id_red = mysql_insert_id();
 		$datos = array('id_red' => $id_red,'id_afiliado' => 2,'debajo_de' => 1,'directo' => 1,'lado' => 0);
 		$this->db->insert("afiliar",$datos);
+		$datos = array('id_red' => $id_red,'id_usuario' => 2,'profundidad' => 0,'estatus' => 'ACT','premium' => 2);
+		$this->db->insert("red",$datos);
 	}
 
 	function listarTodos()
 	{
-		$q=$this->db->query('select id, nombre, descripcion from tipo_red');
+		$q=$this->db->query('select id, nombre, descripcion from tipo_red group by id');
 		return $q->result();
 	}
 	
 	function RedesUsuario($id)
 	{
-		$q=$this->db->query('select tr.id, tr.nombre, tr.descripcion from tipo_red tr, afiliar a where tr.id = a.id_red and a.id_afiliado = '.$id);
+		$q=$this->db->query('select tr.id, tr.nombre, tr.descripcion from tipo_red tr, afiliar a where tr.id = a.id_red and a.id_afiliado = '.$id." group by tr.id");
 		return $q->result();
 	}
 	

@@ -76,7 +76,7 @@ $(document).ready(function() {
 											label: "Ok!",
 											className: "btn-success",
 											callback: function() {
-												location.href="";
+												location.href="/ov/red/red_arbol1?id="+<?php echo $_GET['id']; ?>;
 												}
 											}
 										}

@@ -879,6 +879,7 @@ where(a.id_pais=b.Code)");
 	{
 		$this->db->query("delete from cat_grupo_producto where id_grupo=".$_POST["id"]);
 	}
+	
 	function new_impuesto()
 	{
 		$dato_impuesto=array(
@@ -923,6 +924,19 @@ where(a.id_pais=b.Code)");
 	function kill_tipo_red($id)
 	{
 		$this->db->query("delete from tipo_red where id=".$id);
+		$this->db->query("delete from red where id_red =".$id." and id_usuario = 2");
+		$this->db->query("delete from afiliar where id_red =".$id." and id_afiliado = 2");
+	}
+	
+	function ver_afiliados_red($id)
+	{
+		$q = $this->db->query("select id_red from afiliar where id_red=".$id." and id_afiliado != 2");
+		$red = $q->result();
+		if(isset($red[0]->id_red)){
+			return 1;
+		}else{
+			return 0;
+		}
 	}
 	
 	function get_dato_pais()

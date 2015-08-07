@@ -243,20 +243,20 @@
 												                         <td class="price">$ <?echo number_format($impuesto,2)?></td>
 												                         <td class="price">$ <?echo number_format($total+$impuesto,2)?></td>
 												                         <td>
-												                         	<form method="post" action="https://stg.gateway.payulatam.com/ppp-web-gateway">
+												                         	<form method="post" action="https://gateway.payulatam.com/ppp-web-gateway">
 												                         	 <?php 
 													                         	 $valortotal= $total+$impuesto;
 													                         	 $valortotal = $valortotal + (0.045 * $valortotal);
 													                         	 $time = $items['options']['time'].$items['id'];
-													                         	 $firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~500238~".$time."~".$valortotal."~USD");
+													                         	 $firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~539517~".$time."~".$valortotal."~USD");
 													                         	 $id_usuario = $id;
 													                         	 if(isset($_GET['usr'])){
 													                         	 	$id_usuario = $_GET['usr'];
 													                         	 }
 													                         	 $email=$this->general->get_email($id_usuario);
 													                         	 ?>
-																				  <input name="merchantId"    type="hidden"  value="500238" >
-																				  <input name="accountId"     type="hidden"  value="500538" >
+																				  <input name="merchantId"    type="hidden"  value="539517" >
+																				  <input name="accountId"     type="hidden"  value="541599" >
 																				  <input name="description"   type="hidden"  value="<?php echo $compras[$cantidad]['nombre']; ?>"  >
 																				  <input name="referenceCode" type="hidden"  value="<?php echo $time; ?>" >
 																				  <input name="amount"        type="hidden"  value="<?php echo $valortotal; ?>"   >

@@ -27,7 +27,7 @@ where cpb.id_banco = cb.id_banco and cpb.id_usuario = u.id and up.user_id = u.id
 	}
 	
 	function MercanciaPago($id_venta){
-		$q = $this->db->query("SELECT id_mercancia, cantidad FROM OficinaVirtual.cross_venta_mercancia where id_venta = ".$id_venta);
+		$q = $this->db->query("SELECT id_mercancia, cantidad FROM cross_venta_mercancia where id_venta = ".$id_venta);
 		$venta_mercancia = $q->result();
 		return $venta_mercancia;
 		
