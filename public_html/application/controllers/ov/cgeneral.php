@@ -19,6 +19,8 @@ class cgeneral extends CI_Controller
 		$this->load->model('model_archivo_soporte_tecnico');
 		
 		$this->load->model('bo/model_soporte_tecnico');
+		
+
 	}
 	function soporte_tecnico_ver_redes()
 	{
@@ -29,6 +31,7 @@ class cgeneral extends CI_Controller
 
 		$id=$this->tank_auth->get_user_id();
 		$style=$this->general->get_style($id);
+		
 		$redes = $this->model_tipo_red->listarTodos();
 		
 		$this->template->set("style",$style);
@@ -182,31 +185,65 @@ class cgeneral extends CI_Controller
 	
 	function chat_red()
 	{
+		$red=$_GET['id_red'];
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
 		}
+		
 		if (!($_COOKIE['red1']=="1")){
-			header("Refresh:0;url='/ov/cgeneral/chat_red?id=red_personal'");
+			header("Refresh:0;url='/ov/cgeneral/chat_red?id_red=".$red."'");
 		}	
-		$var=$_GET['id'];
+
 		include_once("cometchat/model_soporte_chat.php");
 		$chat_r=new Red_chat;
 		$chat_r->red_a_red();
 		 
+		
+	    $id=$this->tank_auth->get_user_id();
+		$style=$this->general->get_style($id);
+		$this->template->set("style",$style);
 	
+	   $consultar_asignacion_red=$this->model_soporte_tecnico->consultar_asignacion_red_a_red($id);
+
+		if($consultar_asignacion_red!=null){
+			$this->model_soporte_tecnico->actualizar_red_a_red($id);
+		}else{
+			$this->model_soporte_tecnico->ingresar_id_red_a_red($id);
+		}
+		$this->template->set_theme('desktop');
+        $this->template->set_layout('website/main');
+        $this->template->set_partial('header', 'website/ov/header');
+        $this->template->set_partial('footer', 'website/ov/footer');
+
+		
+		$this->template->build('website/ov/general/chat_red');
+	}
+	
+	
+
+	function redes_afiliado_chat(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+			
 		$id=$this->tank_auth->get_user_id();
 		$style=$this->general->get_style($id);
 		$this->template->set("style",$style);
 	
+			
+		$redes_de_usuario = $this->model_tipo_red->RedesUsuario($id);
+	
+		$this->template->set("style",$style);
+		$this->template->set("redes_de_usuario",$redes_de_usuario);
 	
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
 		$this->template->set_partial('footer', 'website/ov/footer');
-		$this->template->build('website/ov/general/chat_red');
+		$this->template->build('website/ov/general/seleccion_red');
 	}
-	
 	
 	
 	

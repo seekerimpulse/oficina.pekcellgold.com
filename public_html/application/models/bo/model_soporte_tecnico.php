@@ -6,7 +6,7 @@ class model_soporte_tecnico extends CI_Model {
 	function __construct() {
 		parent::__construct ();
 	}
-	
+	//soporte
 	function consultar_asignacion_de_soporte($id){
         $consultar_asignacion = $this->db->query("SELECT id from user_soporte where id_user=".$id."");
 		return $consultar_asignacion->result();
@@ -29,6 +29,8 @@ class model_soporte_tecnico extends CI_Model {
 	}
 	
 	
+	//usuario
+	
 	function consultar_asignacion_de_soporte_a_usuario($id){
 		$consultar_asignacion_red= $this->db->query("SELECT id from user_red_temporal where id_user=".$id."");
 		return $consultar_asignacion_red->result();
@@ -36,7 +38,8 @@ class model_soporte_tecnico extends CI_Model {
 	function asignar_red_de_soporte_a_usuario($id) {
 		$red_temporal = array (
 				"id_user" => $id,
-				"id_red_temporal" => $_GET ['id_red']
+				"id_red_temporal" => $_GET ['id_red'],
+				"id_red_a_red" => "0"
 		);
 		$this->db->insert ( "user_red_temporal", $red_temporal );
 	}
@@ -50,28 +53,31 @@ class model_soporte_tecnico extends CI_Model {
 		$this->db->update('user_red_temporal', $datos);
 	}
 	
-	/*
-	function ingresar_chat($id){
-		$chat_temporal = array (
-				"id_user" => $id,
-				"registro_chat" => "1"
-		);
-		$this->db->insert ( "user_registro_chat", $chat_temporal );
+	
+	function consultar_asignacion_red_a_red($id){
+		$consultar_asignacion_red_a_red= $this->db->query("select id_user from user_red_temporal where id_user=".$id."");
+		return $consultar_asignacion_red_a_red->result();
 	}
 	
-	function actualizar_chat($id){
-
-		$datos=array(
-				"id_user"=> $id,
-				"registro_chat" => "1"
+	
+	function ingresar_id_red_a_red($id){
+		$red_a_red = array (
+				"id_user" => $id,
+				"id_red_temporal" =>"0",
+				"id_red_a_red" => $_GET['id_red']
+		);
+		$this->db->insert ( "user_red_temporal", $red_a_red );
+	}
+	
+	function actualizar_red_a_red($id){
+	
+		$datos = array (
+				"id_user" => $id,
+				"id_red_a_red" => $_GET['id_red']
 		);
 		$this->db->where('id_user', $id);
-		$this->db->update('user_registro_chat', $datos);
+		$this->db->update('user_red_temporal', $datos);
 	}
-
-	function consultar_chat($id){
-		$consultar_chat = $this->db->query("SELECT registro_chat from user_registro_chat where id_user=".$id."");
-		return $consultar_chat->result();
-	}
-	*/
+	
+	
 	}

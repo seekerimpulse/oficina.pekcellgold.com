@@ -29,6 +29,7 @@ class red extends CI_Controller
 		$style         = $this->general->get_style($id);
 		
 		$redes = $this->model_tipo_red->RedesUsuario($id);
+		
 		$this->template->set("id",$id);
 		$this->template->set("style",$style);
 		$this->template->set("redes",$redes);

@@ -118,8 +118,10 @@ function getFriendsList($userid,$time) {
         from  users
         left join cometchat_status on users.id = cometchat_status.userid
         left join afiliar on afiliar.id=users.id
+        left join user_red_temporal on user_red_temporal.id_user=users.id
         left join user_profiles on user_profiles.user_id=users.id
-        where afiliar.id_red=(select afiliar.id_red from afiliar where afiliar.id=".$userid.")
+        where user_red_temporal.id_red_a_red=
+		(select id_red_a_red from user_red_temporal where id_user=".$userid.")
 		and user_profiles.id_tipo_usuario=2");
 			
 		return $sql;
