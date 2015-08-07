@@ -21,7 +21,7 @@
 							<div class="col-lg-2 col-sm-2 col-md-2 col-xs-12">
 							</div>
 							<div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
-								<a href="chat_red">
+								<a href="chat_red?id=red_personal">
 									<div class="well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_1_color?>;">
 										<i class="fa fa-user fa-3x"></i>
 										<h5>Chat con mi red</h5>

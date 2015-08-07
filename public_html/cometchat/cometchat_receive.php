@@ -290,7 +290,9 @@ function getBuddyList() {
 			
 			if ($onlineUsers = getCache($cookiePrefix.$onlineCacheKey, 30)) {    
 				$buddyList = unserialize($onlineUsers);
-			} else {  
+			} else {  		
+				
+			
 				$sql = getFriendsList($userid,$time);
 				if ($guestsMode) {
 					$sql = getGuestsList($userid,$time,$sql);
