@@ -14,6 +14,7 @@ class administracion extends CI_Controller
 		$this->load->model('bo/modelo_dashboard');
 		$this->load->model('bo/general');
 		$this->load->model('model_emails_departamentos');
+		$this->load->model('model_invitado');
 	}
 
 	function index()
@@ -108,4 +109,100 @@ class administracion extends CI_Controller
 			redirect("/bo/administracion/emails_departamentos");
 	}
 
+	
+	function  login_web_personal(){
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$style=$this->modelo_dashboard->get_style(1);
+		
+		
+		
+		$this->template->set("style",$style);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		
+		$this->template->build('website/bo/administracion/login_invitado');
+		
+	}
+	
+	function ingreso_invitado(){
+		
+		$consultar_id_usuario=null;
+       
+     
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$style=$this->modelo_dashboard->get_style(1);
+		
+        $username=$_POST['username'];
+        $password=$_POST['password_invitado'];
+      	$consultar_id_usuario=$this->model_invitado->consultar_username_afiliado($username,$password);
+     
+		$this->template->set("style",$style);
+		
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		
+		if ($consultar_id_usuario !=null){
+			$this->template->build('website/bo/configuracion/soporte_tecnico');
+		}else{
+			$this->template->build('website/bo/administracion/login_invitado');
+		}
+		
+	}
+	function invitar_gente(){
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$style=$this->modelo_dashboard->get_style(1);
+		
+
+		$this->template->set("style",$style);	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		
+		$this->template->build('website/bo/administracion/email_invitado');
+		
+		
+	}
+	
+	function enviar_invitacion(){
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+		$style=$this->modelo_dashboard->get_style(1);	
+		$this->template->set("style",$style);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		
+		
+		$email=$_POST['email_invitado'];
+		echo $email;
+	}
 }

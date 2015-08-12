@@ -56,7 +56,7 @@ $trayicon[] = array('facebook','Facebook Fan Page','modules/facebook/index.php',
 
 /* PLUGINS START */
 
-$plugins = array('smilies','clearconversation','chattime','games','avchat','filetransfer','screenshare','transliterate','broadcast','chathistory','block');
+$plugins = array('smilies','clearconversation','chattime','games','avchat','screenshare','transliterate','chathistory','block','save','filetransfer','broadcast');
 
 /* PLUGINS END */
 

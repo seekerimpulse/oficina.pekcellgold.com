@@ -5,8 +5,8 @@
 /* SETTINGS START */
 
 $videoPluginType = '3';
-$vidWidth = '640';
-$vidHeight = '480';
+$vidWidth = '220';
+$vidHeight = '165';
 $applicationid = '';
 $appAuthSecret = '';
 $maxP = '10';
