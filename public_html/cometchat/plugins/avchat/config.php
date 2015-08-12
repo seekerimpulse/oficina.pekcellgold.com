@@ -4,7 +4,7 @@
 
 /* SETTINGS START */
 
-$videoPluginType = '3';
+$videoPluginType = '0';
 $vidWidth = '640';
 $vidHeight = '480';
 $applicationid = '';
@@ -14,8 +14,8 @@ $quality = '90';
 $winWidth = '650';
 $winHeight = '365';
 $connectUrl = '';
-$camWidth = '440';
-$camHeight = '330';
+$camWidth = '435';
+$camHeight = '327';
 $fps = '30';
 $soundQuality = '7';
 $zoomapplicationid = '';
