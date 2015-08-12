@@ -9,7 +9,7 @@ class Model_tipo_red extends CI_Model{
 	}
 	
 	
-	function insertar($nombre, $descripcion, $profundidad, $frontal){
+	function insertar($nombre, $descripcion, $frontal, $profundidad){
 		$datos = array('id' => 0,
 						'nombre' => $nombre,
 						'descripcion' => $descripcion,

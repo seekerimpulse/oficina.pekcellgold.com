@@ -124,12 +124,7 @@ class model_afiliado extends CI_Model{
 		}
 
 		$mi_red=$_POST['red'];
-		$lado = 1;
-		if(!isset($_POST['lado']))
-			$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
-		else{
-			$lado = $_POST['lado'];
-		}
+		$lado = $this->consultarFrontalDisponible($id_debajo, $mi_red);
 		
 		$dato_afiliar =array(
 			"id_red"      => $mi_red,
