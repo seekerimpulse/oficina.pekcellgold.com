@@ -305,7 +305,7 @@ class cgeneral extends CI_Controller
 	}
 	
 	
-	function actualizar_clave()
+	function actualizar_clave_web_personal()
 	{
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -326,6 +326,38 @@ class cgeneral extends CI_Controller
 		$this->session->set_flashdata('success', $success);
 	
 		redirect('/ov/cgeneral/web_personal');
+	}
+	
+	function envia_mail_invitacion_web_personal()
+	{
+		$this->load->library('Email');
+	
+		$id = $this->tank_auth->get_user_id();
+		$email = $this->model_cabecera->get_mail($id);
+		$email = $email[0]->email;
+	
+		$usuario = $this->general->get_username($id);
+		$nombre = $usuario[0]->nombre." ".$usuario[0]->apellido;
+	
+		$this->email->from($email, $nombre);
+			
+		$this->email->to($_POST['email_receptor']);
+		
+		$acceso = $this->model_user_webs_personales->traer_acceso_web_personal_afiliado($id);
+		
+		$mensaje = "Para tener acceso a mi tienda virtual debes acceder por medio de los siguientes datos,
+				 Username: ".$acceso[0]->username."
+				  Clave: ".$acceso[0]->clave;
+		
+		$this->email->message($mensaje);
+		
+		$this->email->subject("Invitación a mi tienda virtual en pekcell gold");
+	
+		if($this->email->send()){
+			echo "Se ha enviado el email Exitosamente .";
+		}else{
+			echo "Error enviando el email .<br>Porfavor verificar la informacion e intentar nuevamente .";
+		}
 	}
 	
 	function encuestas()

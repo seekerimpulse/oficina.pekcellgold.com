@@ -48,7 +48,7 @@
 					<!-- widget content -->
 					<div class="widget-body">
 						<div class="tab-pane">
-							<form class="smart-form" action="/ov/cgeneral/actualizar_clave" method="POST" role="form">
+							<form class="smart-form" action="/ov/cgeneral/actualizar_clave_web_personal" method="POST" role="form">
 							<div class="row col-xs-12 col-md-12 col-sm-8 col-lg-12 smart-form">
 								<br>
 									<section class="col col-xs-12 col-md-12 col-sm-8 col-lg-4" style="margin-top: 2rem;">
@@ -113,25 +113,25 @@
 					<!-- widget content -->
 					<div class="widget-body">
 						<div class="tab-pane">
-							<form class="smart-form" action="" method="POST" role="form">
+							<form class="smart-form" action="/ov/cgeneral/envia_mail_invitacion_web_personal" method="POST" role="form">
 							<div class="row col-xs-12 col-md-12 col-sm-8 col-lg-12 smart-form">
 								<br>
 									<section class="col col-xs-12 col-md-12 col-sm-8 col-lg-4" style="margin-top: 2rem;">
 									
-										<label > Clave de mi Web Personal 
+										<label > Invitar a un cliente 
 										</label>
 									</section>
 									
 									<section class="col col-xs-12 col-md-12 col-sm-8 col-lg-4" style="margin-top: 0.5rem;">
 									
-										<label class="input"> <i class="icon-append fa fa-briefcase"></i>
-											<input name="clave" placeholder="Escribe tu clave" type="text">
+										<label class="input"> <i class="icon-prepend fa fa-envelope-o"></i>
+											<input name="email_receptor" placeholder="e-mail de tu cliente" type="email">
 										</label>
 									</section>
 									
 									<section class="col col-xs-12 col-md-12 col-sm-8 col-lg-4">
 										<button type="submit" class="btn btn-success col col-xs-12 col-md-12 col-sm-8 col-lg-12">
-											Actualizar
+											Invitar
 										</button>
 									</section>
 									
