@@ -116,11 +116,10 @@ class administracion extends CI_Controller
 		{																		// logged in
 		redirect('/auth');
 		}
+		
 		$id=$this->tank_auth->get_user_id();
 		$usuario=$this->general->get_username($id);
 		$style=$this->modelo_dashboard->get_style(1);
-		
-		
 		
 		$this->template->set("style",$style);
 		
@@ -146,9 +145,9 @@ class administracion extends CI_Controller
 		$usuario=$this->general->get_username($id);
 		$style=$this->modelo_dashboard->get_style(1);
 		
-        $username=$_POST['username'];
-        $password=$_POST['password_invitado'];
-      	$consultar_id_usuario=$this->model_invitado->consultar_username_afiliado($username,$password);
+        $username = $_POST['username'];
+        $password = $_POST['password_invitado'];
+      	$consultar_id_usuario = $this->model_invitado->consultar_username_afiliado($username,$password);
      
 		$this->template->set("style",$style);
 		
@@ -157,13 +156,14 @@ class administracion extends CI_Controller
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
 		
-		if ($consultar_id_usuario !=null){
-			$this->template->build('website/bo/configuracion/soporte_tecnico');
+		if ($consultar_id_usuario != null){
+			redirect("/ov/compras/carrito_publico?usernameAfiliado=".$username);
 		}else{
 			$this->template->build('website/bo/administracion/login_invitado');
 		}
 		
 	}
+	
 	function invitar_gente(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -181,8 +181,6 @@ class administracion extends CI_Controller
 		$this->template->set_partial('footer', 'website/bo/footer');
 		
 		$this->template->build('website/bo/administracion/email_invitado');
-		
-		
 	}
 	
 	function enviar_invitacion(){

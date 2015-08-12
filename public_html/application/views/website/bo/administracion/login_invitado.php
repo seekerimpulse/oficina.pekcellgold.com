@@ -24,9 +24,9 @@
 										</section>
 
 										<section>
-											<label class="label">Contraseña</label>
+											<label class="label">Clave</label>
 											<label class="input"> <i class="icon-append fa fa-lock"></i>
-												<input required type="password" placeholder="Contraseña de Afiliado" name="password_invitado">
+												<input required type="password" placeholder="Clave de Afiliado" name="password_invitado">
 												<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Ingrese la contraseña</b> </label>
 											
 										</section>

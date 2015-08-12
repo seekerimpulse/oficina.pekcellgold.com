@@ -20,6 +20,7 @@ class compras extends CI_Controller
 		$this->load->model('model_user_profiles');
 		$this->load->model('bo/modelo_historial_consignacion');
 		$this->load->model('bo/model_mercancia');
+		$this->load->model('model_user_webs_personales');
 	}
 	
 	private $afiliados = array();
@@ -301,6 +302,77 @@ function index()
         $this->template->set_layout('website/main');
         
         $this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/compra_reporte/carrito',$data);
+	}
+	
+	function carrito_publico()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id = $this->model_user_webs_personales->traer_afiliado_por_username($_GET['usernameAfiliado']);
+		$id = $id[0]->id;
+		
+		$usuario=$this->general->get_username($id);
+		$grupos = $this->model_mercancia->CategoriasMercancia();
+		$redes = $this->model_tipo_red->RedesUsuario($id);
+	
+		$this->template->set("usuario",$usuario);
+		$this->template->set("grupos",$grupos);
+	
+		$info_compras=Array();
+		$producto=0;
+		if($this->cart->contents())
+		{
+			foreach ($this->cart->contents() as $items)
+			{
+				$imgn=$this->modelo_compras->get_img($items['id']);
+				if(isset($imgn[0]->url))
+				{
+					$imagen=$imgn[0]->url;
+				}
+				else
+				{
+					$imagen="";
+				}
+				switch($items['name'])
+				{
+					case 1:
+						$detalles=$this->modelo_compras->detalles_productos($items['id']);
+						break;
+					case 2:
+						$detalles=$this->modelo_compras->detalles_servicios($items['id']);
+						break;
+					case 3:
+						$detalles=$this->modelo_compras->comb_espec($items['id']);
+						break;
+					case 4:
+						$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+						break;
+					case 5:
+						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
+						break;
+					case 6:
+						$detalles=$this->modelo_compras->detalles_prom_comb($items['id']);
+						break;
+				}
+				$info_compras[$producto]=Array(
+						"imagen" => $imagen,
+						"nombre" => $detalles[0]->nombre
+				);
+				$producto++;
+			}
+		}
+		$data=array();
+	
+		$data['compras']= $info_compras;
+		$this->template->set("redes", $redes);
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+	
+		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/compra_reporte/carrito',$data);
 	}
 	

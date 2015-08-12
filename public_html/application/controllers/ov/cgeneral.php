@@ -20,6 +20,7 @@ class cgeneral extends CI_Controller
 		$this->load->model('model_user_webs_personales');
 		
 		$this->load->model('bo/model_soporte_tecnico');
+		$this->load->model('ov/model_cabecera');
 		
 
 	}
@@ -338,15 +339,19 @@ class cgeneral extends CI_Controller
 	
 		$usuario = $this->general->get_username($id);
 		$nombre = $usuario[0]->nombre." ".$usuario[0]->apellido;
-	
+		$username = 0;
+		
+		$afiliado= $this->model_user_webs_personales->traer_afiliado($id);
+		$username = $afiliado[0]->username;
+		
 		$this->email->from($email, $nombre);
 			
 		$this->email->to($_POST['email_receptor']);
 		
-		$acceso = $this->model_user_webs_personales->traer_acceso_web_personal_afiliado($id);
+		$acceso = $this->model_user_webs_personales->traer_acceso_web_personal_afiliado($username);
 		
-		$mensaje = "Para tener acceso a mi tienda virtual debes acceder por medio de los siguientes datos,
-				 Username: ".$acceso[0]->username."
+		$mensaje = "Para tener acceso a mi tienda virtual debes acceder por medio de los siguientes datos:<br><br>
+				 Username: ".$acceso[0]->username."<br>
 				  Clave: ".$acceso[0]->clave;
 		
 		$this->email->message($mensaje);
@@ -355,15 +360,16 @@ class cgeneral extends CI_Controller
 	
 		if($this->email->send()){
 			$success = "Se ha enviado el email Exitosamente .";
+
 			$this->session->set_flashdata('success', $success);
 			
 			redirect('/ov/cgeneral/web_personal');
 		}else{
-			echo "";
-			$success = "Error enviando el email .<br>Porfavor verificar la informacion e intentar nuevamente .";
-			$this->session->set_flashdata('success', $success);
-				
-			redirect('/ov/cgeneral/web_personal');
+			$error = "Por favor verificar la informacion e intentar nuevamente .";
+		$this->session->set_flashdata('error', $error);
+	
+		redirect('/ov/cgeneral/web_personal');
+
 		}
 	}
 	

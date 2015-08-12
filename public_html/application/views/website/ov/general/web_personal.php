@@ -22,6 +22,17 @@
 			</div>'; 
 	}
 ?>	 
+
+<?php if($this->session->flashdata('error')) {
+		echo '<div class="alert alert-danger fade in">
+								<button class="close" data-dismiss="alert">
+									×
+								</button>
+								<i class="fa-fw fa fa-check"></i>
+								<strong>Error! </strong> '.$this->session->flashdata('error').'
+			</div>'; 
+	}
+?>	
 	
 	<section id="widget-grid" class="" >
 		<!-- START ROW -->
@@ -96,7 +107,7 @@
 			
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1"
+				<div class="jarviswidget" id="wid-id-3"
 					data-widget-editbutton="false" data-widget-custombutton="false"
 					data-widget-colorbutton="false">
 
@@ -157,7 +168,7 @@
 			<!-- NEW COL START -->
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1"
+				<div class="jarviswidget" id="wid-id"
 					data-widget-editbutton="false" data-widget-custombutton="false"
 					data-widget-colorbutton="false">
 
