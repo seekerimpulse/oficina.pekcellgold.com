@@ -14,7 +14,7 @@
 								<a href="/bo/configuracion/soporte_tecnico">Soporte Técnico</a> 
 							</span>
 							<span>>
-								<a href="/bo/configuracion/informacion_ver_redes">Ver Redes</a>
+								<a href="/bo/configuracion/informacion_ver_redes?id=0">Ver Redes</a>
 							</span>
 							<span>>
 								<a href="/bo/configuracion/informacion?id_red=<?php echo $id_red;?>">Información</a> > Listar

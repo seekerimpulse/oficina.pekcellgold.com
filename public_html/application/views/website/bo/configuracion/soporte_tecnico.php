@@ -48,7 +48,7 @@
 												</div>
 												
 												<div class="col-xs-10 col-sm-10 col-md-2 col-lg-2" style="padding-right: 1%;padding-bottom: 3rem">
-												<a href="informacion_ver_redes">
+												<a href="informacion_ver_redes?id=0">
 													<div class="minh well well-sm txt-color-white text-center link_dashboard" style="background:<?=$style[0]->btn_2_color?>;">
 														<i class="fa fa-info fa-3x"></i>
 														<h1>Informacion<br><br></h1>

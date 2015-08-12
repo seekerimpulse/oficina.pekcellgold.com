@@ -17,6 +17,7 @@ class cgeneral extends CI_Controller
 		$this->load->model('model_datos_generales_soporte_tecnico');
 		$this->load->model('model_cat_grupo_soporte_tecnico');
 		$this->load->model('model_archivo_soporte_tecnico');
+		$this->load->model('model_user_webs_personales');
 		
 		$this->load->model('bo/model_soporte_tecnico');
 		
@@ -150,8 +151,6 @@ class cgeneral extends CI_Controller
 		$this->template->build('website/ov/general/menu_chat');
 	}
 
-	
-
 	function chat_soporte(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -180,8 +179,6 @@ class cgeneral extends CI_Controller
 		 
 		$this->template->build('website/ov/general/chat_red');
 	}
-	
-	
 	
 	function chat_red()
 	{
@@ -220,8 +217,6 @@ class cgeneral extends CI_Controller
 		$this->template->build('website/ov/general/chat_red');
 	}
 	
-	
-
 	function redes_afiliado_chat(){
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -244,8 +239,6 @@ class cgeneral extends CI_Controller
 		$this->template->set_partial('footer', 'website/ov/footer');
 		$this->template->build('website/ov/general/seleccion_red');
 	}
-	
-	
 	
 	function chat_social()
 	{
@@ -285,6 +278,56 @@ class cgeneral extends CI_Controller
 		$this->template->build('website/ov/general/videollamada');
 	}
 
+	function web_personal()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$style=$this->general->get_style($id);
+		$username = 0;
+		
+		$afiliado= $this->model_user_webs_personales->traer_afiliado($id);
+		$username = $afiliado[0]->username;
+		$datos_web_personal = $this->model_user_webs_personales->listar_por_afiliado($username);
+	
+		$this->template->set("style",$style);
+		$this->template->set("username",$username);
+		$this->template->set("datos_web_personal",$datos_web_personal);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/ov/header');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/general/web_personal');
+	}
+	
+	
+	function actualizar_clave()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+			
+		$trimmed = ereg_replace( "([ ]+)", "",$_POST['clave']);
+		
+		if ($_POST['vacio']==1){
+			$this->model_user_webs_personales->insertar($_POST['username'], $trimmed);
+		}
+		else $this->model_user_webs_personales->actualizar($_POST['username'], $trimmed);
+	
+		$success = "El cambio se ha efectuado satisfactoriamente.";
+		$this->session->set_flashdata('success', $success);
+	
+		redirect('/ov/cgeneral/web_personal');
+	}
+	
 	function encuestas()
 	{
 		if (!$this->tank_auth->is_logged_in()) 

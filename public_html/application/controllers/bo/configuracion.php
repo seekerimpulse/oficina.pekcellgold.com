@@ -623,7 +623,8 @@ class configuracion extends CI_Controller
 	
 function informacion_ver_redes()
 	{
-		$id_para_soporte=$_GET['id'];
+			$id_para_soporte = $_GET['id'];
+		
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
 			redirect('/auth');
@@ -648,7 +649,7 @@ function informacion_ver_redes()
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/bo/header');
 		$this->template->set_partial('footer', 'website/bo/footer');
-		if($id_para_soporte!=1){
+		if($id_para_soporte==0){
 			$this->template->build('website/bo/soporteTecnico/informacion_ver_redes');
 				
 		}else{
@@ -699,6 +700,35 @@ function chat_soporte(){
 		
 		
 }
+
+	function informacion()
+	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+	
+		$id=$this->tank_auth->get_user_id();
+		$usuario=$this->general->get_username($id);
+	
+		if(!$this->general->isAValidUser($id,"soporte"))
+		{
+			redirect('/auth/logout');
+		}
+	
+		$style=$this->modelo_dashboard->get_style(1);
+	
+		$id_red = $_GET['id_red'];
+	
+		$this->template->set("style",$style);
+		$this->template->set("id_red",$id_red);
+	
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('header', 'website/bo/header');
+		$this->template->set_partial('footer', 'website/bo/footer');
+		$this->template->build('website/bo/soporteTecnico/informacion/index');
+	}
 	
 	function alta_informacion()
 	{

@@ -1,0 +1,8 @@
+//El martes 11 de agosto de 2015, se creo una tabla llamada user_webs_personales
+//con el fin de guardar la información correspondiente a la web personal de cada usuario
+
+create table user_webs_personales{
+	id int(11) not null primary key auto_increment,
+	username text not null,
+	clave text not null
+}
