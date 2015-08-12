@@ -31,7 +31,7 @@
 			
 			<article class="col-sm-12 col-md-12 col-lg-12">
 				<!-- Widget ID (each widget will need unique ID)-->
-				<div class="jarviswidget" id="wid-id-1"
+				<div class="jarviswidget" id="wid-id-2"
 					data-widget-editbutton="false" data-widget-custombutton="false"
 					data-widget-colorbutton="false">
 

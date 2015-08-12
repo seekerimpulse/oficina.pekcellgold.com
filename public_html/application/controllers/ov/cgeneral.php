@@ -354,9 +354,16 @@ class cgeneral extends CI_Controller
 		$this->email->subject("Invitación a mi tienda virtual en pekcell gold");
 	
 		if($this->email->send()){
-			echo "Se ha enviado el email Exitosamente .";
+			$success = "Se ha enviado el email Exitosamente .";
+			$this->session->set_flashdata('success', $success);
+			
+			redirect('/ov/cgeneral/web_personal');
 		}else{
-			echo "Error enviando el email .<br>Porfavor verificar la informacion e intentar nuevamente .";
+			echo "";
+			$success = "Error enviando el email .<br>Porfavor verificar la informacion e intentar nuevamente .";
+			$this->session->set_flashdata('success', $success);
+				
+			redirect('/ov/cgeneral/web_personal');
 		}
 	}
 	
