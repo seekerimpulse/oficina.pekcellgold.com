@@ -20,6 +20,7 @@ class cgeneral extends CI_Controller
 		$this->load->model('model_user_webs_personales');
 		
 		$this->load->model('bo/model_soporte_tecnico');
+		$this->load->model('ov/model_cabecera');
 		
 
 	}
@@ -305,7 +306,7 @@ class cgeneral extends CI_Controller
 	}
 	
 	
-	function actualizar_clave()
+	function actualizar_clave_web_personal()
 	{
 		if (!$this->tank_auth->is_logged_in())
 		{																		// logged in
@@ -326,6 +327,48 @@ class cgeneral extends CI_Controller
 		$this->session->set_flashdata('success', $success);
 	
 		redirect('/ov/cgeneral/web_personal');
+	}
+	
+	function envia_mail_invitacion_web_personal()
+	{
+		$this->load->library('Email');
+	
+		$id = $this->tank_auth->get_user_id();
+		$email = $this->model_cabecera->get_mail($id);
+		$email = $email[0]->email;
+	
+		$usuario = $this->general->get_username($id);
+		$nombre = $usuario[0]->nombre." ".$usuario[0]->apellido;
+		$username = 0;
+		
+		$afiliado= $this->model_user_webs_personales->traer_afiliado($id);
+		$username = $afiliado[0]->username;
+		
+		$this->email->from($email, $nombre);
+			
+		$this->email->to($_POST['email_receptor']);
+		
+		$acceso = $this->model_user_webs_personales->traer_acceso_web_personal_afiliado($username);
+		
+		$mensaje = "Para tener acceso a mi tienda virtual debes acceder por medio de los siguientes datos:<br><br>
+				 Username: ".$acceso[0]->username."<br>
+				  Clave: ".$acceso[0]->clave;
+		
+		$this->email->message($mensaje);
+		
+		$this->email->subject("Invitación a mi tienda virtual en pekcell gold");
+	
+		if($this->email->send()){
+			$success = "Se ha enviado el email Exitosamente .";
+		$this->session->set_flashdata('success', $success);
+	
+		redirect('/ov/cgeneral/web_personal');
+		}else{
+			$error = "Por favor verificar la informacion e intentar nuevamente .";
+		$this->session->set_flashdata('error', $error);
+	
+		redirect('/ov/cgeneral/web_personal');
+		}
 	}
 	
 	function encuestas()

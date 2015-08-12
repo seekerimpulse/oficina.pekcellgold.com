@@ -12,6 +12,12 @@ class Model_user_webs_personales extends CI_Model{
 		return $tipos->result();
 	}
 	
+	function traer_acceso_web_personal_afiliado($username){
+		$tipos = $this->db->get_where('user_webs_personales', array('username' => $username));
+	
+		return $tipos->result();
+	}
+	
 	function listar_por_afiliado($username){
 		$tipos = $this->db->get_where('user_webs_personales', array('username' => $username));
 		return $tipos->result();
