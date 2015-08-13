@@ -349,8 +349,7 @@ function new_proveedor()
 		 	"#cp",
 		 	"#tipo_proveedor",
 		 	"#email",
-		 	"#empresa",
-		 	"#Cuenta"
+		 	"#empresa"
 		 );
 		var mensajes = new Array( 
 			"Por favor ingresa tu nombre",
@@ -359,8 +358,7 @@ function new_proveedor()
 		 	"Por favor ingresa tu código postal",
 		 	"Por favor seleciona el tipo de proveedor",
 		 	"Por favor ingresa un correo",
-		 	"Por favor seleciona una empresa",
-		 	"Por favor ingresa el numero de cuenta"
+		 	"Por favor seleciona una empresa"
 		 );
 		
 		var validacion = valida_vacios(ids,mensajes);

@@ -539,6 +539,9 @@ order by (U.id);");
 	}
 	function img_user($id,$data)
 	{
+		$q = $this->db->query("select ci.id_img from cat_img ci, cross_img_user ciu where ci.id_img = ciu.id_img and ciu.id_user = ".$id);
+		$id_img = $q->result();
+		
 		$explode=explode(".",$data["file_name"]);
 		$nombre=$explode[0];
 		$extencion=$explode[1];
@@ -549,20 +552,14 @@ order by (U.id);");
                 "extencion"			=>	$extencion,
                 "estatus"			=>	"ACT"
             );
-		$this->db->insert("cat_img",$dato_img);
-		$id_foto=mysql_insert_id();
-
-		$dato_cross_img=array(
-                "id_user"		=>	$id,
-                "id_img"	=>	$id_foto
-            );
-		$this->db->insert("cross_img_user",$dato_cross_img);
-
+		$this->db->update("cat_img",$dato_img,"id_img = ".$id_img[0]->id_img);
 	}
 
   	function img_user_tomar($id)
 	{
 
+		$q = $this->db->query("select ci.id_img from cat_img ci, cross_img_user ciu where ci.id_img = ciu.id_img and ciu.id_user = ".$id);
+		$id_img = $q->result();
 		$dato_img=array(
                 "url"				=>	"/media/".$id."/user.png",
                 "nombre_completo"	=> "user.png",
@@ -570,14 +567,10 @@ order by (U.id);");
                 "extencion"			=>	"png",
                 "estatus"			=>	"ACT"
             );
-		$this->db->insert("cat_img",$dato_img);
-		$id_foto=mysql_insert_id();
+		$this->db->update("cat_img",$dato_img,"id_img = ".$id_img[0]->id_img);
+		
+		//$id_foto=mysql_insert_id();
 
-		$dato_cross_img=array(
-                "id_user"		=>	$id,
-                "id_img"	=>	$id_foto
-            );
-		$this->db->insert("cross_img_user",$dato_cross_img);
 
 	}
 	function del($id,$tipo)

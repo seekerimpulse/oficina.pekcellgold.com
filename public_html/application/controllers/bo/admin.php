@@ -284,6 +284,19 @@ class admin extends CI_Controller
 	}
 	function edit_merc()
 	{
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+			
+		$id=$this->tank_auth->get_user_id();
+		
+		if(!$this->general->isAValidUser($id,"comercial"))
+		{
+			redirect('/auth/logout');
+		}
+		$style = $this->modelo_dashboard->get_style(1);
+		$usuario = $this->general->get_username($id);
 		
 		$promo          = $this->model_admin->get_promo();
 		$grupos         = $this->model_mercancia->CategoriasMercancia();
@@ -314,23 +327,8 @@ class admin extends CI_Controller
 		if($id_merc==1)
 		{
 			
-			if (!$this->tank_auth->is_logged_in())
-			{																		// logged in
-			redirect('/auth');
-			}
-			
-		$id=$this->tank_auth->get_user_id();
-		
-		if(!$this->general->isAValidUser($id,"comercial"))
-		{
-			redirect('/auth/logout');
-		}
-
-		$usuario=$this->general->get_username($id);
-			
-			
 			$id=$this->tank_auth->get_user_id();
-			$style = $this->modelo_dashboard->get_style(1);
+			
 			$id_mercancia = $_POST['id'];
 			$proveedores    = $this->model_admin->get_proveedor2(1);
 			
@@ -650,16 +648,6 @@ class admin extends CI_Controller
 		}
 		if($id_merc==2)
 		{
-		$id=$this->tank_auth->get_user_id();
-		
-		if(!$this->general->isAValidUser($id,"comercial"))
-		{
-			redirect('/auth/logout');
-		}
-
-		$usuario=$this->general->get_username($id);
-		
-			$style = $this->modelo_dashboard->get_style(1);
 			$id_mercancia = $_POST['id'];
 			
 			$proveedores    = $this->model_admin->get_proveedor2(2);
@@ -839,23 +827,7 @@ class admin extends CI_Controller
 				$prods=$this->model_admin->get_prod_combinado($_POST['id']);
 				$servs=$this->model_admin->get_serv_combinado($_POST['id']);
 				$proveedores    = $this->model_admin->get_proveedor2(3);
-				if (!$this->tank_auth->is_logged_in())
-				{																		// logged in
-				redirect('/auth');
-				}
 				
-		$id=$this->tank_auth->get_user_id();
-		
-		if(!$this->general->isAValidUser($id,"comercial"))
-		{
-			redirect('/auth/logout');
-		}
-
-		$usuario=$this->general->get_username($id);
-				
-				
-				$id=$this->tank_auth->get_user_id();
-				$style = $this->modelo_dashboard->get_style(1);
 				$id_mercancia = $_POST['id'];
 				
 				
