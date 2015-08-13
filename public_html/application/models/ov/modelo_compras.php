@@ -5,7 +5,6 @@ class modelo_compras extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
-	
 		$this->load->model('ov/model_perfil_red');
 	}
 	
@@ -180,7 +179,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	}
 	function get_combinados_red($idRed, $pais)
 	{
-		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.fecha_alta, a.nombre img, a.id_red from combinado a, mercancia d, cross_combinado
+		$q=$this->db->query('SELECT d.id, a.nombre, a.descripcion, a.descuento, a.id id_combinado, d.costo, d.costo_publico,d.fecha_alta, a.nombre img, a.id_red from combinado a, mercancia d, cross_combinado
 		e where a.id=e.id_combinado and d.sku=a.id and d.estatus="ACT" and d.id_tipo_mercancia=3 and a.id_red='.$idRed.' and d.pais = "'.$pais.'" group by (d.id)');
 		return $q->result();
 	}
@@ -194,7 +193,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	}
 	function detalles_productos($i)
 	{
-		$q=$this->db->query('SELECT a.nombre, a.descripcion, a.peso, a.alto, a.ancho, a.profundidad, a.diametro, b.costo 
+		$q=$this->db->query('SELECT a.nombre, a.descripcion, a.peso, a.alto, a.ancho, a.profundidad, a.diametro, b.costo, b.costo_publico 
 		FROM producto a, mercancia b WHERE a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}
@@ -208,7 +207,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 	
 	function detalles_servicios($i)
 	{
-		$q=$this->db->query('SELECT a.nombre, a.descripcion, a.fecha_inicio, a.fecha_fin, b.costo from servicio a, mercancia b where a.id=b.sku and b.id='.$i);
+		$q=$this->db->query('SELECT a.nombre, a.descripcion, a.fecha_inicio, a.fecha_fin, b.costo, b.costo_publico from servicio a, mercancia b where a.id=b.sku and b.id='.$i);
 		return $q->result();
 	}
 	
@@ -262,7 +261,7 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 
 	function costo_merc($id)
 	{
-		$q=$this->db->query('Select costo from mercancia where id='.$id);
+		$q=$this->db->query('Select costo, costo_publico from mercancia where id='.$id);
 		return $q->result();	
 	}
 	function detalles_prom_prod($i)
@@ -302,11 +301,13 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		$q=$this->db->query('Select a.url from cat_img a, mercancia b, cross_merc_img c where a.id_img=c.id_cat_imagen and b.id=c.id_mercancia and b.id='.$i);
 		return $q->result();
 	}
+	
 	function get_img($i)
 	{
 		$q=$this->db->query('Select a.url from cat_img a, mercancia b, cross_merc_img c where a.id_img=c.id_cat_imagen and b.id=c.id_mercancia and b.id='.$i.' limit 1');
 		return $q->result();
 	}
+	
 	function get_img_prom($i)
 	{
 		$q=$this->db->query('SELECT a.url FROM cat_img a, promocion b, cross_img_promo c WHERE c.id_promo=b.id_promocion and a.id_img=c.id_img 

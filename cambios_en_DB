@@ -6,3 +6,33 @@ create table user_webs_personales{
 	username text not null,
 	clave text not null
 }
+
+//El jueves 13 de agosto de 2015, se creo una tabla llamada comprador
+//con el fin de guardar la informacion de una persona que haga una compra
+//en una web personal
+
+CREATE TABLE `OficinaVirtual`.`comprador` (
+  `dni` INT NOT NULL,
+  `nombre` TEXT NULL,
+  `apellido` TEXT NULL,
+  `id_pais` VARCHAR(3) NULL,
+  `estado` TEXT NULL,
+  `municipio` TEXT NULL,
+  `colonia` TEXT NULL,
+  `direccion` TEXT NULL,
+  `email` TEXT NULL,
+  `telefono` TEXT NULL
+  PRIMARY KEY (`dni`));
+
+//El jueves 13 de agosto de 2015, se creo una tabla llamada cross_comprador_venta
+//con el fin de relacionar la informacion de un comprador y las ventas del mismo
+
+CREATE TABLE `OficinaVirtual`.`cross_comprador_venta` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_comprador` INT NULL,
+  `id_venta` INT NULL,
+  `id_afiliado` INT NULL,
+  `fecha` TIMESTAMP NULL,
+  `estado` VARCHAR(10) NULL,
+  PRIMARY KEY (`id`));
+
