@@ -1,5 +1,5 @@
 <link href="/cart/HTML/assets/css/style.css" rel="stylesheet">
-<link href="/cart/HTML/assets/css/skin-6.css" rel="stylesheet">
+<link href="/cart/HTML/assets/css/skin-3.css" rel="stylesheet">
 
 <!-- css3 animation effect for this template -->
 <link href="/cart/HTML/assets/css/animate.min.css" rel="stylesheet">
@@ -35,22 +35,26 @@
     	<div class="col-sm-12">
         	<br />
         	<br />
+            <br />
+        	<br />
         </div>
-    </div>
+        <div class="col-sm-12">
+        </div>
+</div>
+
  <div class="navbar navbar-tshop navbar-fixed-top megamenu" role="navigation" id="cart_cont">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> </button>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i class="fa fa-shopping-cart colorWhite"> </i> <span class="cartRespons colorWhite"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> </button>
-      <a class="navbar-brand titulo_carrito" href="/ov/dashboard" > Dashboard &nbsp;</a> 
-      
-      <!-- this part for mobile -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i class="fa fa-shopping-cart colorWhite fa-2x"> </i> <span class="cartRespons colorWhite"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> </button>
+       
+      <!-- this part for mobile -
       <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
         <div class="input-group">
           <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
         </div>
-        <!-- /input-group --> 
+        <!-- /input-group --
         
-      </div>
+      </div> -->
     </div>
     
     <!-- this part is duplicate from cartMenu  keep it for mobile -->
@@ -59,7 +63,7 @@
         <div class="w100 miniCartTable scroll-pane">
           <table  >
             <tbody>
-            	 <?php
+            	  <?php
                   	if($this->cart->contents())
 					{
 						$cantidad=0; 
@@ -88,8 +92,7 @@
         
         <div class="miniCartFooter  miniCartFooterInMobile text-right">
           <h3 class="text-right subtotal"> Subtotal: $<?php echo $this->cart->total(); ?> </h3>
-          <a class="btn btn-sm btn-danger" onclick="ver_cart()"> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a>
-        </div>
+          <a class="btn btn-sm btn-danger" onclick="ver_cart()> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a> <a class="btn btn-sm btn-primary" onclick="datos_comprador()"> COMPRAR! </a> </div>
         <!--/.miniCartFooter--> 
         
       </div>
@@ -98,11 +101,19 @@
     <!--/.navbar-cart-->
     
     <div class="navbar-collapse collapse">
-      
-      
+   <!--   <ul class="nav navbar-nav">
+        <li class="active"> <a onclick="show_todos()"> Todos </a> </li>
+        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prod()"> Productos </a></li>
+        
+        change width of megamenu = use class > megamenu-fullwidth, megamenu-60width, megamenu-40width 
+        <li class="dropdown megamenu-80width "> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_serv()"> Servicios </a></li>
+        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_comb()"> Combinados </a></li>
+        <li class="dropdown megamenu-fullwidth"> <a data-toggle="dropdown" class="dropdown-toggle" onclick="show_prom()"> Promociones </a></li>
+      </ul>
+      -->
       <!--- this part will be hidden for mobile version -->
       <div class="nav navbar-nav navbar-right hidden-xs">
-        <div class="dropdown  cartMenu "> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart"> </i> <span class="cartRespons"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> <b class="caret"> </b> </a>
+        <div class="dropdown  cartMenu "> <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart fa-2x"> </i> <span class="cartRespons"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> <b class="caret"> </b> </a>
           <div class="dropdown-menu col-lg-4 col-xs-12 col-md-4 ">
             <div class="w100 miniCartTable scroll-pane">
               <table> 
@@ -136,182 +147,214 @@
             
             <div class="miniCartFooter text-right">
               <h3 class="text-right subtotal"> Subtotal: $<?php echo $this->cart->total(); ?> </h3>
-              <a class="btn btn-sm btn-danger" onclick="ver_cart()"> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a> 
-            </div>
+              <a class="btn btn-sm btn-danger" onclick="ver_cart()"> <i class="fa fa-shopping-cart"> </i> VER CARRITO </a> <a class="btn btn-sm btn-primary" onclick="datos_comprador()"> COMPRAR! </a> </div>
             <!--/.miniCartFooter--> 
             
           </div>
           <!--/.dropdown-menu--> 
         </div>
         <!--/.cartMenu-->
-        
+        <!--  
         <div class="search-box">
           <div class="input-group">
             <button class="btn btn-nobg getFullSearch" type="button"> <i class="fa fa-search"> </i> </button>
           </div>
-          <!-- /input-group --> 
+          <!-- /input-group 
           
         </div>
-        <!--/.search-box --> 
+        <!--/.search-box -->
+        <div class=" transparent pull-right" id="logout">
+			<span> <a style="color: rgb(255, 255, 255); background: rgb(206, 53, 44) none repeat scroll 0% 0%;" class="btn btn-default btn-circle btn-lg" href="/index.php/auth/logout" title="Salir" data-action="userLogout" data-logout-msg="¿Realmente desea salir?">
+				<i style="font-size: 3rem;" class="fa fa-sign-out"></i>
+					</a>
+			</span>
+		</div>
       </div>
       <!--/.navbar-nav hidden-xs--> 
     </div>
     <!--/.nav-collapse --> 
 </div>
 <div class="row">
+	
 	<div class="container main-container" style="background-color: #fff;"> 
-		
-		<article class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 3%; padding-bottom: 5%;">
-			<div class="row">
-				<div class="row">
-					<div class="col-lg-9 col-md-9 col-sm-7">
-					  <h1 class="section-title-inner"><span><i class="glyphicon glyphicon-shopping-cart"></i> Comprar</span></h1>
-					</div>
-					<div class="col-lg-3 col-md-3 col-sm-5 rightSidebar">
-					  <h4 class="caps"><a href="carrito?tipo=<?=$_GET["tipo"]?>"><i class="fa fa-chevron-left"></i> Volver al carrito </a></h4>
-					</div>
-				</div> <!--/.row-->
-				<!-- widget edit box -->
-				<div class="jarviswidget-editbox">
-					<!-- This area used as dropdown edit box -->
-	
+	  	
+	  <!-- Main component call to action -->
+	  <!--<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4">
+	      <div class="panel-group" id="accordionNo"> 
+	       
+	        <div class="panel panel-default">
+	          <div class="panel-heading">
+	            <h4 class="panel-title"> <a data-toggle="collapse"  href="#collapseCategory" class="collapseWill"> <span class="pull-left"> <i class="fa fa-caret-right"></i></span> Mas vendidos </a> </h4>
+	          </div>
+	          <div id="collapseCategory" class="panel-collapse collapse in">
+	            <div class="panel-body">
+	              
+	            </div>
+	          </div>
+	        </div>
+	       
+	      </div>
+	  </div>-->
+	  <article class="col-lg-12 col-sm-4 col-md-3 col-lg-3">
+	  			<div class="carousel-inner">
+				<!-- Slide 1 -->
+				<div class="item active" style="height: 100%; margin-bottom: 2rem;">
+					<img src="/template/img/demo/m3.jpg" alt="demo user">
 				</div>
-				<!-- end widget edit box -->
-	
-				<!-- widget content -->
-				<div class="widget-body">
-	
-					<div class="row">
-						<? /*if(isset($_GET['usr']))
-						{ ?>
-							<form id="wizard-1" novalidate="novalidate" action="hacer_compra?tipo=<?=$_GET["tipo"]?>&usr=<?=$_GET["usr"]?>" method="post">
-						<? } else {?>
-							<form id="wizard-1" novalidate="novalidate" action="hacer_compra?tipo=<?=$_GET["tipo"]?>" method="post">
-						<? } */?>
-							<div id="bootstrap-wizard-1" class="col-sm-12">
-								<div class="tab-content">
-									<div class="tab-pane active" id="tab1">
+			</div>
+				<div class="jarviswidget jarviswidget-color-darken" id="wid-id-2" data-widget-editbutton="false" data-widget-colorbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-arrows-v"></i> </span>
+						<h2 class="font-md"><i>Categoria de los productos</i></h2>				
+					</header>
+
+					<!-- widget div-->
+					<div>
+						
+						<!-- widget edit box -->
+						<div class="jarviswidget-editbox">
+							<!-- This area used as dropdown edit box -->
+
+						</div>
+						<!-- end widget edit box -->
+						
+						<!-- widget content -->
+						<div class="widget-body">
+							<? foreach ($redes as $red) {?>
+								<div class="dropdown">
+											<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary btn-block" data-target="#"> <?= $red->nombre;?></a>
+											<ul class="dropdown-menu " role="menu">
+												<?php foreach ($grupos as $grupo) {
+													if ($red->nombre == $grupo->red ){
+													?>
+												<li class="btn btn-lg">
+													<a onclick="show_todos('<?= $grupo->id_grupo;?>');" class="btn btn-block"><?php echo $grupo->descripcion; ?></a>
+												</li>
+												<?php } }?>
+											</ul>
+										</div>
 										<br>
 								
-										<div class="row userInfo">
-                
-							                <div class="col-lg-12">
-							                    <h2 class="block-title-2"> Productos </h2>
-							                </div>
-							            <div class="col-xs-12 col-sm-12 col-lg-12">
-							                      <div class="cartContent w100 checkoutReview">
-							                        <table id="dt_basic" class="table table-striped table-hover" width="100%">
-							                          <thead>
-							                          	<tr class="CartProduct cartTableHeader">
-							                              <th data-hide="phone,tablet"> Productos </th>
-							                              <th data-class="expand" class="checkoutReviewTdDetails" >Detalles</th>
-							                              <th data-hide="phone,tablet" >Valor Unitario</th>
-							                              <th data-hide="phone,tablet" >Cantidad</th>
-							                              <th data-hide="phone,tablet" >Descuento</th>
-							                              <th data-hide="phone">Subtotal<th>
-							                              <th data-hide="phone">Impuestos</th>
-							                              <th data-hide="phone">Total</th>
-							                              <th data-hide="phone" ></th>
-							                            </tr>
-							                            </thead>
-							                            <tbody>
-							                          	<?php
-										                  	if($this->cart->contents())
-															{
-																$cantidad=0;
-																foreach ($this->cart->contents() as $items) 
-																{
-																	$impuesto = $this->modelo_compras->ImpuestoMercancia($items['id'], $items['price'])*$items['qty'];	
-																	$total=$items['qty']*$items['price']; ?>	
-																	
-																	<tr>
-												                        <td  class="CartProductThumb">
-												                        	<div>
-												                        		<a href=""><img  src="<?php echo $compras[$cantidad]['imagen']; ?>"></a> 
-												                        	</div>
-												                        </td>
-												                        <td>
-												                        	<div class="CartDescription">
-												                        		<h4><?php echo $compras[$cantidad]['nombre']; ?></h4>
-												                         	</div>
-												                         </td>
-												                         <td class="price">$ <?echo number_format($items['price'],2)?></td>
-												                         <td class="price"><?php echo $items['qty']; ?></td>
-												                         <td class="price">$ 0</td>
-												                         <td class="price">$ <?echo number_format($total,2)?></td>
-												                         <td></td>
-												                         <td class="price">$ <?echo number_format($impuesto,2)?></td>
-												                         <td class="price">$ <?echo number_format($total+$impuesto,2)?></td>
-												                         <td>
-												                         	<form method="post" >
-												                         	 <?php 
-													                         	 $valortotal= $total+$impuesto;
-													                         	 $valortotal = $valortotal + (0.045 * $valortotal);
-													                         	 $time = $items['options']['time'].$items['id'];
-													                         	 $firma = md5("6u39nqhq8ftd0hlvnjfs66eh8c~500238~".$time."~".$valortotal."~USD");
-													                         	 $id_usuario = $id;
-													                         	 if(isset($_GET['usr'])){
-													                         	 	$id_usuario = $_GET['usr'];
-													                         	 }
-													                         	 $email=$this->general->get_email($id_usuario);
-													                         	 ?>
-																				  <input name="merchantId"    type="hidden"  value="500238" >
-																				  <input name="accountId"     type="hidden"  value="500538" >
-																				  <input name="description"   type="hidden"  value="<?php echo $compras[$cantidad]['nombre']; ?>"  >
-																				  <input name="referenceCode" type="hidden"  value="<?php echo $time; ?>" >
-																				  <input name="amount"        type="hidden"  value="<?php echo $valortotal; ?>"   >
-																				  <input name="tax"           type="hidden"  value="0"  >
-																				  <input name="taxReturnBase" type="hidden"  value="0" >
-																				  <input name="currency"      type="hidden"  value="USD" >
-																				  <input name="signature"     type="hidden"  value="<?php echo $firma; ?>"  >
-																				  <input name="test"     type="hidden"  value="1"  >
-																				  <input name="extra1"      type="hidden"  value="<?php echo $items['id']."-".$items['qty']; ?>" >
-																				  <input name="extra2"      type="hidden"  value="<?php echo $id_usuario; ?>" >
-																				  <input name="buyerEmail"    type="hidden"  value="<?php echo $email[0]->email; ?>" >
-																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
-																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVenta" >
-																				  <input type="submit" value="Pago PayuLatam" onclick="consignacion()" class="btn btn-block btn-success" >
-																				  <br><a class="btn btn-block btn-danger" onclick="consignacion(<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)"> Pago Por Banco</a>
-																			</form>	
-												                         </td>
-												                      </tr>
-												                      
-																	<?php $cantidad++;
-																} 
-															}
-										                  
-										                   ?>
+							<? } ?>
+						</div>
+						<!-- end widget content -->
 						
-							                          </tbody>
-							                        </table>
-							                      </div>
-							                      <!--cartContent-->
-							                  
-							                      
-							
-							          
-							          <!--/row-->
-							  
-							          
-							        			</div>
-							                
-							                
-							                </div>
-							           </div>
-									</div>
-	
-								</div>
 					</div>
-	
+					<!-- end widget div -->
+					
 				</div>
-				<!-- end widget content -->
+				<!-- end widget -->
+			</article>
+	 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+	    	<h3 class="section-title style2 text-center"><span>NUESTROS PRODUCTOS</span></h3>
+	    		<div class="">
+	      			<div class="row xsResponse" id="mercancias">
+	      									<!-- start row -->
+					<div class="row">
 	
-			</div>
-			<!-- end widget div -->
-		</article>
+						<div class="col-sm-12">
+				
+							<div class="row">
+				
+								<div class="col-sm-12 col-md-12 col-lg-12">
+				
+									<!-- well -->
+									<div class="well">
+										<div id="myCarousel-2" class="carousel slide">
+											<ol class="carousel-indicators">
+												<li data-target="#myCarousel-2" data-slide-to="0" class="active"></li>
+												<li data-target="#myCarousel-2" data-slide-to="1" class=""></li>
+												<li data-target="#myCarousel-2" data-slide-to="2" class=""></li>
+											</ol>
+											<div class="carousel-inner">
+												<!-- Slide 1 -->
+												<div class="item active">
+													<img src="/template/img/demo/pinkost.png" alt="">
+													<div class="carousel-caption caption-right">
+												<!--  		<h4>Title 1</h4>
+														<p>
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
+														<br>
+														<a href="javascript:void(0);" class="btn btn-info btn-sm">Read more</a> -->
+													</div>
+												</div>
+												<!-- Slide 2 -->
+												<div class="item">
+													<img src="/template/img/demo/KosTable1.png" alt="">
+													<div class="carousel-caption caption-left">
+													<!--  	<h4>Title 2</h4>
+														<p>
+															Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+														</p>
+														<br>
+														<a href="javascript:void(0);" class="btn btn-danger btn-sm">Read more</a> -->
+													</div>
+												</div>
+												<!-- Slide 3 -->
+												<div class="item">
+													<img src="/template/img/demo/game-kost-1.png" alt="">
+												<!--	<div class="carousel-caption">
+														<h4>A very long thumbnail title here to fill the space</h4>
+														<br>
+													</div> -->
+												</div>
+												<div class="item">
+													<img src="/template/img/demo/Vpskost1.png" alt="">
+												<!--	<div class="carousel-caption">
+														<h4>A very long thumbnail title here to fill the space</h4>
+														<br>
+													</div> -->
+												</div>
+												<div class="item">
+													<img src="/template/img/demo/appkkost1.png" alt="">
+												<!--	<div class="carousel-caption">
+														<h4>A very long thumbnail title here to fill the space</h4>
+														<br>
+													</div> -->
+												</div>
+												<div class="item">
+													<img src="/template/img/demo/pekeylogo.png" alt="">
+												<!--	<div class="carousel-caption">
+														<h4>A very long thumbnail title here to fill the space</h4>
+														<br>
+													</div> -->
+												</div>
+											</div>
+											<a class="left carousel-control" href="#myCarousel-2" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a>
+											<a class="right carousel-control" href="#myCarousel-2" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
+										</div>
+				
+									</div>
+									<!-- end well-->
+				
+								</div>
+				
+							</div>
+				
+						</div>
+				
+					</div>
+				        
+				        <!--/.item--> 
+	      			</div>
+	      <!-- /.row -->
+	      
+	      			
+	    		</div>
+	    	<!--/.container--> 
+	  		</div>
+	  <!--/.featuredPostContainer-->
+	  
+	  
+	  <!--/.section-block-->
+	  
+	  
+	  <!--/.section-block--> 
+	  
 	</div>
 </div>
-<div class="row">         
+	<div class="row">         
          <!-- a blank row to get started -->
     	<div class="col-sm-12">
         	<br />
@@ -319,99 +362,16 @@
         </div>
     </div>
     <script type="text/javascript" src="/cart/HTML/assets/js/smoothproducts.min.js"></script> 
-    <script src="/template/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+    <script src="js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
     <script src="/template/js/plugin/fuelux/wizard/wizard.min.js"></script>
-    
-<script src="/template/js/plugin/dropzone/dropzone.min.js"></script>
-	<script src="/template/js/plugin/markdown/markdown.min.js"></script>
-	<script src="/template/js/plugin/markdown/to-markdown.min.js"></script>
-	<script src="/template/js/plugin/markdown/bootstrap-markdown.min.js"></script>
-	<script src="/template/js/plugin/datatables/jquery.dataTables.min.js"></script>
-	<script src="/template/js/plugin/datatables/dataTables.colVis.min.js"></script>
-	<script src="/template/js/plugin/datatables/dataTables.tableTools.min.js"></script>
-	<script src="/template/js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-	<script src="/template/js/plugin/datatable-responsive/datatables.responsive.min.js"></script>
-	<script src="/template/js/validacion.js"></script>
 	<script type="text/javascript">
-	$(document).ready(function() {
-
-
-		/* BASIC ;*/
-			var responsiveHelper_dt_basic = undefined;
-			var responsiveHelper_datatable_fixed_column = undefined;
-			var responsiveHelper_datatable_col_reorder = undefined;
-			var responsiveHelper_datatable_tabletools = undefined;
-			
-			var breakpointDefinition = {
-				tablet : 1024,
-				phone : 480
-			};
-
-			$('#dt_basic').dataTable({
-				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
-					"t"+
-					"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-				"autoWidth" : true,
-				"preDrawCallback" : function() {
-					// Initialize the responsive datatables helper once.
-					if (!responsiveHelper_dt_basic) {
-						responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-					}
-				},
-				"rowCallback" : function(nRow) {
-					responsiveHelper_dt_basic.createExpandIcon(nRow);
-				},
-				"drawCallback" : function(oSettings) {
-					responsiveHelper_dt_basic.respond();
-				}
-			});
-
-		/* END BASIC */
-
-		/* BASIC ;*/
-			var responsiveHelper_dt_basic = undefined;
-			var responsiveHelper_datatable_fixed_column = undefined;
-			var responsiveHelper_datatable_col_reorder = undefined;
-			var responsiveHelper_datatable_tabletools = undefined;
-			
-			var breakpointDefinition = {
-				tablet : 1024,
-				phone : 480
-			};
-
-			$('#dt_basic_paquete').dataTable({
-				"sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>"+
-					"t"+
-					"<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-				"autoWidth" : true,
-				"preDrawCallback" : function() {
-					// Initialize the responsive datatables helper once.
-					if (!responsiveHelper_dt_basic) {
-						responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-					}
-				},
-				"rowCallback" : function(nRow) {
-					responsiveHelper_dt_basic.createExpandIcon(nRow);
-				},
-				"drawCallback" : function(oSettings) {
-					responsiveHelper_dt_basic.respond();
-				}
-			});
-
-		/* END BASIC */
-
-		pageSetUp();
-
-	})
-	
-
 			function detalles(id,tipo)
 			{
 				var datos={'id':id,'tipo':tipo};
 				$.ajax({
 					data: {info:JSON.stringify(datos)},
 					type: "get",
-					url: "muestra_mercancia",
+					url: "muestra_mercancia_web_personal",
 					success: function(msg){
 				             
 				             bootbox.dialog({
@@ -504,11 +464,12 @@
 					}
 				});
 			}
-			function show_todos()
+			function show_todos(idTipoRed)
 			{
 				$.ajax({
 					type: "get",
-					url: "show_todos",
+					url: "show_todos_web_personal",
+					data: { id: idTipoRed, id_afiliado: <?php echo $id_afiliado;?>},
 					success:function(msg){
 						$("#mercancias").html(msg);
 				
@@ -596,7 +557,7 @@
 					$.ajax({
 						data:{info:JSON.stringify(datos)},
 						type: 'get',
-						url: 'add_merc',
+						url: 'add_merc_web_personal',
 						success: function(msg){
 							if(msg=="Error")
 							{
@@ -630,13 +591,15 @@
 										}
 									}
 								});
-								$("#cart_cont").html(msg);
+								//$("#cart_cont").html(msg);
+								location.reload();
 							}			
 						}
 					});
 					
 				}
 			}
+			
 			function ver_cart()
 			{
 				$.ajax({
@@ -717,7 +680,6 @@
 				
 				});
 			}
-			
 			function completar_compra(id)
 			{
 				switch(id)
@@ -923,7 +885,18 @@
 				});
 				
 			}
-			
+			function muestra_afiliados()
+			{
+				if($('#comprar_otro').prop('checked'))
+				{
+				 	$("#afiliados").show();
+				}
+				else
+				{
+					$("#afiliados").hide();
+
+				}
+			}
 			function show_grupo_prod()
 			{
 				var grupo=$("#grupo_prod").val();
@@ -936,154 +909,108 @@
 					}
 				});
 			}
-			$("#pago_1").click(function(){
-				$("#pago").val("5");
-			});
-			$("#pago_2").click(function(){
-				$("#pago").val("1");
-			});
-			$("#pago_3").click(function(){
-				$("#pago").val("2");
-			});
-			$("#pago_4").click(function(){
-				$("#pago").val("3");
-			});
+
+			function datos_comprador()
+			{
+				$.ajax({
+					type: "post",
+					url: "datos_comprador_web_personal",
+					data: "hola=hola"
+				})
+				.done(function(msg)
+				{
+					bootbox.dialog({
+						message: msg,
+						title: "Datos de Comprador",
+						className: "div_info_merc",
+						buttons: {
+							danger: {
+								label: "Aceptar",
+								className: "hide",
+								callback: function() {
+									}
+							}
+						}
+					})
+				})
+					//va en la vista a_comprar
+			}
+			
+			function a_comprar()
+			{
+				$.ajax({
+					type: "post",
+					url: "verificar_carro",
+					data: "hola=hola"
+				})
+				.done(function(msg)
+				{
+					if(msg=="si")
+					{
+						<? if(isset($_GET["usr"]))
+						{ ?>
+							window.location.href='/ov/compras/comprar?tipo=<?=1?>&usr=<?=$id_afiliado;?>'
+						<? }else{?>
+							window.location.href='/ov/compras/comprar?tipo=<?=1?>'
+						<?}?>
+					}
+					else
+					{
+			            bootbox.dialog({
+							message: "No tiene productos en el carrito",
+							title: "Alerta!",
+							className: "div_info_merc",
+							buttons: {
+								danger: {
+									label: "Aceptar",
+									className: "btn-danger",
+									callback: function() {
+										}
+								}
+							}
+						})
+					}
+				});
+			}
 		</script>
 		<script>
 			$(document).ready(function(){
-			     var $validator = $("#wizard-1").validate({
-			    
-			    rules: {
-			      email: {
-			        required: true,
-			        email: "Your email address must be in the format of name@domain.com"
-			      },
-			      fname: {
-			        required: true
-			      },
-			      lname: {
-			        required: true
-			      },
-			      country: {
-			        required: true
-			      },
-			      city: {
-			        required: true
-			      },
-			      postal: {
-			        required: true,
-			        minlength: 4
-			      },
-			      wphone: {
-			        required: true,
-			        minlength: 10
-			      },
-			      hphone: {
-			        required: true,
-			        minlength: 10
-			      }
-			    },
-			    
-			    messages: {
-			      fname: "Please specify your First name",
-			      lname: "Please specify your Last name",
-			      email: {
-			        required: "We need your email address to contact you",
-			        email: "Your email address must be in the format of name@domain.com"
-			      }
-			    },
-			    
-			    highlight: function (element) {
-			      $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-			    },
-			    unhighlight: function (element) {
-			      $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			    },
-			    errorElement: 'span',
-			    errorClass: 'help-block',
-			    errorPlacement: function (error, element) {
-			      if (element.parent('.input-group').length) {
-			        error.insertAfter(element.parent());
-			      } else {
-			        error.insertAfter(element);
-			      }
-			    }
-			  });
-			  
-			  $('#bootstrap-wizard-1').bootstrapWizard({
-			    'tabClass': 'form-wizard',
-			    'onNext': function (tab, navigation, index) {
-			      var $valid = $("#wizard-1").valid();
-			      if (!$valid) {
-			        $validator.focusInvalid();
-			        return false;
-			      } else {
-			        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).addClass(
-			          'complete');
-			        $('#bootstrap-wizard-1').find('.form-wizard').children('li').eq(index - 1).find('.step')
-			        .html('<i class="fa fa-check"></i>');
-			        
-			      }
-			    }
-			  });
-			  
-		
-			// fuelux wizard
-			  var wizard = $('.wizard').wizard();
-			  
+				$("#logout").html("<p></p>");
+			    var wizard = $('.wizard').wizard();
+	
 			  wizard.on('finished', function (e, data) {
-			    //$("#fuelux-wizard").submit();
-			    //console.log("submitted!");
-			    $.smallBox({
-			      title: "Congratulations! Your form was submitted",
-			      content: "<i class='fa fa-clock-o'></i> <i>1 seconds ago...</i>",
-			      color: "#5F895F",
-			      iconSmall: "fa fa-check bounce animated",
-			      timeout: 4000
-			    });
-			    
 			  });
-			  $('#startdate').datepicker({
-					dateFormat : "yy-mm-dd",
-					prevText : '<i class="fa fa-chevron-left"></i>',
-					nextText : '<i class="fa fa-chevron-right"></i>',
-					changeMonth: false,
-					numberOfMonths: 1,
-					//defaultDate: "1970-01-01",
-					changeYear: false,
-					
-				}); 
+			  
 });
-
-
-	function consignacion(id, cant){
+			
+		</script>
+		<script type="text/javascript">
 		
-		$.ajax({
-						data:{
-							id_mercancia : id,
-							cantidad : cant
-							},
-						type:"post",
-						url:"/ov/compras/SelecioneBanco?usr=<?php if(isset($_GET['usr'])){ echo $_GET['usr']; } else { echo '0'; } ?>",
-						success: function(msg){
-							
-							bootbox.dialog({
-								message: msg,
-								title: "Selecione Banco",
-								className: "",
-								buttons: {
-									success: {
-									label: "Aceptar",
-									className: "hide",
-									callback: function() {
-										 window.location="/ov/compras/carrito?tipo=1";
-										}
-									}
-								}
-							})
-						}
-					});
-					
-	}
+		// DO NOT REMOVE : GLOBAL FUNCTIONS!
 		
+		$(document).ready(function() {
+			
+			pageSetUp();
+			
+			/*
+			 * Autostart Carousel
+			 */
+			$('.carousel.slide').carousel({
+				interval : 3000,
+				cycle : true
+			});
+			$('.carousel.fade').carousel({
+				interval : 3000,
+				cycle : true
+			});
+		
+			// Fill all progress bars with animation
+			
+			$('.progress-bar').progressbar({
+				display_text : 'fill'
+			});
+			
+				
+		})
+
 		</script>
