@@ -22,6 +22,7 @@ class compras extends CI_Controller
 		$this->load->model('bo/model_mercancia');
 		$this->load->model('bo/model_admin');
 		$this->load->model('model_user_webs_personales');
+		$this->load->model('model_comprador');
 	}
 	
 	private $afiliados = array();
@@ -4225,7 +4226,7 @@ function index()
 	
 	function datos_comprador_web_personal()
 	{
-		$pais            = $this->model_admin->get_pais_activo();
+		$pais = $this->model_admin->get_pais_activo();
 		$this->template->set('pais', $pais);
 		$this->template->set_theme('desktop');
 		$this->template->build('website/ov/compra_reporte/datos_comprador_web_personal');
@@ -4234,11 +4235,55 @@ function index()
 	function guardar_venta()
 	{
 		//guardar en BD datos de la venta, guiarme de consignacion
-		$this
-		https://stg.gateway.payulatam.com/ppp-web-gateway
+		//$this
+		//https://stg.gateway.payulatam.com/ppp-web-gateway
 		$this->template->build('website/ov/compra_reporte/datos_comprador_web_personal');
 	}
-//
+	
+	function guardar_info_comprador()
+	{
+		$dni_comprador = $_POST['dni_comprador'];
+		$nombre_comprador = $_POST['nombre_comprador'];
+		$apellido_comprador = $_POST['apellido_comprador'];
+		$pais_comprador = $_POST['pais_comprador'];
+		$estado_comprador = $_POST['estado_comprador'];
+		$municipio_comprador = $_POST['municipio_comprador'];
+		$colonia_comprador = $_POST['colonia_comprador'];
+		$direccion_comprador = $_POST['direccion_comprador'];
+		$email_comprador = $_POST['email_comprador'];
+		$telefono_comprador = $_POST['telefono_comprador'];
+			
+		//$this->template->build('website/ov/compra_reporte/datos_comprador_web_personal');
+	}
+
+	/*function buscar_comprador_web_personal()
+	{
+		$dni_comprador = $_POST['dni'];
+		
+		echo "true";
+		if ($this->model_comprador->get_comprador($dni_comprador)){
+			echo "true";
+		}
+		else {
+			echo "false";
+		}
+			
+		//$this->template->build('website/ov/compra_reporte/datos_comprador_web_personal');
+	}*/
+	
+	function buscar_comprador_web_personal()
+	{
+		$dni_comprador = $_POST['dni'];
+		$use_username=$this->model_comprador->get_comprador($dni_comprador);
+		if($use_username){
+			echo "true";
+		}
+		else {
+			echo "false";
+		}
+	}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 	function EnviarPayuLatam(){
 		
 		$this->template->set_theme('desktop');
@@ -4380,7 +4425,9 @@ function index()
 		$this->template->set_theme('desktop');
 		$this->template->build('website/ov/compra_reporte/bancos',$data);
 	}
-	/
+	
+	////////////////////////////////////////////////////////////////////////////////////////////
+	
 	function RegistrarVentaConsignacion(){
 		
 		if(!isset($_POST['id_mercancia'])){

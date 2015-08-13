@@ -243,7 +243,7 @@
 												                         <td class="price">$ <?echo number_format($impuesto,2)?></td>
 												                         <td class="price">$ <?echo number_format($total+$impuesto,2)?></td>
 												                         <td>
-												                         	<form method="post" >
+												                         	<form id="form-payu" method="post" >
 												                         	 <?php 
 													                         	 $valortotal= $total+$impuesto;
 													                         	 $valortotal = $valortotal + (0.045 * $valortotal);
@@ -265,12 +265,12 @@
 																				  <input name="currency"      type="hidden"  value="USD" >
 																				  <input name="signature"     type="hidden"  value="<?php echo $firma; ?>"  >
 																				  <input name="test"     type="hidden"  value="1"  >
-																				  <input name="extra1"      type="hidden"  value="<?php echo $items['id']."-".$items['qty']; ?>" >
+																				  <input name="extra1"      type="hidden"  value="<?php echo $items['id']."-".$items['qty']; //ponerle id_venta?>" >
 																				  <input name="extra2"      type="hidden"  value="<?php echo $id_usuario; ?>" >
 																				  <input name="buyerEmail"    type="hidden"  value="<?php echo $email[0]->email; ?>" >
 																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
 																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVenta" >
-																				  <input type="submit" value="Pago PayuLatam" onclick="consignacion()" class="btn btn-block btn-success" >
+																				  <input type="submit" value="Pago PayuLatam" onclick="enviar_payulatam()" class="btn btn-block btn-success" >
 																				  <br><a class="btn btn-block btn-danger" onclick="consignacion(<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)"> Pago Por Banco</a>
 																			</form>	
 												                         </td>
@@ -405,6 +405,30 @@
 	})
 	
 
+		function enviar_payulatam(){
+			//#form-payu
+			$.ajax({
+				data: {info:JSON.stringify(datos)},
+				type: "get",
+				url: "muestra_mercancia",
+				success: function(msg){
+			             
+			             bootbox.dialog({
+							message: msg,
+							title: "Descripcion",
+							className: "div_info_merc",
+							buttons: {
+								success: {
+									label: "Ok",
+									className: "btn-success",
+									callback: function() {
+										}
+								}
+							}
+						})
+			    }
+			});
+		}
 			function detalles(id,tipo)
 			{
 				var datos={'id':id,'tipo':tipo};
