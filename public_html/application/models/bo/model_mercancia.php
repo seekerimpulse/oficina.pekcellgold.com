@@ -277,7 +277,9 @@ class model_mercancia extends CI_Model {
 			}
 		}
 		
-		
+		if(!isset($_POST['impuesto'])){
+			$_POST['impuesto'] = 0;
+		}
 		$dato_proveedor = array (
 				"id_empresa" => $_POST ['empresa'],
 				"id_regimen" => $_POST ['regimen'],

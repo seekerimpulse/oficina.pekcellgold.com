@@ -1115,7 +1115,7 @@ class perfil_red extends CI_Controller
 					if($cadena[0]=="user")
 					{
 						unlink(getcwd()."/media/".$id."/".$contenido[$i]);
-						$this->model_perfil_red->del($id,0);
+						
 					}
 				}
 			}
@@ -1133,7 +1133,7 @@ class perfil_red extends CI_Controller
 					if($cadena[0]=="fondo")
 					{
 						unlink(getcwd()."/media/".$id."/".$contenido[$i]);
-						$this->model_perfil_red->del($id,1);
+						
 					}
 				}
 			}
@@ -1154,7 +1154,7 @@ class perfil_red extends CI_Controller
 		if (!$this->upload->do_upload("foto"))
 		{
 			$error = array('error' => $this->upload->display_errors());
-      echo var_dump($error);
+      		
 		}
 		else
 		{
@@ -1171,19 +1171,19 @@ class perfil_red extends CI_Controller
 			redirect('/auth');
 		}
 
-    $id=$this->tank_auth->get_user_id();
-
-    //Checamos si el directorio del usuario existe, si no, se crea
+	    $id=$this->tank_auth->get_user_id();
+	
+	    //Checamos si el directorio del usuario existe, si no, se crea
 		if(!is_dir(getcwd()."/media/".$id))
 		{
 			mkdir(getcwd()."/media/".$id, 0777);
 		}
 
-    $data=$_POST['foto'];
-		$id=$this->tank_auth->get_user_id();
-    list($type, $data) = explode(';', $data);
-    list(, $data)      = explode(',', $data);
-    $data = base64_decode($data);
+	    $data = $_POST['foto'];
+		$id = $this->tank_auth->get_user_id();
+	    list($type, $data) = explode(';', $data);
+	    list(, $data)      = explode(',', $data);
+	    $data = base64_decode($data);
 
 		if (!file_put_contents(getcwd()."/media/".$id."/user.png", $data))
 		{
@@ -1192,6 +1192,7 @@ class perfil_red extends CI_Controller
 		else
 		{
 			$this->model_perfil_red->img_user_tomar($id);
+			echo '1';
 		}
 	}
 	

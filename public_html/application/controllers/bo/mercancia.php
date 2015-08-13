@@ -325,6 +325,7 @@ class mercancia extends CI_Controller
 	{
 		if(isset($_POST)){
 			if($this->ValidarProveedor()){
+				
 				$id=$this->tank_auth->get_user_id();
 				$this->model_mercancia->new_proveedor($id);
 			} 

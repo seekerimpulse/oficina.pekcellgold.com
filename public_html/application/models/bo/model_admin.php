@@ -170,14 +170,10 @@ class model_admin extends CI_Model
 		 from cat_proveedor");*/
 	
 		if($id == 3){
-			$q=$this->db->query("select UP.user_id, UP.nombre, UP.apellido
-				from user_profiles UP, proveedor p, cat_proveedor cp
-				where UP.user_id = cp.id_usuario and cp.id = p.id_proveedor and UP.id_tipo_usuario = 3 ");
+			$q=$this->db->query("select p.id_proveedor as user_id, pd.nombre, pd.apellido from proveedor p, proveedor_datos pd where p.id_proveedor = pd.id_proveedor");
 				
 		}else{
-			$q=$this->db->query("select UP.user_id, UP.nombre, UP.apellido
-				from user_profiles UP, proveedor p, cat_proveedor cp
-				where UP.user_id = cp.id_usuario and cp.id = p.id_proveedor and UP.id_tipo_usuario = 3 and p.mercancia = ".$id);
+			$q=$this->db->query("select p.id_proveedor as user_id, pd.nombre, pd.apellido from proveedor p, proveedor_datos pd where p.id_proveedor = pd.id_proveedor and mercancia = ".$id);
 	
 		}
 		return $q->result();

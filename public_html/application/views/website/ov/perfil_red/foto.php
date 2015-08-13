@@ -343,17 +343,29 @@ $('#botonDetener').on('click', function(e) {
             data: {
                 foto: dataURL
             }
-    });
+    }).done(function(msg)
+		{
+		
+		if(msg == "1"){
+			$("#mensaje").html('<div class="alert alert-success fade in">'+
+	                '<button class="close" data-dismiss="alert">'+
+	                '                 ×  '+
+	                '</button>'+
+	                '<i class="fa-fw fa fa-check"></i>'+
+	                 '<strong>Felicitaciones !</strong> Se ha cambiado la foto de perfil.'+
+	               '</div>')
+			
+		}else{
+			$("#mensaje").html('<div class="alert alert-error fade in">'+
+	                '<button class="close" data-dismiss="alert">'+
+	                '                 ×  '+
+	                '</button>'+
+	                '<i class="fa-fw fa fa-check"></i>'+
+	                 '<strong>Lo Lametamos !</strong>No se ha cambiado la foto de tu perfil.'+
+	               '</div>')
+		}
+	});
 
-   $("#mensaje").html('<div class="alert alert-success fade in">'+
-                         '<button class="close" data-dismiss="alert">'+
-                         '                 ×  '+
-                         '</button>'+
-                         '<i class="fa-fw fa fa-check"></i>'+
-                          '<strong>Felicitaciones !</strong> Se ha cambiado la foto de perfil.'+
-                        '</div>'
-  );
 });
-
 });
 </script>
