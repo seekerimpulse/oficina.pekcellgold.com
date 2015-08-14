@@ -25,4 +25,28 @@ class Model_comprador extends CI_Model{
 		);
 		$this->db->insert("user_webs_personales",$datos);
 	}
+	
+	function actualizar_comprador($dni, $nombre, $apellido, $pais, $estado, $municipio, $colonia, $direcion, $email, $telefono){
+		
+		$comprador = $this->get_comprador($dni);
+		$datos = array(
+				'dni' => $dni,
+				'nombre' => $nombre,
+				'apellido' => $apellido,
+				'id_pais' => $pais,
+				'estado' => $estado,
+				'municipio' => $municipio,
+				'colonia' => $colonia,
+				'direccion' => $direcion,
+				'email' => $email,
+				'telefono' => $telefono
+		);
+		
+		if(isset($comprador[0]->dni)){
+			$this->db->update("comprador",$datos, "dni = ".$dni);
+		}else{
+			$this->db->insert("comprador",$datos);
+		}
+		
+	}
 }

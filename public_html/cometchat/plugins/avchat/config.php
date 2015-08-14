@@ -4,15 +4,14 @@
 
 /* SETTINGS START */
 
-<<<<<<< HEAD
+
 $videoPluginType = '3';
 $vidWidth = '220';
 $vidHeight = '165';
-=======
 $videoPluginType = '0';
 $vidWidth = '640';
 $vidHeight = '480';
->>>>>>> 855a692524e3ead34567b4dddd290b65fb696936
+
 $applicationid = '';
 $appAuthSecret = '';
 $maxP = '10';

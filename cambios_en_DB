@@ -35,4 +35,11 @@ CREATE TABLE `OficinaVirtual`.`cross_comprador_venta` (
   `fecha` TIMESTAMP NULL,
   `estado` VARCHAR(10) NULL,
   PRIMARY KEY (`id`));
+  
+  //El viernes 14 de agosto de 2015, se actualiza la tabla cross_comprador_venta
+//con el fin de dar un valor automatico por el gestor
+  
+  ALTER TABLE `OficinaVirtual`.`cross_comprador_venta` 
+CHANGE COLUMN `fecha` `fecha` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ;
+  
 

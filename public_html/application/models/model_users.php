@@ -16,4 +16,9 @@ class Model_users extends CI_Model{
 
 		$this->db->update("users",$datos,"id = ".$id);
 	}
+	
+	function get_id($username){
+		$q=$this->db->query('select id from users where username="'.$username.'"');
+		return $q->result();
+	}
 }

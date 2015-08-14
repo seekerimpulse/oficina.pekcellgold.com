@@ -917,6 +917,18 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		return $q->result();
 	}
 	
+	function RegsitrarVentaWebPersonal($id_afiliado, $id_comprador, $id_venta){
+		$datos = array(
+				'id_comprador' => $id_comprador,
+				'id_afiliado'	=> $id_afiliado,
+				'id_venta' 	=> $id_venta,
+				'estado'	=> 'Pendiente'
+		);
+		
+		$this->db->insert('cross_comprador_venta', $datos);
+		
+	}
+	
 	function ConsultarIdRedMercancia($id_categoria_mercancia){
 		$q = $this->db->query("select id_red from cat_grupo_producto where id_grupo = ".$id_categoria_mercancia);
 		$red = $q->result();
