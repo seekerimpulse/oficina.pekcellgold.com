@@ -485,6 +485,16 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		$bancos = $q->result();
 		return $bancos;
 	}
+	
+	function BancosPagoComprador($id){
+		$q = $this->db->query("select id_pais from comprador where dni=".$id);
+		$pais = $q->result();
+		$pais = $pais[0]->id_pais;
+		$q = $this->db->query("select * from cat_banco where id_pais='".$pais."' and estatus = 'ACT'");
+		$bancos = $q->result();
+		return $bancos;
+	}
+	
 	function get_direccion_comprador($id)
 	{
 		$q=$this->db->query("SELECT a.*,b.nombre, b.apellido, b.keyword, c.email FROM cross_dir_user a, user_profiles b, users c 
@@ -797,6 +807,16 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		return $puntos;
 	}
 	
+	function insertar_comision_web_personal($id_afiliado, $id_venta, $id_comprador, $valor){
+		$dato_cross_venta=array(
+				"id_afiliado" 	=> $id_afiliado,
+				"id_venta"		=> $id_venta,
+				"id_comprador"		=> $id_comprador,
+				"valor"	=> $valor
+		);
+		$this->db->insert("comision_web_personal",$dato_cross_venta);
+	}
+	
 	function registrar_ventaConsignacion($id_usuario, $costo , $id_transacion, $firma, $fecha, $impuesto){
 		$dato_venta=array(
 				"id_user" 			=> $id_usuario,
@@ -811,6 +831,16 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		$this->db->insert("venta",$dato_venta);
 		$venta = mysql_insert_id();
 		return $venta;
+	}
+	
+	function registrar_cross_comprador_ventaConsignacion($id_comprador, $id_venta , $id_afiliado){
+		$dato_venta=array(
+				"id_comprador" 			=> $id_comprador,
+				"id_venta"		=> $id_venta,
+				"id_afiliado" 			=> $id_afiliado,
+				"estado"			=> "Pendiente"
+		);
+		$this->db->insert("cross_comprador_venta",$dato_venta);
 	}
 	
 	function registrar_impuestos($id_mercancia){
@@ -928,10 +958,34 @@ where a.id=b.sku and d.id_grupo  = a.id_grupo and b.id_tipo_mercancia= 1 and b.e
 		$this->db->insert('cross_comprador_venta', $datos);
 		
 	}
-	
+	function actualizarVenta($id_venta,$id_estatus,$metodo_pago, $id_transaccion ,$firma ){
+		$datos = array(
+				'id_estatus'	=> $id_estatus,
+				'id_metodo_pago' 	=> $metodo_pago,
+				'firma'	=> $firma,
+				'id_transacion'=> $id_transaccion
+		);
+		
+		$this->db->update('venta', $datos, array('id_venta' => $id_venta));
+	}
+	function actualizarcrossCompradorVenta($id_venta,$estado){
+		$datos = array(
+				'estado'	=> $estado
+		);
+		
+		$this->db->update('cross_comprador_venta', $datos, array( 'id_venta ' => $id_venta) );
+	}
 	function ConsultarIdRedMercancia($id_categoria_mercancia){
 		$q = $this->db->query("select id_red from cat_grupo_producto where id_grupo = ".$id_categoria_mercancia);
 		$red = $q->result();
 		return $red[0]->id_red;
+	}
+	
+	function consultarMercancia($id_venta){
+		$q = $this->db->query("select M.id, M.costo, M.costo_publico, CCV.id_comprador, CVM.cantidad
+from cross_venta_mercancia CVM, mercancia M, cross_comprador_venta CCV where CVM.id_venta = ".$id_venta." 
+and CVM.id_mercancia=M.id and CCV.id_venta=CVM.id_venta;");
+		$mercancia = $q->result();
+		return $mercancia;
 	}
 }

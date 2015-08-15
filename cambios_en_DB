@@ -41,5 +41,19 @@ CREATE TABLE `OficinaVirtual`.`cross_comprador_venta` (
   
   ALTER TABLE `OficinaVirtual`.`cross_comprador_venta` 
 CHANGE COLUMN `fecha` `fecha` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ;
+
+//El sabado 15 de agosto de 2015, se creo la tabla comision_web_personal
+//con el fin de guardar el valor de comision y que pueda ser mostrado en 
+//la billetera
+
+CREATE TABLE `comision_web_personal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_afiliado` int(11) NOT NULL,
+  `id_venta` int(11) NOT NULL,
+  `id_comprador` int(11) NOT NULL,
+  `valor` int(11) NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) 
   
 

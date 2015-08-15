@@ -90,7 +90,7 @@
 										</label>
 									</section>
 								</fieldset>
-								<input type="text" value='<?php echo $username; ?>' name="usernameAfiliado">
+								<input type="text" class = "hide" value='<?php echo $username; ?>' name="usernameAfiliado">
 							<section class="col col-12 pull-right" >
 								<button type="submit" class="btn btn-success" onclick="CrearComprador()">
 									Agregar

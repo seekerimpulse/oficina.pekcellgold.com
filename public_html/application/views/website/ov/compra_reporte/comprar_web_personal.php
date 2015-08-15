@@ -266,9 +266,9 @@
 																				  <input name="buyerEmail"    type="hidden"  value="<?php echo $email[0]->email; ?>" >
 																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
 																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVentaWebPersonal" >
-																				  <input type="submit"  value="Enviar" id="enviar">
+																				  <input type="submit"  value="Enviar" id="enviar" class="hide">
 																				  <a onclick="enviar_payulatam('<?php echo $_GET['username']; ?>', '<?php echo $items['id']; ?>', '<?php echo $items['qty'] ?>' , <?php echo $dni; ?>)" class="btn btn-block btn-success" >Pago PayuLatam</a>
-																				  <br><a class="btn btn-block btn-danger" onclick="consignacion( <?php echo $id_usuario; ?>,<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)"> Pago Por Banco</a>
+																				  <br><a class="btn btn-block btn-danger" onclick="consignacion(<?php echo $dni; ?>,<?php echo $id_usuario; ?>,<?php echo $items['id']; ?>,<?php echo $items['qty']; ?>)"> Pago Por Banco</a>
 																			</form>	
 												                         </td>
 												                      </tr>
@@ -1067,17 +1067,18 @@
 });
 
 
-	function consignacion(id, cant){
+	function consignacion(dni, id_afiliado, id, cant){
 		
 		$.ajax({
 						data:{
+							dni: dni,
+							id_afiliado: id_afiliado,
 							id_mercancia : id,
 							cantidad : cant
 							},
 						type:"post",
-						url:"/ov/compras/SelecioneBanco?usr=<?php if(isset($_GET['usr'])){ echo $_GET['usr']; } else { echo '0'; } ?>",
+						url:"/ov/compras/SelecioneBancoWebPersonal?usr=<?php if(isset($_GET['usr'])){ echo $_GET['usr']; } else { echo '0'; } ?>",
 						success: function(msg){
-							
 							bootbox.dialog({
 								message: msg,
 								title: "Selecione Banco",
@@ -1087,7 +1088,7 @@
 									label: "Aceptar",
 									className: "hide",
 									callback: function() {
-										 window.location="/ov/compras/carrito?tipo=1";
+										 window.location="/bo/administracion/login_web_personal";
 										}
 									}
 								}

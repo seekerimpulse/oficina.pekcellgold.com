@@ -1,4 +1,4 @@
-<form method="post" action="/ov/compras/registrarVenta">
+<form method="post" action="/ov/compras/registrarVentaWebPersonal">
 	estado<input name="state_pol">	
 	referencia<input name="reference_sale">
 	id_use<input name="extra2">

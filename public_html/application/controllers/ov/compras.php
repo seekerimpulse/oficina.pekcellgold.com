@@ -4270,8 +4270,55 @@ function index()
 	}
 	
 	function actualizar_comprador(){
-		if(isset($_POST)){
-			
+		      
+		/*if ($_POST['dni_comprador']==""){
+			$error = "Debes escribir tu dni.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/ov/compras/carrito_publico?usernameAfiliado='.$_POST['usernameAfiliado']);
+		}
+		
+		else if ($_POST['nombre_comprador']==""){
+			$error = "Debes escribir tu nombre.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/ov/compras/carrito_publico?usernameAfiliado='.$_POST['usernameAfiliado']);
+		}
+		
+		else if ($_POST['apellido_comprador']==""){
+			$error = "Debes escribir tu apellido.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/ov/compras/carrito_publico?usernameAfiliado='.$_POST['usernameAfiliado']);
+		}
+		else if ($_POST['pais_comprador']=="-"){
+			$error = "Debes seleccionar tu país.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/ov/compras/carrito_publico?usernameAfiliado='.$_POST['usernameAfiliado']);
+		}
+		else if ($_POST['estado_comprador']==""){
+			$error = "Debes escribir el estado donde te encuentras.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/ov/compras/carrito_publico?usernameAfiliado='.$_POST['usernameAfiliado']);
+		}
+		else if ($_POST['municipio_comprador']==""){
+			$error = "Debes escribir el municipio donde te encuentras.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/ov/compras/carrito_publico?usernameAfiliado='.$_POST['usernameAfiliado']);
+		}
+		else if ($_POST['colonia_comprador']==""){
+			$error = "Debes escribir la colonia donde te encuentras.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/ov/compras/carrito_publico?usernameAfiliado='.$_POST['usernameAfiliado']);
+		}
+		else if ($_POST['direccion_comprador']==""){
+			$error = "Debes escribir la dirección donde te encuentras.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/ov/compras/carrito_publico?usernameAfiliado='.$_POST['usernameAfiliado']);
+		}
+		else if ($_POST['telefono_comprador']==""){
+			$error = "Debes escribir tu telefono.";
+			$this->session->set_flashdata('error', $error);
+			redirect('/ov/compras/carrito_publico?usernameAfiliado='.$_POST['usernameAfiliado']);
+		} else {*/
+		 {
 			$this->model_comprador->actualizar_comprador($_POST['dni_comprador'],$_POST['nombre_comprador'], $_POST['apellido_comprador'], $_POST['pais_comprador'], $_POST['estado_comprador'], $_POST['municipio_comprador'], $_POST['colonia_comprador'] , $_POST['direccion_comprador'], $_POST['email_comprador'], $_POST['telefono_comprador']);
 			//$this->comprar_web_personal($_POST['usernameAfiliado'], $_POST['dni_comprador']);
 			redirect("/ov/compras/comprar_web_personal?username=".$_POST['usernameAfiliado']."&dni=".$_POST['dni_comprador']);
@@ -4489,9 +4536,8 @@ function index()
 		$estado = $_POST['state_pol'];
 		$productos = $this->cart->contents();
 		$referencia = $_POST['reference_sale'];
+		$id_venta = $_POST['extra1'];
 		$id_usuario = $_POST['extra2'];
-		$venta = $_POST['extra1'];
-		
 		$metodo_pago = $_POST['payment_method_id'];
 		$respuesta = $_POST['response_code_pol'];
 		$fecha = $_POST['transaction_date'];
@@ -4502,18 +4548,19 @@ function index()
 		$identificado_transacion = $_POST['transaction_id'];
 		$medio_pago = $_POST['payment_method_name'];
 	
-		$id_transacion = $_POST['transaction_id'];
+		$id_transaccion = $_POST['transaction_id'];
 		$firma = $_POST['sign'];
 	
 		
 		//Con la venta consultar el id_mercancia, costo, costo_publico
-		$costo = $cantidad*$this->modelo_compras->CostoMercancia($id_mercancia);
+		
+		$mercancia = $this->modelo_compras->consultarMercancia($id_venta);
 	
-		$impuestos = $this->modelo_compras->ImpuestoMercancia($id_mercancia, $costo);
+		//$impuestos = $this->modelo_compras->ImpuestoMercancia($id_mercancia, $costo);
 	
 		if($estado == 4){
 				
-			$venta = $this->modelo_compras->registrar_venta($id_usuario, $costo, $metodo_pago, $id_transacion, $firma, $fecha, $impuestos);
+			/*$venta = $this->modelo_compras->registrar_venta($id_usuario, $costo, $metodo_pago, $id_transacion, $firma, $fecha, $impuestos);
 				
 			$this->modelo_compras->registrar_envio("1".$venta, $id_usuario, $direcion_envio , $telefono, $email);
 			$this->modelo_compras->registrar_factura($venta, $id_usuario, $direcion_envio , $telefono, $email);
@@ -4527,15 +4574,21 @@ function index()
 				
 			//$red = $this->modelo_compras->Red($id_red_mercancia);
 				
-			//$valor_puntos = $puntos * $red[0]->valor_punto;
-			$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($id_mercancia);
+			//$valor_puntos = $puntos * $red[0]->valor_punto;*/
+			
+			$comision_venta_web_personal = ($mercancia[0]->costo_publico - $mercancia[0]->costo) * $mercancia[0]->cantidad;
+			$this->modelo_compras->insertar_comision_web_personal($id_usuario, $id_venta, $mercancia[0]->id_comprador, $comision_venta_web_personal);
+			$this->modelo_compras->actualizarVenta($id_venta,"2",$metodo_pago, $id_transaccion ,$firma );
+			$this->modelo_compras->actualizarcrossCompradorVenta($id_venta,"Pago");
+			$valor_total_venta = $mercancia[0]->cantidad * $mercancia[0]->costo;
+			$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($mercancia[0]->id);
 			$costo_comision = $this->modelo_compras->ValorComision($id_categoria_mercancia);
 				
 			$id_red = $this->modelo_compras->ConsultarIdRedMercancia($id_categoria_mercancia);
 			$capacidad_red = $this->model_tipo_red->CapacidadRed($id_red);
 			$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $id_usuario, $id_red);
 				
-			$this->CalcularComision2($id_afiliado, $venta, $id_categoria_mercancia ,$costo_comision, $capacidad_red, 1, $puntos);
+			$this->CalcularComision2($id_afiliado, $id_venta, $id_categoria_mercancia ,$costo_comision, $capacidad_red, 1, $valor_total_venta);
 			return "Regsitro Corecto";
 		}
 	}
@@ -4604,6 +4657,34 @@ function index()
 		
 		$this->template->set_theme('desktop');
 		$this->template->build('website/ov/compra_reporte/bancos',$data);
+	}
+	
+	function SelecioneBancoWebPersonal(){
+		
+		//var_dump("dni: ".$_POST['dni'].", id_afiliado: ".$_POST['id_afiliado'].", id: ".$_POST['id_mercancia'].", cantidad:".$_POST['cantidad']);
+		//exit();
+		if(!isset($_POST['id_mercancia'])){
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		if($_GET['usr'] != 0){
+			$id = $_GET['usr'];
+		}else{
+			$id = $this->tank_auth->get_user_id();
+		}
+		
+		$data['bancos'] = $this->modelo_compras->BancosPagoComprador($_POST['dni']);
+		$data['id_mercancia'] = $_POST['id_mercancia'];
+		$data['cantidad'] = $_POST['cantidad'];
+		$data['dni'] = $_POST['dni'];
+		$data['id_afiliado'] = $_POST['id_afiliado'];
+	
+		$this->template->set_theme('desktop');
+		$this->template->build('website/ov/compra_reporte/bancosWebPersonal',$data);
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////
@@ -4675,6 +4756,81 @@ function index()
 			$respuesta = $respuesta."<p> Numero de Cuenta: ".$banco[0]->cuenta.'</p>';
 			$respuesta = $respuesta."<p> CLABE: ".$banco[0]->clave.'</p></div>';
 			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago al depertamento de Pagos(pagosgolden@pekcell.com)</p></div>";
+			echo $respuesta;
+		}else{
+			echo "La venta se a registrado";
+		}
+	}
+	
+	function RegistrarVentaConsignacionWebPersonal(){
+	
+		if(!isset($_POST['id_mercancia'])){
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+			redirect('/auth');
+		}
+		$productos = $this->cart->contents();
+		$id = 2;
+		if($_POST['usr'] != 0){
+			$id = $_POST['usr'];
+		}else{
+			$id = $this->tank_auth->get_user_id();
+		}
+		$datos_perfil = $this->modelo_compras->get_direccion_comprador($_POST['id_afiliado']);
+		$id_mercancia = $_POST['id_mercancia'];
+		$cantidad = $_POST['cantidad'];
+	
+		$direcion_envio = $datos_perfil[0]->calle." ".$datos_perfil[0]->colonia." ".$datos_perfil[0]->municipio." ".$datos_perfil[0]->estado;
+		$telefono = $this->modelo_compras->get_telefonos_comprador($_POST['id_afiliado']);
+		$email = $datos_perfil[0]->email;
+		$time = time().$id_mercancia;
+	
+		$costo = $cantidad * $this->modelo_compras->CostoMercancia($id_mercancia);
+		$firma = md5("consignacion~".$time."~".$costo."~USD");
+		$id_transacion = $id_mercancia.$cantidad.$costo.time();
+		$impuestos = $this->modelo_compras->ImpuestoMercancia($id_mercancia, $costo);
+		$fecha = date("Y-m-d");
+	
+		$venta = $this->modelo_compras->registrar_ventaConsignacion($_POST['id_afiliado'], $costo , $id_transacion, $firma, $fecha, $impuestos);
+		
+		$this->modelo_compras->registrar_cross_comprador_ventaConsignacion($_POST['dni'], $venta, $_POST['id_afiliado']);
+	
+		$envio=$this->modelo_compras->registrar_envio($venta, $_POST['id_afiliado'], $direcion_envio , $telefono, $email);
+	
+		$this->modelo_compras->registrar_factura($venta, $_POST['id_afiliado'], $direcion_envio , $telefono, $email);
+	
+		$puntos = $this->modelo_compras->registrar_venta_mercancia($id_mercancia, $venta, $cantidad);
+		$total = $this->modelo_compras->registrar_impuestos($id_mercancia);
+		$this->modelo_compras->registrar_movimiento($_POST['id_afiliado'], $id_mercancia, $cantidad, $costo+$impuestos, $total, $venta, $puntos);
+		$producto_continua = array();
+	
+		foreach ($productos as $producto){
+			if($producto['id'] == $id_mercancia){
+				$this->cart->destroy();
+			}else{
+				$add_cart = array(
+						'id'      => $producto['id'],
+						'qty'     => $producto['qty'],
+						'price'   => $producto['price'],
+						'name'    => $producto['name'],
+						'options' => $producto['options']
+				);
+				$producto_continua[] = $add_cart;
+			}
+		}
+		$this->cart->insert($producto_continua);
+	
+		$banco = $this->modelo_compras->RegsitrarPagoBanco($_POST['id_afiliado'], $_POST['banco'], $venta, ($costo+$impuestos));
+		if(isset($banco[0]->id_banco)){
+			$respuesta = "<div class='alert alert-success alert-block'>
+								<a class='close' data-dismiss='alert' href='#'></a>
+								<p> Nombre de Banco: ".$banco[0]->descripcion.'</p>';
+			$respuesta = $respuesta."<p> Numero de Cuenta: ".$banco[0]->cuenta.'</p>';
+			$respuesta = $respuesta."<p> CLABE: ".$banco[0]->clave.'</p></div>';
+			$respuesta = $respuesta."<p class='text-danger'> Para terminar tu compra debes enviar un email con el comprobante de pago al vendedor(".$email.")</p></div>";
 			echo $respuesta;
 		}else{
 			echo "La venta se a registrado";
