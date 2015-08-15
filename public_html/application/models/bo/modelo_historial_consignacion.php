@@ -48,4 +48,14 @@ where cpb.id_banco = cb.id_banco and cs.id_estatus = cpb.estatus and cpb.id_usua
 		$historial = $q->result();
 		return $historial;
 	}
+	
+	function comprovarCompraWebPersonal($id_venta){
+		$q = $this->db->query("select id_comprador from cross_comprador_venta where id_venta = ".$id_venta);
+		$historial = $q->result();
+		if(isset($historial[0]->id_comprador)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

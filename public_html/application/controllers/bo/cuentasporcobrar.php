@@ -64,6 +64,10 @@ class cuentasporcobrar extends compras{
 			
 			
 			$this->ComisionBanco($historico);
+			
+			if($this->modelo_historial_consignacion->comprovarCompraWebPersonal($id_venta)){
+				$this->modelo_compras->actualizarcrossCompradorVenta($id_venta,'Pago');
+			}
 			$this->EnvarMail($id_historial);
 			echo  "La peticion se ha cambiado de estado a pago";
 			//$this->session->set_flashdata('correcto', $correcto);
