@@ -207,7 +207,9 @@ class billetera2 extends CI_Controller
 		
 		$id=$this->tank_auth->get_user_id();
 		
+		$comision_web_personal = $this->modelo_billetera->get_comisiones_web_personal($id);
 		$comisiones = $this->modelo_billetera->get_total_comisiones_afiliado($id);
+		$comisiones +=$comision_web_personal[0]->valor;
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotalesAfiliado();
 		$cobrosPagos=$this->modelo_billetera->get_cobros_total_afiliado($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
