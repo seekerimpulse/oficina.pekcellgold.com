@@ -23,6 +23,8 @@ class compras extends CI_Controller
 		$this->load->model('bo/model_admin');
 		$this->load->model('model_user_webs_personales');
 		$this->load->model('model_comprador');
+		
+		$this->load->model('ov/model_web_personal_reporte');
 	}
 	
 	private $afiliados = array();
@@ -4499,5 +4501,92 @@ function index()
 		}else{
 			echo "La venta se a registrado";
 		}
+	}
+	
+	
+	function reporte_ventas_web_personal()
+	{
+		$id=$this->tank_auth->get_user_id();
+		$red=$this->modelo_compras->get_red($id);
+		$inicio = 0;
+		$fin = 0;
+		$consultar_ventas_web_p=$this->model_web_personal_reporte->consultar_ventas_web_personal($id,$inicio,$fin);
+		echo
+		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
+				<thead id='tablacabeza'>
+					<th data-class='expand'>ID_Venta</th>
+					<th data-hide='phone,tablet'>Fecha de venta</th>
+					<th >Nombre</th>
+					<th data-hide='phone,tablet'>Apellido</th>
+				    <th data-hide='phone,tablet'>Email</th>
+					<th data-hide='phone,tablet'>Telefono</th>
+                    <th data-hide='phone,tablet'>Mercancia</th>
+				    <th data-hide='phone,tablet'>Tipo</th>
+				    <th data-hide='phone,tablet'>Cantidad</th>
+				    <th data-hide='phone,tablet'>Costo Unitario</th>
+				    <th data-hide='phone,tablet'>Costo Total</th>
+				    <th data-hide='phone,tablet'>Estado</th>
+				    <th data-hide='phone,tablet'>Enviar</th>
+				</thead>
+				<tbody>";
+		$averiguar_producto=0;
+		$tipo_mercancia=0;
+		for($i=0;$i<sizeof($consultar_ventas_web_p);$i++)
+		{
+			
+			
+	
+			if(($consultar_ventas_web_p[$i]->id_tipo_mercancia)=="1"){
+				$averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("producto",$consultar_ventas_web_p[$i]->sku);
+			    $tipo_mercancia="producto";
+			}
+			
+			else if(($consultar_ventas_web_p[$i]->id_tipo_mercancia)=="2"){
+				$averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("servicio",$consultar_ventas_web_p[$i]->sku);
+			    $tipo_mercancia="servicio";;
+			}
+			else if(($consultar_ventas_web_p[$i]->id_tipo_mercancia)=="3"){
+		        $averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("combinado",$consultar_ventas_web_p[$i]->sku);
+			    $tipo_mercancia="combinado";
+			}
+			
+		
+		echo "<tr>
+		<td>".$consultar_ventas_web_p[$i]->id_venta."</td>
+		<td>".$consultar_ventas_web_p[$i]->fecha."</td>
+		<td>".$consultar_ventas_web_p[$i]->nombre."</td>
+		<td>".$consultar_ventas_web_p[$i]->apellido."</td>
+		<td>".$consultar_ventas_web_p[$i]->email."</td>
+		<td>".$consultar_ventas_web_p[$i]->telefono."</td>
+		<td>".$averiguar_producto[0]->nombre."</td>
+		<td>".$tipo_mercancia."</td>	
+		<td>".$consultar_ventas_web_p[$i]->cantidad."</td>	
+		<td>".($consultar_ventas_web_p[$i]->costo/$consultar_ventas_web_p[$i]->cantidad)."</td>	
+		<td>".$consultar_ventas_web_p[$i]->costo."</td>	
+		<td>".$consultar_ventas_web_p[$i]->estado."</td>
+		<td class='text-center'>";
+		if($consultar_ventas_web_p[$i]->estado=="Pago"){
+			echo   "<a class='txt-color-blue' style='cursor: pointer;' onclick='Enviar(".$consultar_ventas_web_p[$i]->id_venta.")' title='Envio Mercancia'><i class='fa fa-truck fa-3x'></i></a>
+				   </td>
+		        </tr>";
+		}else if($consultar_ventas_web_p[$i]->estado=="Embarcado"){
+			echo   "<a class='txt-color-blue' style='cursor: pointer;'  title='Mercancia Enviada'><i class='fa fa-check-circle fa-3x'></i></a>
+				   </td>
+		        </tr>";
+		}
+		
+		}
+	
+	
+		echo "</tbody>
+		</table><tr class='odd' role='row'>";
+	
+	
+	}
+	function Cambiar_estado_enviar(){
+		
+		$id_venta=$_POST['id'];
+		$consultar_ventas_web_p=$this->model_web_personal_reporte->Actualizar_estado_a_envio($id_venta);
+		
 	}
 }

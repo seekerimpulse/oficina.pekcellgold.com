@@ -19,7 +19,7 @@ and any Corporate Licensee and 'Inscripts' means Inscripts (I) Private Limited:
 CometChat license grants you the right to run one instance (a single installation)
 of the Software on one web server and one web site for each license purchased.
 Each license may power one instance of the Software on one domain. For each 
-installed instance of the Softwáre, a separate license is required. 
+installed instance of the Software, a separate license is required. 
 The Software is licensed only to you. You may not rent, lease, sublicense, sell,
 assign, pledge, transfer or otherwise dispose of the Software in any form, on
 a temporary or permanent basis, without the prior written consent of Inscripts. 
