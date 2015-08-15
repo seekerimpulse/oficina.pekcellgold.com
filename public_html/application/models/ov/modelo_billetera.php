@@ -246,4 +246,20 @@ class modelo_billetera extends CI_Model
 		$q = $this->db->query("select YEAR(fecha) as año from cobro group by año");
 		return $q->result();
 	}
+	
+	function comisionWebPersonal($id_afiliado, $fecha){
+		$q=$this->db->query('select sum(valor) as valor from comision_web_personal where MONTH(fecha) = MONTH("'.$fecha.'") and id_afiliado ='.$id_afiliado.'');
+		return $q->result();
+	}
+	
+	function get_comisiones_web_personal($id_afiliado){
+		$q=$this->db->query('select sum(valor) as valor from comision_web_personal where id_afiliado ='.$id_afiliado.'');
+		return $q->result();
+	}
+	
+	function get_historial_cuenta_web_personal($id)
+	{
+		$q=$this->db->query('SELECT  DATE_FORMAT(fecha,"%Y-%m-01") as fecha, sum(valor) as valor FROM comision_web_personal where id_afiliado = "'.$id.'" group by MONTH(fecha)');
+		return $q->result();
+	}
 }
