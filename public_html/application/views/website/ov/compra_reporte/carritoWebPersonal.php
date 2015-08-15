@@ -912,17 +912,19 @@
 
 			function datos_comprador()
 			{
+				
 				$.ajax({
-					type: "post",
+					type: "POST",
 					url: "datos_comprador_web_personal",
-					data: "hola=hola"
+					data: { username : "<?php echo $_GET['usernameAfiliado']; ?>" }
 				})
 				.done(function(msg)
 				{
+					
 					bootbox.dialog({
 						message: msg,
 						title: "Datos de Comprador",
-						className: "div_info_merc",
+						className: "div",
 						buttons: {
 							danger: {
 								label: "Aceptar",

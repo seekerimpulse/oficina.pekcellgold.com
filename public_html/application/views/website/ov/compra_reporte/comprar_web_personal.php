@@ -41,7 +41,6 @@
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only"> Toggle navigation </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> <span class="icon-bar"> </span> </button>
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-cart"> <i class="fa fa-shopping-cart colorWhite"> </i> <span class="cartRespons colorWhite"> Cart (<?php echo $this->cart->total_items(); ?> ) </span> </button>
-      <a class="navbar-brand titulo_carrito" href="/ov/dashboard" > Dashboard &nbsp;</a> 
       
       <!-- this part for mobile -->
       <div class="search-box pull-right hidden-lg hidden-md hidden-sm">
@@ -167,9 +166,6 @@
 					<div class="col-lg-9 col-md-9 col-sm-7">
 					  <h1 class="section-title-inner"><span><i class="glyphicon glyphicon-shopping-cart"></i> Comprar</span></h1>
 					</div>
-					<div class="col-lg-3 col-md-3 col-sm-5 rightSidebar">
-					  <h4 class="caps"><a href="carrito?tipo=<?=$_GET["tipo"]?>"><i class="fa fa-chevron-left"></i> Volver al carrito </a></h4>
-					</div>
 				</div> <!--/.row-->
 				<!-- widget edit box -->
 				<div class="jarviswidget-editbox">
@@ -265,13 +261,14 @@
 																				  <input name="currency"      type="hidden"  value="USD" >
 																				  <input name="signature"     type="hidden"  value="<?php echo $firma; ?>"  >
 																				  <input name="test"     type="hidden"  value="1"  >
-																				  <input name="extra1"      type="hidden"  value="<?php echo $items['id']."-".$items['qty']; //ponerle id_venta?>" >
+																				  <input name="extra1"      type="hidden"  value="<?php echo $items['id']."-".$items['qty']; //ponerle id_venta?>" id="extra">
 																				  <input name="extra2"      type="hidden"  value="<?php echo $id_usuario; ?>" >
 																				  <input name="buyerEmail"    type="hidden"  value="<?php echo $email[0]->email; ?>" >
 																				  <input name="responseUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/carrito_menu" >
-																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVenta" >
-																				  <input type="submit" value="Pago PayuLatam"  class="btn btn-block btn-success" >
-																				  <br><a class="btn btn-block btn-danger" onclick="consignacion(<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)"> Pago Por Banco</a>
+																				  <input name="confirmationUrl"    type="hidden"  value="http://www.oficina.pekcellgold.com/ov/compras/registrarVentaWebPersonal" >
+																				  <input type="submit"  value="Enviar" id="enviar">
+																				  <a onclick="enviar_payulatam('<?php echo $_GET['username']; ?>', '<?php echo $items['id']; ?>', '<?php echo $items['qty'] ?>' , <?php echo $dni; ?>)" class="btn btn-block btn-success" >Pago PayuLatam</a>
+																				  <br><a class="btn btn-block btn-danger" onclick="consignacion( <?php echo $id_usuario; ?>,<?php echo $items['id']; ?>, <?php echo $items['qty']; ?>)"> Pago Por Banco</a>
 																			</form>	
 												                         </td>
 												                      </tr>
@@ -405,27 +402,17 @@
 	})
 	
 
-		function enviar_payulatam(){
+		function enviar_payulatam(id_usuario, id, cantidad, dni){
 			//#form-payu
+			
 			$.ajax({
-				data: {info:JSON.stringify(datos)},
-				type: "get",
-				url: "muestra_mercancia",
+				data: { usr : id_usuario, id_mercancia : id, cantidad : cantidad, dni : dni },
+				type: "post",
+				url: "GuardarVentaWebPersonal",
 				success: function(msg){
-			             
-			             bootbox.dialog({
-							message: msg,
-							title: "Descripcion",
-							className: "div_info_merc",
-							buttons: {
-								success: {
-									label: "Ok",
-									className: "btn-success",
-									callback: function() {
-										}
-								}
-							}
-						})
+					$("#extra").val(msg);
+					$("#enviar").click();
+					  
 			    }
 			});
 		}

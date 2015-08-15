@@ -4229,6 +4229,7 @@ function index()
 	function datos_comprador_web_personal()
 	{
 		$pais = $this->model_admin->get_pais_activo();
+		$this->template->set('username',$_POST['username']);
 		$this->template->set('pais', $pais);
 		$this->template->set_theme('desktop');
 		$this->template->build('website/ov/compra_reporte/datos_comprador_web_personal');
@@ -4242,22 +4243,7 @@ function index()
 		$this->template->build('website/ov/compra_reporte/datos_comprador_web_personal');
 	}
 	
-	function guardar_info_comprador()
-	{
-		$dni_comprador = $_POST['dni_comprador'];
-		$nombre_comprador = $_POST['nombre_comprador'];
-		$apellido_comprador = $_POST['apellido_comprador'];
-		$pais_comprador = $_POST['pais_comprador'];
-		$estado_comprador = $_POST['estado_comprador'];
-		$municipio_comprador = $_POST['municipio_comprador'];
-		$colonia_comprador = $_POST['colonia_comprador'];
-		$direccion_comprador = $_POST['direccion_comprador'];
-		$email_comprador = $_POST['email_comprador'];
-		$telefono_comprador = $_POST['telefono_comprador'];
-			
-		//$this->template->build('website/ov/compra_reporte/datos_comprador_web_personal');
-	}
-
+	
 	/*function buscar_comprador_web_personal()
 	{
 		$dni_comprador = $_POST['dni'];
@@ -4283,6 +4269,144 @@ function index()
 		else {
 			echo "false";
 		}
+	}
+	
+	function actualizar_comprador(){
+		if(isset($_POST)){
+			
+			$this->model_comprador->actualizar_comprador($_POST['dni_comprador'],$_POST['nombre_comprador'], $_POST['apellido_comprador'], $_POST['pais_comprador'], $_POST['estado_comprador'], $_POST['municipio_comprador'], $_POST['colonia_comprador'] , $_POST['direccion_comprador'], $_POST['email_comprador'], $_POST['telefono_comprador']);
+			//$this->comprar_web_personal($_POST['usernameAfiliado'], $_POST['dni_comprador']);
+			redirect("/ov/compras/comprar_web_personal?username=".$_POST['usernameAfiliado']."&dni=".$_POST['dni_comprador']);
+		}
+	}
+	
+	function comprar_web_personal()
+	{
+		$this->load->model('model_users');
+		
+		$username = $_GET['username'];
+		$dni = $_GET['dni'];
+		
+		$id = $this->model_users->get_id($username);
+		$id = $id[0]->id;
+		$usuario = $username;
+		$style=$this->general->get_style($id);
+		$this->template->set("style",$style);
+		$this->template->set("usuario",$usuario);
+		$this->template->set("dni",$dni);
+		
+		$direccion=$this->modelo_compras->get_direccion_comprador($id);
+		$pais=$this->modelo_compras->get_pais();
+		$info_compras=Array();
+		$producto=0;
+		if($this->cart->contents())
+		{
+			foreach ($this->cart->contents() as $items)
+			{
+				$imgn=$this->modelo_compras->get_img($items['id']);
+				if(isset($imgn[0]->url))
+				{
+					$imagen=$imgn[0]->url;
+				}
+				else
+				{
+					$imagen="";
+				}
+				switch($items['name'])
+				{
+					case 1:
+						$detalles=$this->modelo_compras->detalles_productos($items['id']);
+						break;
+					case 2:
+						$detalles=$this->modelo_compras->detalles_servicios($items['id']);
+						break;
+					case 3:
+						$detalles=$this->modelo_compras->comb_espec($items['id']);
+						break;
+					case 4:
+						$detalles=$this->modelo_compras->detalles_prom_prod($items['id']);
+						break;
+					case 5:
+						$detalles=$this->modelo_compras->detalles_prom_serv($items['id']);
+						break;
+					case 6:
+						$detalles=$this->modelo_compras->detalles_prom_comb($items['id']);
+						break;
+				}
+				$info_compras[$producto]=Array(
+						"imagen" => $imagen,
+						"nombre" => $detalles[0]->nombre
+				);
+				$producto++;
+			}
+		}
+		$data=array();
+		$data["direccion"]=$direccion;
+		$data["compras"]=$info_compras;
+		$data["pais"]=$pais;
+		$data['id'] = $id;
+		$this->template->set_theme('desktop');
+		$this->template->set_layout('website/main');
+		$this->template->set_partial('footer', 'website/ov/footer');
+		$this->template->build('website/ov/compra_reporte/comprar_web_personal',$data);
+	}
+	
+	function GuardarVentaWebPersonal(){
+		
+		$this->load->model('model_users');
+		if(!isset($_POST['id_mercancia'])){
+			echo "La compra no puedo ser registrada";
+			return 0;
+		}
+		
+		$productos = $this->cart->contents();
+		$id = $this->model_users->get_id($_POST['usr']);
+		$id = $id[0]->id;
+		$datos_perfil = $this->modelo_compras->get_direccion_comprador($id);
+		
+		$id_mercancia = $_POST['id_mercancia'];
+		$cantidad = $_POST['cantidad'];
+		
+		$direcion_envio = $datos_perfil[0]->calle." ".$datos_perfil[0]->colonia." ".$datos_perfil[0]->municipio." ".$datos_perfil[0]->estado;
+		$telefono = $this->modelo_compras->get_telefonos_comprador($id);
+		$email = $datos_perfil[0]->email;
+		$time = time().$id_mercancia;
+		
+		$costo = $cantidad * $this->modelo_compras->CostoMercancia($id_mercancia);
+		$firma = md5("consignacion~".$time."~".$costo."~USD");
+		$id_transacion = $id_mercancia.$cantidad.$costo.time();
+		$impuestos = $this->modelo_compras->ImpuestoMercancia($id_mercancia, $costo);
+		$fecha = date("Y-m-d");
+		
+		$venta = $this->modelo_compras->registrar_ventaConsignacion($id, $costo , $id_transacion, $firma, $fecha, $impuestos);
+		
+		$envio=$this->modelo_compras->registrar_envio($venta, $id, $direcion_envio , $telefono, $email);
+		
+		$this->modelo_compras->registrar_factura($venta, $id, $direcion_envio , $telefono, $email);
+		
+		$puntos = $this->modelo_compras->registrar_venta_mercancia($id_mercancia, $venta, $cantidad);
+		$total = $this->modelo_compras->registrar_impuestos($id_mercancia);
+		$this->modelo_compras->registrar_movimiento($id, $id_mercancia, $cantidad, $costo+$impuestos, $total, $venta, $puntos);
+		$producto_continua = array();
+		
+		foreach ($productos as $producto){
+			if($producto['id'] == $id_mercancia){
+				$this->cart->destroy();
+			}else{
+				$add_cart = array(
+						'id'      => $producto['id'],
+						'qty'     => $producto['qty'],
+						'price'   => $producto['price'],
+						'name'    => $producto['name'],
+						'options' => $producto['options']
+				);
+				$producto_continua[] = $add_cart;
+			}
+		}
+		$this->cart->insert($producto_continua);
+		
+		$this->modelo_compras->RegsitrarVentaWebPersonal($id, $_POST['dni'], $venta);
+		echo $venta;
 	}
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -4360,6 +4484,62 @@ function index()
 			$this->CalcularComision2($id_afiliado, $venta, $id_categoria_mercancia ,$costo_comision, $capacidad_red, 1, $puntos);
 			return "Regsitro Corecto";
 		}	
+	}
+	
+	function registrarVentaWebPersonal(){
+		
+		$estado = $_POST['state_pol'];
+		$productos = $this->cart->contents();
+		$referencia = $_POST['reference_sale'];
+		$id_usuario = $_POST['extra2'];
+		$venta = $_POST['extra1'];
+		
+		$metodo_pago = $_POST['payment_method_id'];
+		$respuesta = $_POST['response_code_pol'];
+		$fecha = $_POST['transaction_date'];
+		$moneda = $_POST['currency'];
+		$email = $_POST['email_buyer'];
+		$direcion_envio = $_POST['shipping_address'];
+		$telefono = $_POST['phone'];
+		$identificado_transacion = $_POST['transaction_id'];
+		$medio_pago = $_POST['payment_method_name'];
+	
+		$id_transacion = $_POST['transaction_id'];
+		$firma = $_POST['sign'];
+	
+		
+		//Con la venta consultar el id_mercancia, costo, costo_publico
+		$costo = $cantidad*$this->modelo_compras->CostoMercancia($id_mercancia);
+	
+		$impuestos = $this->modelo_compras->ImpuestoMercancia($id_mercancia, $costo);
+	
+		if($estado == 4){
+				
+			$venta = $this->modelo_compras->registrar_venta($id_usuario, $costo, $metodo_pago, $id_transacion, $firma, $fecha, $impuestos);
+				
+			$this->modelo_compras->registrar_envio("1".$venta, $id_usuario, $direcion_envio , $telefono, $email);
+			$this->modelo_compras->registrar_factura($venta, $id_usuario, $direcion_envio , $telefono, $email);
+				
+			$puntos = $this->modelo_compras->registrar_venta_mercancia($id_mercancia, $venta, $cantidad);
+			$total = $this->modelo_compras->registrar_impuestos($id_mercancia);
+			$this->modelo_compras->registrar_movimiento($id_usuario, $id_mercancia, $cantidad, $costo+$impuestos, $total, $venta, $puntos);
+			$producto_continua = array();
+				
+			#$id_red_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($id_mercancia);
+				
+			//$red = $this->modelo_compras->Red($id_red_mercancia);
+				
+			//$valor_puntos = $puntos * $red[0]->valor_punto;
+			$id_categoria_mercancia = $this->modelo_compras->ObtenerCategoriaMercancia($id_mercancia);
+			$costo_comision = $this->modelo_compras->ValorComision($id_categoria_mercancia);
+				
+			$id_red = $this->modelo_compras->ConsultarIdRedMercancia($id_categoria_mercancia);
+			$capacidad_red = $this->model_tipo_red->CapacidadRed($id_red);
+			$id_afiliado = $this->model_perfil_red->ConsultarIdPadre( $id_usuario, $id_red);
+				
+			$this->CalcularComision2($id_afiliado, $venta, $id_categoria_mercancia ,$costo_comision, $capacidad_red, 1, $puntos);
+			return "Regsitro Corecto";
+		}
 	}
 
 	
