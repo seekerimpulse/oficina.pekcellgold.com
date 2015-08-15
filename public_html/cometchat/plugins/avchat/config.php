@@ -4,6 +4,11 @@
 
 /* SETTINGS START */
 
+<<<<<<< HEAD
+$videoPluginType = '3';
+$vidWidth = '640';
+$vidHeight = '480';
+=======
 
 $videoPluginType = '3';
 $vidWidth = '220';
@@ -12,6 +17,7 @@ $videoPluginType = '0';
 $vidWidth = '640';
 $vidHeight = '480';
 
+>>>>>>> 508ac8e5fd6399f507b0c70bed8f80ab86e737f0
 $applicationid = '';
 $appAuthSecret = '';
 $maxP = '10';
@@ -19,8 +25,8 @@ $quality = '90';
 $winWidth = '650';
 $winHeight = '365';
 $connectUrl = '';
-$camWidth = '435';
-$camHeight = '327';
+$camWidth = '440';
+$camHeight = '330';
 $fps = '30';
 $soundQuality = '7';
 $zoomapplicationid = '';

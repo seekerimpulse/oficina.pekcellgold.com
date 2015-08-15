@@ -1,8 +1,0 @@
- git add . --ignore-removal
- git commit -m "Correcin chat"
- git pull origin dev
- git branch
- git push origin dev
-
-
-
