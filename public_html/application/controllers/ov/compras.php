@@ -4844,8 +4844,8 @@ function index()
 	{
 		$id=$this->tank_auth->get_user_id();
 		$red=$this->modelo_compras->get_red($id);
-		$inicio = 0;
-		$fin = 0;
+		$inicio = $_POST['inicio'];
+		$fin = $_POST['fin'];
 		$consultar_ventas_web_p=$this->model_web_personal_reporte->consultar_ventas_web_personal($id,$inicio,$fin);
 		echo
 		"<table id='datatable_fixed_column1' class='table table-striped table-bordered table-hover' width='100%'>
@@ -4919,10 +4919,84 @@ function index()
 	
 	
 	}
+	function Reporte_Excel_WP(){
+		
+	
+		
+		if (!$this->tank_auth->is_logged_in())
+		{																		// logged in
+		redirect('/auth');
+		}
+		$id=$this->tank_auth->get_user_id();
+		
+		
+		
+		$inicio=$_GET['inicio'];
+		$fin=$_GET['fin'];
+		$consultar_ventas_web_p=$this->model_web_personal_reporte->consultar_ventas_web_personal($id,$inicio,$fin);
+		
+
+		
+		$this->load->library('excel');
+		$this->excel=PHPExcel_IOFactory::load(FCPATH."/application/third_party/templates/reporte_web_personal.xls");
+		
+		$averiguar_producto=0;
+		$tipo_mercancia=0;
+		
+		for($i = 0;$i < sizeof($consultar_ventas_web_p);$i++)
+		{
+			
+
+			if(($consultar_ventas_web_p[$i]->id_tipo_mercancia)=="1"){
+				$averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("producto",$consultar_ventas_web_p[$i]->sku);
+				$tipo_mercancia="producto";
+			}
+				
+			else if(($consultar_ventas_web_p[$i]->id_tipo_mercancia)=="2"){
+				$averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("servicio",$consultar_ventas_web_p[$i]->sku);
+				$tipo_mercancia="servicio";;
+			}
+			else if(($consultar_ventas_web_p[$i]->id_tipo_mercancia)=="3"){
+				$averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("combinado",$consultar_ventas_web_p[$i]->sku);
+				$tipo_mercancia="combinado";
+			}
+				
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(0, ($i+8), $consultar_ventas_web_p[$i]->id_venta);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(1, ($i+8), $consultar_ventas_web_p[$i]->fecha);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(2, ($i+8), $consultar_ventas_web_p[$i]->nombre);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(3, ($i+8), $consultar_ventas_web_p[$i]->apellido);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(4, ($i+8), $consultar_ventas_web_p[$i]->email);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(5, ($i+8), $consultar_ventas_web_p[$i]->telefono);
+		
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(6, ($i+8), $averiguar_producto[0]->nombre);
+		
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(7, ($i+8), $tipo_mercancia);
+		
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(8, ($i+8), $consultar_ventas_web_p[$i]->cantidad);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(9, ($i+8), ($consultar_ventas_web_p[$i]->costo/$consultar_ventas_web_p[$i]->cantidad));
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(10, ($i+8), $consultar_ventas_web_p[$i]->costo);
+		$this->excel->getActiveSheet()->setCellValueByColumnAndRow(11, ($i+8), $consultar_ventas_web_p[$i]->estado);
+		
+		}
+		
+		$filename='Reportes_web_personal.xls'; //save our workbook as this file name
+		header('Content-Type: application/vnd.ms-excel'); //mime type
+		header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+		header('Cache-Control: max-age=0'); //no cache
+		
+				//save it to Excel5 format (excel 2003 .XLS file), change this to 'Excel2007' (and adjust the filename extension, also the header mime type)
+		//if you want to save it as .XLSX Excel 2007 format
+		$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+		//force user to download the Excel file without writing it to server's HD
+		$objWriter->save('php://output');
+	}
 	function Cambiar_estado_enviar(){
 		
 		$id_venta=$_POST['id'];
 		$consultar_ventas_web_p=$this->model_web_personal_reporte->Actualizar_estado_a_envio($id_venta);
 		
 	}
+	
+	
+	
 }

@@ -200,26 +200,71 @@
 							<table  id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 								<thead>
 									<tr>
-										<th data-hide="phone">ID</th>
+										<th data-hide="phone">ID_venta</th>
+										<th data-hide="phone">Fecha</th>	
 										<th data-class="expand">Nombre</th>
-										<th data-hide="phone">Tipo</th>	
-										<th data-hide="phone">Usuario</th>
-										<th data-hide="phone,tablet">Grupo</th>
-										<th data-hide="phone,tablet">Descripci&oacute;n</th>
-										<th data-hide="phone,tablet">Fecha</th>
+										<th data-hide="phone">Apellido</th>	
+										<th data-hide="phone">Email</th>
+										<th data-hide="phone,tablet">Telefono</th>
+										<th data-hide="phone,tablet">Tipo</th>
+										<th data-hide="phone,tablet">Cantidad</th>
+										<th data-hide="phone,tablet">Valor Unitario</th>
+										<th data-hide="phone,tablet">Costo</th>
+									    <th data-hide="phone,tablet">Estado</th>
+									    <th data-hide="phone,tablet">Enviado</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td><?php echo "id"; ?></td>
-										<td><?php echo "n_publico"; ?></td>
-										<td><?php echo "tipo"; ?></td>
-										<td><?php echo "usuario"; ?></td>
-										<td><?php echo "grupo"; ?></td>
-										<td><?php echo "descripcion"; ?></td>
-										<td><?php echo "fecha"; ?></td>
+									
+										<?php 
+										$averiguar_producto=0;
+										$tipo_mercancia=0;
 										
-									</tr>
+											for($i=0;$i<sizeof($datos_compra);$i++)
+		                                                     {
+		                                                     
+		    if(($datos_compra[$i]->id_tipo_mercancia)=="1"){
+	         //$averiguar_producto=$datos_compra->tipo_de_producto("producto",$datos_compra[$i]->sku);
+		                              $tipo_mercancia="producto";
+		                                                   }
+		                                                     		
+		     else if(($datos_compra[$i]->id_tipo_mercancia)=="2"){
+		  //$averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("servicio",$consultar_ventas_web_p[$i]->sku);
+		   $tipo_mercancia="servicio";;
+		                                             }
+		                   else if(($datos_compra[$i]->id_tipo_mercancia)=="3"){
+		   //$averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("combinado",$datos_compra[$i]->sku);
+		                       $tipo_mercancia="combinado";
+		                                                     	}               	
+		                                                     	?>
+		                                                     <tr>
+										<td><?php echo $datos_compra[$i]->id_venta ?></td>
+										<td><?php echo $datos_compra[$i]->fecha ?></td>
+										<td><?php echo $datos_compra[$i]->nombre ?></td>
+										
+										<td><?php echo $datos_compra[$i]->apellido ?></td>
+										<td><?php echo $datos_compra[$i]->email ?></td>
+										<td><?php echo $datos_compra[$i]->telefono ?></td>
+										<td><?php echo $tipo_mercancia; ?></td>
+										<td><?php echo $datos_compra[$i]->cantidad ?></td>
+										<td><?php echo ($datos_compra[$i]->costo/$datos_compra[$i]->cantidad) ?></td>
+										<td><?php echo $datos_compra[$i]->costo ?></td>
+										<td><?php echo $datos_compra[$i]->estado ?></td>
+										
+										<td class='text-center'>
+	<?php if($datos_compra[$i]->estado=="Pago"){ ?>
+ <a class='txt-color-blue' style='cursor: pointer;' onclick='Enviar(<?php echo $datos_compra[$i]->id_venta ?>)' 
+title='Envio Mercancia'><i class='fa fa-truck fa-3x'></i></a>
+				   </td>
+		        </tr>
+<?php } else if($datos_compra[$i]->estado=="Embarcado"){?>
+<a class='txt-color-blue' style='cursor: pointer;'  title='Mercancia Enviada'><i class='fa fa-check-circle fa-3x'></i></a>
+				  </td>
+		        </tr>
+				<?php }?>					
+					<?php }?>			
+										
+									
 								</tbody>
 							</table>
 						</div>
@@ -331,3 +376,52 @@ $(document).ready(function() {
 })
 	
 </script>
+
+<script type="text/javascript">
+		function Enviar(id)
+		{
+			bootbox.dialog({
+				message: "¿Desea enviar este registro ahora?",
+				title: "Enviar Venta ".concat(id),
+				className: "",
+				buttons: {
+					success: {
+					label: "Si",
+					className: "btn-success",
+					callback: function() {
+						$.ajax({
+							type: "post",
+							data: {id:id},
+							url: "/ov/compras/Cambiar_estado_enviar"
+						})
+						.done(function(msg){
+							bootbox.dialog({
+								message: "Se han enviado estos producto exitosamente.",
+								title: "Exito",
+								className: "",
+								buttons: {
+									success: {
+										label: "Aceptar",
+										className: "btn-success",
+										callback: function(){
+											window.location.href="/ov/cgeneral/web_personal";
+										}
+									}
+								}
+							})
+						});
+					}
+				},
+				danger: {
+					label: "No",
+					className: "btn-danger",
+					callback: function(){
+					
+					}
+				}
+			}
+		});
+					
+		}
+
+		</script>

@@ -22,6 +22,8 @@ class cgeneral extends CI_Controller
 		$this->load->model('bo/model_soporte_tecnico');
 		$this->load->model('ov/model_cabecera');
 		
+		$this->load->model('ov/model_web_personal_reporte');
+		
 
 	}
 	function soporte_tecnico_ver_redes()
@@ -293,11 +295,15 @@ class cgeneral extends CI_Controller
 		$afiliado= $this->model_user_webs_personales->traer_afiliado($id);
 		$username = $afiliado[0]->username;
 		$datos_web_personal = $this->model_user_webs_personales->listar_por_afiliado($username);
-	
-		$this->template->set("style",$style);
+		
+	    $consultar_datos_compra=$this->model_web_personal_reporte->consultar_ventas_web_personal_listar($id);
+		
+	    $this->template->set("style",$style);
 		$this->template->set("username",$username);
 		$this->template->set("datos_web_personal",$datos_web_personal);
-	
+		
+	    $this->template->set("datos_compra",$consultar_datos_compra);
+	    
 		$this->template->set_theme('desktop');
 		$this->template->set_layout('website/main');
 		$this->template->set_partial('header', 'website/ov/header');
