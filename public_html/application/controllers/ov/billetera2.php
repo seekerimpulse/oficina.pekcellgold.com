@@ -59,14 +59,32 @@ class billetera2 extends CI_Controller
 		$historial=$this->modelo_billetera->get_historial_cuenta($id);
 		$ganancias=$this->modelo_billetera->get_monto($id);
 		$ganancias=$ganancias[0]->monto;
-		
-
-
+		$comision_web_personal_mes = $this->modelo_billetera->get_historial_cuenta_web_personal($id);		
 		$años = $this->modelo_billetera->añosCobro($id);
-	
+
+		if(count($comision_web_personal_mes) < count($historial)){
+			foreach ($historial as $mes){
+				foreach ($comision_web_personal_mes as $comision){
+					if($comision->fecha == $mes->fecha){
+						$mes->valor+=$comision->valor;
+					}
+				}
+			}
+			$this->template->set("historial",$historial);
+		}else{
+			foreach ($comision_web_personal_mes as $mes){
+				foreach ($historial as $comision){
+					if($comision->fecha == $mes->fecha){
+						$mes->valor+=$comision->valor;
+					}
+				}
+			}
+			$this->template->set("historial",$comision_web_personal_mes);
+		}
+		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
-		$this->template->set("historial",$historial);
+		//$this->template->set("historial",$historial);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("años",$años);
 	
@@ -137,8 +155,10 @@ class billetera2 extends CI_Controller
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
+		$comision_web_personal = $this->modelo_billetera->get_comisiones_web_personal($id);
 		
 		$this->template->set("style",$style);
+		$this->template->set("comision_web_personal",$comision_web_personal[0]->valor);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("cobro",$cobro);
@@ -224,10 +244,12 @@ class billetera2 extends CI_Controller
 		$cobro=$this->modelo_billetera->get_cobros_total($id);
 		$cobroPendientes=$this->modelo_billetera->get_cobros_pendientes_total_afiliado($id);
 		$retenciones = $this->modelo_billetera->ValorRetencionesTotales($id);
+		$comision_web_personal = $this->modelo_billetera->get_comisiones_web_personal($id);
 		
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
-		$this->template->set("comisiones",$comisiones);
+		$this->template->set("comision_web_personal",$comision_web_personal[0]->valor);
+		$this->template->set("comisiones",$comisiones+$comision_web_personal[0]->valor);
 		$this->template->set("ganancias",$ganancias);
 		$this->template->set("cobro",$cobro);
 		$this->template->set("cobroPendientes",$cobroPendientes);
@@ -259,6 +281,7 @@ class billetera2 extends CI_Controller
 			array_push($ganancias,$this->modelo_billetera->get_comisiones_mes($id,$red->id,$_GET['fecha']));
 		}
 	
+		$comision_web_personal = $this->modelo_billetera->comisionWebPersonal($id, $_GET['fecha']);
 		$retenciones = $this->modelo_billetera->ValorRetenciones_historial($_GET['fecha'],$id);
 		$cobro=$this->modelo_billetera->get_cobros_afiliado_mes($id,$_GET['fecha']);
 		$cobroPendiente=$this->modelo_billetera->get_cobros_afiliado_mes_pendientes($id,$_GET['fecha']);
@@ -266,6 +289,7 @@ class billetera2 extends CI_Controller
 		$this->template->set("style",$style);
 		$this->template->set("usuario",$usuario);
 		$this->template->set("ganancias",$ganancias);
+		$this->template->set("comision_web_personal",$comision_web_personal[0]->valor);
 		$this->template->set("retenciones",$retenciones);
 		$this->template->set("cobro",$cobro);
 		$this->template->set("cobroPendiente",$cobroPendiente);
