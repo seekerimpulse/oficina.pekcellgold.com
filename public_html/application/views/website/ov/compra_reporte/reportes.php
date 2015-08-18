@@ -433,7 +433,7 @@
 							    $("#well-print-af").show();
 								$("#row-print-af").show();
 						    // custom toolbar
-								 var obj = '<a onclick="" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
+								 var obj = '<a onclick="reporte_excel()" class="btn btn-success col-xs-12 col-lg-12 col-md-12 col-sm-12 " ><i class="fa fa-print"></i>&nbsp;Crear excel</a>'
 										$("#remplazar").html(obj);
 										$("#row-print-red").show();
 							}
@@ -1039,7 +1039,7 @@
 			
 			switch($("#tipo-reporte").val()){
 				
-			case "6" :{
+			case "1" :{
 				window.location="/ov/compras/reporte_afiliados_todos_excel";
 			}
 			break;

@@ -1,4 +1,6 @@
-
+<?php 
+include_once("application/models/ov/model_web_personal_reporte.php");
+?>
 <!-- MAIN CONTENT -->
 <div id="content">
 	<div class="row">
@@ -187,12 +189,18 @@
 						<div class="tab-pane">
 
 							<div class="row col-xs-12 col-md-12 col-sm-8 col-lg-5 pull-right">
-								<div class="col-xs-6 col-md-10 col-sm-10 col-lg-10">
+								<div class="col-xs-6 col-md-8 col-sm-8 col-lg-8">		
 								</div>
-								<div class="col-xs-6 col-md-2 col-sm-2 col-lg-2">
+								<div class="col-xs-3 col-md-2 col-sm-2 col-lg-2">
 									<center>
 										<a title="Descargar" href="#" class="txt-color-blue">
-										<i class='fa fa-download fa-3x'></i></a> <br>Descargar
+										<i class='fa fa-truck  fa-3x'></i></a> <br>Pagado	
+									</center>		
+								</div>
+								<div class="col-xs-3 col-md-2 col-sm-2 col-lg-2">
+									<center>
+										<a title="Descargar" href="#" class="txt-color-blue">
+										<i class='fa fa-check-circle  fa-3x'></i></a> <br>Embarcado
 									</center>
 								</div>
 							</div>
@@ -207,6 +215,7 @@
 										<th data-hide="phone">Email</th>
 										<th data-hide="phone,tablet">Telefono</th>
 										<th data-hide="phone,tablet">Tipo</th>
+										<th data-hide="phone,tablet">Nombre Mercancia</th>
 										<th data-hide="phone,tablet">Cantidad</th>
 										<th data-hide="phone,tablet">Valor Unitario</th>
 										<th data-hide="phone,tablet">Costo</th>
@@ -219,22 +228,22 @@
 										<?php 
 										$averiguar_producto=0;
 										$tipo_mercancia=0;
-										
+										$wp=new model_web_personal_reporte();
 											for($i=0;$i<sizeof($datos_compra);$i++)
 		                                                     {
 		                                                     
 		    if(($datos_compra[$i]->id_tipo_mercancia)=="1"){
-	         //$averiguar_producto=$datos_compra->tipo_de_producto("producto",$datos_compra[$i]->sku);
-		                              $tipo_mercancia="producto";
+	         $averiguar_producto=$wp->tipo_de_producto("producto",$datos_compra[$i]->sku);
+		     $tipo_mercancia="producto";
 		                                                   }
 		                                                     		
 		     else if(($datos_compra[$i]->id_tipo_mercancia)=="2"){
-		  //$averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("servicio",$consultar_ventas_web_p[$i]->sku);
-		   $tipo_mercancia="servicio";;
+		     $averiguar_producto=$wp->tipo_de_producto("servicio",$datos_compra[$i]->sku);
+		     $tipo_mercancia="servicio";
 		                                             }
 		                   else if(($datos_compra[$i]->id_tipo_mercancia)=="3"){
-		   //$averiguar_producto=$this->model_web_personal_reporte->tipo_de_producto("combinado",$datos_compra[$i]->sku);
-		                       $tipo_mercancia="combinado";
+		    $averiguar_producto=$wp->tipo_de_producto("combinado",$datos_compra[$i]->sku);
+		     $tipo_mercancia="combinado";
 		                                                     	}               	
 		                                                     	?>
 		                                                     <tr>
@@ -246,6 +255,7 @@
 										<td><?php echo $datos_compra[$i]->email ?></td>
 										<td><?php echo $datos_compra[$i]->telefono ?></td>
 										<td><?php echo $tipo_mercancia; ?></td>
+										<td><?php echo  $averiguar_producto[0]->nombre; ?></td>
 										<td><?php echo $datos_compra[$i]->cantidad ?></td>
 										<td><?php echo ($datos_compra[$i]->costo/$datos_compra[$i]->cantidad) ?></td>
 										<td><?php echo $datos_compra[$i]->costo ?></td>
