@@ -64,11 +64,12 @@ class cuentasporcobrar extends compras{
 			
 			if($this->modelo_historial_consignacion->comprovarCompraWebPersonal($id_venta)){
 				$this->modelo_compras->actualizarcrossCompradorVenta($id_venta,'Pago');
+				$mercancia = $this->modelo_compras->consultarMercancia($id_venta);
+				$comision_venta_web_personal = ($mercancia[0]->costo_publico - $mercancia[0]->costo) * $mercancia[0]->cantidad;
+				$this->modelo_compras->insertar_comision_web_personal($_POST['id_usuario'], $id_venta, $mercancia[0]->id_comprador, $comision_venta_web_personal);
 			}
-			$mercancia = $this->modelo_compras->consultarMercancia($id_venta);
-			$comision_venta_web_personal = ($mercancia[0]->costo_publico - $mercancia[0]->costo) * $mercancia[0]->cantidad;
-			$this->modelo_compras->insertar_comision_web_personal($_POST['id_usuario'], $id_venta, $mercancia[0]->id_comprador, $comision_venta_web_personal);
-				
+			
+			
 			$this->ComisionBanco($historico);
 			
 			$this->EnvarMail($id_historial);

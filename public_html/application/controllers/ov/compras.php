@@ -4182,7 +4182,9 @@ function index()
 	function select_af()
 	{
 		$user=$this->tank_auth->get_user_id();
-		$afiliados=$this->modelo_compras->get_afiliados($user);
+		$this->afiliados = array();
+		$this->preOrden($user);
+		$afiliados = $this->modelo_compras->get_afiliados($user);
 		echo '<div class="row">
 	              <div class="col-lg-12">
 	                <div class="row" style="text-align:center;">
@@ -4192,9 +4194,9 @@ function index()
 							<label class="select" id="afiliados">
 								<select id="afiliado_id">
 									<option value="0">Escoge a tu afiliado</option>';
-										foreach($afiliados as $afiliado)
+										foreach($this->afiliados as $afiliado)
 										{
-											echo '<option value="'.$afiliado->id_afiliado.'">'.$afiliado->afiliado.' '.$afiliado->afiliado_p.'</option>';
+											echo '<option value="'.$afiliado->id_afiliado.'">'.$afiliado->nombre.'</option>';
 										}								
 									
 								echo '</select> <i></i> </label>
@@ -4608,6 +4610,7 @@ function index()
 			$valor_comision = 0;
 			$porcentaje = 0;
 			if( $contador <= $capacidad_red[0]->profundidad){
+				$porcentaje = $config_comision[$contador-1]->valor;
 				$valor_comision = ($config_comision[$contador-1]->valor * $costo_mercancia) / 100;
 			}else{
 				$porcentaje = $config_comision[$capacidad_red[0]->profundidad]->valor;
@@ -4862,7 +4865,6 @@ function index()
 				    <th data-hide='phone,tablet'>Costo Unitario</th>
 				    <th data-hide='phone,tablet'>Costo Total</th>
 				    <th data-hide='phone,tablet'>Estado</th>
-				    <th data-hide='phone,tablet'>Enviar</th>
 				</thead>
 				<tbody>";
 		$averiguar_producto=0;
@@ -4900,16 +4902,9 @@ function index()
 		<td>".($consultar_ventas_web_p[$i]->costo/$consultar_ventas_web_p[$i]->cantidad)."</td>	
 		<td>".$consultar_ventas_web_p[$i]->costo."</td>	
 		<td>".$consultar_ventas_web_p[$i]->estado."</td>
-		<td class='text-center'>";
-		if($consultar_ventas_web_p[$i]->estado=="Pago"){
-			echo   "<a class='txt-color-blue' style='cursor: pointer;' onclick='Enviar(".$consultar_ventas_web_p[$i]->id_venta.")' title='Envio Mercancia'><i class='fa fa-truck fa-3x'></i></a>
-				   </td>
-		        </tr>";
-		}else if($consultar_ventas_web_p[$i]->estado=="Embarcado"){
-			echo   "<a class='txt-color-blue' style='cursor: pointer;'  title='Mercancia Enviada'><i class='fa fa-check-circle fa-3x'></i></a>
-				   </td>
-		        </tr>";
-		}
+		
+		</tr>";
+		
 		
 		}
 	
